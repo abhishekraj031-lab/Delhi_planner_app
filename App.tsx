@@ -7,6 +7,7 @@ import { Figtree_400Regular } from '@expo-google-fonts/figtree/400Regular';
 import { Figtree_500Medium } from '@expo-google-fonts/figtree/500Medium';
 import { Figtree_600SemiBold } from '@expo-google-fonts/figtree/600SemiBold';
 import { Figtree_700Bold } from '@expo-google-fonts/figtree/700Bold';
+import { FadeSlide } from './src/components/motion';
 import { Church, Dome, FerrisWheel, Landmark, Lighthouse, Heart, MapPin, Search, ShoppingBag, SlidersHorizontal, Ticket, Trees } from 'lucide-react-native';
 import type { Category, Place } from './src/types';
 import { colors, font } from './src/theme';
@@ -37,7 +38,7 @@ const CAT_COLOR: Record<Category, string> = {
 function CategoryTab({ label, color, on, Icon, onPress }: { label: string; color: string; on: boolean; Icon: React.ComponentType<{ size?: number; color?: string; fill?: string; strokeWidth?: number }>; onPress: () => void }) {
   return (
     <Pressable onPress={onPress} hitSlop={4} accessibilityRole="button" accessibilityState={{ selected: on }}
-      style={{ alignItems: 'center', gap: 6, minHeight: 60, paddingHorizontal: 14, paddingTop: 8, borderBottomWidth: 2, borderBottomColor: on ? color : 'transparent' }}>
+      style={({ pressed }) => ({ alignItems: 'center', gap: 6, minHeight: 60, paddingHorizontal: 14, paddingTop: 8, borderBottomWidth: 2, borderBottomColor: on ? color : 'transparent', opacity: pressed ? 0.6 : 1, transform: [{ scale: pressed ? 0.96 : 1 }] })}>
       <Icon size={26} color={on ? color : colors.sub} fill={on ? `${color}38` : 'none'} strokeWidth={on ? 2.2 : 1.8} />
       <Txt w={on ? 'semi' : 'regular'} style={{ fontSize: 12, color: on ? colors.ink : colors.sub, paddingBottom: 6 }}>{label}</Txt>
     </Pressable>
@@ -113,14 +114,15 @@ function Home() {
     return (
       <View style={s.screen}>
         <StatusBar style="dark" />
-        {body}
-        <TabBar tab={tab} onChange={changeTab} />
+        <FadeSlide k={`${tab}-${!user && loginOpen}`} style={{ flex: 1 }}>{body}</FadeSlide>
+        <TabBar key="tabbar" tab={tab} onChange={changeTab} />
       </View>
     );
   }
   return (
     <View style={[s.screen, { paddingTop: insets.top }]}>
       <StatusBar style="dark" />
+      <FadeSlide k="home" style={{ flex: 1 }}>
       <View style={s.header}>
         <View style={{ flex: 1 }}>
           <Txt w="bold" style={{ fontSize: 20 }}>Welcome</Txt>
@@ -150,6 +152,7 @@ function Home() {
       </View>
       {loc ? <Txt style={s.hint}>Nearest first, by straight-line distance.</Txt> : null}
       {dayChoice !== 'today' ? <Txt style={s.hint}>Showing status for {choice.label}.</Txt> : null}
+      <FadeSlide k={query ? 'search' : String(category)} style={{ flex: 1 }}>
       <FlatList data={rows} keyExtractor={(r) => r.place.id} style={{ backgroundColor: colors.white }} contentContainerStyle={{ paddingBottom: 12 }}
         initialNumToRender={6} windowSize={7} keyboardShouldPersistTaps="handled"
         ListEmptyComponent={<Txt style={s.empty}>Nothing here yet. More places are coming soon — try another category or clear the filters.</Txt>}
@@ -157,7 +160,9 @@ function Home() {
           <PlaceCard place={item.place} km={item.km} day={day} today={today} saved={saved.has(item.place.id)}
             onOpen={() => setOpenId(item.place.id)} onToggleSave={() => toggleSave(item.place.id)} />
         )} />
-      <TabBar tab={tab} onChange={setTab} />
+      </FadeSlide>
+      </FadeSlide>
+      <TabBar key="tabbar" tab={tab} onChange={setTab} />
       <PlaceDetail place={openPlace} km={openKm} day={day} today={today} saved={openId ? saved.has(openId) : false}
         onClose={() => setOpenId(null)} onToggleSave={() => openId && toggleSave(openId)} />
       <FilterSheet visible={showFilters} onClose={() => setShowFilters(false)} dayChoice={dayChoice} setDayChoice={setDayChoice}
