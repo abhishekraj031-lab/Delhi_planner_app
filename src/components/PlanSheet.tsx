@@ -1,5 +1,6 @@
 import React from 'react';
 import { Linking, Pressable, StyleSheet, View } from 'react-native';
+import { X } from 'lucide-react-native';
 import type { Coords, Place } from '../types';
 import { colors } from '../theme';
 import { buildPlan, planMapsUrl } from '../lib/plan';
@@ -19,7 +20,13 @@ export function PlanSheet({ visible, onClose, places, day, dayLabel, today, loc,
   return (
     <Sheet visible={visible} onClose={onClose} label="Plan my day">
       <View style={{ gap: 4 }}>
-        <Txt w="bold" style={{ fontSize: 20 }}>Plan my day</Txt>
+        <View style={s.head}>
+          <Txt w="bold" style={{ fontSize: 20, flex: 1 }}>Plan my day</Txt>
+          <Pressable onPress={onClose} accessibilityRole="button" accessibilityLabel="Close plan" hitSlop={8}
+            style={({ pressed }) => [s.close, { opacity: pressed ? 0.6 : 1 }]}>
+            <X size={22} color={colors.ink} />
+          </Pressable>
+        </View>
         <Txt style={{ fontSize: 14, color: colors.sub }}>
           {stops.length ? `${stops.length} places close to each other, open ${dayLabel.toLowerCase()}. About ${total < 1 ? 'under 1' : total.toFixed(1)} km between them.` : 'No places with known opening days yet.'}
         </Txt>
@@ -56,6 +63,8 @@ export function PlanSheet({ visible, onClose, places, day, dayLabel, today, loc,
   );
 }
 const s = StyleSheet.create({
+  head: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+  close: { width: 44, height: 44, borderRadius: 22, backgroundColor: colors.fill, alignItems: 'center', justifyContent: 'center', marginTop: -6, marginRight: -6 },
   stop: { flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 56, paddingVertical: 8 },
   num: { width: 28, height: 28, borderRadius: 14, backgroundColor: colors.dark, alignItems: 'center', justifyContent: 'center' },
   leg: { flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 28 },
