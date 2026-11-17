@@ -11,7 +11,7 @@ import { Church, Dome, FerrisWheel, Landmark, Lighthouse, Heart, MapPin, Search,
 import type { Category, Place } from './src/types';
 import { colors, font } from './src/theme';
 import { loadPlaces } from './src/data/repository';
-import { CATEGORIES, visiblePlaces } from './src/lib/places';
+import { categoriesWithPlaces, visiblePlaces } from './src/lib/places';
 import { KEYS, loadJSON, saveJSON } from './src/lib/storage';
 import { useLocation } from './src/hooks/useLocation';
 import { Chip, Txt } from './src/components/ui';
@@ -141,7 +141,7 @@ function Home() {
         </Pressable>
       </View>
       <View style={{ flexGrow: 0 }}>
-        <FlatList horizontal showsHorizontalScrollIndicator={false} data={CATEGORIES} keyExtractor={(c) => c} contentContainerStyle={s.chips}
+        <FlatList horizontal showsHorizontalScrollIndicator={false} data={categoriesWithPlaces(places)} keyExtractor={(c) => c} contentContainerStyle={s.chips}
           renderItem={({ item }) => {
             const Icon = ICONS[item];
             const on = !query && category === item;

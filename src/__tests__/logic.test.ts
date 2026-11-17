@@ -3,7 +3,7 @@ import type { Place } from '../types';
 import { getStatus } from '../lib/status';
 import { estimateTotal, formatFee, priceFor } from '../lib/pricing';
 import { distanceKm, formatAway } from '../lib/distance';
-import { hasCollectedData, visiblePlaces } from '../lib/places';
+import { isOnOfficialList, visiblePlaces } from '../lib/places';
 
 const all = places as unknown as Place[];
 const find = (id: string) => all.find((p) => p.id === id) as Place;
@@ -108,8 +108,7 @@ describe('filters and search', () => {
   });
 });
 
-test('only places with collected data are shown', () => {
-  const shown = (places as unknown as Place[]).filter(hasCollectedData);
-  expect(shown.length).toBe(26);
-  expect(shown.every((p) => p.source !== 'Not collected yet')).toBe(true);
+test('only places on the official Delhi Tourism list are shown', () => {
+  const shown = (places as unknown as Place[]).filter(isOnOfficialList);
+  expect(shown.length).toBe(17);
 });
