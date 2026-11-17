@@ -34,7 +34,7 @@ function PlaceCardBase({ place, km, day, today, saved, onOpen, onToggleSave }: P
   return (
     <Pressable onPress={onOpen} accessibilityRole="button" accessibilityLabel={`${place.name}. ${s.text}`} style={st.card}>
       <View>
-        <PlaceVisual place={place} height={176} radius={{ borderRadius: 20 }} />
+        <PlaceVisual place={place} height={184} radius={{ borderRadius: 20 }} />
         <View style={st.badge}>
           <Txt w="semi" style={{ fontSize: 12, color: s.muted ? colors.sub : colors.ink }}>{s.text}</Txt>
           {s.unverified ? <Unverified /> : null}
@@ -69,10 +69,10 @@ const st = StyleSheet.create({
   card: { marginHorizontal: 16, marginTop: 16 },
   heart: { position: 'absolute', top: 12, right: 12 },
   badge: { position: 'absolute', top: 12, left: 12, flexDirection: 'row', alignItems: 'center', maxWidth: '75%', minHeight: 28, paddingHorizontal: 12, paddingVertical: 4, borderRadius: 14, backgroundColor: colors.white, shadowColor: '#000', shadowOpacity: 0.12, shadowRadius: 4, shadowOffset: { width: 0, height: 1 }, elevation: 2 },
-  text: { marginTop: 8, gap: 2 },
+  text: { marginTop: 6, gap: 0 },
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  fee: { flexDirection: 'row', minHeight: 32, paddingHorizontal: 10, borderRadius: 16, backgroundColor: '#e8f0fe', alignItems: 'center' },
+  fee: { flexDirection: 'row', minHeight: 28, paddingHorizontal: 10, borderRadius: 14, backgroundColor: '#e8f0fe', alignItems: 'center' },
   feeFree: { backgroundColor: '#dcfce7' },
-  feeNone: { minHeight: 32, paddingHorizontal: 10, borderRadius: 16, backgroundColor: colors.fill, justifyContent: 'center' },
-  grey: { color: colors.sub, fontSize: 14, lineHeight: 20 },
+  feeNone: { minHeight: 28, paddingHorizontal: 10, borderRadius: 14, backgroundColor: colors.fill, justifyContent: 'center' },
+  grey: { color: colors.sub, fontSize: 14, lineHeight: 18, marginTop: -2 },
 });

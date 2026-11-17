@@ -33,3 +33,6 @@
 - [ ] Remove the demo login (`DEMO_LOGIN` in `src/config.ts`, the hint text in `LoginScreen.tsx`, `src/hooks/useAuth.ts` check). It is not secure
 - [ ] Add real sign-in: phone OTP + Google (+ Sign in with Apple, required by App Store rules when Google login is offered)
 - [ ] Add in-app "Delete my account" (required by both stores once accounts exist)
+
+## Photos (to do)
+- [ ] Replace the current low-resolution photos (many are only 360-720px wide and look soft on phones) with sharp ones about 1100px wide, then run `node scripts/generate-photos-index.js`. Keep a credit for every photo (3 have none yet)

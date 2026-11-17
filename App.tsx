@@ -29,11 +29,16 @@ const ICONS: Record<Category, React.ComponentType<{ size?: number; color?: strin
   'Gardens & Parks': Trees, 'Markets & Food': ShoppingBag, 'Entertainment': FerrisWheel,
 };
 
-function CategoryTab({ label, on, Icon, onPress }: { label: string; on: boolean; Icon: React.ComponentType<{ size?: number; color?: string }>; onPress: () => void }) {
+const CAT_COLOR: Record<Category, string> = {
+  'Monuments': '#e0662b', 'Modern Landmarks': '#7c4dff', 'Museums': '#0f9d8a', 'Religious & spiritual': '#d9476b',
+  'Gardens & Parks': '#2e9e4f', 'Markets & Food': '#d99100', 'Entertainment': '#2c7aef',
+};
+
+function CategoryTab({ label, color, on, Icon, onPress }: { label: string; color: string; on: boolean; Icon: React.ComponentType<{ size?: number; color?: string; fill?: string; strokeWidth?: number }>; onPress: () => void }) {
   return (
     <Pressable onPress={onPress} hitSlop={4} accessibilityRole="button" accessibilityState={{ selected: on }}
-      style={{ alignItems: 'center', gap: 6, minHeight: 60, paddingHorizontal: 14, paddingTop: 8, borderBottomWidth: 2, borderBottomColor: on ? colors.ink : 'transparent' }}>
-      <Icon size={24} color={on ? colors.ink : colors.sub} />
+      style={{ alignItems: 'center', gap: 6, minHeight: 60, paddingHorizontal: 14, paddingTop: 8, borderBottomWidth: 2, borderBottomColor: on ? color : 'transparent' }}>
+      <Icon size={26} color={on ? color : colors.sub} fill={on ? `${color}38` : 'none'} strokeWidth={on ? 2.2 : 1.8} />
       <Txt w={on ? 'semi' : 'regular'} style={{ fontSize: 12, color: on ? colors.ink : colors.sub, paddingBottom: 6 }}>{label}</Txt>
     </Pressable>
   );
@@ -140,7 +145,7 @@ function Home() {
           renderItem={({ item }) => {
             const Icon = ICONS[item];
             const on = !query && category === item;
-            return <CategoryTab label={item} on={on} Icon={Icon} onPress={() => { setQuery(''); setCategory(on ? 'All' : item); }} />;
+            return <CategoryTab label={item} color={CAT_COLOR[item]} on={on} Icon={Icon} onPress={() => { setQuery(''); setCategory(on ? 'All' : item); }} />;
           }} />
       </View>
       {loc ? <Txt style={s.hint}>Nearest first, by straight-line distance.</Txt> : null}
