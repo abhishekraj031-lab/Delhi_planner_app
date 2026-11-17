@@ -152,7 +152,7 @@ function Home() {
       {dayChoice !== 'today' ? <Txt style={s.hint}>Showing status for {choice.label}.</Txt> : null}
       <FlatList data={rows} keyExtractor={(r) => r.place.id} style={{ backgroundColor: colors.white }} contentContainerStyle={{ paddingBottom: 12 }}
         initialNumToRender={6} windowSize={7} keyboardShouldPersistTaps="handled"
-        ListEmptyComponent={<Txt style={s.empty}>No places match. Try another category or clear the filters.</Txt>}
+        ListEmptyComponent={<Txt style={s.empty}>Nothing here yet. More places are coming soon — try another category or clear the filters.</Txt>}
         renderItem={({ item }) => (
           <PlaceCard place={item.place} km={item.km} day={day} today={today} saved={saved.has(item.place.id)}
             onOpen={() => setOpenId(item.place.id)} onToggleSave={() => toggleSave(item.place.id)} />
