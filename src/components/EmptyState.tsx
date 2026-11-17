@@ -17,7 +17,7 @@ export function EmptyState({ title, icon, heading, message, cta, onCta }: {
           {icon}
         </View>
         <Txt w="bold" style={{ fontSize: 18 }}>{heading}</Txt>
-        <Txt style={{ color: colors.sub, fontSize: 13, textAlign: 'center', maxWidth: 260 }}>{message}</Txt>
+        <Txt style={{ color: colors.sub, fontSize: 14, lineHeight: 20, textAlign: 'center', maxWidth: 280 }}>{message}</Txt>
         <View style={{ flexDirection: 'row', width: 240, marginTop: 16 }}><Button label={cta} onPress={onCta} /></View>
       </View>
     </View>

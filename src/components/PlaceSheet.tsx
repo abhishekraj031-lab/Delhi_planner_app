@@ -16,16 +16,16 @@ type Props = { place: Place | null; km: number | null; day: number; today: Date 
 
 const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <View style={{ gap: 4 }}>
-    <Txt w="bold" style={{ fontSize: 16, color: colors.heading }}>{title}</Txt>
+    <Txt w="bold" style={{ fontSize: 18, color: colors.heading }}>{title}</Txt>
     {children}
   </View>
 );
-const Body = ({ children }: { children: React.ReactNode }) => <Txt style={{ color: colors.heading, lineHeight: 18 }}>{children}</Txt>;
+const Body = ({ children }: { children: React.ReactNode }) => <Txt style={{ color: colors.heading, fontSize: 14, lineHeight: 21 }}>{children}</Txt>;
 const Row = ({ label, value, unverified }: { label: string; value: string; unverified?: boolean }) => (
   <View style={s.row}>
-    <Txt style={{ color: colors.heading, flex: 1 }}>{label}</Txt>
+    <Txt style={{ color: colors.heading, fontSize: 14, flex: 1 }}>{label}</Txt>
     <View style={{ flexDirection: 'row', alignItems: 'center', flexShrink: 1 }}>
-      {value === 'Not available' ? <NotAvailable /> : <Txt w="semi" style={{ color: colors.heading, textAlign: 'right', flexShrink: 1 }}>{value}</Txt>}
+      {value === 'Not available' ? <NotAvailable /> : <Txt w="semi" style={{ color: colors.heading, fontSize: 14, textAlign: 'right', flexShrink: 1 }}>{value}</Txt>}
       {unverified ? <Unverified /> : null}
     </View>
   </View>
@@ -50,17 +50,17 @@ export function PlaceSheet({ place, km, day, today, saved, onClose, onToggleSave
       <View>
         <View>
           <PlaceVisual place={p} height={155} radius={{ borderRadius: 10 }} />
-          <Pressable onPress={onToggleSave} hitSlop={10} accessibilityRole="button" accessibilityLabel={saved ? 'Remove from saved' : 'Save place'} style={{ position: 'absolute', top: 12, right: 12 }}>
-            <Heart size={24} color={saved ? '#ff3b5c' : colors.white} fill={saved ? '#ff3b5c' : 'rgba(0,0,0,0.3)'} />
+          <Pressable onPress={onToggleSave} hitSlop={14} accessibilityRole="button" accessibilityLabel={saved ? 'Remove from saved' : 'Save place'} style={{ position: 'absolute', top: 12, right: 12 }}>
+            <Heart size={26} color={saved ? '#ff3b5c' : colors.white} fill={saved ? '#ff3b5c' : 'rgba(0,0,0,0.3)'} />
           </Pressable>
           {st.kind === 'closed' || st.kind === 'partial' ? (
-            <View style={s.badge}><Txt style={{ fontSize: 10, color: colors.white }}>{st.label}</Txt></View>
+            <View style={s.badge}><Txt style={{ fontSize: 12, color: colors.white }}>{st.label}</Txt></View>
           ) : null}
         </View>
         <View style={[s.row, { marginTop: 8, alignItems: 'flex-start' }]}>
           <View style={{ flex: 1 }}>
-            <Txt w="semi" style={{ fontSize: 14, color: colors.heading }}>{p.name}</Txt>
-            <Txt style={{ fontSize: 11, color: colors.heading }}>{areaLabel(p)}{km != null ? ` · ${formatAway(km)}` : ''}</Txt>
+            <Txt w="bold" style={{ fontSize: 18, color: colors.heading }}>{p.name}</Txt>
+            <Txt style={{ fontSize: 13, color: colors.heading }}>{areaLabel(p)}{km != null ? ` · ${formatAway(km)}` : ''}</Txt>
           </View>
           <View style={{ alignItems: 'flex-end' }}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -68,7 +68,7 @@ export function PlaceSheet({ place, km, day, today, saved, onClose, onToggleSave
               {fee ? <Txt w="semi" style={{ fontSize: 14, color: colors.heading }}>{fee}</Txt> : <NotAvailable size={14} />}
               {p.price.unverified && fee ? <Unverified /> : null}
             </View>
-            {p.duration ? <Txt style={{ fontSize: 11, color: colors.heading }}>{p.duration}</Txt> : <NotAvailable size={11} />}
+            {p.duration ? <Txt style={{ fontSize: 13, color: colors.heading }}>{p.duration}</Txt> : <NotAvailable size={13} />}
           </View>
         </View>
       </View>
@@ -96,11 +96,11 @@ export function PlaceSheet({ place, km, day, today, saved, onClose, onToggleSave
               <Chip label="Indian" on={who === 'i'} onPress={() => setWho('i')} />
               <Chip label="Foreign" on={who === 'f'} onPress={() => setWho('f')} />
               <Chip label="−" on={false} onPress={() => setCount((c) => Math.max(1, c - 1))} />
-              <Txt w="semi">{count} visitors</Txt>
+              <Txt w="semi" style={{ fontSize: 14 }}>{count} visitors</Txt>
               <Chip label="+" on={false} onPress={() => setCount((c) => c + 1)} />
             </View>
             {total == null ? <NotAvailable /> : <Txt w="bold" style={{ fontSize: 16 }}>Estimate ₹{total}</Txt>}
-            <Txt style={{ color: colors.sub, fontSize: 11 }}>Adult rate only. Children and seniors may pay less.</Txt>
+            <Txt style={{ color: colors.sub, fontSize: 12 }}>Adult rate only. Children and seniors may pay less.</Txt>
           </View>
         ) : null}
       </Section>
@@ -108,12 +108,12 @@ export function PlaceSheet({ place, km, day, today, saved, onClose, onToggleSave
       <Section title="What’s allowed">{p.rules.map((r) => <Row key={r.label} label={r.label} value={r.value} />)}</Section>
 
       <View style={{ gap: 4 }}>
-        <Txt style={{ color: colors.sub, fontSize: 11 }}>
+        <Txt style={{ color: colors.sub, fontSize: 12, lineHeight: 18 }}>
           Source: {p.source}. {p.verifiedNote}
           {p.photoCredit ? `\nPhoto: ${p.photoCredit} (Wikimedia Commons)` : ''}
         </Txt>
-        <Pressable accessibilityRole="link" onPress={() => Linking.openURL(`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(`Correction: ${p.name}`)}`)}>
-          <Txt style={{ color: colors.sub, fontSize: 11, textDecorationLine: 'underline' }}>Report wrong information</Txt>
+        <Pressable accessibilityRole="link" hitSlop={{ top: 14, bottom: 14 }} onPress={() => Linking.openURL(`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(`Correction: ${p.name}`)}`)}>
+          <Txt style={{ color: colors.sub, fontSize: 13, textDecorationLine: 'underline' }}>Report wrong information</Txt>
         </Pressable>
       </View>
 
@@ -126,5 +126,5 @@ export function PlaceSheet({ place, km, day, today, saved, onClose, onToggleSave
 }
 const s = StyleSheet.create({
   row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 12, paddingVertical: 3 },
-  badge: { position: 'absolute', left: 12, top: 12, height: 20, borderRadius: 99, paddingHorizontal: 10, backgroundColor: colors.dark, justifyContent: 'center' },
+  badge: { position: 'absolute', left: 12, top: 12, minHeight: 24, borderRadius: 99, paddingHorizontal: 10, backgroundColor: colors.dark, justifyContent: 'center' },
 });

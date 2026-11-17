@@ -108,16 +108,16 @@ function Home() {
       <StatusBar style="dark" />
       <View style={s.header}>
         <View style={{ flex: 1 }}>
-          <Txt w="bold" style={{ fontSize: 16 }}>Welcome</Txt>
-          <Pressable onPress={() => setShowLocation(true)} accessibilityRole="button" accessibilityLabel={`Location: ${locLabel}. Change`} style={s.loc}>
-            <MapPin size={12} color={colors.sub} />
-            <Txt style={{ color: colors.sub }}>{locLabel}</Txt>
+          <Txt w="bold" style={{ fontSize: 20 }}>Welcome</Txt>
+          <Pressable onPress={() => setShowLocation(true)} hitSlop={{ top: 8, bottom: 8, right: 16 }} accessibilityRole="button" accessibilityLabel={`Location: ${locLabel}. Change`} style={s.loc}>
+            <MapPin size={14} color={colors.sub} />
+            <Txt style={{ color: colors.sub, fontSize: 13 }}>{locLabel}</Txt>
           </Pressable>
         </View>
       </View>
       <View style={s.searchRow}>
         <View style={s.search}>
-          <Search size={16} color={colors.text} />
+          <Search size={20} color={colors.text} />
           <TextInput value={query} onChangeText={setQuery} placeholder="Search place, attractions..." placeholderTextColor="#333232"
             accessibilityLabel="Search places" returnKeyType="search" style={s.input} />
         </View>
@@ -162,12 +162,11 @@ const s = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.white },
   header: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 16, paddingTop: 12 },
   loc: { flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 2 },
-  avatar: { width: 40, height: 40, borderRadius: 20, backgroundColor: '#d9d9d9' },
-  searchRow: { flexDirection: 'row', gap: 12, paddingHorizontal: 16, paddingTop: 16 },
-  search: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8, height: 40, paddingHorizontal: 12, borderRadius: 8, backgroundColor: colors.fill },
-  input: { flex: 1, fontFamily: font.regular, fontSize: 12, color: '#333232', padding: 0 },
-  filter: { width: 40, height: 40, borderRadius: 8, backgroundColor: colors.fill, alignItems: 'center', justifyContent: 'center' },
+    searchRow: { flexDirection: 'row', gap: 12, paddingHorizontal: 16, paddingTop: 16 },
+  search: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8, minHeight: 48, paddingHorizontal: 12, borderRadius: 10, backgroundColor: colors.fill },
+  input: { flex: 1, fontFamily: font.regular, fontSize: 16, color: '#333232', paddingVertical: 8 },
+  filter: { width: 48, height: 48, borderRadius: 10, backgroundColor: colors.fill, alignItems: 'center', justifyContent: 'center' },
   chips: { gap: 8, paddingHorizontal: 16, paddingTop: 12, paddingBottom: 4 },
-  hint: { color: colors.sub, fontSize: 11, marginHorizontal: 16, marginTop: 8 },
+  hint: { color: colors.sub, fontSize: 12, marginHorizontal: 16, marginTop: 8 },
   empty: { color: colors.sub, textAlign: 'center', padding: 48 },
 });

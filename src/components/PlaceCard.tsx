@@ -34,40 +34,40 @@ function PlaceCardBase({ place, km, day, today, saved, onOpen, onToggleSave }: P
     <Pressable onPress={onOpen} accessibilityRole="button" accessibilityLabel={`${place.name}. ${s.text}`} style={st.card}>
       <View>
         <PlaceVisual place={place} height={147} radius={{ borderRadius: 12 }} />
-        <Pressable onPress={onToggleSave} hitSlop={10} accessibilityRole="button"
+        <Pressable onPress={onToggleSave} hitSlop={14} accessibilityRole="button"
           accessibilityLabel={saved ? `Remove ${place.name} from saved` : `Save ${place.name}`} style={st.heart}>
-          <Heart size={24} color={saved ? '#ff3b5c' : colors.white} fill={saved ? '#ff3b5c' : 'rgba(0,0,0,0.3)'} />
+          <Heart size={26} color={saved ? '#ff3b5c' : colors.white} fill={saved ? '#ff3b5c' : 'rgba(0,0,0,0.3)'} />
         </Pressable>
       </View>
       <View style={st.titleRow}>
         <View style={{ flex: 1 }}>
-          <Txt w="bold" style={{ fontSize: 14, lineHeight: 20 }}>{place.name}</Txt>
+          <Txt w="bold" style={{ fontSize: 16, lineHeight: 22 }}>{place.name}</Txt>
           <View style={st.row}>
-            <MapPin size={12} color={colors.sub} />
-            <Txt style={{ color: colors.sub, fontSize: 10 }}>{areaLabel(place)}</Txt>
+            <MapPin size={14} color={colors.sub} />
+            <Txt style={{ color: colors.sub, fontSize: 12 }}>{areaLabel(place)}</Txt>
           </View>
         </View>
         <View style={st.fee}>
-          <TicketCheck size={16} color={colors.white} />
+          <TicketCheck size={18} color={colors.white} />
           {fee ? (
             <>
-              <Txt w="bold" style={{ color: colors.white, fontSize: 14 }}>{fee}</Txt>
-              <Txt style={{ color: colors.white, fontSize: 10 }}>{fee === 'Free' ? 'Entry' : 'Entry fee'}</Txt>
+              <Txt w="bold" style={{ color: colors.white, fontSize: 16 }}>{fee}</Txt>
+              {place.price.unverified ? null : <Txt numberOfLines={1} style={{ color: colors.white, fontSize: 12 }}>{fee === 'Free' ? 'Entry' : 'Entry fee'}</Txt>}
               {place.price.unverified ? <Unverified /> : null}
             </>
-          ) : <Txt style={{ color: colors.white, fontSize: 10 }}>Fee not available</Txt>}
+          ) : <Txt style={{ color: colors.white, fontSize: 12 }}>Fee not available</Txt>}
         </View>
       </View>
       <View style={st.strip}>
         <View style={st.stripItem}>
-          <TrainFront size={16} color={colors.ink} />
-          {km != null ? <Txt w="bold" style={{ fontSize: 12 }}>{formatAway(km)}</Txt> : null}
-          <Txt style={{ fontSize: 10, flexShrink: 1 }} numberOfLines={1}>{km != null ? `(${metro ?? 'Metro not available'})` : (metro ?? 'Metro not available')}</Txt>
+          <TrainFront size={18} color={colors.ink} />
+          {km != null ? <Txt w="bold" style={{ fontSize: 13 }}>{formatAway(km)}</Txt> : null}
+          <Txt style={{ fontSize: 12, flexShrink: 1 }} numberOfLines={1}>{km != null ? `(${metro ?? 'Metro not available'})` : (metro ?? 'Metro not available')}</Txt>
         </View>
         <View style={st.sep} />
-        <View style={[st.stripItem, { justifyContent: 'flex-end' }]}>
-          <Clock4 size={16} color={colors.ink} />
-          <Txt w="bold" style={{ fontSize: 12, color: s.muted ? colors.sub : colors.ink }} numberOfLines={1}>{s.text}</Txt>
+        <View style={[st.stripItem, { justifyContent: 'flex-end', flexWrap: 'wrap', rowGap: 2 }]}>
+          <Clock4 size={18} color={colors.ink} />
+          <Txt w="bold" style={{ fontSize: 13, color: s.muted ? colors.sub : colors.ink }}>{s.text}</Txt>
           {s.unverified ? <Unverified /> : null}
         </View>
       </View>
@@ -81,8 +81,8 @@ const st = StyleSheet.create({
   heart: { position: 'absolute', top: 12, right: 12 },
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 10 },
   row: { flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 2 },
-  fee: { flexDirection: 'row', alignItems: 'center', gap: 4, minHeight: 40, paddingHorizontal: 10, borderRadius: 8, backgroundColor: colors.dark, maxWidth: '55%' },
-  strip: { flexDirection: 'row', alignItems: 'center', marginTop: 10, marginBottom: 12, minHeight: 36, borderRadius: 8, backgroundColor: colors.fill, paddingHorizontal: 12, paddingVertical: 6 },
+  fee: { flexDirection: 'row', alignItems: 'center', gap: 4, minHeight: 44, paddingHorizontal: 12, borderRadius: 8, backgroundColor: colors.dark, maxWidth: '55%' },
+  strip: { flexDirection: 'row', alignItems: 'center', marginTop: 10, marginBottom: 12, minHeight: 44, borderRadius: 10, backgroundColor: colors.fill, paddingHorizontal: 12, paddingVertical: 8 },
   stripItem: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 4 },
   sep: { width: 1, alignSelf: 'stretch', backgroundColor: colors.line, marginHorizontal: 8 },
 });

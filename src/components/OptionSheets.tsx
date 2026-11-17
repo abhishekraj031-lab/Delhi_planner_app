@@ -51,7 +51,7 @@ export function LocationSheet(p: LocProps) {
           {AREAS.map((a) => <Chip key={a.label} label={a.label} on={p.loc?.label === a.label} onPress={() => { p.onChooseArea(a.label); p.onClose(); }} />)}
         </View>
       </View>
-      <Txt style={{ color: colors.sub, fontSize: 11 }}>Your location stays on your phone and is only used to sort places. Distances are straight-line, not travel time.</Txt>
+      <Txt style={{ color: colors.sub, fontSize: 12 }}>Your location stays on your phone and is only used to sort places. Distances are straight-line, not travel time.</Txt>
     </Sheet>
   );
 }

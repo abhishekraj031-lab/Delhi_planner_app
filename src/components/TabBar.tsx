@@ -22,7 +22,7 @@ export function TabBar({ tab, onChange }: { tab: TabKey; onChange: (t: TabKey) =
         return (
           <Pressable key={key} onPress={() => onChange(key)} accessibilityRole="tab" accessibilityState={{ selected: on }} accessibilityLabel={label}
             style={[s.tab, on && s.tabOn]}>
-            <Icon size={16} color={on ? colors.white : colors.ink} />
+            <Icon size={20} color={on ? colors.white : colors.ink} />
             <Txt w={on ? 'semi' : 'regular'} style={{ fontSize: 12, color: on ? colors.white : colors.ink }}>{label}</Txt>
           </Pressable>
         );
@@ -32,6 +32,6 @@ export function TabBar({ tab, onChange }: { tab: TabKey; onChange: (t: TabKey) =
 }
 const s = StyleSheet.create({
   bar: { flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', paddingTop: 12, paddingHorizontal: 8, backgroundColor: colors.white, borderTopWidth: 1, borderTopColor: colors.fill },
-  tab: { flexDirection: 'row', alignItems: 'center', gap: 4, height: 36, paddingHorizontal: 10, borderRadius: 8 },
+  tab: { flexDirection: 'row', alignItems: 'center', gap: 4, minHeight: 44, paddingHorizontal: 12, borderRadius: 10 },
   tabOn: { backgroundColor: colors.dark },
 });

@@ -19,18 +19,18 @@ export function LoginScreen({ title, hint, onSignIn }: { title: string; hint: st
       <Txt w="bold" style={{ fontSize: 16 }}>{title}</Txt>
       <View style={{ marginTop: 32, gap: 12 }}>
         <Txt w="bold" style={{ fontSize: 20 }}>Log in</Txt>
-        <Txt style={{ color: colors.sub, fontSize: 12 }}>{hint}</Txt>
+        <Txt style={{ color: colors.sub, fontSize: 14 }}>{hint}</Txt>
         <TextInput value={id} onChangeText={setId} placeholder="Email or phone number" placeholderTextColor="#333232" autoCapitalize="none"
           autoCorrect={false} accessibilityLabel="Email or phone number" style={s.input} />
         <TextInput value={pw} onChangeText={setPw} placeholder="Password" placeholderTextColor="#333232" secureTextEntry
           accessibilityLabel="Password" onSubmitEditing={submit} style={s.input} />
         {error ? <Txt style={{ color: colors.warn }}>{error}</Txt> : null}
         <View style={{ flexDirection: 'row' }}><Button label="Log in" onPress={submit} /></View>
-        <Txt style={{ color: colors.sub, fontSize: 11 }}>Demo login for testing: {DEMO_LOGIN.id} / {DEMO_LOGIN.password}. Phone OTP and Google sign-in are coming later.</Txt>
+        <Txt style={{ color: colors.sub, fontSize: 12 }}>Demo login for testing: {DEMO_LOGIN.id} / {DEMO_LOGIN.password}. Phone OTP and Google sign-in are coming later.</Txt>
       </View>
     </View>
   );
 }
 const s = StyleSheet.create({
-  input: { height: 44, borderRadius: 8, backgroundColor: colors.fill, paddingHorizontal: 12, fontFamily: font.regular, fontSize: 14, color: '#333232' },
+  input: { minHeight: 48, borderRadius: 10, backgroundColor: colors.fill, paddingHorizontal: 12, paddingVertical: 10, fontFamily: font.regular, fontSize: 16, color: '#333232' },
 });
