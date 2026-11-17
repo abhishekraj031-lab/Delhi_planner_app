@@ -2,7 +2,7 @@ import React from 'react';
 import { Linking, Pressable, StyleSheet, View } from 'react-native';
 import type { Coords, Place } from '../types';
 import { colors } from '../theme';
-import { buildPlan, planMapsUrl } from '../lib/plan';
+import { buildPlan, explainPlan, planMapsUrl } from '../lib/plan';
 import { formatFee } from '../lib/pricing';
 import { Button, Txt } from './ui';
 import { Sheet } from './Sheet';
@@ -13,6 +13,7 @@ type Props = { visible: boolean; onClose: () => void; places: Place[]; day: numb
 /** "Plan my day": a short chain of nearby places that are open on the chosen day. */
 export function PlanSheet({ visible, onClose, places, day, dayLabel, today, loc, saved, onSaveAll, onOpenPlace }: Props) {
   const stops = visible ? buildPlan(places, day, loc) : [];
+  const why = explainPlan(places, day, loc, stops);
   const allSaved = stops.length > 0 && stops.every((x) => saved.has(x.place.id));
   const url = planMapsUrl(stops);
   const total = stops.reduce((n, s) => n + (s.legKm ?? 0), 0);
@@ -24,6 +25,18 @@ export function PlanSheet({ visible, onClose, places, day, dayLabel, today, loc,
           {stops.length ? `${stops.length} places close to each other, open ${dayLabel.toLowerCase()}. About ${total < 1 ? 'under 1' : total.toFixed(1)} km between them.` : 'No places with known opening days yet.'}
         </Txt>
       </View>
+      {why ? (
+        <View style={s.why}>
+          <Txt w="bold" style={{ fontSize: 15 }}>Why these places</Txt>
+          {[
+            `Open ${dayLabel.toLowerCase()}. Picked from ${why.openCount} places we know are open that day.${why.unknownCount ? ` ${why.unknownCount} ${why.unknownCount === 1 ? 'place' : 'places'} with unknown opening days ${why.unknownCount === 1 ? 'is' : 'are'} left out.` : ''}`,
+            `Close together. Each stop is the nearest open place to the one before, and never more than ${why.maxLegKm} km away.`,
+            why.startReason,
+          ].map((t) => (
+            <View key={t} style={s.tip}><View style={s.dot} /><Txt style={{ fontSize: 13, lineHeight: 19, color: colors.sub, flex: 1 }}>{t}</Txt></View>
+          ))}
+        </View>
+      ) : null}
       <View style={{ gap: 0 }}>
         {stops.map(({ place, legKm }, i) => {
           const st = statusText(place, day, today);
@@ -56,6 +69,9 @@ export function PlanSheet({ visible, onClose, places, day, dayLabel, today, loc,
   );
 }
 const s = StyleSheet.create({
+  why: { backgroundColor: colors.fill, borderRadius: 14, padding: 14, gap: 6 },
+  tip: { flexDirection: 'row', gap: 8, alignItems: 'flex-start' },
+  dot: { width: 5, height: 5, borderRadius: 3, backgroundColor: colors.sub, marginTop: 7 },
   stop: { flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 56, paddingVertical: 8 },
   num: { width: 28, height: 28, borderRadius: 14, backgroundColor: colors.dark, alignItems: 'center', justifyContent: 'center' },
   leg: { flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 28 },

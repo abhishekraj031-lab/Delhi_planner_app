@@ -3,7 +3,7 @@ import type { Place } from '../types';
 import { getStatus } from '../lib/status';
 import { estimateTotal, formatFee, priceFor } from '../lib/pricing';
 import { distanceKm, formatAway } from '../lib/distance';
-import { buildPlan, planMapsUrl } from '../lib/plan';
+import { buildPlan, explainPlan, planMapsUrl } from '../lib/plan';
 import { categoriesWithPlaces, hasCollectedData, visiblePlaces } from '../lib/places';
 
 const all = places as unknown as Place[];
@@ -131,4 +131,13 @@ test('plan opens as one Maps route through all stops', () => {
   expect(url).toContain('origin=');
   expect(url).toContain('destination=');
   expect(decodeURIComponent(url).split('waypoints=')[1].split('|').length).toBe(plan.length - 2);
+});
+
+test('plan explains why: open that day, nearest chain, start point', () => {
+  const all = (places as unknown as Place[]).filter(hasCollectedData);
+  const plan = buildPlan(all, 1, null);
+  const why = explainPlan(all, 1, null, plan)!;
+  expect(why.openCount).toBeGreaterThan(plan.length);
+  expect(why.startReason).toContain(plan[0].place.name);
+  expect(explainPlan(all, 1, { lat: 28.6, lng: 77.2 }, plan)!.startReason).toContain('nearest to your location');
 });

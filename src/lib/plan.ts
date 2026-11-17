@@ -37,3 +37,16 @@ export function planMapsUrl(stops: PlanStop[]): string | null {
   const q = `api=1&origin=${pt(first)}&destination=${pt(stops.length === 1 ? first : last)}&travelmode=driving${mid ? `&waypoints=${encodeURIComponent(mid)}` : ''}`;
   return `https://www.google.com/maps/dir/?${q}`;
 }
+
+export type PlanWhy = { openCount: number; unknownCount: number; startReason: string; maxLegKm: number };
+
+/** Plain-language reasons behind a plan, built from the same rules buildPlan uses. */
+export function explainPlan(places: Place[], day: number, loc: Coords | null, stops: PlanStop[], maxLegKm = 8): PlanWhy | null {
+  if (!stops.length) return null;
+  const open = places.filter((p) => p.closedDays !== null && !p.closedDays.includes(day));
+  const seed = stops[0].place;
+  const startReason = loc
+    ? `Starts at ${seed.name}, the open place nearest to your location.`
+    : `Starts at ${seed.name}, where the most places are close together (${nearCount(open, seed) - 1} others within 6 km).`;
+  return { openCount: open.length, unknownCount: places.filter((p) => p.closedDays === null).length, startReason, maxLegKm };
+}
