@@ -129,7 +129,7 @@
     "bookable": true,
     "source": "Delhi Tourism (official); travel sites",
     "verifiedNote": "Official source for prices and metro. Opening hours are not on the official page and come from travel sites.",
-    "photoCredit": null,
+    "photoCredit": "Slyronit · CC BY-SA 4.0",
     "lat": 28.6096,
     "lng": 77.2437,
     "metroUnverified": false
@@ -607,7 +607,7 @@
     "bookable": false,
     "source": "Delhi Tourism (official)",
     "verifiedNote": "Official source.",
-    "photoCredit": null,
+    "photoCredit": "Alessio · CC BY-SA 4.0",
     "lat": 28.627,
     "lng": 77.2166,
     "metroUnverified": false
@@ -671,7 +671,7 @@
     "bookable": false,
     "source": "YoMetro travel guide (not official)",
     "verifiedNote": "Checked 17 Nov 2026. Not confirmed by an official source.",
-    "photoCredit": null,
+    "photoCredit": "Rupeshsarkar · CC BY-SA 4.0",
     "lat": 28.6358,
     "lng": 77.24,
     "metroUnverified": true
@@ -791,7 +791,7 @@
     "bookable": false,
     "source": "YoMetro travel guide (not official)",
     "verifiedNote": "Checked 17 Nov 2026. Not confirmed by an official source.",
-    "photoCredit": null,
+    "photoCredit": "Nehasinha18 · CC BY-SA 4.0",
     "lat": 28.5886,
     "lng": 77.2423,
     "metroUnverified": true
@@ -1503,7 +1503,7 @@
     "bookable": false,
     "source": "YoMetro travel guide (not official)",
     "verifiedNote": "Checked 17 Nov 2026. Not confirmed by an official source.",
-    "photoCredit": null,
+    "photoCredit": "Rahul buddala · CC BY-SA 3.0",
     "lat": 28.569,
     "lng": 77.128,
     "metroUnverified": false
@@ -1713,7 +1713,7 @@
     "bookable": false,
     "source": "Delhi Tourism (official)",
     "verifiedNote": "Official source. Some other sites say the complex stays open until 8 PM.",
-    "photoCredit": null,
+    "photoCredit": "Shiprasarangi · CC BY-SA 4.0",
     "lat": 28.6127,
     "lng": 77.2773,
     "metroUnverified": false
@@ -1765,7 +1765,7 @@
     "bookable": false,
     "source": "Temple website (official)",
     "verifiedNote": "Official source.",
-    "photoCredit": null,
+    "photoCredit": "Goutam1962 · CC BY-SA 4.0",
     "lat": 28.5574,
     "lng": 77.2426,
     "metroUnverified": false
@@ -1947,7 +1947,7 @@
     "bookable": false,
     "source": "Delhi Tourism (official)",
     "verifiedNote": "Official source. The official page does not list days closed. Best to visit during morning and evening aarti.",
-    "photoCredit": null,
+    "photoCredit": "Goutam1962 · CC BY-SA 4.0",
     "lat": 28.6327,
     "lng": 77.1996,
     "metroUnverified": false

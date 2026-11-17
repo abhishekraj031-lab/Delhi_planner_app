@@ -21,8 +21,10 @@ export function PlanSheet({ visible, onClose, places, day, dayLabel, today, loc,
     <Sheet visible={visible} onClose={onClose} label="Plan my day">
       <View style={{ gap: 4 }}>
         <Txt w="bold" style={{ fontSize: 20 }}>Plan my day</Txt>
-        <Txt style={{ fontSize: 14, color: colors.sub }}>
-          {stops.length ? `${stops.length} places close to each other, open ${dayLabel.toLowerCase()}. About ${total < 1 ? 'under 1' : total.toFixed(1)} km between them.` : 'No places with known opening days yet.'}
+        <Txt style={{ fontSize: 14, lineHeight: 20, color: colors.sub }}>
+          {stops.length
+            ? `${stops[0].place.name} is the first stop because ${loc ? "it is the closest open place to your current location" : 'many other places are close to it'}. ${stops.length > 1 ? `The other ${stops.length - 1} ${stops.length - 1 === 1 ? 'place is' : 'places are'} connected one after another, so they are easy to visit together in one day (about ${total < 1 ? 'under 1' : total.toFixed(1)} km in total).` : ''}`
+            : 'No places with known opening days yet.'}
         </Txt>
       </View>
       {why ? (
