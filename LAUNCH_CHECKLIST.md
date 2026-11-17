@@ -28,3 +28,8 @@
 - [ ] Airplane mode (the app works offline; only maps/booking links need internet)
 - [ ] Small and large screens, large system font size
 - [ ] TestFlight and Play internal testing with a few people
+
+## Login (must do before launch)
+- [ ] Remove the demo login (`DEMO_LOGIN` in `src/config.ts`, the hint text in `LoginScreen.tsx`, `src/hooks/useAuth.ts` check). It is not secure
+- [ ] Add real sign-in: phone OTP + Google (+ Sign in with Apple, required by App Store rules when Google login is offered)
+- [ ] Add in-app "Delete my account" (required by both stores once accounts exist)

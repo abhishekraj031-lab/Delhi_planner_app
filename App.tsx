@@ -18,7 +18,9 @@ import { Chip, Txt } from './src/components/ui';
 import { PlaceCard } from './src/components/PlaceCard';
 import { PlaceSheet } from './src/components/PlaceSheet';
 import { TabBar, TabKey } from './src/components/TabBar';
-import { LoginRequired } from './src/components/LoginRequired';
+import { EmptyTab } from './src/components/LoginRequired';
+import { LoginScreen } from './src/components/LoginScreen';
+import { useAuth } from './src/hooks/useAuth';
 import { DAY_CHOICES, DayChoice, FilterSheet, LocationSheet } from './src/components/OptionSheets';
 
 const ICONS: Record<Category, React.ComponentType<{ size?: number; color?: string }>> = {
@@ -40,6 +42,7 @@ function Home() {
   const [showLocation, setShowLocation] = useState(false);
   const [tab, setTab] = useState<TabKey>('home');
   const [now, setNow] = useState(() => new Date());
+  const { user, ready: authReady, signIn, signOut } = useAuth();
   const { loc, state, requestCurrent, chooseArea } = useLocation();
 
   useEffect(() => {
@@ -70,16 +73,19 @@ function Home() {
   const openPlace = places.find((p) => p.id === openId) ?? null;
   const locLabel = state === 'asking' ? 'Finding your location…' : loc ? (loc.kind === 'gps' ? 'Near your current location' : `Near ${loc.label}`) : 'Location off. Choose an area';
 
-  const placeholders: Record<Exclude<TabKey, 'home'>, { title: string; hint: string }> = {
-    favourites: { title: 'Favourites', hint: 'Your saved places will show here after you log in.' },
-    bookings: { title: 'Bookings', hint: 'Your bookings will show here after you log in.' },
-    profile: { title: 'Profile', hint: 'Log in to manage your profile.' },
+  const tabs: Record<Exclude<TabKey, 'home'>, { title: string; hint: string; empty: string }> = {
+    favourites: { title: 'Favourites', hint: 'Log in to see your saved places.', empty: 'Nothing here yet.' },
+    bookings: { title: 'Bookings', hint: 'Log in to see your bookings.', empty: 'Nothing here yet.' },
+    profile: { title: 'Profile', hint: 'Log in to manage your profile.', empty: `Signed in as ${user?.name ?? ''}.` },
   };
   if (tab !== 'home') {
+    const t = tabs[tab];
     return (
       <View style={s.screen}>
         <StatusBar style="dark" />
-        <LoginRequired {...placeholders[tab]} />
+        {!authReady ? <View style={{ flex: 1 }} /> : user
+          ? <EmptyTab title={t.title} message={t.empty} onSignOut={tab === 'profile' ? signOut : undefined} />
+          : <LoginScreen title={t.title} hint={t.hint} onSignIn={signIn} />}
         <TabBar tab={tab} onChange={setTab} />
       </View>
     );
