@@ -3,7 +3,8 @@ export const SUPPORT_EMAIL = 'hello@example.com';
 export const PRIVACY_POLICY_URL = 'https://example.com/privacy';
 
 /**
- * DEMO LOGIN, for testing the signed-in screens only. It is NOT secure (anyone can read these
- * from the app). Replace with real phone OTP / Google sign-in and delete this before launch.
+ * DEMO LOGIN, for testing the signed-in screens only. There is no server yet, so no code is really sent
+ * and any phone number or email is accepted with this fixed code. Replace with real phone OTP / Google
+ * email verification and delete this before launch.
  */
-export const DEMO_LOGIN = { id: 'demo', password: 'demo1234', name: 'Demo User' };
+export const DEMO_OTP = '123456';

@@ -110,8 +110,8 @@ function Home() {
     if (pendingSave?.reopen) setOpenId(pendingSave.reopen);
     setPendingSave(null);
   };
-  const signInThenSave = async (id: string, pw: string) => {
-    const ok = await signIn(id, pw);
+  const signInThenSave = async (id: string, code: string) => {
+    const ok = await signIn(id, code);
     if (ok && pendingSave) {
       saveMany(pendingSave.ids);
       if (pendingSave.reopen) setOpenId(pendingSave.reopen);

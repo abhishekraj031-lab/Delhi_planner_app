@@ -30,8 +30,8 @@
 - [ ] TestFlight and Play internal testing with a few people
 
 ## Login (must do before launch)
-- [ ] Remove the demo login (`DEMO_LOGIN` in `src/config.ts`, the hint text in `LoginScreen.tsx`, `src/hooks/useAuth.ts` check). It is not secure
-- [ ] Add real sign-in: phone OTP + Google (+ Sign in with Apple, required by App Store rules when Google login is offered)
+- [ ] Remove the demo login (`DEMO_OTP` in `src/config.ts`, the "Demo only" hint lines in `LoginScreen.tsx`, the code check in `src/hooks/useAuth.ts`). Right now any phone or email is accepted with code 123456 and nothing is really sent
+- [ ] Add real sign-in: SMS OTP for phone, and Google sign-in with email verification code (+ Sign in with Apple, required by App Store rules when Google login is offered). No passwords
 - [ ] Add in-app "Delete my account" (required by both stores once accounts exist)
 
 ## Photos (to do)

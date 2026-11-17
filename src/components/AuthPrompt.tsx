@@ -6,7 +6,7 @@ import { colors } from '../theme';
 import { LoginScreen } from './LoginScreen';
 
 /** Full-screen login shown when someone tries to save a place while logged out. */
-export function AuthPrompt({ visible, onClose, onSignIn }: { visible: boolean; onClose: () => void; onSignIn: (id: string, pw: string) => Promise<boolean> }) {
+export function AuthPrompt({ visible, onClose, onSignIn }: { visible: boolean; onClose: () => void; onSignIn: (id: string, code: string) => Promise<boolean> }) {
   const insets = useSafeAreaInsets();
   return (
     <Modal visible={visible} animationType="slide" onRequestClose={onClose} statusBarTranslucent>

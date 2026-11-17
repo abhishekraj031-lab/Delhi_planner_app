@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { DEMO_LOGIN } from '../config';
+import { DEMO_OTP } from '../config';
 import { loadJSON, saveJSON } from '../lib/storage';
 
 const KEY = 'demo-auth-v1';
@@ -13,9 +13,10 @@ export function useAuth() {
     loadJSON<{ name: string } | null>(KEY, null).then((u) => { setUser(u); setReady(true); });
   }, []);
 
-  const signIn = useCallback(async (id: string, password: string): Promise<boolean> => {
-    if (id.trim().toLowerCase() === DEMO_LOGIN.id && password === DEMO_LOGIN.password) {
-      const u = { name: DEMO_LOGIN.name };
+  /** `id` is the verified phone number or email; `code` is the one-time code sent to it. */
+  const signIn = useCallback(async (id: string, code: string): Promise<boolean> => {
+    if (code === DEMO_OTP) {
+      const u = { name: id };
       setUser(u); await saveJSON(KEY, u);
       return true;
     }
