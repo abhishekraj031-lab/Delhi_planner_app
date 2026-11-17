@@ -2,7 +2,7 @@ import type { Category, Coords, Place } from '../types';
 import { distanceKm } from './distance';
 import { priceFor } from './pricing';
 
-export const CATEGORIES: Category[] = ['Monuments', 'Modern Landmarks', 'Museums', 'Religious & spiritual', 'Gardens & Parks', 'Markets & Food', 'Entertainment'];
+export const CATEGORIES: Category[] = ['Monuments', 'Modern Landmarks', 'Museums', 'Religious & spiritual', 'Gardens & Parks'];
 /** Tabs are shown only for categories that currently have places. */
 export const categoriesWithPlaces = (places: Place[]) => CATEGORIES.filter((c) => places.some((p) => p.category === c));
 /**
