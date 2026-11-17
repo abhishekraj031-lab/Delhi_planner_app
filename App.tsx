@@ -10,7 +10,7 @@ import { Figtree_700Bold } from '@expo-google-fonts/figtree/700Bold';
 import { FadeSlide } from './src/components/motion';
 import { PlanSheet } from './src/components/PlanSheet';
 import { distanceKm } from './src/lib/distance';
-import { Church, Dome, FerrisWheel, Landmark, Lighthouse, Heart, MapPin, Route, Search, ShoppingBag, SlidersHorizontal, Ticket, Trees } from 'lucide-react-native';
+import { Church, Dome, FerrisWheel, Landmark, Lighthouse, Heart, MapPin, Search, ShoppingBag, SlidersHorizontal, Ticket, Trees } from 'lucide-react-native';
 import type { Category, Place } from './src/types';
 import { colors, font } from './src/theme';
 import { loadPlaces } from './src/data/repository';
@@ -124,7 +124,7 @@ function Home() {
       <View style={s.screen}>
         <StatusBar style="dark" />
         <FadeSlide k={`${tab}-${!user && loginOpen}`} style={{ flex: 1 }}>{body}</FadeSlide>
-        <TabBar key="tabbar" tab={tab} onChange={changeTab} />
+        <TabBar key="tabbar" tab={tab} onChange={changeTab} onPlan={() => { changeTab('home'); setShowPlan(true); }} />
       </View>
     );
   }
@@ -140,10 +140,6 @@ function Home() {
             <Txt style={{ color: colors.sub, fontSize: 13 }}>{locLabel}</Txt>
           </Pressable>
         </View>
-        <Pressable onPress={() => setShowPlan(true)} accessibilityRole="button" accessibilityLabel="Plan my day" style={({ pressed }) => [s.plan, { opacity: pressed ? 0.7 : 1 }]}>
-          <Route size={18} color={colors.ink} />
-          <Txt w="semi" style={{ fontSize: 14 }}>Plan my day</Txt>
-        </Pressable>
       </View>
       <View style={s.searchRow}>
         <View style={s.search}>
@@ -175,7 +171,7 @@ function Home() {
         )} />
       </FadeSlide>
       </FadeSlide>
-      <TabBar key="tabbar" tab={tab} onChange={setTab} />
+      <TabBar key="tabbar" tab={tab} onChange={setTab} onPlan={() => setShowPlan(true)} />
       <PlaceDetail place={openPlace} km={openKm} day={day} today={today} saved={openId ? saved.has(openId) : false} nearby={nearby} onOpenPlace={setOpenId}
         onClose={() => setOpenId(null)} onToggleSave={() => openId && toggleSave(openId)} />
       <PlanSheet visible={showPlan} onClose={() => setShowPlan(false)} places={places} day={day} dayLabel={choice.label} today={today} loc={loc} onOpenPlace={setOpenId} />
