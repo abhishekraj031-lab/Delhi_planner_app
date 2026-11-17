@@ -34,7 +34,7 @@ function PlaceCardBase({ place, km, day, today, saved, onOpen, onToggleSave }: P
   return (
     <Pressable onPress={onOpen} accessibilityRole="button" accessibilityLabel={`${place.name}. ${s.text}`} style={st.card}>
       <View>
-        <PlaceVisual place={place} height={224} radius={{ borderRadius: 20 }} />
+        <PlaceVisual place={place} height={176} radius={{ borderRadius: 20 }} />
         <View style={st.badge}>
           <Txt w="semi" style={{ fontSize: 12, color: s.muted ? colors.sub : colors.ink }}>{s.text}</Txt>
           {s.unverified ? <Unverified /> : null}
@@ -45,18 +45,20 @@ function PlaceCardBase({ place, km, day, today, saved, onOpen, onToggleSave }: P
         </Pressable>
       </View>
       <View style={st.text}>
-        <Txt w="semi" style={{ fontSize: 16, lineHeight: 22 }} numberOfLines={1}>{place.name}</Txt>
-        <Txt style={st.grey} numberOfLines={1}>{areaLabel(place)}{km != null ? ` · ${formatAway(km)} away` : ''}</Txt>
-        <Txt style={[st.grey, !metro && { fontStyle: 'italic' }]} numberOfLines={1}>{metro ? `Near ${metro} metro` : 'Metro not available'}</Txt>
-        <View style={st.feeRow}>
+        <View style={st.titleRow}>
+          <Txt w="semi" style={{ fontSize: 16, lineHeight: 22, flex: 1 }} numberOfLines={1}>{place.name}</Txt>
           {fee ? (
-            <>
-              <Txt w="semi" style={{ fontSize: 15 }}>{fee === 'Free' ? 'Free entry' : fee}</Txt>
-              {fee !== 'Free' ? <Txt style={{ fontSize: 15 }}> entry fee</Txt> : null}
+            <View style={[st.fee, fee === 'Free' && st.feeFree]}>
+              {fee === 'Free'
+                ? <Txt w="bold" style={{ fontSize: 15, color: '#166534' }}>Free entry</Txt>
+                : <><Txt w="bold" style={{ fontSize: 17, color: '#1d5fc4' }}>{fee}</Txt><Txt style={{ fontSize: 12, color: '#1d5fc4' }}> entry fee</Txt></>}
               {place.price.unverified ? <Unverified /> : null}
-            </>
-          ) : <Txt style={[st.grey, { fontStyle: 'italic' }]}>Fee not available</Txt>}
+            </View>
+          ) : <View style={st.feeNone}><Txt style={{ fontSize: 12, color: colors.sub }}>Fee not available</Txt></View>}
         </View>
+        <Txt style={st.grey} numberOfLines={1}>
+          {[place.area, km != null ? formatAway(km) : null, metro ? `${metro} metro` : null].filter(Boolean).join(' · ')}
+        </Txt>
       </View>
     </Pressable>
   );
@@ -64,10 +66,13 @@ function PlaceCardBase({ place, km, day, today, saved, onOpen, onToggleSave }: P
 export const PlaceCard = React.memo(PlaceCardBase);
 
 const st = StyleSheet.create({
-  card: { marginHorizontal: 16, marginTop: 24 },
+  card: { marginHorizontal: 16, marginTop: 16 },
   heart: { position: 'absolute', top: 12, right: 12 },
   badge: { position: 'absolute', top: 12, left: 12, flexDirection: 'row', alignItems: 'center', maxWidth: '75%', minHeight: 28, paddingHorizontal: 12, paddingVertical: 4, borderRadius: 14, backgroundColor: colors.white, shadowColor: '#000', shadowOpacity: 0.12, shadowRadius: 4, shadowOffset: { width: 0, height: 1 }, elevation: 2 },
-  text: { marginTop: 10, gap: 1 },
+  text: { marginTop: 8, gap: 2 },
+  titleRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  fee: { flexDirection: 'row', minHeight: 32, paddingHorizontal: 10, borderRadius: 16, backgroundColor: '#e8f0fe', alignItems: 'center' },
+  feeFree: { backgroundColor: '#dcfce7' },
+  feeNone: { minHeight: 32, paddingHorizontal: 10, borderRadius: 16, backgroundColor: colors.fill, justifyContent: 'center' },
   grey: { color: colors.sub, fontSize: 14, lineHeight: 20 },
-  feeRow: { flexDirection: 'row', alignItems: 'center', marginTop: 3 },
 });
