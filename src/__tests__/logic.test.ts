@@ -3,7 +3,7 @@ import type { Place } from '../types';
 import { getStatus } from '../lib/status';
 import { estimateTotal, formatFee, priceFor } from '../lib/pricing';
 import { distanceKm, formatAway } from '../lib/distance';
-import { categoriesWithPlaces, visiblePlaces } from '../lib/places';
+import { categoriesWithPlaces, hasCollectedData, visiblePlaces } from '../lib/places';
 
 const all = places as unknown as Place[];
 const find = (id: string) => all.find((p) => p.id === id) as Place;
@@ -108,6 +108,9 @@ describe('filters and search', () => {
   });
 });
 
-test('every category has places, so all tabs show', () => {
-  expect(categoriesWithPlaces(places as unknown as Place[]).length).toBe(7);
+test('places without collected data are hidden, tabs follow the rest', () => {
+  const shown = (places as unknown as Place[]).filter(hasCollectedData);
+  expect(shown.length).toBe(28);
+  expect(shown.every((p) => p.source !== 'Not collected yet')).toBe(true);
+  expect(categoriesWithPlaces(shown).length).toBe(5);
 });

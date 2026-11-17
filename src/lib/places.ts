@@ -5,6 +5,8 @@ import { priceFor } from './pricing';
 export const CATEGORIES: Category[] = ['Monuments', 'Modern Landmarks', 'Museums', 'Religious & spiritual', 'Gardens & Parks', 'Markets & Food', 'Entertainment'];
 /** Tabs are shown only for categories that currently have places. */
 export const categoriesWithPlaces = (places: Place[]) => CATEGORIES.filter((c) => places.some((p) => p.category === c));
+/** Places with no collected data are held back until their details are added. */
+export const hasCollectedData = (p: Place) => p.source !== 'Not collected yet';
 export type Filters = { category: Category | 'All'; query: string; freeOnly: boolean; savedOnly: boolean; day: number };
 
 /** Search is global: when a query is typed, the category filter is ignored. */
