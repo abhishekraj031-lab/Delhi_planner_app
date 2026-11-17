@@ -1,3491 +1,3566 @@
 [
- {
-  "id": "rf",
-  "name": "Lal Qila (Red Fort)",
-  "area": "Chandni Chowk",
-  "category": "Monuments",
-  "emoji": "🏰",
-  "color": "#f6c9a8",
-  "closedDays": [],
-  "hours": [
-   360,
-   1260
-  ],
-  "hoursText": "Sunrise – 9:00 PM",
-  "hoursUnverified": true,
-  "price": {
-   "weekday": {
-    "i": 35,
-    "f": 550
-   },
-   "weekend": {
-    "i": 35,
-    "f": 550
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Indian (online)",
-    "value": "₹35",
-    "unverified": true
-   },
-   {
-    "label": "SAARC & BIMSTEC visitors",
-    "value": "₹50 (₹35 online)",
-    "unverified": false
-   },
-   {
-    "label": "Other foreign visitors",
-    "value": "₹600 (₹550 online)",
-    "unverified": false
-   },
-   {
-    "label": "Children under 15",
-    "value": "Free",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Entry to some halls",
-    "value": "Restricted"
-   },
-   {
-    "label": "Everything else",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": "Six structures inside, including Diwan-i-Khas and Sheesh Mahal, are closed to visitors.",
-  "partialNoteByDay": {},
-  "metro": "Lal Qila (Violet Line)",
-  "duration": "2–3 hrs",
-  "description": "17th-century Mughal fort and a UNESCO World Heritage Site in Old Delhi.",
-  "bookUrl": null,
-  "bookable": true,
-  "source": "News report of an ASI order, Feb 2026",
-  "verifiedNote": "Hours conflict across sites",
-  "photoCredit": null,
-  "lat": 28.6562,
-  "lng": 77.241,
-  "metroUnverified": false
- },
- {
-  "id": "pq",
-  "name": "Purana Qila",
-  "area": "Central Delhi",
-  "category": "Monuments",
-  "emoji": "🏯",
-  "color": "#f7e2b5",
-  "closedDays": [],
-  "hours": [
-   420,
-   1020
-  ],
-  "hoursText": "7:00 AM – 5:00 PM",
-  "hoursUnverified": true,
-  "price": {
-   "weekday": {
-    "i": 30,
-    "f": 300
-   },
-   "weekend": {
-    "i": 30,
-    "f": 300
-   },
-   "unverified": true
-  },
-  "tickets": [
-   {
-    "label": "Indian",
-    "value": "₹30",
-    "unverified": true
-   },
-   {
-    "label": "Foreign visitors",
-    "value": "₹300",
-    "unverified": true
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {
-   "5": "The site museum is closed on Fridays."
-  },
-  "metro": "Indraprastha (1.4 km)",
-  "duration": "2 hrs",
-  "description": "A 16th-century fort opposite Pragati Maidan, begun under Humayun and extended by Sher Shah Suri. It is known for its red sandstone walls and gateways.",
-  "bookUrl": null,
-  "bookable": true,
-  "source": "Travel sites, no official source found; YoMetro travel guide (not official)",
-  "verifiedNote": "Prices conflict. Most common value shown.",
-  "photoCredit": null,
-  "lat": 28.6096,
-  "lng": 77.2437,
-  "metroUnverified": true
- },
- {
-  "id": "humayun-s-tomb",
-  "name": "Humayun’s Tomb",
-  "area": "Nizamuddin",
-  "category": "Monuments",
-  "emoji": "🕌",
-  "color": "#f6c9a8",
-  "closedDays": [],
-  "hours": [
-   360,
-   1080
-  ],
-  "hoursText": "6:00 AM – 6:00 PM",
-  "hoursUnverified": true,
-  "price": {
-   "weekday": {
-    "i": 35,
-    "f": 550
-   },
-   "weekend": {
-    "i": 35,
-    "f": 550
-   },
-   "unverified": true
-  },
-  "tickets": [
-   {
-    "label": "Indian (online)",
-    "value": "₹35",
-    "unverified": true
-   },
-   {
-    "label": "Foreign (online)",
-    "value": "₹550",
-    "unverified": true
-   },
-   {
-    "label": "Online discount",
-    "value": "₹5 Indian, ₹50 foreign",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": "JLN Stadium (2 km)",
-  "duration": null,
-  "description": "A red sandstone Mughal tomb built between 1565 and 1572, considered the first garden tomb in India. It became a UNESCO World Heritage Site in 1993.",
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Travel guides; YoMetro travel guide (not official)",
-  "verifiedNote": "Hours and prices differ across sources.",
-  "photoCredit": "Anupam Calcutta · CC BY-SA 4.0",
-  "lat": 28.5933,
-  "lng": 77.2507,
-  "metroUnverified": true
- },
- {
-  "id": "qutub-minar",
-  "name": "Qutub Minar",
-  "area": "Mehrauli",
-  "category": "Monuments",
-  "emoji": "🗼",
-  "color": "#f6c9a8",
-  "closedDays": [],
-  "hours": [
-   420,
-   1260
-  ],
-  "hoursText": "7:00 AM – 9:00 PM",
-  "hoursUnverified": true,
-  "price": {
-   "weekday": {
-    "i": 35,
-    "f": 550
-   },
-   "weekend": {
-    "i": 35,
-    "f": 550
-   },
-   "unverified": true
-  },
-  "tickets": [
-   {
-    "label": "Indian (online / counter)",
-    "value": "₹35 / ₹40",
-    "unverified": true
-   },
-   {
-    "label": "Foreign (online / counter)",
-    "value": "₹550 / ₹600",
-    "unverified": true
-   },
-   {
-    "label": "Children under 15",
-    "value": "Free",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Tripods",
-    "value": "Not allowed"
-   },
-   {
-    "label": "Food",
-    "value": "Water only"
-   }
-  ],
-  "partialNote": "Parts of the complex are closed for repairs (ASI report, Sept 2026).",
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": "A 72.5 m tower of red and buff sandstone begun in 1199 as a call-to-prayer tower. It is the tallest tower in India, and each storey has a balcony with honeycomb-patterned brackets.",
-  "bookUrl": null,
-  "bookable": true,
-  "source": "Travel sites and a news report on restricted areas; ASI (official)",
-  "verifiedNote": "Hours and prices differ across sources.",
-  "photoCredit": "Akbarzoda · CC BY-SA 4.0",
-  "lat": 28.5245,
-  "lng": 77.1855,
-  "metroUnverified": false
- },
- {
-  "id": "mehrauli-archaeological-park",
-  "name": "Mehrauli Archaeological Park",
-  "area": "Mehrauli",
-  "category": "Monuments",
-  "emoji": "🏛️",
-  "color": "#f6c9a8",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": "Varun Shiv Kapur from New Delhi, India · CC BY 2.0",
-  "lat": 28.5195,
-  "lng": 77.184,
-  "metroUnverified": false
- },
- {
-  "id": "safdarjung-tomb",
-  "name": "Safdarjung Tomb",
-  "area": "South Delhi",
-  "category": "Monuments",
-  "emoji": "🕌",
-  "color": "#f6c9a8",
-  "closedDays": [],
-  "hours": [
-   360,
-   1080
-  ],
-  "hoursText": "Sunrise – Sunset",
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": 25,
-    "f": 300
-   },
-   "weekend": {
-    "i": 25,
-    "f": 300
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Indian",
-    "value": "₹25",
-    "unverified": false
-   },
-   {
-    "label": "Foreign visitors",
-    "value": "₹300",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": "The mosque and cells are under repair.",
-  "partialNoteByDay": {},
-  "metro": "Jor Bagh (457 m)",
-  "duration": null,
-  "description": "A late Mughal garden tomb built around 1754 for Nawab Safdarjung, with a charbagh garden, a central dome and red sandstone and marble work.",
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Delhi Tourism (official); YoMetro travel guide (not official)",
-  "verifiedNote": "Official source. Older, lower prices still appear on other sites.",
-  "photoCredit": "Dey.sandip · CC BY-SA 4.0",
-  "lat": 28.5897,
-  "lng": 77.2108,
-  "metroUnverified": true
- },
- {
-  "id": "tughlaqabad-fort",
-  "name": "Tughlaqabad Fort",
-  "area": "South Delhi",
-  "category": "Monuments",
-  "emoji": "🏰",
-  "color": "#f6c9a8",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": "Shannon.Mathew · CC BY-SA 3.0",
-  "lat": 28.5126,
-  "lng": 77.261,
-  "metroUnverified": false
- },
- {
-  "id": "hauz-khas-fort",
-  "name": "Hauz Khas Fort",
-  "area": "Hauz Khas",
-  "category": "Monuments",
-  "emoji": "🏯",
-  "color": "#f6c9a8",
-  "closedDays": [],
-  "hours": [
-   630,
-   1140
-  ],
-  "hoursText": "10:30 AM – 7:00 PM",
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": 20,
-    "f": 250
-   },
-   "weekend": {
-    "i": 20,
-    "f": 250
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Indian",
-    "value": "₹20",
-    "unverified": false
-   },
-   {
-    "label": "Foreign visitors",
-    "value": "₹250",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": "Parts are restricted while repairs are underway.",
-  "partialNoteByDay": {},
-  "metro": "IIT (334 m)",
-  "duration": null,
-  "description": "A 13th-century Delhi Sultanate complex with a royal water tank, a mosque, a tomb and a seminary, set among parks in South Delhi.",
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Delhi Tourism (official); YoMetro travel guide (not official)",
-  "verifiedNote": "Official source. Some sites say it is closed on Sundays.",
-  "photoCredit": "Varun Shiv Kapur from New Delhi, India · CC BY 2.0",
-  "lat": 28.5494,
-  "lng": 77.1943,
-  "metroUnverified": true
- },
- {
-  "id": "agrasen-ki-baoli",
-  "name": "Agrasen ki Baoli",
-  "area": "Connaught Place",
-  "category": "Monuments",
-  "emoji": "🏛️",
-  "color": "#f6c9a8",
-  "closedDays": [],
-  "hours": [
-   540,
-   1050
-  ],
-  "hoursText": "9:00 AM – 5:30 PM",
-  "hoursUnverified": true,
-  "price": {
-   "weekday": {
-    "i": 0,
-    "f": 0
-   },
-   "weekend": {
-    "i": 0,
-    "f": 0
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Entry",
-    "value": "Free",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": "Parts are restricted while repairs are underway.",
-  "partialNoteByDay": {},
-  "metro": "Barakhamba Road (188 m)",
-  "duration": null,
-  "description": "A historic stepwell near Jantar Mantar, traditionally linked to Maharaja Agrasen. Its tiered steps and arched niches once held water and gave visitors a cool place to rest.",
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Travel sites; YoMetro travel guide (not official)",
-  "verifiedNote": "Opening hours differ across sources.",
-  "photoCredit": "Indrajit Das · CC BY-SA 4.0",
-  "lat": 28.6265,
-  "lng": 77.2252,
-  "metroUnverified": true
- },
- {
-  "id": "jantar-mantar",
-  "name": "Jantar Mantar",
-  "area": "Connaught Place",
-  "category": "Monuments",
-  "emoji": "🧭",
-  "color": "#f6c9a8",
-  "closedDays": [],
-  "hours": [
-   360,
-   1080
-  ],
-  "hoursText": "Sunrise – Sunset",
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": 25,
-    "f": 300
-   },
-   "weekend": {
-    "i": 25,
-    "f": 300
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Indian",
-    "value": "₹25",
-    "unverified": false
-   },
-   {
-    "label": "Foreign visitors",
-    "value": "₹300",
-    "unverified": false
-   },
-   {
-    "label": "Video filming",
-    "value": "₹25 extra",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": "Parts are restricted while repairs are underway.",
-  "partialNoteByDay": {},
-  "metro": "Shivaji Stadium (177 m)",
-  "duration": null,
-  "description": "An observatory built in 1724 by Maharaja Sawai Jai Singh II, with large stone instruments such as the Samrat Yantra sundial for tracking time and the stars.",
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Delhi Tourism (official); YoMetro travel guide (not official)",
-  "verifiedNote": "Official source. Lower prices still appear on other sites.",
-  "photoCredit": null,
-  "lat": 28.627,
-  "lng": 77.2166,
-  "metroUnverified": true
- },
- {
-  "id": "feroz-shah-kotla",
-  "name": "Feroz Shah Kotla",
-  "area": "Central Delhi",
-  "category": "Monuments",
-  "emoji": "🏛️",
-  "color": "#f6c9a8",
-  "closedDays": [
-   1
-  ],
-  "hours": [
-   510,
-   1140
-  ],
-  "hoursText": "8:30 AM – 7:00 PM",
-  "hoursUnverified": true,
-  "price": {
-   "weekday": {
-    "i": 5,
-    "f": 100
-   },
-   "weekend": {
-    "i": 5,
-    "f": 100
-   },
-   "unverified": true
-  },
-  "tickets": [
-   {
-    "label": "Indian & SAARC visitors",
-    "value": "₹5",
-    "unverified": true
-   },
-   {
-    "label": "Foreign visitors",
-    "value": "₹100",
-    "unverified": true
-   },
-   {
-    "label": "Children up to 15",
-    "value": "Free",
-    "unverified": true
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": "Delhi Gate (202 m)",
-  "duration": null,
-  "description": "A 14th-century Tughlaq-era fort with thick walls, bastions, a mosque, a tomb and a stepwell. An Ashokan pillar brought from Haryana stands inside.",
-  "bookUrl": null,
-  "bookable": false,
-  "source": "YoMetro travel guide (not official)",
-  "verifiedNote": "Checked 17 Nov 2026. Not confirmed by an official source.",
-  "photoCredit": null,
-  "lat": 28.6358,
-  "lng": 77.24,
-  "metroUnverified": true
- },
- {
-  "id": "lodhi-garden-tombs",
-  "name": "Lodhi Garden tombs",
-  "area": "Lodhi Road",
-  "category": "Monuments",
-  "emoji": "🕌",
-  "color": "#f6c9a8",
-  "closedDays": [],
-  "hours": [
-   360,
-   1200
-  ],
-  "hoursText": "6:00 AM – 8:00 PM (winter). Opens at 5:00 AM in summer.",
-  "hoursUnverified": true,
-  "price": {
-   "weekday": {
-    "i": 0,
-    "f": 0
-   },
-   "weekend": {
-    "i": 0,
-    "f": 0
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Entry",
-    "value": "Free",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Smoking, alcohol and drugs",
-    "value": "Not allowed"
-   },
-   {
-    "label": "Food",
-    "value": "Allowed"
-   },
-   {
-    "label": "Professional shoots",
-    "value": "Permission needed"
-   },
-   {
-    "label": "Pets",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Travel sites",
-  "verifiedNote": "Timings vary by season. Pet rules conflict across sources.",
-  "photoCredit": "Amaninder · CC BY-SA 3.0",
-  "lat": 28.5931,
-  "lng": 77.2197,
-  "metroUnverified": false
- },
- {
-  "id": "hazrat-nizamuddin-dargah",
-  "name": "Hazrat Nizamuddin Dargah",
-  "area": "Nizamuddin",
-  "category": "Monuments",
-  "emoji": "🕌",
-  "color": "#f6c9a8",
-  "closedDays": [],
-  "hours": [
-   300,
-   1320
-  ],
-  "hoursText": "5:00 AM – 10:00 PM",
-  "hoursUnverified": true,
-  "price": {
-   "weekday": {
-    "i": 0,
-    "f": 0
-   },
-   "weekend": {
-    "i": 0,
-    "f": 0
-   },
-   "unverified": true
-  },
-  "tickets": [
-   {
-    "label": "All visitors",
-    "value": "Free",
-    "unverified": true
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": "Jangpura (796 m)",
-  "duration": null,
-  "description": "A Sufi shrine honouring the 14th-century saint Nizamuddin Auliya and his disciple Amir Khusro. Qawwali sessions on Thursdays draw large crowds.",
-  "bookUrl": null,
-  "bookable": false,
-  "source": "YoMetro travel guide (not official)",
-  "verifiedNote": "Checked 17 Nov 2026. Not confirmed by an official source.",
-  "photoCredit": null,
-  "lat": 28.5886,
-  "lng": 77.2423,
-  "metroUnverified": true
- },
- {
-  "id": "ig",
-  "name": "India Gate",
-  "area": "Kartavya Path",
-  "category": "Modern Landmarks",
-  "emoji": "🏛️",
-  "color": "#ffd9a0",
-  "closedDays": [],
-  "hours": [
-   0,
-   1440
-  ],
-  "hoursText": "Open 24 hours",
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": 0,
-    "f": 0
-   },
-   "weekend": {
-    "i": 0,
-    "f": 0
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "All visitors",
-    "value": "Free",
-    "unverified": false
-   },
-   {
-    "label": "National War Memorial",
-    "value": "Free, ID proof needed",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Vehicles on Kartavya Path",
-    "value": "Closed during Republic Day events"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": "1–2 hrs",
-  "description": "War memorial at the heart of the ceremonial avenue, lit up at night.",
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Travel guides, two sources agree",
-  "verifiedNote": "Checked Nov 2026",
-  "photoCredit": null,
-  "lat": 28.6129,
-  "lng": 77.2295,
-  "metroUnverified": false
- },
- {
-  "id": "national-war-memorial",
-  "name": "National War Memorial",
-  "area": "Central Delhi",
-  "category": "Modern Landmarks",
-  "emoji": "🇮🇳",
-  "color": "#ffd9a0",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": 0,
-    "f": 0
-   },
-   "weekend": {
-    "i": 0,
-    "f": 0
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Entry",
-    "value": "Free, ID proof needed",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Travel guides",
-  "verifiedNote": "Opening hours not collected yet.",
-  "photoCredit": null,
-  "lat": 28.6118,
-  "lng": 77.2336,
-  "metroUnverified": false
- },
- {
-  "id": "rashtrapati-bhavan-and-amrit-udyan",
-  "name": "Rashtrapati Bhavan and Amrit Udyan",
-  "area": "Central Delhi",
-  "category": "Modern Landmarks",
-  "emoji": "🇮🇳",
-  "color": "#ffd9a0",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": "The garden is open seasonally.",
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": null,
-  "lat": 28.6143,
-  "lng": 77.1995,
-  "metroUnverified": false
- },
- {
-  "id": "raj-ghat",
-  "name": "Raj Ghat",
-  "area": "Central Delhi",
-  "category": "Modern Landmarks",
-  "emoji": "🕊️",
-  "color": "#ffd9a0",
-  "closedDays": [],
-  "hours": [
-   390,
-   1080
-  ],
-  "hoursText": "6:30 AM – 6:00 PM",
-  "hoursUnverified": true,
-  "price": {
-   "weekday": {
-    "i": 0,
-    "f": 0
-   },
-   "weekend": {
-    "i": 0,
-    "f": 0
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Entry",
-    "value": "Free",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Footwear",
-    "value": "Remove near the memorial platform"
-   },
-   {
-    "label": "Photography",
-    "value": "Not allowed near the main platform"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Travel sites",
-  "verifiedNote": "Opening hours differ across sources.",
-  "photoCredit": "Humayunn Niaz Ahmed Peerzaada from Mumbai, India · CC BY-SA 2.0",
-  "lat": 28.6406,
-  "lng": 77.2495,
-  "metroUnverified": false
- },
- {
-  "id": "gandhi-smriti",
-  "name": "Gandhi Smriti",
-  "area": "Tees January Marg",
-  "category": "Modern Landmarks",
-  "emoji": "🕊️",
-  "color": "#ffd9a0",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": null,
-  "lat": 28.6008,
-  "lng": 77.215,
-  "metroUnverified": false
- },
- {
-  "id": "rm",
-  "name": "National Rail Museum",
-  "area": "Chanakyapuri",
-  "category": "Museums",
-  "emoji": "🚂",
-  "color": "#e8d9ff",
-  "closedDays": [
-   1
-  ],
-  "hours": [
-   600,
-   1020
-  ],
-  "hoursText": "10:00 AM – 5:00 PM (last entry 4:30)",
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": 50,
-    "f": null
-   },
-   "weekend": {
-    "i": 100,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Weekdays: adult / child",
-    "value": "₹50 / ₹10",
-    "unverified": false
-   },
-   {
-    "label": "Weekends and holidays: adult / child",
-    "value": "₹100 / ₹20",
-    "unverified": false
-   },
-   {
-    "label": "Foreign visitors",
-    "value": "Not available",
-    "unverified": false
-   },
-   {
-    "label": "Rides",
-    "value": "Extra, prices vary",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": "2–3 hrs",
-  "description": "Heritage locomotives, coaches and a monorail, with a toy train for children.",
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Several travel and railway sites agree",
-  "verifiedNote": "No official page found",
-  "photoCredit": "Bruno Corpet (Quoique) · CC BY-SA 3.0",
-  "lat": 28.5836,
-  "lng": 77.1805,
-  "metroUnverified": false
- },
- {
-  "id": "national-museum",
-  "name": "National Museum",
-  "area": "Janpath",
-  "category": "Museums",
-  "emoji": "🏺",
-  "color": "#e8d9ff",
-  "closedDays": [
-   1
-  ],
-  "hours": [
-   600,
-   1080
-  ],
-  "hoursText": "10:00 AM – 6:00 PM",
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": 20,
-    "f": 500
-   },
-   "weekend": {
-    "i": 20,
-    "f": 500
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Adults (Indian)",
-    "value": "₹20",
-    "unverified": false
-   },
-   {
-    "label": "Foreign visitors",
-    "value": "₹500",
-    "unverified": false
-   },
-   {
-    "label": "Students up to Class 12",
-    "value": "Free",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "National Museum (official)",
-  "verifiedNote": "Official source. One site says weekends run to 8 PM, not confirmed.",
-  "photoCredit": "Miya.m · CC BY-SA 3.0",
-  "lat": 28.6117,
-  "lng": 77.2196,
-  "metroUnverified": false
- },
- {
-  "id": "national-gallery-of-modern-art",
-  "name": "National Gallery of Modern Art",
-  "area": "Near India Gate",
-  "category": "Museums",
-  "emoji": "🖼️",
-  "color": "#e8d9ff",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": null,
-  "lat": 28.6119,
-  "lng": 77.2342,
-  "metroUnverified": false
- },
- {
-  "id": "pm-sangrahalaya-teen-murti-",
-  "name": "PM Sangrahalaya (Teen Murti)",
-  "area": "Central Delhi",
-  "category": "Museums",
-  "emoji": "🏺",
-  "color": "#e8d9ff",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": null,
-  "lat": 28.6006,
-  "lng": 77.1967,
-  "metroUnverified": false
- },
- {
-  "id": "crafts-museum",
-  "name": "Crafts Museum",
-  "area": "Pragati Maidan",
-  "category": "Museums",
-  "emoji": "🏺",
-  "color": "#e8d9ff",
-  "closedDays": [
-   1
-  ],
-  "hours": [
-   600,
-   1020
-  ],
-  "hoursText": "10:00 AM – 5:00 PM",
-  "hoursUnverified": true,
-  "price": {
-   "weekday": {
-    "i": 20,
-    "f": 300
-   },
-   "weekend": {
-    "i": 20,
-    "f": 300
-   },
-   "unverified": true
-  },
-  "tickets": [
-   {
-    "label": "Indian visitors",
-    "value": "₹20",
-    "unverified": true
-   },
-   {
-    "label": "Foreign visitors",
-    "value": "₹300",
-    "unverified": true
-   },
-   {
-    "label": "Children under 15",
-    "value": "Free",
-    "unverified": true
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": "A national collection of Indian handicrafts founded in 1956, in a building by architect Charles Correa, with galleries on tribal, court and textile crafts and an outdoor village complex.",
-  "bookUrl": null,
-  "bookable": false,
-  "source": "YoMetro travel guide (not official)",
-  "verifiedNote": "Checked 17 Nov 2026. Not confirmed by an official source.",
-  "photoCredit": null,
-  "lat": 28.612,
-  "lng": 77.243,
-  "metroUnverified": false
- },
- {
-  "id": "national-science-centre",
-  "name": "National Science Centre",
-  "area": "Pragati Maidan",
-  "category": "Museums",
-  "emoji": "🔬",
-  "color": "#e8d9ff",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": null,
-  "lat": 28.6119,
-  "lng": 77.244,
-  "metroUnverified": false
- },
- {
-  "id": "indira-gandhi-memorial-museum",
-  "name": "Indira Gandhi Memorial Museum",
-  "area": "Safdarjung Road",
-  "category": "Museums",
-  "emoji": "🏺",
-  "color": "#e8d9ff",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": "Vinayaraj · CC BY-SA 4.0",
-  "lat": 28.5996,
-  "lng": 77.21,
-  "metroUnverified": false
- },
- {
-  "id": "air-force-museum",
-  "name": "Air Force Museum",
-  "area": "Palam",
-  "category": "Museums",
-  "emoji": "✈️",
-  "color": "#e8d9ff",
-  "closedDays": [
-   1,
-   2
-  ],
-  "hours": [
-   600,
-   1020
-  ],
-  "hoursText": "10:00 AM – 5:00 PM",
-  "hoursUnverified": true,
-  "price": {
-   "weekday": {
-    "i": 30,
-    "f": null
-   },
-   "weekend": {
-    "i": 30,
-    "f": null
-   },
-   "unverified": true
-  },
-  "tickets": [
-   {
-    "label": "Indian visitors",
-    "value": "₹30 (one section of the source says free)",
-    "unverified": true
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": "A museum opened in 1967 on Indian Air Force history, with aircraft, helicopters, uniforms and medals, and a memorial hall for personnel who died in service.",
-  "bookUrl": null,
-  "bookable": false,
-  "source": "YoMetro travel guide (not official)",
-  "verifiedNote": "Checked 17 Nov 2026. Not confirmed by an official source.",
-  "photoCredit": null,
-  "lat": 28.569,
-  "lng": 77.128,
-  "metroUnverified": false
- },
- {
-  "id": "sanskriti-kendra-museums",
-  "name": "Sanskriti Kendra Museums",
-  "area": "Anandgram",
-  "category": "Museums",
-  "emoji": "🏺",
-  "color": "#e8d9ff",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": null,
-  "lat": 28.493,
-  "lng": 77.19,
-  "metroUnverified": false
- },
- {
-  "id": "lt",
-  "name": "Lotus Temple",
-  "area": "Kalkaji",
-  "category": "Religious & spiritual",
-  "emoji": "🪷",
-  "color": "#d9e4ff",
-  "closedDays": [
-   1
-  ],
-  "hours": [
-   570,
-   1050
-  ],
-  "hoursText": "9:30 AM – 5:30 PM (winter)",
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": 0,
-    "f": 0
-   },
-   "weekend": {
-    "i": 0,
-    "f": 0
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "All visitors",
-    "value": "Free",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Photography inside",
-    "value": "Not allowed"
-   },
-   {
-    "label": "Silence",
-    "value": "Required in the prayer hall"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": "Kalkaji Mandir (333 m)",
-  "duration": "1–2 hrs",
-  "description": "Bahá’í house of worship shaped like a lotus, set in landscaped gardens.",
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Delhi Tourism (official); YoMetro travel guide (not official)",
-  "verifiedNote": "Official source",
-  "photoCredit": null,
-  "lat": 28.5535,
-  "lng": 77.2588,
-  "metroUnverified": true
- },
- {
-  "id": "akshardham-temple",
-  "name": "Akshardham Temple",
-  "area": "East Delhi",
-  "category": "Religious & spiritual",
-  "emoji": "🛕",
-  "color": "#d9e4ff",
-  "closedDays": [
-   1
-  ],
-  "hours": [
-   570,
-   1110
-  ],
-  "hoursText": "9:30 AM – 6:30 PM (last entry)",
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": 0,
-    "f": 0
-   },
-   "weekend": {
-    "i": 0,
-    "f": 0
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Temple entry",
-    "value": "Free",
-    "unverified": false
-   },
-   {
-    "label": "Exhibitions and water show",
-    "value": "Ticketed, prices differ across sources",
-    "unverified": true
-   }
-  ],
-  "rules": [
-   {
-    "label": "Phones, cameras and electronics",
-    "value": "Not allowed"
-   },
-   {
-    "label": "Outside food",
-    "value": "Not allowed"
-   },
-   {
-    "label": "Dress",
-    "value": "Modest dress required"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": "Akshardham (939 m)",
-  "duration": null,
-  "description": "A Hindu temple dedicated to Lord Swaminarayan, opened in 2005, that shows Indian art, architecture and spiritual traditions.",
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Incredible India and travel sites; YoMetro travel guide (not official)",
-  "verifiedNote": "Some sites say the complex stays open until 8 PM.",
-  "photoCredit": null,
-  "lat": 28.6127,
-  "lng": 77.2773,
-  "metroUnverified": true
- },
- {
-  "id": "iskcon-temple",
-  "name": "ISKCON Temple",
-  "area": "East of Kailash",
-  "category": "Religious & spiritual",
-  "emoji": "🛕",
-  "color": "#d9e4ff",
-  "closedDays": [],
-  "hours": [
-   270,
-   1260
-  ],
-  "hoursText": "4:30 AM – 9:00 PM (sanctum closed 1:00–4:00 PM)",
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": 0,
-    "f": 0
-   },
-   "weekend": {
-    "i": 0,
-    "f": 0
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Entry",
-    "value": "Free",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Dress",
-    "value": "Modest dress advised"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Temple website (official)",
-  "verifiedNote": "Official source.",
-  "photoCredit": null,
-  "lat": 28.5574,
-  "lng": 77.2426,
-  "metroUnverified": false
- },
- {
-  "id": "gurudwara-bangla-sahib",
-  "name": "Gurudwara Bangla Sahib",
-  "area": "Connaught Place",
-  "category": "Religious & spiritual",
-  "emoji": "🛕",
-  "color": "#d9e4ff",
-  "closedDays": [],
-  "hours": [
-   0,
-   1440
-  ],
-  "hoursText": "Open 24 hours",
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": 0,
-    "f": 0
-   },
-   "weekend": {
-    "i": 0,
-    "f": 0
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Entry",
-    "value": "Free",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Head covering",
-    "value": "Required (free scarves at the entrance)"
-   },
-   {
-    "label": "Footwear",
-    "value": "Remove before entering"
-   },
-   {
-    "label": "Photography in the main hall",
-    "value": "Not allowed"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": "Patel Chowk (418 m)",
-  "duration": null,
-  "description": "A major Sikh gurdwara in central Delhi, once the bungalow of Raja Jai Singh where Guru Har Krishan stayed. It is known for its golden dome, its sarovar and its langar.",
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Travel sites; YoMetro travel guide (not official)",
-  "verifiedNote": "Photography rules differ across sources.",
-  "photoCredit": "Slyronit · CC BY-SA 4.0",
-  "lat": 28.6264,
-  "lng": 77.2092,
-  "metroUnverified": true
- },
- {
-  "id": "jama-masjid",
-  "name": "Jama Masjid",
-  "area": "Old Delhi",
-  "category": "Religious & spiritual",
-  "emoji": "🕌",
-  "color": "#d9e4ff",
-  "closedDays": [],
-  "hours": [
-   420,
-   1110
-  ],
-  "hoursText": "7:00 AM – 12:00 PM and 1:30 PM – 6:30 PM",
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": 0,
-    "f": 0
-   },
-   "weekend": {
-    "i": 0,
-    "f": 0
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Entry",
-    "value": "Free",
-    "unverified": false
-   },
-   {
-    "label": "Minaret climb",
-    "value": "₹100",
-    "unverified": false
-   },
-   {
-    "label": "Camera",
-    "value": "₹300",
-    "unverified": false
-   },
-   {
-    "label": "Entry for foreign visitors",
-    "value": "Free on most sites, ₹300–400 on Delhi Tourism",
-    "unverified": true
-   }
-  ],
-  "rules": [
-   {
-    "label": "Dress",
-    "value": "Shoulders, knees and head covered"
-   },
-   {
-    "label": "Visits during prayer",
-    "value": "Not allowed"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": "Jama Masjid (534 m)",
-  "duration": null,
-  "description": "A Shah Jahan-era mosque in Old Delhi, built of red sandstone and white marble, with a courtyard that holds about 25,000 people. Tourists cannot enter during prayer times.",
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Travel sites and Delhi Tourism; YoMetro travel guide (not official)",
-  "verifiedNote": "Delhi Tourism’s own pages disagree on foreign entry.",
-  "photoCredit": "Bintladen · CC BY-SA 4.0",
-  "lat": 28.6507,
-  "lng": 77.2334,
-  "metroUnverified": true
- },
- {
-  "id": "birla-mandir-laxminarayan-temple-",
-  "name": "Birla Mandir (Laxminarayan Temple)",
-  "area": "Connaught Place",
-  "category": "Religious & spiritual",
-  "emoji": "🛕",
-  "color": "#d9e4ff",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": null,
-  "lat": 28.6327,
-  "lng": 77.1996,
-  "metroUnverified": false
- },
- {
-  "id": "chhatarpur-temple",
-  "name": "Chhatarpur Temple",
-  "area": "South Delhi",
-  "category": "Religious & spiritual",
-  "emoji": "🛕",
-  "color": "#d9e4ff",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": "Akshatha Inamdar · CC BY-SA 4.0",
-  "lat": 28.5053,
-  "lng": 77.18,
-  "metroUnverified": false
- },
- {
-  "id": "sacred-heart-cathedral",
-  "name": "Sacred Heart Cathedral",
-  "area": "Central Delhi",
-  "category": "Religious & spiritual",
-  "emoji": "⛪",
-  "color": "#d9e4ff",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": null,
-  "lat": 28.6295,
-  "lng": 77.2115,
-  "metroUnverified": false
- },
- {
-  "id": "sn",
-  "name": "Sunder Nursery",
-  "area": "Nizamuddin",
-  "category": "Gardens & Parks",
-  "emoji": "🌳",
-  "color": "#cdeccd",
-  "closedDays": [],
-  "hours": [
-   420,
-   1320
-  ],
-  "hoursText": "7:00 AM – 10:00 PM",
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": 50,
-    "f": 200
-   },
-   "weekend": {
-    "i": 50,
-    "f": 200
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Indian",
-    "value": "₹50",
-    "unverified": false
-   },
-   {
-    "label": "Foreign visitors",
-    "value": "₹200",
-    "unverified": false
-   },
-   {
-    "label": "Children 5–12 and seniors",
-    "value": "₹25",
-    "unverified": false
-   },
-   {
-    "label": "Under 5, differently-abled",
-    "value": "Free",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": "2–3 hrs",
-  "description": "Restored heritage park with Mughal-era tombs, gardens and a seasonal nursery.",
-  "bookUrl": null,
-  "bookable": false,
-  "source": "sundernursery.org (official)",
-  "verifiedNote": "Official source. Other sites list Mondays closed and lower prices.",
-  "photoCredit": "Danish971 · CC BY-SA 4.0",
-  "lat": 28.5937,
-  "lng": 77.2463,
-  "metroUnverified": false
- },
- {
-  "id": "lodhi-garden",
-  "name": "Lodhi Garden",
-  "area": "Lodhi Road",
-  "category": "Gardens & Parks",
-  "emoji": "🌳",
-  "color": "#cdeccd",
-  "closedDays": [],
-  "hours": [
-   360,
-   1200
-  ],
-  "hoursText": "6:00 AM – 8:00 PM (winter). Opens at 5:00 AM in summer.",
-  "hoursUnverified": true,
-  "price": {
-   "weekday": {
-    "i": 0,
-    "f": 0
-   },
-   "weekend": {
-    "i": 0,
-    "f": 0
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Entry",
-    "value": "Free",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Smoking, alcohol and drugs",
-    "value": "Not allowed"
-   },
-   {
-    "label": "Food",
-    "value": "Allowed"
-   },
-   {
-    "label": "Professional shoots",
-    "value": "Permission needed"
-   },
-   {
-    "label": "Pets",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Travel sites",
-  "verifiedNote": "Timings vary by season. Pet rules conflict across sources.",
-  "photoCredit": "Amaninder · CC BY-SA 3.0",
-  "lat": 28.593,
-  "lng": 77.219,
-  "metroUnverified": false
- },
- {
-  "id": "garden-of-five-senses",
-  "name": "Garden of Five Senses",
-  "area": "Saket",
-  "category": "Gardens & Parks",
-  "emoji": "🌳",
-  "color": "#cdeccd",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": "Sanskari · CC BY-SA 4.0",
-  "lat": 28.517,
-  "lng": 77.203,
-  "metroUnverified": false
- },
- {
-  "id": "deer-park",
-  "name": "Deer Park",
-  "area": "Hauz Khas",
-  "category": "Gardens & Parks",
-  "emoji": "🦌",
-  "color": "#cdeccd",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": null,
-  "lat": 28.553,
-  "lng": 77.203,
-  "metroUnverified": false
- },
- {
-  "id": "nehru-park",
-  "name": "Nehru Park",
-  "area": "Chanakyapuri",
-  "category": "Gardens & Parks",
-  "emoji": "🌳",
-  "color": "#cdeccd",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": null,
-  "lat": 28.5865,
-  "lng": 77.1895,
-  "metroUnverified": false
- },
- {
-  "id": "buddha-jayanti-park",
-  "name": "Buddha Jayanti Park",
-  "area": "Ridge",
-  "category": "Gardens & Parks",
-  "emoji": "🌳",
-  "color": "#cdeccd",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": null,
-  "lat": 28.61,
-  "lng": 77.175,
-  "metroUnverified": false
- },
- {
-  "id": "national-zoological-park",
-  "name": "National Zoological Park",
-  "area": "Delhi Zoo",
-  "category": "Gardens & Parks",
-  "emoji": "🦁",
-  "color": "#cdeccd",
-  "closedDays": [
-   5
-  ],
-  "hours": [
-   570,
-   990
-  ],
-  "hoursText": "9:30 AM – 4:30 PM",
-  "hoursUnverified": true,
-  "price": {
-   "weekday": {
-    "i": 80,
-    "f": 400
-   },
-   "weekend": {
-    "i": 80,
-    "f": 400
-   },
-   "unverified": true
-  },
-  "tickets": [
-   {
-    "label": "Indian",
-    "value": "₹80",
-    "unverified": true
-   },
-   {
-    "label": "Foreign visitors",
-    "value": "₹400",
-    "unverified": true
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "A travel site (official page not reached)",
-  "verifiedNote": "Prices differ across sources.",
-  "photoCredit": null,
-  "lat": 28.6083,
-  "lng": 77.2475,
-  "metroUnverified": false
- },
- {
-  "id": "yamuna-biodiversity-park",
-  "name": "Yamuna Biodiversity Park",
-  "area": "North Delhi",
-  "category": "Gardens & Parks",
-  "emoji": "🌳",
-  "color": "#cdeccd",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": null,
-  "lat": 28.7,
-  "lng": 77.23,
-  "metroUnverified": false
- },
- {
-  "id": "sanjay-van",
-  "name": "Sanjay Van",
-  "area": "Vasant Kunj",
-  "category": "Gardens & Parks",
-  "emoji": "🌳",
-  "color": "#cdeccd",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": null,
-  "lat": 28.533,
-  "lng": 77.174,
-  "metroUnverified": false
- },
- {
-  "id": "okhla-bird-sanctuary",
-  "name": "Okhla Bird Sanctuary",
-  "area": "Noida",
-  "category": "Gardens & Parks",
-  "emoji": "🦆",
-  "color": "#cdeccd",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": "Akhilan · CC BY-SA 3.0",
-  "lat": 28.562,
-  "lng": 77.317,
-  "metroUnverified": false
- },
- {
-  "id": "noida-botanical-garden",
-  "name": "Noida Botanical Garden",
-  "area": "Noida",
-  "category": "Gardens & Parks",
-  "emoji": "🌳",
-  "color": "#cdeccd",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": null,
-  "lat": 28.564,
-  "lng": 77.334,
-  "metroUnverified": false
- },
- {
-  "id": "aravalli-biodiversity-park",
-  "name": "Aravalli Biodiversity Park",
-  "area": "Gurugram",
-  "category": "Gardens & Parks",
-  "emoji": "🌳",
-  "color": "#cdeccd",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": null,
-  "lat": 28.469,
-  "lng": 77.1,
-  "metroUnverified": false
- },
- {
-  "id": "leisure-valley-park",
-  "name": "Leisure Valley Park",
-  "area": "Gurugram",
-  "category": "Gardens & Parks",
-  "emoji": "🌳",
-  "color": "#cdeccd",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": null,
-  "lat": 28.462,
-  "lng": 77.064,
-  "metroUnverified": false
- },
- {
-  "id": "sultanpur-national-park",
-  "name": "Sultanpur National Park",
-  "area": "Gurugram",
-  "category": "Gardens & Parks",
-  "emoji": "🦆",
-  "color": "#cdeccd",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": "Bird sanctuary.",
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": "Ekabhishek · CC BY-SA 3.0",
-  "lat": 28.47,
-  "lng": 76.885,
-  "metroUnverified": false
- },
- {
-  "id": "chandni-chowk",
-  "name": "Chandni Chowk",
-  "area": "Old Delhi",
-  "category": "Markets & Food",
-  "emoji": "🛍️",
-  "color": "#ffe0b0",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": "कृष्ण कान्त शर्मा · CC BY-SA 4.0",
-  "lat": 28.6506,
-  "lng": 77.2303,
-  "metroUnverified": false
- },
- {
-  "id": "paranthe-wali-gali",
-  "name": "Paranthe Wali Gali",
-  "area": "Old Delhi",
-  "category": "Markets & Food",
-  "emoji": "🥘",
-  "color": "#ffe0b0",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": "Sripathroy · CC0",
-  "lat": 28.656,
-  "lng": 77.232,
-  "metroUnverified": false
- },
- {
-  "id": "connaught-place",
-  "name": "Connaught Place",
-  "area": "Central Delhi",
-  "category": "Markets & Food",
-  "emoji": "🛍️",
-  "color": "#ffe0b0",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": "Kabi1990 · CC BY-SA 3.0",
-  "lat": 28.6315,
-  "lng": 77.2167,
-  "metroUnverified": false
- },
- {
-  "id": "khan-market",
-  "name": "Khan Market",
-  "area": "Central Delhi",
-  "category": "Markets & Food",
-  "emoji": "🛍️",
-  "color": "#ffe0b0",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": "Varun Shiv Kapur from New Delhi, India · CC BY 2.0",
-  "lat": 28.5998,
-  "lng": 77.227,
-  "metroUnverified": false
- },
- {
-  "id": "janpath-and-dilli-haat-ina",
-  "name": "Janpath and Dilli Haat INA",
-  "area": "Central and South Delhi",
-  "category": "Markets & Food",
-  "emoji": "🛍️",
-  "color": "#ffe0b0",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": null,
-  "lat": 28.5728,
-  "lng": 77.2085,
-  "metroUnverified": false
- },
- {
-  "id": "sarojini-nagar-market",
-  "name": "Sarojini Nagar Market",
-  "area": "South Delhi",
-  "category": "Markets & Food",
-  "emoji": "🛍️",
-  "color": "#ffe0b0",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": "Dev Jadiya · CC BY-SA 4.0",
-  "lat": 28.576,
-  "lng": 77.199,
-  "metroUnverified": false
- },
- {
-  "id": "lajpat-nagar-market",
-  "name": "Lajpat Nagar Market",
-  "area": "South Delhi",
-  "category": "Markets & Food",
-  "emoji": "🛍️",
-  "color": "#ffe0b0",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": null,
-  "lat": 28.57,
-  "lng": 77.243,
-  "metroUnverified": false
- },
- {
-  "id": "hauz-khas-village",
-  "name": "Hauz Khas Village",
-  "area": "South Delhi",
-  "category": "Markets & Food",
-  "emoji": "🍽️",
-  "color": "#ffe0b0",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": null,
-  "lat": 28.5535,
-  "lng": 77.195,
-  "metroUnverified": false
- },
- {
-  "id": "majnu-ka-tila",
-  "name": "Majnu ka Tila",
-  "area": "North Delhi",
-  "category": "Markets & Food",
-  "emoji": "🥟",
-  "color": "#ffe0b0",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": "Ktoya · CC BY-SA 3.0",
-  "lat": 28.699,
-  "lng": 77.229,
-  "metroUnverified": false
- },
- {
-  "id": "karol-bagh",
-  "name": "Karol Bagh",
-  "area": "Central Delhi",
-  "category": "Markets & Food",
-  "emoji": "🛍️",
-  "color": "#ffe0b0",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": "Bahnfrend · CC BY-SA 3.0",
-  "lat": 28.651,
-  "lng": 77.19,
-  "metroUnverified": false
- },
- {
-  "id": "select-citywalk",
-  "name": "Select Citywalk",
-  "area": "Saket",
-  "category": "Markets & Food",
-  "emoji": "🛍️",
-  "color": "#ffe0b0",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": "KuwarOnline · CC BY-SA 3.0",
-  "lat": 28.5285,
-  "lng": 77.219,
-  "metroUnverified": false
- },
- {
-  "id": "cyber-hub",
-  "name": "Cyber Hub",
-  "area": "Gurugram",
-  "category": "Markets & Food",
-  "emoji": "🍽️",
-  "color": "#ffe0b0",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": "Slyronit · CC BY-SA 4.0",
-  "lat": 28.495,
-  "lng": 77.089,
-  "metroUnverified": false
- },
- {
-  "id": "dlf-mall-of-india",
-  "name": "DLF Mall of India",
-  "area": "Noida",
-  "category": "Markets & Food",
-  "emoji": "🛍️",
-  "color": "#ffe0b0",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": "AjayDas · CC BY-SA 4.0",
-  "lat": 28.5675,
-  "lng": 77.3215,
-  "metroUnverified": false
- },
- {
-  "id": "kingdom-of-dreams",
-  "name": "Kingdom of Dreams",
-  "area": "Gurugram",
-  "category": "Entertainment",
-  "emoji": "🎭",
-  "color": "#ffd1e8",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": "Ekabhishek · CC BY-SA 3.0",
-  "lat": 28.47,
-  "lng": 77.072,
-  "metroUnverified": false
- },
- {
-  "id": "worlds-of-wonder",
-  "name": "Worlds of Wonder",
-  "area": "Noida",
-  "category": "Entertainment",
-  "emoji": "🎡",
-  "color": "#ffd1e8",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": null,
-  "lat": 28.5665,
-  "lng": 77.334,
-  "metroUnverified": false
- },
- {
-  "id": "dilli-haat-janakpuri",
-  "name": "Dilli Haat Janakpuri",
-  "area": "West Delhi",
-  "category": "Entertainment",
-  "emoji": "🎨",
-  "color": "#ffd1e8",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
-  "price": {
-   "weekday": {
-    "i": null,
-    "f": null
-   },
-   "weekend": {
-    "i": null,
-    "f": null
-   },
-   "unverified": false
-  },
-  "tickets": [
-   {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
-   }
-  ],
-  "rules": [
-   {
-    "label": "Rules",
-    "value": "Not available"
-   }
-  ],
-  "partialNote": null,
-  "partialNoteByDay": {},
-  "metro": null,
-  "duration": null,
-  "description": null,
-  "bookUrl": null,
-  "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
-  "photoCredit": null,
-  "lat": 28.62,
-  "lng": 77.083,
-  "metroUnverified": false
- }
+  {
+    "id": "rf",
+    "name": "Lal Qila (Red Fort)",
+    "area": "Chandni Chowk",
+    "category": "Monuments",
+    "emoji": "🏰",
+    "color": "#f6c9a8",
+    "closedDays": [],
+    "hours": [
+      360,
+      1260
+    ],
+    "hoursText": "Sunrise – 9:00 PM",
+    "hoursUnverified": true,
+    "price": {
+      "weekday": {
+        "i": 35,
+        "f": 550
+      },
+      "weekend": {
+        "i": 35,
+        "f": 550
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Indian (online)",
+        "value": "₹35",
+        "unverified": true
+      },
+      {
+        "label": "SAARC & BIMSTEC visitors",
+        "value": "₹50 (₹35 online)",
+        "unverified": false
+      },
+      {
+        "label": "Other foreign visitors",
+        "value": "₹600 (₹550 online)",
+        "unverified": false
+      },
+      {
+        "label": "Children under 15",
+        "value": "Free",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Entry to some halls",
+        "value": "Restricted"
+      },
+      {
+        "label": "Everything else",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": "Six structures inside, including Diwan-i-Khas and Sheesh Mahal, are closed to visitors.",
+    "partialNoteByDay": {},
+    "metro": "Lal Qila (Violet Line)",
+    "duration": "2–3 hrs",
+    "description": "17th-century Mughal fort and a UNESCO World Heritage Site in Old Delhi.",
+    "bookUrl": null,
+    "bookable": true,
+    "source": "News report of an ASI order, Feb 2026",
+    "verifiedNote": "Hours conflict across sites",
+    "photoCredit": null,
+    "lat": 28.6562,
+    "lng": 77.241,
+    "metroUnverified": false
+  },
+  {
+    "id": "pq",
+    "name": "Purana Qila",
+    "area": "Central Delhi",
+    "category": "Monuments",
+    "emoji": "🏯",
+    "color": "#f7e2b5",
+    "closedDays": [],
+    "hours": [
+      420,
+      1020
+    ],
+    "hoursText": "7:00 AM – 5:00 PM",
+    "hoursUnverified": true,
+    "price": {
+      "weekday": {
+        "i": 30,
+        "f": 300
+      },
+      "weekend": {
+        "i": 30,
+        "f": 300
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Indian",
+        "value": "₹30",
+        "unverified": false
+      },
+      {
+        "label": "Foreign visitors",
+        "value": "₹300",
+        "unverified": false
+      },
+      {
+        "label": "Video filming",
+        "value": "₹25 extra",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Photography",
+        "value": "Free (still camera)"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {
+      "5": "The site museum is closed on Fridays."
+    },
+    "metro": "Pragati Maidan",
+    "duration": "2 hrs",
+    "description": "A 16th-century fort near Delhi Zoo on Mathura Road, on the site of the ancient city of Indraprastha. Humayun built its walls and gateways and Sher Shah Suri carried the work forward. It hosts a sound and light show every evening.",
+    "bookUrl": null,
+    "bookable": true,
+    "source": "Delhi Tourism (official); travel sites",
+    "verifiedNote": "Official source for prices and metro. Opening hours are not on the official page and come from travel sites.",
+    "photoCredit": null,
+    "lat": 28.6096,
+    "lng": 77.2437,
+    "metroUnverified": false
+  },
+  {
+    "id": "humayun-s-tomb",
+    "name": "Humayun’s Tomb",
+    "area": "Nizamuddin",
+    "category": "Monuments",
+    "emoji": "🕌",
+    "color": "#f6c9a8",
+    "closedDays": [],
+    "hours": [
+      360,
+      1080
+    ],
+    "hoursText": "Sunrise – Sunset",
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": 40,
+        "f": 600
+      },
+      "weekend": {
+        "i": 40,
+        "f": 600
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Indian",
+        "value": "₹40",
+        "unverified": false
+      },
+      {
+        "label": "Foreign visitors",
+        "value": "₹600",
+        "unverified": false
+      },
+      {
+        "label": "Video filming",
+        "value": "₹25 extra",
+        "unverified": false
+      },
+      {
+        "label": "Online discount",
+        "value": "₹5 Indian, ₹50 foreign",
+        "unverified": true
+      }
+    ],
+    "rules": [
+      {
+        "label": "Photography",
+        "value": "Free"
+      },
+      {
+        "label": "Accessibility",
+        "value": "Disable friendly"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": "JLN Stadium",
+    "duration": null,
+    "description": "A magnificent garden tomb near the crossing of Mathura Road and Lodhi Road, and the first substantial example of Mughal architecture in India. It was built in 1565 by Humayun’s senior widow Bega Begum, and the last Mughal emperor Bahadur Shah II was captured here in 1857.",
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Delhi Tourism (official); travel guides",
+    "verifiedNote": "Official source. Lower online prices appear on other sites.",
+    "photoCredit": "Anupam Calcutta · CC BY-SA 4.0",
+    "lat": 28.5933,
+    "lng": 77.2507,
+    "metroUnverified": false
+  },
+  {
+    "id": "qutub-minar",
+    "name": "Qutub Minar",
+    "area": "Mehrauli",
+    "category": "Monuments",
+    "emoji": "🗼",
+    "color": "#f6c9a8",
+    "closedDays": [],
+    "hours": [
+      360,
+      1200
+    ],
+    "hoursText": "Sunrise – 8:00 PM",
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": 50,
+        "f": 600
+      },
+      "weekend": {
+        "i": 50,
+        "f": 600
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Indian, SAARC and BIMSTEC (counter)",
+        "value": "₹50",
+        "unverified": false
+      },
+      {
+        "label": "Indian, SAARC and BIMSTEC (online)",
+        "value": "₹35",
+        "unverified": false
+      },
+      {
+        "label": "Others (counter)",
+        "value": "₹600",
+        "unverified": false
+      },
+      {
+        "label": "Others (online)",
+        "value": "₹550",
+        "unverified": false
+      },
+      {
+        "label": "Children up to 15 years",
+        "value": "Free",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Tripods",
+        "value": "Not allowed"
+      },
+      {
+        "label": "Food",
+        "value": "Water only"
+      }
+    ],
+    "partialNote": "Parts of the complex are closed for repairs (ASI report, Sept 2026).",
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": "A 72.5 m tower of red and buff sandstone begun in 1199 as a call-to-prayer tower. It is the tallest tower in India, and each storey has a balcony with honeycomb-patterned brackets.",
+    "bookUrl": null,
+    "bookable": true,
+    "source": "ASI and Delhi Tourism (official); travel sites",
+    "verifiedNote": "Official source. Some other sites list a ₹40 counter price for Indians.",
+    "photoCredit": "Akbarzoda · CC BY-SA 4.0",
+    "lat": 28.5245,
+    "lng": 77.1855,
+    "metroUnverified": false
+  },
+  {
+    "id": "mehrauli-archaeological-park",
+    "name": "Mehrauli Archaeological Park",
+    "area": "Mehrauli",
+    "category": "Monuments",
+    "emoji": "🏛️",
+    "color": "#f6c9a8",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": "Varun Shiv Kapur from New Delhi, India · CC BY 2.0",
+    "lat": 28.5195,
+    "lng": 77.184,
+    "metroUnverified": false
+  },
+  {
+    "id": "safdarjung-tomb",
+    "name": "Safdarjung Tomb",
+    "area": "South Delhi",
+    "category": "Monuments",
+    "emoji": "🕌",
+    "color": "#f6c9a8",
+    "closedDays": [],
+    "hours": [
+      360,
+      1080
+    ],
+    "hoursText": "Sunrise – Sunset",
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": 25,
+        "f": 300
+      },
+      "weekend": {
+        "i": 25,
+        "f": 300
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Indian",
+        "value": "₹25",
+        "unverified": false
+      },
+      {
+        "label": "Foreign visitors",
+        "value": "₹300",
+        "unverified": false
+      },
+      {
+        "label": "Video camera",
+        "value": "₹25 extra",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Photography",
+        "value": "Free (still camera)"
+      }
+    ],
+    "partialNote": "The mosque and cells are under repair.",
+    "partialNoteByDay": {},
+    "metro": "Jor Bagh",
+    "duration": null,
+    "description": "The last enclosed garden tomb in Delhi, in the tradition of Humayun’s Tomb but smaller, built in 1753–54 for Safdarjung, the viceroy of Awadh. Its pavilions include Jangli Mahal, Moti Mahal and Badshah Pasand, and the complex has a madarsa and an ASI library over the main gateway.",
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Delhi Tourism (official)",
+    "verifiedNote": "Official source.",
+    "photoCredit": "Dey.sandip · CC BY-SA 4.0",
+    "lat": 28.5897,
+    "lng": 77.2108,
+    "metroUnverified": false
+  },
+  {
+    "id": "tughlaqabad-fort",
+    "name": "Tughlaqabad Fort",
+    "area": "South Delhi",
+    "category": "Monuments",
+    "emoji": "🏰",
+    "color": "#f6c9a8",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": "Shannon.Mathew · CC BY-SA 3.0",
+    "lat": 28.5126,
+    "lng": 77.261,
+    "metroUnverified": false
+  },
+  {
+    "id": "hauz-khas-fort",
+    "name": "Hauz Khas Fort",
+    "area": "Hauz Khas",
+    "category": "Monuments",
+    "emoji": "🏯",
+    "color": "#f6c9a8",
+    "closedDays": [],
+    "hours": [
+      630,
+      1140
+    ],
+    "hoursText": "10:30 AM – 7:00 PM",
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": 20,
+        "f": 250
+      },
+      "weekend": {
+        "i": 20,
+        "f": 250
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Indian",
+        "value": "₹20",
+        "unverified": false
+      },
+      {
+        "label": "Foreign visitors",
+        "value": "₹250",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": "Parts are restricted while repairs are underway.",
+    "partialNoteByDay": {},
+    "metro": "IIT (334 m)",
+    "duration": null,
+    "description": "A 13th-century Delhi Sultanate complex with a royal water tank, a mosque, a tomb and a seminary, set among parks in South Delhi.",
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Delhi Tourism (official); YoMetro travel guide (not official)",
+    "verifiedNote": "Official source. Some sites say it is closed on Sundays.",
+    "photoCredit": "Varun Shiv Kapur from New Delhi, India · CC BY 2.0",
+    "lat": 28.5494,
+    "lng": 77.1943,
+    "metroUnverified": true
+  },
+  {
+    "id": "agrasen-ki-baoli",
+    "name": "Agrasen ki Baoli",
+    "area": "Connaught Place",
+    "category": "Monuments",
+    "emoji": "🏛️",
+    "color": "#f6c9a8",
+    "closedDays": [],
+    "hours": [
+      540,
+      1050
+    ],
+    "hoursText": "9:00 AM – 5:30 PM",
+    "hoursUnverified": true,
+    "price": {
+      "weekday": {
+        "i": 0,
+        "f": 0
+      },
+      "weekend": {
+        "i": 0,
+        "f": 0
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Entry",
+        "value": "Free",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": "Parts are restricted while repairs are underway.",
+    "partialNoteByDay": {},
+    "metro": "Barakhamba Road (188 m)",
+    "duration": null,
+    "description": "A historic stepwell near Jantar Mantar, traditionally linked to Maharaja Agrasen. Its tiered steps and arched niches once held water and gave visitors a cool place to rest.",
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Travel sites; YoMetro travel guide (not official)",
+    "verifiedNote": "Opening hours differ across sources.",
+    "photoCredit": "Indrajit Das · CC BY-SA 4.0",
+    "lat": 28.6265,
+    "lng": 77.2252,
+    "metroUnverified": true
+  },
+  {
+    "id": "jantar-mantar",
+    "name": "Jantar Mantar",
+    "area": "Connaught Place",
+    "category": "Monuments",
+    "emoji": "🧭",
+    "color": "#f6c9a8",
+    "closedDays": [],
+    "hours": [
+      360,
+      1080
+    ],
+    "hoursText": "Sunrise – Sunset",
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": 25,
+        "f": 300
+      },
+      "weekend": {
+        "i": 25,
+        "f": 300
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Indian",
+        "value": "₹25",
+        "unverified": false
+      },
+      {
+        "label": "Foreign visitors",
+        "value": "₹300",
+        "unverified": false
+      },
+      {
+        "label": "Video filming",
+        "value": "₹25 extra",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Photography",
+        "value": "Free"
+      }
+    ],
+    "partialNote": "Parts are restricted while repairs are underway.",
+    "partialNoteByDay": {},
+    "metro": "Patel Chowk",
+    "duration": null,
+    "description": "An observatory built in 1724 by Maharaja Jai Singh of Jaipur, with large stone instruments such as the Samrat Yantra sundial. Accurate observations can no longer be made here because of the tall buildings around.",
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Delhi Tourism (official)",
+    "verifiedNote": "Official source.",
+    "photoCredit": null,
+    "lat": 28.627,
+    "lng": 77.2166,
+    "metroUnverified": false
+  },
+  {
+    "id": "feroz-shah-kotla",
+    "name": "Feroz Shah Kotla",
+    "area": "Central Delhi",
+    "category": "Monuments",
+    "emoji": "🏛️",
+    "color": "#f6c9a8",
+    "closedDays": [
+      1
+    ],
+    "hours": [
+      510,
+      1140
+    ],
+    "hoursText": "8:30 AM – 7:00 PM",
+    "hoursUnverified": true,
+    "price": {
+      "weekday": {
+        "i": 5,
+        "f": 100
+      },
+      "weekend": {
+        "i": 5,
+        "f": 100
+      },
+      "unverified": true
+    },
+    "tickets": [
+      {
+        "label": "Indian & SAARC visitors",
+        "value": "₹5",
+        "unverified": true
+      },
+      {
+        "label": "Foreign visitors",
+        "value": "₹100",
+        "unverified": true
+      },
+      {
+        "label": "Children up to 15",
+        "value": "Free",
+        "unverified": true
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": "Delhi Gate (202 m)",
+    "duration": null,
+    "description": "A 14th-century Tughlaq-era fort with thick walls, bastions, a mosque, a tomb and a stepwell. An Ashokan pillar brought from Haryana stands inside.",
+    "bookUrl": null,
+    "bookable": false,
+    "source": "YoMetro travel guide (not official)",
+    "verifiedNote": "Checked 17 Nov 2026. Not confirmed by an official source.",
+    "photoCredit": null,
+    "lat": 28.6358,
+    "lng": 77.24,
+    "metroUnverified": true
+  },
+  {
+    "id": "lodhi-garden-tombs",
+    "name": "Lodhi Garden tombs",
+    "area": "Lodhi Road",
+    "category": "Monuments",
+    "emoji": "🕌",
+    "color": "#f6c9a8",
+    "closedDays": [],
+    "hours": [
+      360,
+      1200
+    ],
+    "hoursText": "Morning to evening",
+    "hoursUnverified": true,
+    "price": {
+      "weekday": {
+        "i": 0,
+        "f": 0
+      },
+      "weekend": {
+        "i": 0,
+        "f": 0
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Entry",
+        "value": "Free",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Photography",
+        "value": "Free"
+      },
+      {
+        "label": "Smoking, alcohol and drugs",
+        "value": "Not allowed"
+      },
+      {
+        "label": "Food",
+        "value": "Allowed"
+      },
+      {
+        "label": "Professional shoots",
+        "value": "Permission needed"
+      },
+      {
+        "label": "Pets",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": "JLN Stadium",
+    "duration": null,
+    "description": "The old Lady Willingdon Park, now Lodhi Garden, beside the India International Centre on Lodhi Road. It is dotted with tombs, mosques and bridges of the Sayyid and Lodhi periods, including the octagonal tombs of Muhammad Shah and Sikandar Lodhi and the square Shish Gumbad and Bara Gumbad.",
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Delhi Tourism (official); travel sites",
+    "verifiedNote": "Official source says morning to evening. Some travel sites say 6 AM – 8 PM in winter.",
+    "photoCredit": "Amaninder · CC BY-SA 3.0",
+    "lat": 28.5931,
+    "lng": 77.2197,
+    "metroUnverified": false
+  },
+  {
+    "id": "hazrat-nizamuddin-dargah",
+    "name": "Hazrat Nizamuddin Dargah",
+    "area": "Nizamuddin",
+    "category": "Monuments",
+    "emoji": "🕌",
+    "color": "#f6c9a8",
+    "closedDays": [],
+    "hours": [
+      300,
+      1320
+    ],
+    "hoursText": "5:00 AM – 10:00 PM",
+    "hoursUnverified": true,
+    "price": {
+      "weekday": {
+        "i": 0,
+        "f": 0
+      },
+      "weekend": {
+        "i": 0,
+        "f": 0
+      },
+      "unverified": true
+    },
+    "tickets": [
+      {
+        "label": "All visitors",
+        "value": "Free",
+        "unverified": true
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": "Jangpura (796 m)",
+    "duration": null,
+    "description": "A Sufi shrine honouring the 14th-century saint Nizamuddin Auliya and his disciple Amir Khusro. Qawwali sessions on Thursdays draw large crowds.",
+    "bookUrl": null,
+    "bookable": false,
+    "source": "YoMetro travel guide (not official)",
+    "verifiedNote": "Checked 17 Nov 2026. Not confirmed by an official source.",
+    "photoCredit": null,
+    "lat": 28.5886,
+    "lng": 77.2423,
+    "metroUnverified": true
+  },
+  {
+    "id": "ig",
+    "name": "India Gate",
+    "area": "Kartavya Path",
+    "category": "Modern Landmarks",
+    "emoji": "🏛️",
+    "color": "#ffd9a0",
+    "closedDays": [],
+    "hours": [
+      0,
+      1440
+    ],
+    "hoursText": "Morning to night",
+    "hoursUnverified": true,
+    "price": {
+      "weekday": {
+        "i": 0,
+        "f": 0
+      },
+      "weekend": {
+        "i": 0,
+        "f": 0
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "All visitors",
+        "value": "Free",
+        "unverified": false
+      },
+      {
+        "label": "National War Memorial",
+        "value": "Free, ID proof needed",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Photography",
+        "value": "Free"
+      },
+      {
+        "label": "Vehicles on Kartavya Path",
+        "value": "Closed during Republic Day events"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": "Pragati Maidan",
+    "duration": "1–2 hrs",
+    "description": "A 42 m high arch near Rajpath, designed by Edwin Lutyens and dedicated in 1931. It commemorates the 70,000 Indian soldiers lost in World War I, and the Amar Jawan Jyoti flame was added after 1971. It is floodlit at night and the lawns around it are a popular picnic spot.",
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Delhi Tourism (official); travel guides",
+    "verifiedNote": "Official source says morning to night. Other sites say open 24 hours.",
+    "photoCredit": null,
+    "lat": 28.6129,
+    "lng": 77.2295,
+    "metroUnverified": false
+  },
+  {
+    "id": "national-war-memorial",
+    "name": "National War Memorial",
+    "area": "Central Delhi",
+    "category": "Modern Landmarks",
+    "emoji": "🇮🇳",
+    "color": "#ffd9a0",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": 0,
+        "f": 0
+      },
+      "weekend": {
+        "i": 0,
+        "f": 0
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Entry",
+        "value": "Free, ID proof needed",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Travel guides",
+    "verifiedNote": "Opening hours not collected yet.",
+    "photoCredit": null,
+    "lat": 28.6118,
+    "lng": 77.2336,
+    "metroUnverified": false
+  },
+  {
+    "id": "rashtrapati-bhavan-and-amrit-udyan",
+    "name": "Rashtrapati Bhavan and Amrit Udyan",
+    "area": "Central Delhi",
+    "category": "Modern Landmarks",
+    "emoji": "🇮🇳",
+    "color": "#ffd9a0",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": "The garden is open seasonally.",
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": null,
+    "lat": 28.6143,
+    "lng": 77.1995,
+    "metroUnverified": false
+  },
+  {
+    "id": "raj-ghat",
+    "name": "Raj Ghat",
+    "area": "Central Delhi",
+    "category": "Modern Landmarks",
+    "emoji": "🕊️",
+    "color": "#ffd9a0",
+    "closedDays": [],
+    "hours": [
+      390,
+      1080
+    ],
+    "hoursText": "6:30 AM – 6:00 PM",
+    "hoursUnverified": true,
+    "price": {
+      "weekday": {
+        "i": 0,
+        "f": 0
+      },
+      "weekend": {
+        "i": 0,
+        "f": 0
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Entry",
+        "value": "Free",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Footwear",
+        "value": "Remove near the memorial platform"
+      },
+      {
+        "label": "Photography",
+        "value": "Not allowed near the main platform"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Travel sites",
+    "verifiedNote": "Opening hours differ across sources.",
+    "photoCredit": "Humayunn Niaz Ahmed Peerzaada from Mumbai, India · CC BY-SA 2.0",
+    "lat": 28.6406,
+    "lng": 77.2495,
+    "metroUnverified": false
+  },
+  {
+    "id": "gandhi-smriti",
+    "name": "Gandhi Smriti",
+    "area": "Tees January Marg",
+    "category": "Modern Landmarks",
+    "emoji": "🕊️",
+    "color": "#ffd9a0",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": null,
+    "lat": 28.6008,
+    "lng": 77.215,
+    "metroUnverified": false
+  },
+  {
+    "id": "rm",
+    "name": "National Rail Museum",
+    "area": "Chanakyapuri",
+    "category": "Museums",
+    "emoji": "🚂",
+    "color": "#e8d9ff",
+    "closedDays": [
+      1
+    ],
+    "hours": [
+      600,
+      1020
+    ],
+    "hoursText": "10:00 AM – 5:00 PM (last entry 4:30)",
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": 50,
+        "f": null
+      },
+      "weekend": {
+        "i": 100,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Weekdays: adult / child",
+        "value": "₹50 / ₹10",
+        "unverified": false
+      },
+      {
+        "label": "Weekends and holidays: adult / child",
+        "value": "₹100 / ₹20",
+        "unverified": false
+      },
+      {
+        "label": "Foreign visitors",
+        "value": "Not available",
+        "unverified": false
+      },
+      {
+        "label": "Rides",
+        "value": "Extra, prices vary",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": "2–3 hrs",
+    "description": "Heritage locomotives, coaches and a monorail, with a toy train for children.",
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Several travel and railway sites agree",
+    "verifiedNote": "No official page found",
+    "photoCredit": "Bruno Corpet (Quoique) · CC BY-SA 3.0",
+    "lat": 28.5836,
+    "lng": 77.1805,
+    "metroUnverified": false
+  },
+  {
+    "id": "national-museum",
+    "name": "National Museum",
+    "area": "Janpath",
+    "category": "Museums",
+    "emoji": "🏺",
+    "color": "#e8d9ff",
+    "closedDays": [
+      1
+    ],
+    "hours": [
+      600,
+      1080
+    ],
+    "hoursText": "10:00 AM – 6:00 PM",
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": 20,
+        "f": 500
+      },
+      "weekend": {
+        "i": 20,
+        "f": 500
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Adults (Indian)",
+        "value": "₹20",
+        "unverified": false
+      },
+      {
+        "label": "Foreign visitors",
+        "value": "₹500",
+        "unverified": false
+      },
+      {
+        "label": "Students up to Class 12",
+        "value": "Free",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "National Museum (official)",
+    "verifiedNote": "Official source. One site says weekends run to 8 PM, not confirmed.",
+    "photoCredit": "Miya.m · CC BY-SA 3.0",
+    "lat": 28.6117,
+    "lng": 77.2196,
+    "metroUnverified": false
+  },
+  {
+    "id": "national-gallery-of-modern-art",
+    "name": "National Gallery of Modern Art",
+    "area": "Near India Gate",
+    "category": "Museums",
+    "emoji": "🖼️",
+    "color": "#e8d9ff",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": null,
+    "lat": 28.6119,
+    "lng": 77.2342,
+    "metroUnverified": false
+  },
+  {
+    "id": "pm-sangrahalaya-teen-murti-",
+    "name": "PM Sangrahalaya (Teen Murti)",
+    "area": "Central Delhi",
+    "category": "Museums",
+    "emoji": "🏺",
+    "color": "#e8d9ff",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": null,
+    "lat": 28.6006,
+    "lng": 77.1967,
+    "metroUnverified": false
+  },
+  {
+    "id": "crafts-museum",
+    "name": "Crafts Museum",
+    "area": "Pragati Maidan",
+    "category": "Museums",
+    "emoji": "🏺",
+    "color": "#e8d9ff",
+    "closedDays": [
+      1
+    ],
+    "hours": [
+      600,
+      1020
+    ],
+    "hoursText": "10:00 AM – 5:00 PM",
+    "hoursUnverified": true,
+    "price": {
+      "weekday": {
+        "i": 20,
+        "f": 300
+      },
+      "weekend": {
+        "i": 20,
+        "f": 300
+      },
+      "unverified": true
+    },
+    "tickets": [
+      {
+        "label": "Indian visitors",
+        "value": "₹20",
+        "unverified": true
+      },
+      {
+        "label": "Foreign visitors",
+        "value": "₹300",
+        "unverified": true
+      },
+      {
+        "label": "Children under 15",
+        "value": "Free",
+        "unverified": true
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": "A national collection of Indian handicrafts founded in 1956, in a building by architect Charles Correa, with galleries on tribal, court and textile crafts and an outdoor village complex.",
+    "bookUrl": null,
+    "bookable": false,
+    "source": "YoMetro travel guide (not official)",
+    "verifiedNote": "Checked 17 Nov 2026. Not confirmed by an official source.",
+    "photoCredit": null,
+    "lat": 28.612,
+    "lng": 77.243,
+    "metroUnverified": false
+  },
+  {
+    "id": "national-science-centre",
+    "name": "National Science Centre",
+    "area": "Pragati Maidan",
+    "category": "Museums",
+    "emoji": "🔬",
+    "color": "#e8d9ff",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": null,
+    "lat": 28.6119,
+    "lng": 77.244,
+    "metroUnverified": false
+  },
+  {
+    "id": "indira-gandhi-memorial-museum",
+    "name": "Indira Gandhi Memorial Museum",
+    "area": "Safdarjung Road",
+    "category": "Museums",
+    "emoji": "🏺",
+    "color": "#e8d9ff",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": "Vinayaraj · CC BY-SA 4.0",
+    "lat": 28.5996,
+    "lng": 77.21,
+    "metroUnverified": false
+  },
+  {
+    "id": "air-force-museum",
+    "name": "Air Force Museum",
+    "area": "Palam",
+    "category": "Museums",
+    "emoji": "✈️",
+    "color": "#e8d9ff",
+    "closedDays": [
+      1,
+      2
+    ],
+    "hours": [
+      600,
+      1020
+    ],
+    "hoursText": "10:00 AM – 5:00 PM",
+    "hoursUnverified": true,
+    "price": {
+      "weekday": {
+        "i": 30,
+        "f": null
+      },
+      "weekend": {
+        "i": 30,
+        "f": null
+      },
+      "unverified": true
+    },
+    "tickets": [
+      {
+        "label": "Indian visitors",
+        "value": "₹30 (one section of the source says free)",
+        "unverified": true
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": "A museum opened in 1967 on Indian Air Force history, with aircraft, helicopters, uniforms and medals, and a memorial hall for personnel who died in service.",
+    "bookUrl": null,
+    "bookable": false,
+    "source": "YoMetro travel guide (not official)",
+    "verifiedNote": "Checked 17 Nov 2026. Not confirmed by an official source.",
+    "photoCredit": null,
+    "lat": 28.569,
+    "lng": 77.128,
+    "metroUnverified": false
+  },
+  {
+    "id": "sanskriti-kendra-museums",
+    "name": "Sanskriti Kendra Museums",
+    "area": "Anandgram",
+    "category": "Museums",
+    "emoji": "🏺",
+    "color": "#e8d9ff",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": null,
+    "lat": 28.493,
+    "lng": 77.19,
+    "metroUnverified": false
+  },
+  {
+    "id": "lt",
+    "name": "Lotus Temple",
+    "area": "Kalkaji",
+    "category": "Religious & spiritual",
+    "emoji": "🪷",
+    "color": "#d9e4ff",
+    "closedDays": [
+      1
+    ],
+    "hours": [
+      540,
+      1050
+    ],
+    "hoursText": "9:00 AM – 5:30 PM",
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": 0,
+        "f": 0
+      },
+      "weekend": {
+        "i": 0,
+        "f": 0
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "All visitors",
+        "value": "Free",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Photography",
+        "value": "Permission required"
+      },
+      {
+        "label": "Silence",
+        "value": "Required in the prayer hall"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": "Kalkaji Mandir",
+    "duration": "1–2 hrs",
+    "description": "A Bahá’í house of worship near Kalkaji Temple, built in the shape of a lotus and completed in 1986. It is made of white marble and set among landscaped gardens with nine pools, and people of any faith can visit to pray or meditate.",
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Delhi Tourism (official)",
+    "verifiedNote": "Official source. Some other sites say photography is not allowed inside.",
+    "photoCredit": null,
+    "lat": 28.5535,
+    "lng": 77.2588,
+    "metroUnverified": false
+  },
+  {
+    "id": "akshardham-temple",
+    "name": "Akshardham Temple",
+    "area": "East Delhi",
+    "category": "Religious & spiritual",
+    "emoji": "🛕",
+    "color": "#d9e4ff",
+    "closedDays": [
+      1
+    ],
+    "hours": [
+      570,
+      1110
+    ],
+    "hoursText": "9:30 AM – 6:30 PM (last entry)",
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": 0,
+        "f": 0
+      },
+      "weekend": {
+        "i": 0,
+        "f": 0
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Complex entry",
+        "value": "Free, no ticket",
+        "unverified": false
+      },
+      {
+        "label": "Exhibition: adult",
+        "value": "₹170",
+        "unverified": false
+      },
+      {
+        "label": "Exhibition: senior citizen",
+        "value": "₹125",
+        "unverified": false
+      },
+      {
+        "label": "Exhibition: child 4–11 yrs",
+        "value": "₹100",
+        "unverified": false
+      },
+      {
+        "label": "Exhibition: child below 4",
+        "value": "Free",
+        "unverified": false
+      },
+      {
+        "label": "Exhibition ticket counter",
+        "value": "10 AM – 5 PM",
+        "unverified": false
+      },
+      {
+        "label": "Musical fountain: adult",
+        "value": "₹30",
+        "unverified": false
+      },
+      {
+        "label": "Musical fountain: senior citizen",
+        "value": "₹30",
+        "unverified": false
+      },
+      {
+        "label": "Musical fountain: child 4–11 yrs",
+        "value": "₹20",
+        "unverified": false
+      },
+      {
+        "label": "Musical fountain: child below 4",
+        "value": "Free",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Photography",
+        "value": "Not allowed"
+      },
+      {
+        "label": "Mobiles and electronics",
+        "value": "Not allowed (cloakroom available)"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": "Akshardham",
+    "duration": null,
+    "description": "Swaminarayan Akshardham, opened in 2005, shows 10,000 years of Indian culture through its temple, exhibitions, a musical fountain and the Garden of India. It was built in five years and is recognised by Guinness World Records as the world’s largest comprehensive Hindu temple.",
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Delhi Tourism (official)",
+    "verifiedNote": "Official source. Some other sites say the complex stays open until 8 PM.",
+    "photoCredit": null,
+    "lat": 28.6127,
+    "lng": 77.2773,
+    "metroUnverified": false
+  },
+  {
+    "id": "iskcon-temple",
+    "name": "ISKCON Temple",
+    "area": "East of Kailash",
+    "category": "Religious & spiritual",
+    "emoji": "🛕",
+    "color": "#d9e4ff",
+    "closedDays": [],
+    "hours": [
+      270,
+      1260
+    ],
+    "hoursText": "4:30 AM – 9:00 PM (sanctum closed 1:00–4:00 PM)",
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": 0,
+        "f": 0
+      },
+      "weekend": {
+        "i": 0,
+        "f": 0
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Entry",
+        "value": "Free",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Dress",
+        "value": "Modest dress advised"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Temple website (official)",
+    "verifiedNote": "Official source.",
+    "photoCredit": null,
+    "lat": 28.5574,
+    "lng": 77.2426,
+    "metroUnverified": false
+  },
+  {
+    "id": "gurudwara-bangla-sahib",
+    "name": "Gurudwara Bangla Sahib",
+    "area": "Connaught Place",
+    "category": "Religious & spiritual",
+    "emoji": "🛕",
+    "color": "#d9e4ff",
+    "closedDays": [],
+    "hours": [
+      0,
+      1440
+    ],
+    "hoursText": "Open 24 hours",
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": 0,
+        "f": 0
+      },
+      "weekend": {
+        "i": 0,
+        "f": 0
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Entry",
+        "value": "Free",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Head covering",
+        "value": "Required (free scarves at the entrance)"
+      },
+      {
+        "label": "Footwear",
+        "value": "Remove before entering"
+      },
+      {
+        "label": "Photography in the main hall",
+        "value": "Not allowed"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": "Patel Chowk (418 m)",
+    "duration": null,
+    "description": "A major Sikh gurdwara in central Delhi, once the bungalow of Raja Jai Singh where Guru Har Krishan stayed. It is known for its golden dome, its sarovar and its langar.",
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Travel sites; YoMetro travel guide (not official)",
+    "verifiedNote": "Photography rules differ across sources.",
+    "photoCredit": "Slyronit · CC BY-SA 4.0",
+    "lat": 28.6264,
+    "lng": 77.2092,
+    "metroUnverified": true
+  },
+  {
+    "id": "jama-masjid",
+    "name": "Jama Masjid",
+    "area": "Old Delhi",
+    "category": "Religious & spiritual",
+    "emoji": "🕌",
+    "color": "#d9e4ff",
+    "closedDays": [],
+    "hours": [
+      660,
+      1080
+    ],
+    "hoursText": "Indian visitors 11:00 AM – sunset. Foreign visitors 8:00 AM – sunset.",
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": 0,
+        "f": 400
+      },
+      "weekend": {
+        "i": 0,
+        "f": 400
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Indian visitors",
+        "value": "Free",
+        "unverified": false
+      },
+      {
+        "label": "Foreign visitors",
+        "value": "₹400",
+        "unverified": false
+      },
+      {
+        "label": "Minaret climb",
+        "value": "₹100",
+        "unverified": true
+      }
+    ],
+    "rules": [
+      {
+        "label": "Photography",
+        "value": "Free"
+      },
+      {
+        "label": "Dress",
+        "value": "Shoulders, knees and head covered"
+      },
+      {
+        "label": "After sunset",
+        "value": "Only devotees, for Isha prayer. Closed until tourist hours."
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": "Chawri Bazaar",
+    "duration": null,
+    "description": "The largest mosque in India, in Old Delhi, with a courtyard for 25,000 people. It was begun in 1644 as Shah Jahan’s last grand building, with three great gates, four towers and two 40 m minarets of red sandstone and white marble.",
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Delhi Tourism (official); travel sites",
+    "verifiedNote": "Official source. Some other sites list different foreign entry and camera fees.",
+    "photoCredit": "Bintladen · CC BY-SA 4.0",
+    "lat": 28.6507,
+    "lng": 77.2334,
+    "metroUnverified": false
+  },
+  {
+    "id": "birla-mandir-laxminarayan-temple-",
+    "name": "Birla Mandir (Laxminarayan Temple)",
+    "area": "Connaught Place",
+    "category": "Religious & spiritual",
+    "emoji": "🛕",
+    "color": "#d9e4ff",
+    "closedDays": [],
+    "hours": [
+      270,
+      1260
+    ],
+    "hoursText": "4:30 AM – 1:30 PM and 2:30 PM – 9:00 PM",
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": 0,
+        "f": 0
+      },
+      "weekend": {
+        "i": 0,
+        "f": 0
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Entry",
+        "value": "Free",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Photography, mobiles and cameras",
+        "value": "Not allowed in the temple"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": "RK Ashram Marg",
+    "duration": null,
+    "description": "Laxmi Narayan Temple, known as Birla Mandir, is one of Delhi’s major temples, built by industrialist J.K. Birla in 1939 near Gole Market. It is dedicated to Laxmi and Narayana and was inaugurated by Mahatma Gandhi on the condition that people of all castes could enter.",
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Delhi Tourism (official)",
+    "verifiedNote": "Official source. The official page does not list days closed. Best to visit during morning and evening aarti.",
+    "photoCredit": null,
+    "lat": 28.6327,
+    "lng": 77.1996,
+    "metroUnverified": false
+  },
+  {
+    "id": "chhatarpur-temple",
+    "name": "Chhatarpur Temple",
+    "area": "South Delhi",
+    "category": "Religious & spiritual",
+    "emoji": "🛕",
+    "color": "#d9e4ff",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": "Akshatha Inamdar · CC BY-SA 4.0",
+    "lat": 28.5053,
+    "lng": 77.18,
+    "metroUnverified": false
+  },
+  {
+    "id": "sacred-heart-cathedral",
+    "name": "Sacred Heart Cathedral",
+    "area": "Central Delhi",
+    "category": "Religious & spiritual",
+    "emoji": "⛪",
+    "color": "#d9e4ff",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": null,
+    "lat": 28.6295,
+    "lng": 77.2115,
+    "metroUnverified": false
+  },
+  {
+    "id": "sn",
+    "name": "Sunder Nursery",
+    "area": "Nizamuddin",
+    "category": "Gardens & Parks",
+    "emoji": "🌳",
+    "color": "#cdeccd",
+    "closedDays": [],
+    "hours": [
+      420,
+      1320
+    ],
+    "hoursText": "7:00 AM – 10:00 PM",
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": 50,
+        "f": 200
+      },
+      "weekend": {
+        "i": 50,
+        "f": 200
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Indian",
+        "value": "₹50",
+        "unverified": false
+      },
+      {
+        "label": "Foreign visitors",
+        "value": "₹200",
+        "unverified": false
+      },
+      {
+        "label": "Children 5–12 and seniors",
+        "value": "₹25",
+        "unverified": false
+      },
+      {
+        "label": "Under 5, differently-abled",
+        "value": "Free",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": "2–3 hrs",
+    "description": "Restored heritage park with Mughal-era tombs, gardens and a seasonal nursery.",
+    "bookUrl": null,
+    "bookable": false,
+    "source": "sundernursery.org (official)",
+    "verifiedNote": "Official source. Other sites list Mondays closed and lower prices.",
+    "photoCredit": "Danish971 · CC BY-SA 4.0",
+    "lat": 28.5937,
+    "lng": 77.2463,
+    "metroUnverified": false
+  },
+  {
+    "id": "lodhi-garden",
+    "name": "Lodhi Garden",
+    "area": "Lodhi Road",
+    "category": "Gardens & Parks",
+    "emoji": "🌳",
+    "color": "#cdeccd",
+    "closedDays": [],
+    "hours": [
+      360,
+      1200
+    ],
+    "hoursText": "6:00 AM – 8:00 PM (winter). Opens at 5:00 AM in summer.",
+    "hoursUnverified": true,
+    "price": {
+      "weekday": {
+        "i": 0,
+        "f": 0
+      },
+      "weekend": {
+        "i": 0,
+        "f": 0
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Entry",
+        "value": "Free",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Smoking, alcohol and drugs",
+        "value": "Not allowed"
+      },
+      {
+        "label": "Food",
+        "value": "Allowed"
+      },
+      {
+        "label": "Professional shoots",
+        "value": "Permission needed"
+      },
+      {
+        "label": "Pets",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Travel sites",
+    "verifiedNote": "Timings vary by season. Pet rules conflict across sources.",
+    "photoCredit": "Amaninder · CC BY-SA 3.0",
+    "lat": 28.593,
+    "lng": 77.219,
+    "metroUnverified": false
+  },
+  {
+    "id": "garden-of-five-senses",
+    "name": "Garden of Five Senses",
+    "area": "Saket",
+    "category": "Gardens & Parks",
+    "emoji": "🌳",
+    "color": "#cdeccd",
+    "closedDays": [],
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": "Saket",
+    "duration": null,
+    "description": "A twenty-acre leisure garden at Said-ul-Ajaib village near the Mehrauli heritage area, developed by Delhi Tourism and opened in February 2003. It has a Khas Bagh patterned on a Mughal garden, fountains, stone sculptures, a spiral walkway, a food court and the Trail of Fragrance.",
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Delhi Tourism (official)",
+    "verifiedNote": "Official source. Timings and entry fee are not on the official page.",
+    "photoCredit": "Sanskari · CC BY-SA 4.0",
+    "lat": 28.517,
+    "lng": 77.203,
+    "metroUnverified": false
+  },
+  {
+    "id": "deer-park",
+    "name": "Deer Park",
+    "area": "Hauz Khas",
+    "category": "Gardens & Parks",
+    "emoji": "🦌",
+    "color": "#cdeccd",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": null,
+    "lat": 28.553,
+    "lng": 77.203,
+    "metroUnverified": false
+  },
+  {
+    "id": "nehru-park",
+    "name": "Nehru Park",
+    "area": "Chanakyapuri",
+    "category": "Gardens & Parks",
+    "emoji": "🌳",
+    "color": "#cdeccd",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": null,
+    "lat": 28.5865,
+    "lng": 77.1895,
+    "metroUnverified": false
+  },
+  {
+    "id": "buddha-jayanti-park",
+    "name": "Buddha Jayanti Park",
+    "area": "Ridge",
+    "category": "Gardens & Parks",
+    "emoji": "🌳",
+    "color": "#cdeccd",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": null,
+    "lat": 28.61,
+    "lng": 77.175,
+    "metroUnverified": false
+  },
+  {
+    "id": "national-zoological-park",
+    "name": "National Zoological Park",
+    "area": "Delhi Zoo",
+    "category": "Gardens & Parks",
+    "emoji": "🦁",
+    "color": "#cdeccd",
+    "closedDays": [
+      5
+    ],
+    "hours": [
+      570,
+      990
+    ],
+    "hoursText": "9:30 AM – 4:30 PM",
+    "hoursUnverified": true,
+    "price": {
+      "weekday": {
+        "i": 80,
+        "f": 400
+      },
+      "weekend": {
+        "i": 80,
+        "f": 400
+      },
+      "unverified": true
+    },
+    "tickets": [
+      {
+        "label": "Indian",
+        "value": "₹80",
+        "unverified": true
+      },
+      {
+        "label": "Foreign visitors",
+        "value": "₹400",
+        "unverified": true
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "A travel site (official page not reached)",
+    "verifiedNote": "Prices differ across sources.",
+    "photoCredit": null,
+    "lat": 28.6083,
+    "lng": 77.2475,
+    "metroUnverified": false
+  },
+  {
+    "id": "yamuna-biodiversity-park",
+    "name": "Yamuna Biodiversity Park",
+    "area": "North Delhi",
+    "category": "Gardens & Parks",
+    "emoji": "🌳",
+    "color": "#cdeccd",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": null,
+    "lat": 28.7,
+    "lng": 77.23,
+    "metroUnverified": false
+  },
+  {
+    "id": "sanjay-van",
+    "name": "Sanjay Van",
+    "area": "Vasant Kunj",
+    "category": "Gardens & Parks",
+    "emoji": "🌳",
+    "color": "#cdeccd",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": null,
+    "lat": 28.533,
+    "lng": 77.174,
+    "metroUnverified": false
+  },
+  {
+    "id": "okhla-bird-sanctuary",
+    "name": "Okhla Bird Sanctuary",
+    "area": "Noida",
+    "category": "Gardens & Parks",
+    "emoji": "🦆",
+    "color": "#cdeccd",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": "Akhilan · CC BY-SA 3.0",
+    "lat": 28.562,
+    "lng": 77.317,
+    "metroUnverified": false
+  },
+  {
+    "id": "noida-botanical-garden",
+    "name": "Noida Botanical Garden",
+    "area": "Noida",
+    "category": "Gardens & Parks",
+    "emoji": "🌳",
+    "color": "#cdeccd",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": null,
+    "lat": 28.564,
+    "lng": 77.334,
+    "metroUnverified": false
+  },
+  {
+    "id": "aravalli-biodiversity-park",
+    "name": "Aravalli Biodiversity Park",
+    "area": "Gurugram",
+    "category": "Gardens & Parks",
+    "emoji": "🌳",
+    "color": "#cdeccd",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": null,
+    "lat": 28.469,
+    "lng": 77.1,
+    "metroUnverified": false
+  },
+  {
+    "id": "leisure-valley-park",
+    "name": "Leisure Valley Park",
+    "area": "Gurugram",
+    "category": "Gardens & Parks",
+    "emoji": "🌳",
+    "color": "#cdeccd",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": null,
+    "lat": 28.462,
+    "lng": 77.064,
+    "metroUnverified": false
+  },
+  {
+    "id": "sultanpur-national-park",
+    "name": "Sultanpur National Park",
+    "area": "Gurugram",
+    "category": "Gardens & Parks",
+    "emoji": "🦆",
+    "color": "#cdeccd",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": "Bird sanctuary.",
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": "Ekabhishek · CC BY-SA 3.0",
+    "lat": 28.47,
+    "lng": 76.885,
+    "metroUnverified": false
+  },
+  {
+    "id": "chandni-chowk",
+    "name": "Chandni Chowk",
+    "area": "Old Delhi",
+    "category": "Markets & Food",
+    "emoji": "🛍️",
+    "color": "#ffe0b0",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": "कृष्ण कान्त शर्मा · CC BY-SA 4.0",
+    "lat": 28.6506,
+    "lng": 77.2303,
+    "metroUnverified": false
+  },
+  {
+    "id": "paranthe-wali-gali",
+    "name": "Paranthe Wali Gali",
+    "area": "Old Delhi",
+    "category": "Markets & Food",
+    "emoji": "🥘",
+    "color": "#ffe0b0",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": "Sripathroy · CC0",
+    "lat": 28.656,
+    "lng": 77.232,
+    "metroUnverified": false
+  },
+  {
+    "id": "connaught-place",
+    "name": "Connaught Place",
+    "area": "Central Delhi",
+    "category": "Markets & Food",
+    "emoji": "🛍️",
+    "color": "#ffe0b0",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": "Kabi1990 · CC BY-SA 3.0",
+    "lat": 28.6315,
+    "lng": 77.2167,
+    "metroUnverified": false
+  },
+  {
+    "id": "khan-market",
+    "name": "Khan Market",
+    "area": "Central Delhi",
+    "category": "Markets & Food",
+    "emoji": "🛍️",
+    "color": "#ffe0b0",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": "Varun Shiv Kapur from New Delhi, India · CC BY 2.0",
+    "lat": 28.5998,
+    "lng": 77.227,
+    "metroUnverified": false
+  },
+  {
+    "id": "janpath-and-dilli-haat-ina",
+    "name": "Janpath and Dilli Haat INA",
+    "area": "Central and South Delhi",
+    "category": "Markets & Food",
+    "emoji": "🛍️",
+    "color": "#ffe0b0",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": null,
+    "lat": 28.5728,
+    "lng": 77.2085,
+    "metroUnverified": false
+  },
+  {
+    "id": "sarojini-nagar-market",
+    "name": "Sarojini Nagar Market",
+    "area": "South Delhi",
+    "category": "Markets & Food",
+    "emoji": "🛍️",
+    "color": "#ffe0b0",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": "Dev Jadiya · CC BY-SA 4.0",
+    "lat": 28.576,
+    "lng": 77.199,
+    "metroUnverified": false
+  },
+  {
+    "id": "lajpat-nagar-market",
+    "name": "Lajpat Nagar Market",
+    "area": "South Delhi",
+    "category": "Markets & Food",
+    "emoji": "🛍️",
+    "color": "#ffe0b0",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": null,
+    "lat": 28.57,
+    "lng": 77.243,
+    "metroUnverified": false
+  },
+  {
+    "id": "hauz-khas-village",
+    "name": "Hauz Khas Village",
+    "area": "South Delhi",
+    "category": "Markets & Food",
+    "emoji": "🍽️",
+    "color": "#ffe0b0",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": null,
+    "lat": 28.5535,
+    "lng": 77.195,
+    "metroUnverified": false
+  },
+  {
+    "id": "majnu-ka-tila",
+    "name": "Majnu ka Tila",
+    "area": "North Delhi",
+    "category": "Markets & Food",
+    "emoji": "🥟",
+    "color": "#ffe0b0",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": "Ktoya · CC BY-SA 3.0",
+    "lat": 28.699,
+    "lng": 77.229,
+    "metroUnverified": false
+  },
+  {
+    "id": "karol-bagh",
+    "name": "Karol Bagh",
+    "area": "Central Delhi",
+    "category": "Markets & Food",
+    "emoji": "🛍️",
+    "color": "#ffe0b0",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": "Bahnfrend · CC BY-SA 3.0",
+    "lat": 28.651,
+    "lng": 77.19,
+    "metroUnverified": false
+  },
+  {
+    "id": "select-citywalk",
+    "name": "Select Citywalk",
+    "area": "Saket",
+    "category": "Markets & Food",
+    "emoji": "🛍️",
+    "color": "#ffe0b0",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": "KuwarOnline · CC BY-SA 3.0",
+    "lat": 28.5285,
+    "lng": 77.219,
+    "metroUnverified": false
+  },
+  {
+    "id": "cyber-hub",
+    "name": "Cyber Hub",
+    "area": "Gurugram",
+    "category": "Markets & Food",
+    "emoji": "🍽️",
+    "color": "#ffe0b0",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": "Slyronit · CC BY-SA 4.0",
+    "lat": 28.495,
+    "lng": 77.089,
+    "metroUnverified": false
+  },
+  {
+    "id": "dlf-mall-of-india",
+    "name": "DLF Mall of India",
+    "area": "Noida",
+    "category": "Markets & Food",
+    "emoji": "🛍️",
+    "color": "#ffe0b0",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": "AjayDas · CC BY-SA 4.0",
+    "lat": 28.5675,
+    "lng": 77.3215,
+    "metroUnverified": false
+  },
+  {
+    "id": "kingdom-of-dreams",
+    "name": "Kingdom of Dreams",
+    "area": "Gurugram",
+    "category": "Entertainment",
+    "emoji": "🎭",
+    "color": "#ffd1e8",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": "Ekabhishek · CC BY-SA 3.0",
+    "lat": 28.47,
+    "lng": 77.072,
+    "metroUnverified": false
+  },
+  {
+    "id": "worlds-of-wonder",
+    "name": "Worlds of Wonder",
+    "area": "Noida",
+    "category": "Entertainment",
+    "emoji": "🎡",
+    "color": "#ffd1e8",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": null,
+    "lat": 28.5665,
+    "lng": 77.334,
+    "metroUnverified": false
+  },
+  {
+    "id": "dilli-haat-janakpuri",
+    "name": "Dilli Haat Janakpuri",
+    "area": "West Delhi",
+    "category": "Entertainment",
+    "emoji": "🎨",
+    "color": "#ffd1e8",
+    "closedDays": null,
+    "hours": null,
+    "hoursText": null,
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": null,
+        "f": null
+      },
+      "weekend": {
+        "i": null,
+        "f": null
+      },
+      "unverified": false
+    },
+    "tickets": [
+      {
+        "label": "Ticket prices",
+        "value": "Not available",
+        "unverified": false
+      }
+    ],
+    "rules": [
+      {
+        "label": "Rules",
+        "value": "Not available"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": null,
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Not collected yet",
+    "verifiedNote": "Details for this place have not been collected yet.",
+    "photoCredit": null,
+    "lat": 28.62,
+    "lng": 77.083,
+    "metroUnverified": false
+  }
 ]
