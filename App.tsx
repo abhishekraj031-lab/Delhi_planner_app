@@ -29,6 +29,16 @@ const ICONS: Record<Category, React.ComponentType<{ size?: number; color?: strin
   'Gardens & Parks': Trees, 'Markets & Food': ShoppingBag, 'Entertainment': FerrisWheel,
 };
 
+function CategoryTab({ label, on, Icon, onPress }: { label: string; on: boolean; Icon: React.ComponentType<{ size?: number; color?: string }>; onPress: () => void }) {
+  return (
+    <Pressable onPress={onPress} hitSlop={4} accessibilityRole="button" accessibilityState={{ selected: on }}
+      style={{ alignItems: 'center', gap: 6, minHeight: 60, paddingHorizontal: 14, paddingTop: 8, borderBottomWidth: 2, borderBottomColor: on ? colors.ink : 'transparent' }}>
+      <Icon size={24} color={on ? colors.ink : colors.sub} />
+      <Txt w={on ? 'semi' : 'regular'} style={{ fontSize: 12, color: on ? colors.ink : colors.sub, paddingBottom: 6 }}>{label}</Txt>
+    </Pressable>
+  );
+}
+
 function Home() {
   const insets = useSafeAreaInsets();
   const [places, setPlaces] = useState<Place[]>([]);
@@ -130,12 +140,12 @@ function Home() {
           renderItem={({ item }) => {
             const Icon = ICONS[item];
             const on = !query && category === item;
-            return <Chip label={item} on={on} onPress={() => { setQuery(''); setCategory(on ? 'All' : item); }} icon={<Icon size={12} color={on ? colors.white : colors.text} />} />;
+            return <CategoryTab label={item} on={on} Icon={Icon} onPress={() => { setQuery(''); setCategory(on ? 'All' : item); }} />;
           }} />
       </View>
       {loc ? <Txt style={s.hint}>Nearest first, by straight-line distance.</Txt> : null}
       {dayChoice !== 'today' ? <Txt style={s.hint}>Showing status for {choice.label}.</Txt> : null}
-      <FlatList data={rows} keyExtractor={(r) => r.place.id} style={{ backgroundColor: colors.fill, marginTop: 8 }} contentContainerStyle={{ paddingBottom: 12 }}
+      <FlatList data={rows} keyExtractor={(r) => r.place.id} style={{ backgroundColor: colors.white }} contentContainerStyle={{ paddingBottom: 12 }}
         initialNumToRender={6} windowSize={7} keyboardShouldPersistTaps="handled"
         ListEmptyComponent={<Txt style={s.empty}>No places match. Try another category or clear the filters.</Txt>}
         renderItem={({ item }) => (
@@ -163,10 +173,10 @@ const s = StyleSheet.create({
   header: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 16, paddingTop: 12 },
   loc: { flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 2 },
     searchRow: { flexDirection: 'row', gap: 12, paddingHorizontal: 16, paddingTop: 16 },
-  search: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8, minHeight: 48, paddingHorizontal: 12, borderRadius: 10, backgroundColor: colors.fill },
+  search: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8, minHeight: 52, paddingHorizontal: 16, borderRadius: 26, backgroundColor: colors.white, borderWidth: 1, borderColor: colors.line, shadowColor: '#000', shadowOpacity: 0.1, shadowRadius: 8, shadowOffset: { width: 0, height: 2 }, elevation: 3 },
   input: { flex: 1, fontFamily: font.regular, fontSize: 16, color: '#333232', paddingVertical: 8 },
-  filter: { width: 48, height: 48, borderRadius: 10, backgroundColor: colors.fill, alignItems: 'center', justifyContent: 'center' },
-  chips: { gap: 8, paddingHorizontal: 16, paddingTop: 12, paddingBottom: 4 },
+  filter: { width: 48, height: 48, borderRadius: 24, backgroundColor: colors.white, borderWidth: 1, borderColor: colors.line, alignItems: 'center', justifyContent: 'center' },
+  chips: { paddingHorizontal: 4, paddingTop: 8, borderBottomWidth: 0 },
   hint: { color: colors.sub, fontSize: 12, marginHorizontal: 16, marginTop: 8 },
   empty: { color: colors.sub, textAlign: 'center', padding: 48 },
 });
