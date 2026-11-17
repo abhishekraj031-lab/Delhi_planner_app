@@ -48,7 +48,7 @@ function Home() {
   const insets = useSafeAreaInsets();
   const [places, setPlaces] = useState<Place[]>([]);
   const [saved, setSaved] = useState<Set<string>>(new Set());
-  const [category, setCategory] = useState<Category | 'All'>('All');
+  const [category, setCategory] = useState<Category | 'All'>('Monuments');
   const [query, setQuery] = useState('');
   const [dayChoice, setDayChoice] = useState<DayChoice>('today');
   const [freeOnly, setFreeOnly] = useState(false);
@@ -145,7 +145,7 @@ function Home() {
           renderItem={({ item }) => {
             const Icon = ICONS[item];
             const on = !query && category === item;
-            return <CategoryTab label={item} color={CAT_COLOR[item]} on={on} Icon={Icon} onPress={() => { setQuery(''); setCategory(on ? 'All' : item); }} />;
+            return <CategoryTab label={item} color={CAT_COLOR[item]} on={on} Icon={Icon} onPress={() => { setQuery(''); setCategory(item); }} />;
           }} />
       </View>
       {loc ? <Txt style={s.hint}>Nearest first, by straight-line distance.</Txt> : null}
