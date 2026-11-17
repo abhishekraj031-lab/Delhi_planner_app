@@ -8,6 +8,7 @@ import { Figtree_500Medium } from '@expo-google-fonts/figtree/500Medium';
 import { Figtree_600SemiBold } from '@expo-google-fonts/figtree/600SemiBold';
 import { Figtree_700Bold } from '@expo-google-fonts/figtree/700Bold';
 import { FadeSlide } from './src/components/motion';
+import { AuthPrompt } from './src/components/AuthPrompt';
 import { PlanSheet } from './src/components/PlanSheet';
 import { distanceKm } from './src/lib/distance';
 import { Church, Dome, FerrisWheel, Landmark, Lighthouse, Heart, MapPin, Search, ShoppingBag, SlidersHorizontal, Ticket, Trees } from 'lucide-react-native';
@@ -50,7 +51,8 @@ function CategoryTab({ label, color, on, Icon, onPress }: { label: string; color
 function Home() {
   const insets = useSafeAreaInsets();
   const [places, setPlaces] = useState<Place[]>([]);
-  const [saved, setSaved] = useState<Set<string>>(new Set());
+  const [savedAll, setSaved] = useState<Set<string>>(new Set());
+  const [pendingSave, setPendingSave] = useState<{ ids: string[]; reopen: string | null } | null>(null);
   const [category, setCategory] = useState<Category | 'All'>('Monuments');
   const [query, setQuery] = useState('');
   const [dayChoice, setDayChoice] = useState<DayChoice>('today');
@@ -64,6 +66,8 @@ function Home() {
   const [loginOpen, setLoginOpen] = useState(false);
   const [now, setNow] = useState(() => new Date());
   const { user, ready: authReady, signIn, signOut } = useAuth();
+  // Saving needs a login: logged-out visitors see nothing saved, and are asked to log in first.
+  const saved = useMemo(() => (user ? savedAll : new Set<string>()), [user, savedAll]);
   const { loc, state, requestCurrent, chooseArea } = useLocation();
 
   useEffect(() => {
@@ -94,6 +98,27 @@ function Home() {
       return next;
     });
   }, []);
+
+  const askLogin = (ids: string[]) => {
+    setPendingSave({ ids, reopen: openId });
+    setOpenId(null);
+    setShowPlan(false);
+  };
+  const requestToggle = (id: string) => (user ? toggleSave(id) : askLogin([id]));
+  const requestSaveAll = (ids: string[]) => (user ? saveMany(ids) : askLogin(ids));
+  const closeLoginPrompt = () => {
+    if (pendingSave?.reopen) setOpenId(pendingSave.reopen);
+    setPendingSave(null);
+  };
+  const signInThenSave = async (id: string, pw: string) => {
+    const ok = await signIn(id, pw);
+    if (ok && pendingSave) {
+      saveMany(pendingSave.ids);
+      if (pendingSave.reopen) setOpenId(pendingSave.reopen);
+      setPendingSave(null);
+    }
+    return ok;
+  };
 
   const rows = useMemo(
     () => visiblePlaces(places, { category, query, freeOnly, savedOnly, day }, saved, loc),
@@ -176,14 +201,15 @@ function Home() {
         ListEmptyComponent={<Txt style={s.empty}>Nothing here yet. More places are coming soon — try another category or clear the filters.</Txt>}
         renderItem={({ item }) => (
           <PlaceCard place={item.place} km={item.km} day={day} today={today} saved={saved.has(item.place.id)}
-            onOpen={() => setOpenId(item.place.id)} onToggleSave={() => toggleSave(item.place.id)} />
+            onOpen={() => setOpenId(item.place.id)} onToggleSave={() => requestToggle(item.place.id)} />
         )} />
       </FadeSlide>
       </FadeSlide>
       <TabBar key="tabbar" tab={tab} onChange={setTab} onPlan={() => setShowPlan(true)} />
       <PlaceDetail place={openPlace} km={openKm} day={day} today={today} saved={openId ? saved.has(openId) : false} nearby={nearby} onOpenPlace={setOpenId}
-        onClose={() => setOpenId(null)} onToggleSave={() => openId && toggleSave(openId)} />
-      <PlanSheet visible={showPlan} onClose={() => setShowPlan(false)} places={places} day={day} dayLabel={choice.label} today={today} loc={loc} saved={saved} onSaveAll={saveMany} onOpenPlace={setOpenId} />
+        onClose={() => setOpenId(null)} onToggleSave={() => openId && requestToggle(openId)} />
+      <PlanSheet visible={showPlan} onClose={() => setShowPlan(false)} places={places} day={day} dayLabel={choice.label} today={today} loc={loc} saved={saved} onSaveAll={requestSaveAll} onOpenPlace={setOpenId} />
+      <AuthPrompt visible={pendingSave !== null} onClose={closeLoginPrompt} onSignIn={signInThenSave} />
       <FilterSheet visible={showFilters} onClose={() => setShowFilters(false)} dayChoice={dayChoice} setDayChoice={setDayChoice}
         freeOnly={freeOnly} setFreeOnly={setFreeOnly} savedOnly={savedOnly} setSavedOnly={setSavedOnly} savedCount={saved.size} />
       <LocationSheet visible={showLocation} onClose={() => setShowLocation(false)} loc={loc} state={state} onUseCurrent={requestCurrent} onChooseArea={chooseArea} />

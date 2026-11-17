@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { X } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '../theme';
 
@@ -9,7 +10,10 @@ export function Sheet({ visible, onClose, children, label }: { visible: boolean;
   return (
     <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose} statusBarTranslucent>
       <View style={s.wrap}>
-        <Pressable style={StyleSheet.absoluteFill} onPress={onClose} accessibilityLabel="Close" accessibilityRole="button" />
+        <Pressable style={StyleSheet.absoluteFill} onPress={onClose} accessibilityLabel="Dismiss" accessibilityRole="button" />
+        <Pressable onPress={onClose} accessibilityLabel="Close" accessibilityRole="button" hitSlop={8} style={({ pressed }) => [s.fab, { opacity: pressed ? 0.7 : 1 }]}>
+          <X size={22} color={colors.white} />
+        </Pressable>
         <View style={s.sheet} accessibilityViewIsModal accessibilityLabel={label}>
           <ScrollView contentContainerStyle={{ padding: 16, gap: 20, paddingBottom: 24 + insets.bottom }} showsVerticalScrollIndicator={false}>
             {children}
@@ -21,5 +25,6 @@ export function Sheet({ visible, onClose, children, label }: { visible: boolean;
 }
 const s = StyleSheet.create({
   wrap: { flex: 1, justifyContent: 'flex-end', backgroundColor: colors.overlay },
+  fab: { alignSelf: 'center', width: 44, height: 44, borderRadius: 22, backgroundColor: colors.dark, alignItems: 'center', justifyContent: 'center', marginBottom: 12 },
   sheet: { maxHeight: '82%', backgroundColor: colors.white, borderTopLeftRadius: 16, borderTopRightRadius: 16 },
 });
