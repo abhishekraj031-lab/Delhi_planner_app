@@ -16,7 +16,7 @@ import { KEYS, loadJSON, saveJSON } from './src/lib/storage';
 import { useLocation } from './src/hooks/useLocation';
 import { Chip, Txt } from './src/components/ui';
 import { PlaceCard } from './src/components/PlaceCard';
-import { PlaceSheet } from './src/components/PlaceSheet';
+import { PlaceDetail } from './src/components/PlaceDetail';
 import { TabBar, TabKey } from './src/components/TabBar';
 import { EmptyTab } from './src/components/LoginRequired';
 import { EmptyState } from './src/components/EmptyState';
@@ -158,7 +158,7 @@ function Home() {
             onOpen={() => setOpenId(item.place.id)} onToggleSave={() => toggleSave(item.place.id)} />
         )} />
       <TabBar tab={tab} onChange={setTab} />
-      <PlaceSheet place={openPlace} km={openKm} day={day} today={today} saved={openId ? saved.has(openId) : false}
+      <PlaceDetail place={openPlace} km={openKm} day={day} today={today} saved={openId ? saved.has(openId) : false}
         onClose={() => setOpenId(null)} onToggleSave={() => openId && toggleSave(openId)} />
       <FilterSheet visible={showFilters} onClose={() => setShowFilters(false)} dayChoice={dayChoice} setDayChoice={setDayChoice}
         freeOnly={freeOnly} setFreeOnly={setFreeOnly} savedOnly={savedOnly} setSavedOnly={setSavedOnly} savedCount={saved.size} />
