@@ -17,6 +17,8 @@ import { useLocation } from './src/hooks/useLocation';
 import { Chip, Txt } from './src/components/ui';
 import { PlaceCard } from './src/components/PlaceCard';
 import { PlaceSheet } from './src/components/PlaceSheet';
+import { TabBar, TabKey } from './src/components/TabBar';
+import { LoginRequired } from './src/components/LoginRequired';
 import { DAY_CHOICES, DayChoice, FilterSheet, LocationSheet } from './src/components/OptionSheets';
 
 const ICONS: Record<Category, React.ComponentType<{ size?: number; color?: string }>> = {
@@ -36,6 +38,7 @@ function Home() {
   const [openId, setOpenId] = useState<string | null>(null);
   const [showFilters, setShowFilters] = useState(false);
   const [showLocation, setShowLocation] = useState(false);
+  const [tab, setTab] = useState<TabKey>('home');
   const [now, setNow] = useState(() => new Date());
   const { loc, state, requestCurrent, chooseArea } = useLocation();
 
@@ -67,6 +70,20 @@ function Home() {
   const openPlace = places.find((p) => p.id === openId) ?? null;
   const locLabel = state === 'asking' ? 'Finding your location…' : loc ? (loc.kind === 'gps' ? 'Near your current location' : `Near ${loc.label}`) : 'Location off. Choose an area';
 
+  const placeholders: Record<Exclude<TabKey, 'home'>, { title: string; hint: string }> = {
+    favourites: { title: 'Favourites', hint: 'Your saved places will show here after you log in.' },
+    bookings: { title: 'Bookings', hint: 'Your bookings will show here after you log in.' },
+    profile: { title: 'Profile', hint: 'Log in to manage your profile.' },
+  };
+  if (tab !== 'home') {
+    return (
+      <View style={s.screen}>
+        <StatusBar style="dark" />
+        <LoginRequired {...placeholders[tab]} />
+        <TabBar tab={tab} onChange={setTab} />
+      </View>
+    );
+  }
   return (
     <View style={[s.screen, { paddingTop: insets.top }]}>
       <StatusBar style="dark" />
@@ -78,7 +95,6 @@ function Home() {
             <Txt style={{ color: colors.sub }}>{locLabel}</Txt>
           </Pressable>
         </View>
-        <View style={s.avatar} />
       </View>
       <View style={s.searchRow}>
         <View style={s.search}>
@@ -100,13 +116,14 @@ function Home() {
       </View>
       {loc ? <Txt style={s.hint}>Nearest first, by straight-line distance.</Txt> : null}
       {dayChoice !== 'today' ? <Txt style={s.hint}>Showing status for {choice.label}.</Txt> : null}
-      <FlatList data={rows} keyExtractor={(r) => r.place.id} contentContainerStyle={{ paddingBottom: 24 + insets.bottom }}
+      <FlatList data={rows} keyExtractor={(r) => r.place.id} contentContainerStyle={{ paddingBottom: 12 }}
         initialNumToRender={6} windowSize={7} keyboardShouldPersistTaps="handled"
         ListEmptyComponent={<Txt style={s.empty}>No places match. Try another category or clear the filters.</Txt>}
         renderItem={({ item }) => (
           <PlaceCard place={item.place} km={item.km} day={day} today={today} saved={saved.has(item.place.id)}
             onOpen={() => setOpenId(item.place.id)} onToggleSave={() => toggleSave(item.place.id)} />
         )} />
+      <TabBar tab={tab} onChange={setTab} />
       <PlaceSheet place={openPlace} km={openKm} day={day} today={today} saved={openId ? saved.has(openId) : false}
         onClose={() => setOpenId(null)} onToggleSave={() => openId && toggleSave(openId)} />
       <FilterSheet visible={showFilters} onClose={() => setShowFilters(false)} dayChoice={dayChoice} setDayChoice={setDayChoice}

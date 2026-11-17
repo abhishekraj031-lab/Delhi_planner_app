@@ -6,59 +6,69 @@ import { colors } from '../theme';
 import { getStatus } from '../lib/status';
 import { formatFee } from '../lib/pricing';
 import { formatAway } from '../lib/distance';
-import { NotAvailable, Txt, Unverified } from './ui';
+import { Txt, Unverified } from './ui';
 import { PlaceVisual } from './Visual';
 
 type Props = { place: Place; km: number | null; day: number; today: Date | null; saved: boolean; onOpen: () => void; onToggleSave: () => void };
 
 export const areaLabel = (p: Place) => (['Noida', 'Gurugram'].includes(p.area) ? p.area : `${p.area}, Delhi`);
 
-function Stat({ icon, label, children, grow }: { icon: React.ReactNode; label: string; children: React.ReactNode; grow?: boolean }) {
-  return (
-    <View style={[s.stat, grow && { flex: 1 }]}>
-      {icon}
-      <View style={{ flexShrink: 1 }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>{children}</View>
-        <Txt style={{ fontSize: 10 }}>{label}</Txt>
-      </View>
-    </View>
-  );
+const fmtTime = (m: number) => {
+  const h = Math.floor(m / 60), min = m % 60, ap = h >= 12 ? 'pm' : 'am';
+  return `${h % 12 || 12}${min ? `:${String(min).padStart(2, '0')}` : ''}${ap}`;
+};
+
+/** Status text for the strip under the card: "Open till 5:00pm", "Today closed", etc. */
+export function statusText(p: Place, day: number, today: Date | null) {
+  const st = getStatus(p, day, today ?? undefined);
+  if (st.kind === 'open') return { text: p.hours ? `Open till ${fmtTime(p.hours[1])}` : 'Open', muted: false, unverified: !!p.hoursUnverified };
+  if (st.kind === 'unknown') return { text: 'Hours not available', muted: true, unverified: false };
+  return { text: st.label, muted: false, unverified: false };
 }
 
 function PlaceCardBase({ place, km, day, today, saved, onOpen, onToggleSave }: Props) {
-  const st = getStatus(place, day, today ?? undefined);
   const fee = formatFee(place, day);
+  const s = statusText(place, day, today);
+  const metro = place.metro ? place.metro.split(' (')[0] : null;
   return (
-    <Pressable onPress={onOpen} accessibilityRole="button" accessibilityLabel={`${place.name}. ${st.label}`} style={s.card}>
+    <Pressable onPress={onOpen} accessibilityRole="button" accessibilityLabel={`${place.name}. ${s.text}`} style={st.card}>
       <View>
-        <PlaceVisual place={place} height={141} radius={{ borderTopLeftRadius: 16, borderTopRightRadius: 16 }} />
+        <PlaceVisual place={place} height={147} radius={{ borderRadius: 12 }} />
         <Pressable onPress={onToggleSave} hitSlop={10} accessibilityRole="button"
-          accessibilityLabel={saved ? `Remove ${place.name} from saved` : `Save ${place.name}`} style={s.heart}>
+          accessibilityLabel={saved ? `Remove ${place.name} from saved` : `Save ${place.name}`} style={st.heart}>
           <Heart size={24} color={saved ? '#ff3b5c' : colors.white} fill={saved ? '#ff3b5c' : 'rgba(0,0,0,0.3)'} />
         </Pressable>
-        {st.kind === 'closed' || st.kind === 'partial' ? (
-          <View style={s.badge}><Txt style={{ fontSize: 10, color: colors.white }}>{st.label}</Txt></View>
-        ) : null}
       </View>
-      <View style={s.body}>
-        <Txt w="bold" style={{ fontSize: 14 }}>{place.name}</Txt>
-        <View style={s.row}>
-          <MapPin size={12} color={colors.ink} />
-          <Txt style={{ flexShrink: 1 }}>{areaLabel(place)}{km != null ? ` · ${formatAway(km)}` : ''}</Txt>
+      <View style={st.titleRow}>
+        <View style={{ flex: 1 }}>
+          <Txt w="bold" style={{ fontSize: 14, lineHeight: 20 }}>{place.name}</Txt>
+          <View style={st.row}>
+            <MapPin size={12} color={colors.sub} />
+            <Txt style={{ color: colors.sub, fontSize: 10 }}>{areaLabel(place)}</Txt>
+          </View>
         </View>
-        <View style={s.stats}>
-          <Stat icon={<TicketCheck size={24} color={colors.primary} />} label="Entry fee">
-            {fee ? <Txt w="bold" style={s.val}>{fee}</Txt> : <NotAvailable size={14} />}
-            {place.price.unverified && fee ? <Unverified /> : null}
-          </Stat>
-          <View style={s.div} />
-          <Stat icon={<Clock4 size={24} color={colors.primary} />} label="Duration">
-            {place.duration ? <Txt w="bold" style={s.val}>{place.duration}</Txt> : <NotAvailable size={14} />}
-          </Stat>
-          <View style={s.div} />
-          <Stat icon={<TrainFront size={24} color={colors.primary} />} label="Nearest metro" grow>
-            {place.metro ? <Txt w="bold" style={s.val} numberOfLines={1}>{place.metro.split(' (')[0]}</Txt> : <NotAvailable size={14} />}
-          </Stat>
+        <View style={st.fee}>
+          <TicketCheck size={16} color={colors.white} />
+          {fee ? (
+            <>
+              <Txt w="bold" style={{ color: colors.white, fontSize: 14 }}>{fee}</Txt>
+              <Txt style={{ color: colors.white, fontSize: 10 }}>{fee === 'Free' ? 'Entry' : 'Entry fee'}</Txt>
+              {place.price.unverified ? <Unverified /> : null}
+            </>
+          ) : <Txt style={{ color: colors.white, fontSize: 10 }}>Fee not available</Txt>}
+        </View>
+      </View>
+      <View style={st.strip}>
+        <View style={st.stripItem}>
+          <TrainFront size={16} color={colors.ink} />
+          {km != null ? <Txt w="bold" style={{ fontSize: 12 }}>{formatAway(km)}</Txt> : null}
+          <Txt style={{ fontSize: 10, flexShrink: 1 }} numberOfLines={1}>{km != null ? `(${metro ?? 'Metro not available'})` : (metro ?? 'Metro not available')}</Txt>
+        </View>
+        <View style={st.sep} />
+        <View style={[st.stripItem, { justifyContent: 'flex-end' }]}>
+          <Clock4 size={16} color={colors.ink} />
+          <Txt w="bold" style={{ fontSize: 12, color: s.muted ? colors.sub : colors.ink }} numberOfLines={1}>{s.text}</Txt>
+          {s.unverified ? <Unverified /> : null}
         </View>
       </View>
     </Pressable>
@@ -66,14 +76,13 @@ function PlaceCardBase({ place, km, day, today, saved, onOpen, onToggleSave }: P
 }
 export const PlaceCard = React.memo(PlaceCardBase);
 
-const s = StyleSheet.create({
-  card: { marginHorizontal: 16, marginTop: 12 },
+const st = StyleSheet.create({
+  card: { marginHorizontal: 16, marginTop: 12, padding: 0 },
   heart: { position: 'absolute', top: 12, right: 12 },
-  badge: { position: 'absolute', right: 12, bottom: 12, height: 20, borderRadius: 99, paddingHorizontal: 10, backgroundColor: colors.dark, justifyContent: 'center' },
-  body: { paddingTop: 12, paddingBottom: 16, gap: 8 },
-  row: { flexDirection: 'row', alignItems: 'center', gap: 4 },
-  stats: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
-  stat: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  div: { width: 1, alignSelf: 'stretch', backgroundColor: colors.line },
-  val: { fontSize: 14, lineHeight: 21 },
+  titleRow: { flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 10 },
+  row: { flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 2 },
+  fee: { flexDirection: 'row', alignItems: 'center', gap: 4, minHeight: 40, paddingHorizontal: 10, borderRadius: 8, backgroundColor: colors.dark, maxWidth: '55%' },
+  strip: { flexDirection: 'row', alignItems: 'center', marginTop: 10, marginBottom: 12, minHeight: 36, borderRadius: 8, backgroundColor: colors.fill, paddingHorizontal: 12, paddingVertical: 6 },
+  stripItem: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 4 },
+  sep: { width: 1, alignSelf: 'stretch', backgroundColor: colors.line, marginHorizontal: 8 },
 });
