@@ -17,7 +17,9 @@ export type Place = {
   price: { weekday: Price; weekend: Price; unverified: boolean };
   tickets: Ticket[]; rules: Rule[];
   partialNote: string | null; partialNoteByDay: Record<string, string>;
-  metro: string | null; duration: string | null; description: string | null;
+  metro: string | null; metroUnverified?: boolean; duration: string | null; description: string | null;
+  /** Short tips shown in the Things to know card. The card stays hidden while this is empty. */
+  thingsToKnow?: string[];
   /** Official booking page. The Book tickets button stays hidden while this is null. */
   bookUrl: string | null; bookable: boolean;
   source: string; verifiedNote: string; photoCredit: string | null;

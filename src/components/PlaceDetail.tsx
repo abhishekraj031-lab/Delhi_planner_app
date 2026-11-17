@@ -115,6 +115,14 @@ export function PlaceDetail({ place, km, day, today, saved, onClose, onToggleSav
 
               <Card title="About">{p.description ? <Body>{p.description}</Body> : <NotAvailable size={15} />}</Card>
 
+              {p.thingsToKnow?.length ? (
+                <Card title="Things to know">
+                  {p.thingsToKnow.map((t) => (
+                    <View key={t} style={s.tip}><View style={s.bullet} /><Txt style={[s.body, { flex: 1 }]}>{t}</Txt></View>
+                  ))}
+                </Card>
+              ) : null}
+
               <Card title="Opening hours">
                 {p.closedDays ? (
                   <>
@@ -155,7 +163,7 @@ export function PlaceDetail({ place, km, day, today, saved, onClose, onToggleSav
               </Card>
 
               <Card title="Getting there">
-                <Row label="Nearest metro" value={p.metro ?? 'Not available'} />
+                <Row label="Nearest metro" value={p.metro ?? 'Not available'} unverified={!!p.metro && !!p.metroUnverified} />
                 {km != null ? <Row label="From you" value={`${formatAway(km)} (straight line)`} /> : null}
               </Card>
 
@@ -209,6 +217,8 @@ const s = StyleSheet.create({
   row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 16, minHeight: 28 },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 4 },
   pill: { minHeight: 30, paddingHorizontal: 12, borderRadius: 15, justifyContent: 'center' },
+  tip: { flexDirection: 'row', gap: 10, alignItems: 'flex-start' },
+  bullet: { width: 6, height: 6, borderRadius: 3, backgroundColor: colors.primary, marginTop: 9 },
   note: { backgroundColor: '#fef3c7', borderRadius: 10, padding: 10, marginTop: 4 },
   estimate: { marginTop: 8, paddingTop: 12, borderTopWidth: 1, borderTopColor: colors.line, gap: 8 },
   circle: { position: 'absolute', width: 44, height: 44, borderRadius: 22, backgroundColor: colors.white, alignItems: 'center', justifyContent: 'center', shadowColor: '#000', shadowOpacity: 0.18, shadowRadius: 6, shadowOffset: { width: 0, height: 2 }, elevation: 4 },

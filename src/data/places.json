@@ -67,7 +67,8 @@
   "verifiedNote": "Hours conflict across sites",
   "photoCredit": null,
   "lat": 28.6562,
-  "lng": 77.241
+  "lng": 77.241,
+  "metroUnverified": false
  },
  {
   "id": "pq",
@@ -116,16 +117,17 @@
   "partialNoteByDay": {
    "5": "The site museum is closed on Fridays."
   },
-  "metro": null,
+  "metro": "Indraprastha (1.4 km)",
   "duration": "2 hrs",
-  "description": "16th-century fort with a lake and a site museum, near the Delhi Zoo.",
+  "description": "A 16th-century fort opposite Pragati Maidan, begun under Humayun and extended by Sher Shah Suri. It is known for its red sandstone walls and gateways.",
   "bookUrl": null,
   "bookable": true,
-  "source": "Travel sites, no official source found",
+  "source": "Travel sites, no official source found; YoMetro travel guide (not official)",
   "verifiedNote": "Prices conflict. Most common value shown.",
   "photoCredit": null,
   "lat": 28.6096,
-  "lng": 77.2437
+  "lng": 77.2437,
+  "metroUnverified": true
  },
  {
   "id": "humayun-s-tomb",
@@ -177,16 +179,17 @@
   ],
   "partialNote": null,
   "partialNoteByDay": {},
-  "metro": null,
+  "metro": "JLN Stadium (2 km)",
   "duration": null,
-  "description": null,
+  "description": "A red sandstone Mughal tomb built between 1565 and 1572, considered the first garden tomb in India. It became a UNESCO World Heritage Site in 1993.",
   "bookUrl": null,
   "bookable": false,
-  "source": "Travel guides",
+  "source": "Travel guides; YoMetro travel guide (not official)",
   "verifiedNote": "Hours and prices differ across sources.",
   "photoCredit": "Anupam Calcutta · CC BY-SA 4.0",
   "lat": 28.5933,
-  "lng": 77.2507
+  "lng": 77.2507,
+  "metroUnverified": true
  },
  {
   "id": "qutub-minar",
@@ -244,14 +247,15 @@
   "partialNoteByDay": {},
   "metro": null,
   "duration": null,
-  "description": null,
+  "description": "A 72.5 m tower of red and buff sandstone begun in 1199 as a call-to-prayer tower. It is the tallest tower in India, and each storey has a balcony with honeycomb-patterned brackets.",
   "bookUrl": null,
   "bookable": true,
-  "source": "Travel sites and a news report on restricted areas",
+  "source": "Travel sites and a news report on restricted areas; ASI (official)",
   "verifiedNote": "Hours and prices differ across sources.",
   "photoCredit": "Akbarzoda · CC BY-SA 4.0",
   "lat": 28.5245,
-  "lng": 77.1855
+  "lng": 77.1855,
+  "metroUnverified": false
  },
  {
   "id": "mehrauli-archaeological-park",
@@ -299,7 +303,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": "Varun Shiv Kapur from New Delhi, India · CC BY 2.0",
   "lat": 28.5195,
-  "lng": 77.184
+  "lng": 77.184,
+  "metroUnverified": false
  },
  {
   "id": "safdarjung-tomb",
@@ -346,16 +351,17 @@
   ],
   "partialNote": "The mosque and cells are under repair.",
   "partialNoteByDay": {},
-  "metro": null,
+  "metro": "Jor Bagh (457 m)",
   "duration": null,
-  "description": null,
+  "description": "A late Mughal garden tomb built around 1754 for Nawab Safdarjung, with a charbagh garden, a central dome and red sandstone and marble work.",
   "bookUrl": null,
   "bookable": false,
-  "source": "Delhi Tourism (official)",
+  "source": "Delhi Tourism (official); YoMetro travel guide (not official)",
   "verifiedNote": "Official source. Older, lower prices still appear on other sites.",
   "photoCredit": "Dey.sandip · CC BY-SA 4.0",
   "lat": 28.5897,
-  "lng": 77.2108
+  "lng": 77.2108,
+  "metroUnverified": true
  },
  {
   "id": "tughlaqabad-fort",
@@ -403,7 +409,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": "Shannon.Mathew · CC BY-SA 3.0",
   "lat": 28.5126,
-  "lng": 77.261
+  "lng": 77.261,
+  "metroUnverified": false
  },
  {
   "id": "hauz-khas-fort",
@@ -450,16 +457,17 @@
   ],
   "partialNote": "Parts are restricted while repairs are underway.",
   "partialNoteByDay": {},
-  "metro": null,
+  "metro": "IIT (334 m)",
   "duration": null,
-  "description": null,
+  "description": "A 13th-century Delhi Sultanate complex with a royal water tank, a mosque, a tomb and a seminary, set among parks in South Delhi.",
   "bookUrl": null,
   "bookable": false,
-  "source": "Delhi Tourism (official)",
+  "source": "Delhi Tourism (official); YoMetro travel guide (not official)",
   "verifiedNote": "Official source. Some sites say it is closed on Sundays.",
   "photoCredit": "Varun Shiv Kapur from New Delhi, India · CC BY 2.0",
   "lat": 28.5494,
-  "lng": 77.1943
+  "lng": 77.1943,
+  "metroUnverified": true
  },
  {
   "id": "agrasen-ki-baoli",
@@ -501,16 +509,17 @@
   ],
   "partialNote": "Parts are restricted while repairs are underway.",
   "partialNoteByDay": {},
-  "metro": null,
+  "metro": "Barakhamba Road (188 m)",
   "duration": null,
-  "description": null,
+  "description": "A historic stepwell near Jantar Mantar, traditionally linked to Maharaja Agrasen. Its tiered steps and arched niches once held water and gave visitors a cool place to rest.",
   "bookUrl": null,
   "bookable": false,
-  "source": "Travel sites",
+  "source": "Travel sites; YoMetro travel guide (not official)",
   "verifiedNote": "Opening hours differ across sources.",
   "photoCredit": "Indrajit Das · CC BY-SA 4.0",
   "lat": 28.6265,
-  "lng": 77.2252
+  "lng": 77.2252,
+  "metroUnverified": true
  },
  {
   "id": "jantar-mantar",
@@ -562,16 +571,17 @@
   ],
   "partialNote": "Parts are restricted while repairs are underway.",
   "partialNoteByDay": {},
-  "metro": null,
+  "metro": "Shivaji Stadium (177 m)",
   "duration": null,
-  "description": null,
+  "description": "An observatory built in 1724 by Maharaja Sawai Jai Singh II, with large stone instruments such as the Samrat Yantra sundial for tracking time and the stars.",
   "bookUrl": null,
   "bookable": false,
-  "source": "Delhi Tourism (official)",
+  "source": "Delhi Tourism (official); YoMetro travel guide (not official)",
   "verifiedNote": "Official source. Lower prices still appear on other sites.",
   "photoCredit": null,
   "lat": 28.627,
-  "lng": 77.2166
+  "lng": 77.2166,
+  "metroUnverified": true
  },
  {
   "id": "feroz-shah-kotla",
@@ -580,26 +590,41 @@
   "category": "Monuments",
   "emoji": "🏛️",
   "color": "#f6c9a8",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
+  "closedDays": [
+   1
+  ],
+  "hours": [
+   510,
+   1140
+  ],
+  "hoursText": "8:30 AM – 7:00 PM",
+  "hoursUnverified": true,
   "price": {
    "weekday": {
-    "i": null,
-    "f": null
+    "i": 5,
+    "f": 100
    },
    "weekend": {
-    "i": null,
-    "f": null
+    "i": 5,
+    "f": 100
    },
-   "unverified": false
+   "unverified": true
   },
   "tickets": [
    {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
+    "label": "Indian & SAARC visitors",
+    "value": "₹5",
+    "unverified": true
+   },
+   {
+    "label": "Foreign visitors",
+    "value": "₹100",
+    "unverified": true
+   },
+   {
+    "label": "Children up to 15",
+    "value": "Free",
+    "unverified": true
    }
   ],
   "rules": [
@@ -610,16 +635,17 @@
   ],
   "partialNote": null,
   "partialNoteByDay": {},
-  "metro": null,
+  "metro": "Delhi Gate (202 m)",
   "duration": null,
-  "description": null,
+  "description": "A 14th-century Tughlaq-era fort with thick walls, bastions, a mosque, a tomb and a stepwell. An Ashokan pillar brought from Haryana stands inside.",
   "bookUrl": null,
   "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
+  "source": "YoMetro travel guide (not official)",
+  "verifiedNote": "Checked 17 Nov 2026. Not confirmed by an official source.",
   "photoCredit": null,
   "lat": 28.6358,
-  "lng": 77.24
+  "lng": 77.24,
+  "metroUnverified": true
  },
  {
   "id": "lodhi-garden-tombs",
@@ -682,7 +708,8 @@
   "verifiedNote": "Timings vary by season. Pet rules conflict across sources.",
   "photoCredit": "Amaninder · CC BY-SA 3.0",
   "lat": 28.5931,
-  "lng": 77.2197
+  "lng": 77.2197,
+  "metroUnverified": false
  },
  {
   "id": "hazrat-nizamuddin-dargah",
@@ -691,26 +718,29 @@
   "category": "Monuments",
   "emoji": "🕌",
   "color": "#f6c9a8",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
+  "closedDays": [],
+  "hours": [
+   300,
+   1320
+  ],
+  "hoursText": "5:00 AM – 10:00 PM",
+  "hoursUnverified": true,
   "price": {
    "weekday": {
-    "i": null,
-    "f": null
+    "i": 0,
+    "f": 0
    },
    "weekend": {
-    "i": null,
-    "f": null
+    "i": 0,
+    "f": 0
    },
-   "unverified": false
+   "unverified": true
   },
   "tickets": [
    {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
+    "label": "All visitors",
+    "value": "Free",
+    "unverified": true
    }
   ],
   "rules": [
@@ -721,16 +751,17 @@
   ],
   "partialNote": null,
   "partialNoteByDay": {},
-  "metro": null,
+  "metro": "Jangpura (796 m)",
   "duration": null,
-  "description": null,
+  "description": "A Sufi shrine honouring the 14th-century saint Nizamuddin Auliya and his disciple Amir Khusro. Qawwali sessions on Thursdays draw large crowds.",
   "bookUrl": null,
   "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
+  "source": "YoMetro travel guide (not official)",
+  "verifiedNote": "Checked 17 Nov 2026. Not confirmed by an official source.",
   "photoCredit": null,
   "lat": 28.5886,
-  "lng": 77.2423
+  "lng": 77.2423,
+  "metroUnverified": true
  },
  {
   "id": "ig",
@@ -786,7 +817,8 @@
   "verifiedNote": "Checked Nov 2026",
   "photoCredit": null,
   "lat": 28.6129,
-  "lng": 77.2295
+  "lng": 77.2295,
+  "metroUnverified": false
  },
  {
   "id": "national-war-memorial",
@@ -834,7 +866,8 @@
   "verifiedNote": "Opening hours not collected yet.",
   "photoCredit": null,
   "lat": 28.6118,
-  "lng": 77.2336
+  "lng": 77.2336,
+  "metroUnverified": false
  },
  {
   "id": "rashtrapati-bhavan-and-amrit-udyan",
@@ -882,7 +915,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": null,
   "lat": 28.6143,
-  "lng": 77.1995
+  "lng": 77.1995,
+  "metroUnverified": false
  },
  {
   "id": "raj-ghat",
@@ -937,7 +971,8 @@
   "verifiedNote": "Opening hours differ across sources.",
   "photoCredit": "Humayunn Niaz Ahmed Peerzaada from Mumbai, India · CC BY-SA 2.0",
   "lat": 28.6406,
-  "lng": 77.2495
+  "lng": 77.2495,
+  "metroUnverified": false
  },
  {
   "id": "gandhi-smriti",
@@ -985,7 +1020,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": null,
   "lat": 28.6008,
-  "lng": 77.215
+  "lng": 77.215,
+  "metroUnverified": false
  },
  {
   "id": "rm",
@@ -1053,7 +1089,8 @@
   "verifiedNote": "No official page found",
   "photoCredit": "Bruno Corpet (Quoique) · CC BY-SA 3.0",
   "lat": 28.5836,
-  "lng": 77.1805
+  "lng": 77.1805,
+  "metroUnverified": false
  },
  {
   "id": "national-museum",
@@ -1116,7 +1153,8 @@
   "verifiedNote": "Official source. One site says weekends run to 8 PM, not confirmed.",
   "photoCredit": "Miya.m · CC BY-SA 3.0",
   "lat": 28.6117,
-  "lng": 77.2196
+  "lng": 77.2196,
+  "metroUnverified": false
  },
  {
   "id": "national-gallery-of-modern-art",
@@ -1164,7 +1202,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": null,
   "lat": 28.6119,
-  "lng": 77.2342
+  "lng": 77.2342,
+  "metroUnverified": false
  },
  {
   "id": "pm-sangrahalaya-teen-murti-",
@@ -1212,7 +1251,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": null,
   "lat": 28.6006,
-  "lng": 77.1967
+  "lng": 77.1967,
+  "metroUnverified": false
  },
  {
   "id": "crafts-museum",
@@ -1221,26 +1261,41 @@
   "category": "Museums",
   "emoji": "🏺",
   "color": "#e8d9ff",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
+  "closedDays": [
+   1
+  ],
+  "hours": [
+   600,
+   1020
+  ],
+  "hoursText": "10:00 AM – 5:00 PM",
+  "hoursUnverified": true,
   "price": {
    "weekday": {
-    "i": null,
-    "f": null
+    "i": 20,
+    "f": 300
    },
    "weekend": {
-    "i": null,
-    "f": null
+    "i": 20,
+    "f": 300
    },
-   "unverified": false
+   "unverified": true
   },
   "tickets": [
    {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
+    "label": "Indian visitors",
+    "value": "₹20",
+    "unverified": true
+   },
+   {
+    "label": "Foreign visitors",
+    "value": "₹300",
+    "unverified": true
+   },
+   {
+    "label": "Children under 15",
+    "value": "Free",
+    "unverified": true
    }
   ],
   "rules": [
@@ -1253,14 +1308,15 @@
   "partialNoteByDay": {},
   "metro": null,
   "duration": null,
-  "description": null,
+  "description": "A national collection of Indian handicrafts founded in 1956, in a building by architect Charles Correa, with galleries on tribal, court and textile crafts and an outdoor village complex.",
   "bookUrl": null,
   "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
+  "source": "YoMetro travel guide (not official)",
+  "verifiedNote": "Checked 17 Nov 2026. Not confirmed by an official source.",
   "photoCredit": null,
   "lat": 28.612,
-  "lng": 77.243
+  "lng": 77.243,
+  "metroUnverified": false
  },
  {
   "id": "national-science-centre",
@@ -1308,7 +1364,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": null,
   "lat": 28.6119,
-  "lng": 77.244
+  "lng": 77.244,
+  "metroUnverified": false
  },
  {
   "id": "indira-gandhi-memorial-museum",
@@ -1356,7 +1413,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": "Vinayaraj · CC BY-SA 4.0",
   "lat": 28.5996,
-  "lng": 77.21
+  "lng": 77.21,
+  "metroUnverified": false
  },
  {
   "id": "air-force-museum",
@@ -1365,26 +1423,32 @@
   "category": "Museums",
   "emoji": "✈️",
   "color": "#e8d9ff",
-  "closedDays": null,
-  "hours": null,
-  "hoursText": null,
-  "hoursUnverified": false,
+  "closedDays": [
+   1,
+   2
+  ],
+  "hours": [
+   600,
+   1020
+  ],
+  "hoursText": "10:00 AM – 5:00 PM",
+  "hoursUnverified": true,
   "price": {
    "weekday": {
-    "i": null,
+    "i": 30,
     "f": null
    },
    "weekend": {
-    "i": null,
+    "i": 30,
     "f": null
    },
-   "unverified": false
+   "unverified": true
   },
   "tickets": [
    {
-    "label": "Ticket prices",
-    "value": "Not available",
-    "unverified": false
+    "label": "Indian visitors",
+    "value": "₹30 (one section of the source says free)",
+    "unverified": true
    }
   ],
   "rules": [
@@ -1397,14 +1461,15 @@
   "partialNoteByDay": {},
   "metro": null,
   "duration": null,
-  "description": null,
+  "description": "A museum opened in 1967 on Indian Air Force history, with aircraft, helicopters, uniforms and medals, and a memorial hall for personnel who died in service.",
   "bookUrl": null,
   "bookable": false,
-  "source": "Not collected yet",
-  "verifiedNote": "Details for this place have not been collected yet.",
+  "source": "YoMetro travel guide (not official)",
+  "verifiedNote": "Checked 17 Nov 2026. Not confirmed by an official source.",
   "photoCredit": null,
   "lat": 28.569,
-  "lng": 77.128
+  "lng": 77.128,
+  "metroUnverified": false
  },
  {
   "id": "sanskriti-kendra-museums",
@@ -1452,7 +1517,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": null,
   "lat": 28.493,
-  "lng": 77.19
+  "lng": 77.19,
+  "metroUnverified": false
  },
  {
   "id": "lt",
@@ -1500,16 +1566,17 @@
   ],
   "partialNote": null,
   "partialNoteByDay": {},
-  "metro": null,
+  "metro": "Kalkaji Mandir (333 m)",
   "duration": "1–2 hrs",
   "description": "Bahá’í house of worship shaped like a lotus, set in landscaped gardens.",
   "bookUrl": null,
   "bookable": false,
-  "source": "Delhi Tourism (official)",
+  "source": "Delhi Tourism (official); YoMetro travel guide (not official)",
   "verifiedNote": "Official source",
   "photoCredit": null,
   "lat": 28.5535,
-  "lng": 77.2588
+  "lng": 77.2588,
+  "metroUnverified": true
  },
  {
   "id": "akshardham-temple",
@@ -1566,16 +1633,17 @@
   ],
   "partialNote": null,
   "partialNoteByDay": {},
-  "metro": null,
+  "metro": "Akshardham (939 m)",
   "duration": null,
-  "description": null,
+  "description": "A Hindu temple dedicated to Lord Swaminarayan, opened in 2005, that shows Indian art, architecture and spiritual traditions.",
   "bookUrl": null,
   "bookable": false,
-  "source": "Incredible India and travel sites",
+  "source": "Incredible India and travel sites; YoMetro travel guide (not official)",
   "verifiedNote": "Some sites say the complex stays open until 8 PM.",
   "photoCredit": null,
   "lat": 28.6127,
-  "lng": 77.2773
+  "lng": 77.2773,
+  "metroUnverified": true
  },
  {
   "id": "iskcon-temple",
@@ -1626,7 +1694,8 @@
   "verifiedNote": "Official source.",
   "photoCredit": null,
   "lat": 28.5574,
-  "lng": 77.2426
+  "lng": 77.2426,
+  "metroUnverified": false
  },
  {
   "id": "gurudwara-bangla-sahib",
@@ -1676,16 +1745,17 @@
   ],
   "partialNote": null,
   "partialNoteByDay": {},
-  "metro": null,
+  "metro": "Patel Chowk (418 m)",
   "duration": null,
-  "description": null,
+  "description": "A major Sikh gurdwara in central Delhi, once the bungalow of Raja Jai Singh where Guru Har Krishan stayed. It is known for its golden dome, its sarovar and its langar.",
   "bookUrl": null,
   "bookable": false,
-  "source": "Travel sites",
+  "source": "Travel sites; YoMetro travel guide (not official)",
   "verifiedNote": "Photography rules differ across sources.",
   "photoCredit": "Slyronit · CC BY-SA 4.0",
   "lat": 28.6264,
-  "lng": 77.2092
+  "lng": 77.2092,
+  "metroUnverified": true
  },
  {
   "id": "jama-masjid",
@@ -1746,16 +1816,17 @@
   ],
   "partialNote": null,
   "partialNoteByDay": {},
-  "metro": null,
+  "metro": "Jama Masjid (534 m)",
   "duration": null,
-  "description": null,
+  "description": "A Shah Jahan-era mosque in Old Delhi, built of red sandstone and white marble, with a courtyard that holds about 25,000 people. Tourists cannot enter during prayer times.",
   "bookUrl": null,
   "bookable": false,
-  "source": "Travel sites and Delhi Tourism",
+  "source": "Travel sites and Delhi Tourism; YoMetro travel guide (not official)",
   "verifiedNote": "Delhi Tourism’s own pages disagree on foreign entry.",
   "photoCredit": "Bintladen · CC BY-SA 4.0",
   "lat": 28.6507,
-  "lng": 77.2334
+  "lng": 77.2334,
+  "metroUnverified": true
  },
  {
   "id": "birla-mandir-laxminarayan-temple-",
@@ -1803,7 +1874,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": null,
   "lat": 28.6327,
-  "lng": 77.1996
+  "lng": 77.1996,
+  "metroUnverified": false
  },
  {
   "id": "chhatarpur-temple",
@@ -1851,7 +1923,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": "Akshatha Inamdar · CC BY-SA 4.0",
   "lat": 28.5053,
-  "lng": 77.18
+  "lng": 77.18,
+  "metroUnverified": false
  },
  {
   "id": "sacred-heart-cathedral",
@@ -1899,7 +1972,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": null,
   "lat": 28.6295,
-  "lng": 77.2115
+  "lng": 77.2115,
+  "metroUnverified": false
  },
  {
   "id": "sn",
@@ -1965,7 +2039,8 @@
   "verifiedNote": "Official source. Other sites list Mondays closed and lower prices.",
   "photoCredit": "Danish971 · CC BY-SA 4.0",
   "lat": 28.5937,
-  "lng": 77.2463
+  "lng": 77.2463,
+  "metroUnverified": false
  },
  {
   "id": "lodhi-garden",
@@ -2028,7 +2103,8 @@
   "verifiedNote": "Timings vary by season. Pet rules conflict across sources.",
   "photoCredit": "Amaninder · CC BY-SA 3.0",
   "lat": 28.593,
-  "lng": 77.219
+  "lng": 77.219,
+  "metroUnverified": false
  },
  {
   "id": "garden-of-five-senses",
@@ -2076,7 +2152,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": "Sanskari · CC BY-SA 4.0",
   "lat": 28.517,
-  "lng": 77.203
+  "lng": 77.203,
+  "metroUnverified": false
  },
  {
   "id": "deer-park",
@@ -2124,7 +2201,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": null,
   "lat": 28.553,
-  "lng": 77.203
+  "lng": 77.203,
+  "metroUnverified": false
  },
  {
   "id": "nehru-park",
@@ -2172,7 +2250,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": null,
   "lat": 28.5865,
-  "lng": 77.1895
+  "lng": 77.1895,
+  "metroUnverified": false
  },
  {
   "id": "buddha-jayanti-park",
@@ -2220,7 +2299,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": null,
   "lat": 28.61,
-  "lng": 77.175
+  "lng": 77.175,
+  "metroUnverified": false
  },
  {
   "id": "national-zoological-park",
@@ -2278,7 +2358,8 @@
   "verifiedNote": "Prices differ across sources.",
   "photoCredit": null,
   "lat": 28.6083,
-  "lng": 77.2475
+  "lng": 77.2475,
+  "metroUnverified": false
  },
  {
   "id": "yamuna-biodiversity-park",
@@ -2326,7 +2407,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": null,
   "lat": 28.7,
-  "lng": 77.23
+  "lng": 77.23,
+  "metroUnverified": false
  },
  {
   "id": "sanjay-van",
@@ -2374,7 +2456,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": null,
   "lat": 28.533,
-  "lng": 77.174
+  "lng": 77.174,
+  "metroUnverified": false
  },
  {
   "id": "okhla-bird-sanctuary",
@@ -2422,7 +2505,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": "Akhilan · CC BY-SA 3.0",
   "lat": 28.562,
-  "lng": 77.317
+  "lng": 77.317,
+  "metroUnverified": false
  },
  {
   "id": "noida-botanical-garden",
@@ -2470,7 +2554,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": null,
   "lat": 28.564,
-  "lng": 77.334
+  "lng": 77.334,
+  "metroUnverified": false
  },
  {
   "id": "aravalli-biodiversity-park",
@@ -2518,7 +2603,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": null,
   "lat": 28.469,
-  "lng": 77.1
+  "lng": 77.1,
+  "metroUnverified": false
  },
  {
   "id": "leisure-valley-park",
@@ -2566,7 +2652,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": null,
   "lat": 28.462,
-  "lng": 77.064
+  "lng": 77.064,
+  "metroUnverified": false
  },
  {
   "id": "sultanpur-national-park",
@@ -2614,7 +2701,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": "Ekabhishek · CC BY-SA 3.0",
   "lat": 28.47,
-  "lng": 76.885
+  "lng": 76.885,
+  "metroUnverified": false
  },
  {
   "id": "chandni-chowk",
@@ -2662,7 +2750,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": "कृष्ण कान्त शर्मा · CC BY-SA 4.0",
   "lat": 28.6506,
-  "lng": 77.2303
+  "lng": 77.2303,
+  "metroUnverified": false
  },
  {
   "id": "paranthe-wali-gali",
@@ -2710,7 +2799,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": "Sripathroy · CC0",
   "lat": 28.656,
-  "lng": 77.232
+  "lng": 77.232,
+  "metroUnverified": false
  },
  {
   "id": "connaught-place",
@@ -2758,7 +2848,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": "Kabi1990 · CC BY-SA 3.0",
   "lat": 28.6315,
-  "lng": 77.2167
+  "lng": 77.2167,
+  "metroUnverified": false
  },
  {
   "id": "khan-market",
@@ -2806,7 +2897,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": "Varun Shiv Kapur from New Delhi, India · CC BY 2.0",
   "lat": 28.5998,
-  "lng": 77.227
+  "lng": 77.227,
+  "metroUnverified": false
  },
  {
   "id": "janpath-and-dilli-haat-ina",
@@ -2854,7 +2946,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": null,
   "lat": 28.5728,
-  "lng": 77.2085
+  "lng": 77.2085,
+  "metroUnverified": false
  },
  {
   "id": "sarojini-nagar-market",
@@ -2902,7 +2995,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": "Dev Jadiya · CC BY-SA 4.0",
   "lat": 28.576,
-  "lng": 77.199
+  "lng": 77.199,
+  "metroUnverified": false
  },
  {
   "id": "lajpat-nagar-market",
@@ -2950,7 +3044,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": null,
   "lat": 28.57,
-  "lng": 77.243
+  "lng": 77.243,
+  "metroUnverified": false
  },
  {
   "id": "hauz-khas-village",
@@ -2998,7 +3093,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": null,
   "lat": 28.5535,
-  "lng": 77.195
+  "lng": 77.195,
+  "metroUnverified": false
  },
  {
   "id": "majnu-ka-tila",
@@ -3046,7 +3142,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": "Ktoya · CC BY-SA 3.0",
   "lat": 28.699,
-  "lng": 77.229
+  "lng": 77.229,
+  "metroUnverified": false
  },
  {
   "id": "karol-bagh",
@@ -3094,7 +3191,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": "Bahnfrend · CC BY-SA 3.0",
   "lat": 28.651,
-  "lng": 77.19
+  "lng": 77.19,
+  "metroUnverified": false
  },
  {
   "id": "select-citywalk",
@@ -3142,7 +3240,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": "KuwarOnline · CC BY-SA 3.0",
   "lat": 28.5285,
-  "lng": 77.219
+  "lng": 77.219,
+  "metroUnverified": false
  },
  {
   "id": "cyber-hub",
@@ -3190,7 +3289,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": "Slyronit · CC BY-SA 4.0",
   "lat": 28.495,
-  "lng": 77.089
+  "lng": 77.089,
+  "metroUnverified": false
  },
  {
   "id": "dlf-mall-of-india",
@@ -3238,7 +3338,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": "AjayDas · CC BY-SA 4.0",
   "lat": 28.5675,
-  "lng": 77.3215
+  "lng": 77.3215,
+  "metroUnverified": false
  },
  {
   "id": "kingdom-of-dreams",
@@ -3286,7 +3387,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": "Ekabhishek · CC BY-SA 3.0",
   "lat": 28.47,
-  "lng": 77.072
+  "lng": 77.072,
+  "metroUnverified": false
  },
  {
   "id": "worlds-of-wonder",
@@ -3334,7 +3436,8 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": null,
   "lat": 28.5665,
-  "lng": 77.334
+  "lng": 77.334,
+  "metroUnverified": false
  },
  {
   "id": "dilli-haat-janakpuri",
@@ -3382,6 +3485,7 @@
   "verifiedNote": "Details for this place have not been collected yet.",
   "photoCredit": null,
   "lat": 28.62,
-  "lng": 77.083
+  "lng": 77.083,
+  "metroUnverified": false
  }
 ]
