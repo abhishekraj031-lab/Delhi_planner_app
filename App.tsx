@@ -124,7 +124,11 @@ function Home() {
     () => visiblePlaces(places, { category, query, freeOnly, savedOnly, day }, saved, loc),
     [places, category, query, freeOnly, savedOnly, day, saved, loc],
   );
-  const openKm = rows.find((r) => r.place.id === openId)?.km ?? null;
+  const favRows = useMemo(
+    () => visiblePlaces(places, { category: 'All', query: '', freeOnly: false, savedOnly: true, day }, saved, loc),
+    [places, day, saved, loc],
+  );
+  const openKm = rows.find((r) => r.place.id === openId)?.km ?? favRows.find((r) => r.place.id === openId)?.km ?? null;
   const openPlace = places.find((p) => p.id === openId) ?? null;
   const nearby = useMemo(
     () => openPlace
@@ -151,6 +155,19 @@ function Home() {
       body = user
         ? <EmptyTab title={t.title} message={t.empty} onSignOut={signOut} />
         : <LoginScreen title={t.title} hint={t.hint} onSignIn={signIn} />;
+    } else if (tab === 'favourites' && user && favRows.length > 0) {
+      body = (
+        <View style={{ flex: 1, paddingTop: insets.top + 12 }}>
+          <View style={{ paddingHorizontal: 16, paddingBottom: 8 }}>
+            <Txt w="bold" style={{ fontSize: 20 }}>Favourites</Txt>
+            <Txt style={{ color: colors.sub, fontSize: 13 }}>{favRows.length} saved {favRows.length === 1 ? 'place' : 'places'}{loc ? ', nearest first' : ''}</Txt>
+          </View>
+          <FlatList data={favRows} keyExtractor={(r) => r.place.id} contentContainerStyle={{ paddingBottom: 12 }}
+            renderItem={({ item }) => (
+              <PlaceCard place={item.place} km={item.km} day={day} today={today} saved onOpen={() => setOpenId(item.place.id)} onToggleSave={() => toggleSave(item.place.id)} />
+            )} />
+        </View>
+      );
     } else {
       body = <EmptyState title={t.title} {...empty} onCta={() => (user ? changeTab('home') : setLoginOpen(true))} />;
     }
@@ -159,6 +176,8 @@ function Home() {
         <StatusBar style="dark" />
         <FadeSlide k={`${tab}-${!user && loginOpen}`} style={{ flex: 1 }}>{body}</FadeSlide>
         <TabBar key="tabbar" tab={tab} onChange={changeTab} onPlan={() => { changeTab('home'); setShowPlan(true); }} />
+        <PlaceDetail place={openPlace} km={openKm} day={day} today={today} saved={openId ? saved.has(openId) : false} nearby={nearby} onOpenPlace={setOpenId}
+          onClose={() => setOpenId(null)} onToggleSave={() => openId && requestToggle(openId)} />
       </View>
     );
   }

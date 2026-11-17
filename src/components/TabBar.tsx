@@ -8,7 +8,7 @@ import { Txt } from './ui';
 export type TabKey = 'home' | 'favourites' | 'bookings' | 'profile';
 const TABS: { key: TabKey; label: string; Icon: React.ComponentType<{ size?: number; color?: string }> }[] = [
   { key: 'home', label: 'Home', Icon: House },
-  { key: 'favourites', label: 'favourites', Icon: Heart },
+  { key: 'favourites', label: 'Favourites', Icon: Heart },
   { key: 'bookings', label: 'Bookings', Icon: Ticket },
   { key: 'profile', label: 'Profile', Icon: CircleUser },
 ];
