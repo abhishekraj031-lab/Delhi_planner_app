@@ -1,18 +1,20 @@
 import React from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Linking, Pressable, StyleSheet, View } from 'react-native';
 import type { Coords, Place } from '../types';
 import { colors } from '../theme';
-import { buildPlan } from '../lib/plan';
+import { buildPlan, planMapsUrl } from '../lib/plan';
 import { formatFee } from '../lib/pricing';
-import { Txt } from './ui';
+import { Button, Txt } from './ui';
 import { Sheet } from './Sheet';
 import { areaLabel, statusText } from './PlaceCard';
 
-type Props = { visible: boolean; onClose: () => void; places: Place[]; day: number; dayLabel: string; today: Date | null; loc: Coords | null; onOpenPlace: (id: string) => void };
+type Props = { visible: boolean; onClose: () => void; places: Place[]; day: number; dayLabel: string; today: Date | null; loc: Coords | null; saved: Set<string>; onSaveAll: (ids: string[]) => void; onOpenPlace: (id: string) => void };
 
 /** "Plan my day": a short chain of nearby places that are open on the chosen day. */
-export function PlanSheet({ visible, onClose, places, day, dayLabel, today, loc, onOpenPlace }: Props) {
+export function PlanSheet({ visible, onClose, places, day, dayLabel, today, loc, saved, onSaveAll, onOpenPlace }: Props) {
   const stops = visible ? buildPlan(places, day, loc) : [];
+  const allSaved = stops.length > 0 && stops.every((x) => saved.has(x.place.id));
+  const url = planMapsUrl(stops);
   const total = stops.reduce((n, s) => n + (s.legKm ?? 0), 0);
   return (
     <Sheet visible={visible} onClose={onClose} label="Plan my day">
@@ -43,6 +45,12 @@ export function PlanSheet({ visible, onClose, places, day, dayLabel, today, loc,
           );
         })}
       </View>
+      {stops.length ? (
+        <View style={{ gap: 8 }}>
+          {url ? <Button label="Open route in Maps" onPress={() => Linking.openURL(url)} /> : null}
+          <Button label={allSaved ? 'Saved to Favourites' : 'Save all to Favourites'} outline onPress={() => { if (!allSaved) onSaveAll(stops.map((x) => x.place.id)); }} />
+        </View>
+      ) : null}
       {stops.length ? <Txt style={{ fontSize: 12, color: colors.sub }}>Straight-line distances. Check the place page for opening hours before you go.</Txt> : null}
     </Sheet>
   );

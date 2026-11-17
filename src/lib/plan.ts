@@ -27,3 +27,13 @@ export function buildPlan(places: Place[], day: number, loc: Coords | null, maxS
   return stops;
 }
 const nearCount = (list: Place[], p: Place) => list.filter((q) => distanceKm(p, q) <= 6).length;
+
+/** One Google Maps directions link through every stop (it opens the Maps app when installed). */
+export function planMapsUrl(stops: PlanStop[]): string | null {
+  if (!stops.length) return null;
+  const pt = (p: Place) => `${p.lat},${p.lng}`;
+  const first = stops[0].place, last = stops[stops.length - 1].place;
+  const mid = stops.slice(1, -1).map((s) => pt(s.place)).join('|');
+  const q = `api=1&origin=${pt(first)}&destination=${pt(stops.length === 1 ? first : last)}&travelmode=driving${mid ? `&waypoints=${encodeURIComponent(mid)}` : ''}`;
+  return `https://www.google.com/maps/dir/?${q}`;
+}

@@ -3,7 +3,7 @@ import type { Place } from '../types';
 import { getStatus } from '../lib/status';
 import { estimateTotal, formatFee, priceFor } from '../lib/pricing';
 import { distanceKm, formatAway } from '../lib/distance';
-import { buildPlan } from '../lib/plan';
+import { buildPlan, planMapsUrl } from '../lib/plan';
 import { categoriesWithPlaces, hasCollectedData, visiblePlaces } from '../lib/places';
 
 const all = places as unknown as Place[];
@@ -123,4 +123,12 @@ test('plan my day chains nearby places that are open that day', () => {
   expect(plan.every((s) => !s.place.closedDays!.includes(1))).toBe(true);
   expect(plan.slice(1).every((s) => (s.legKm as number) <= 8)).toBe(true);
   expect(new Set(plan.map((s) => s.place.id)).size).toBe(plan.length);
+});
+
+test('plan opens as one Maps route through all stops', () => {
+  const plan = buildPlan((places as unknown as Place[]).filter(hasCollectedData), 1, null);
+  const url = planMapsUrl(plan) as string;
+  expect(url).toContain('origin=');
+  expect(url).toContain('destination=');
+  expect(decodeURIComponent(url).split('waypoints=')[1].split('|').length).toBe(plan.length - 2);
 });

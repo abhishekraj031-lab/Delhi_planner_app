@@ -86,6 +86,15 @@ function Home() {
     });
   }, []);
 
+  const saveMany = useCallback((ids: string[]) => {
+    setSaved((prev) => {
+      const next = new Set(prev);
+      ids.forEach((id) => next.add(id));
+      saveJSON(KEYS.saved, [...next]);
+      return next;
+    });
+  }, []);
+
   const rows = useMemo(
     () => visiblePlaces(places, { category, query, freeOnly, savedOnly, day }, saved, loc),
     [places, category, query, freeOnly, savedOnly, day, saved, loc],
@@ -174,7 +183,7 @@ function Home() {
       <TabBar key="tabbar" tab={tab} onChange={setTab} onPlan={() => setShowPlan(true)} />
       <PlaceDetail place={openPlace} km={openKm} day={day} today={today} saved={openId ? saved.has(openId) : false} nearby={nearby} onOpenPlace={setOpenId}
         onClose={() => setOpenId(null)} onToggleSave={() => openId && toggleSave(openId)} />
-      <PlanSheet visible={showPlan} onClose={() => setShowPlan(false)} places={places} day={day} dayLabel={choice.label} today={today} loc={loc} onOpenPlace={setOpenId} />
+      <PlanSheet visible={showPlan} onClose={() => setShowPlan(false)} places={places} day={day} dayLabel={choice.label} today={today} loc={loc} saved={saved} onSaveAll={saveMany} onOpenPlace={setOpenId} />
       <FilterSheet visible={showFilters} onClose={() => setShowFilters(false)} dayChoice={dayChoice} setDayChoice={setDayChoice}
         freeOnly={freeOnly} setFreeOnly={setFreeOnly} savedOnly={savedOnly} setSavedOnly={setSavedOnly} savedCount={saved.size} />
       <LocationSheet visible={showLocation} onClose={() => setShowLocation(false)} loc={loc} state={state} onUseCurrent={requestCurrent} onChooseArea={chooseArea} />
