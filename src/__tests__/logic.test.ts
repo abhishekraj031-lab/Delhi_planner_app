@@ -3,6 +3,7 @@ import type { Place } from '../types';
 import { getStatus } from '../lib/status';
 import { estimateTotal, formatFee, priceFor } from '../lib/pricing';
 import { distanceKm, formatAway } from '../lib/distance';
+import { buildPlan } from '../lib/plan';
 import { categoriesWithPlaces, hasCollectedData, visiblePlaces } from '../lib/places';
 
 const all = places as unknown as Place[];
@@ -113,4 +114,13 @@ test('places without collected data are hidden, tabs follow the rest', () => {
   expect(shown.length).toBe(28);
   expect(shown.every((p) => p.source !== 'Not collected yet')).toBe(true);
   expect(categoriesWithPlaces(shown).length).toBe(5);
+});
+
+test('plan my day chains nearby places that are open that day', () => {
+  const all = places as unknown as Place[];
+  const plan = buildPlan(all.filter(hasCollectedData), 1, null);
+  expect(plan.length).toBeGreaterThan(1);
+  expect(plan.every((s) => !s.place.closedDays!.includes(1))).toBe(true);
+  expect(plan.slice(1).every((s) => (s.legKm as number) <= 8)).toBe(true);
+  expect(new Set(plan.map((s) => s.place.id)).size).toBe(plan.length);
 });

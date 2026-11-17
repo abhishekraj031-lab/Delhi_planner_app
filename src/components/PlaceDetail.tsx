@@ -186,6 +186,7 @@ export function PlaceDetail({ place, km, day, today, saved, nearby, onOpenPlace,
                         <View style={{ borderRadius: 12, overflow: 'hidden' }}><PlaceVisual place={n} height={84} radius={{}} /></View>
                         <Txt w="semi" numberOfLines={1} style={{ fontSize: 14 }}>{n.name}</Txt>
                         <Txt numberOfLines={1} style={{ fontSize: 12, color: colors.sub }}>{d < 1 ? 'Under 1 km' : `${d.toFixed(1)} km`} from here</Txt>
+                        {getStatus(n, day).kind === 'closed' ? <Txt w="semi" numberOfLines={1} style={{ fontSize: 12, color: STATUS_TONE.closed.fg }}>{getStatus(n, day).label}</Txt> : null}
                       </Pressable>
                     ))}
                   </ScrollView>

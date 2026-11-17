@@ -8,8 +8,9 @@ import { Figtree_500Medium } from '@expo-google-fonts/figtree/500Medium';
 import { Figtree_600SemiBold } from '@expo-google-fonts/figtree/600SemiBold';
 import { Figtree_700Bold } from '@expo-google-fonts/figtree/700Bold';
 import { FadeSlide } from './src/components/motion';
+import { PlanSheet } from './src/components/PlanSheet';
 import { distanceKm } from './src/lib/distance';
-import { Church, Dome, FerrisWheel, Landmark, Lighthouse, Heart, MapPin, Search, ShoppingBag, SlidersHorizontal, Ticket, Trees } from 'lucide-react-native';
+import { Church, Dome, FerrisWheel, Landmark, Lighthouse, Heart, MapPin, Route, Search, ShoppingBag, SlidersHorizontal, Ticket, Trees } from 'lucide-react-native';
 import type { Category, Place } from './src/types';
 import { colors, font } from './src/theme';
 import { loadPlaces } from './src/data/repository';
@@ -58,6 +59,7 @@ function Home() {
   const [openId, setOpenId] = useState<string | null>(null);
   const [showFilters, setShowFilters] = useState(false);
   const [showLocation, setShowLocation] = useState(false);
+  const [showPlan, setShowPlan] = useState(false);
   const [tab, setTab] = useState<TabKey>('home');
   const [loginOpen, setLoginOpen] = useState(false);
   const [now, setNow] = useState(() => new Date());
@@ -138,6 +140,10 @@ function Home() {
             <Txt style={{ color: colors.sub, fontSize: 13 }}>{locLabel}</Txt>
           </Pressable>
         </View>
+        <Pressable onPress={() => setShowPlan(true)} accessibilityRole="button" accessibilityLabel="Plan my day" style={({ pressed }) => [s.plan, { opacity: pressed ? 0.7 : 1 }]}>
+          <Route size={18} color={colors.ink} />
+          <Txt w="semi" style={{ fontSize: 14 }}>Plan my day</Txt>
+        </Pressable>
       </View>
       <View style={s.searchRow}>
         <View style={s.search}>
@@ -172,6 +178,7 @@ function Home() {
       <TabBar key="tabbar" tab={tab} onChange={setTab} />
       <PlaceDetail place={openPlace} km={openKm} day={day} today={today} saved={openId ? saved.has(openId) : false} nearby={nearby} onOpenPlace={setOpenId}
         onClose={() => setOpenId(null)} onToggleSave={() => openId && toggleSave(openId)} />
+      <PlanSheet visible={showPlan} onClose={() => setShowPlan(false)} places={places} day={day} dayLabel={choice.label} today={today} loc={loc} onOpenPlace={setOpenId} />
       <FilterSheet visible={showFilters} onClose={() => setShowFilters(false)} dayChoice={dayChoice} setDayChoice={setDayChoice}
         freeOnly={freeOnly} setFreeOnly={setFreeOnly} savedOnly={savedOnly} setSavedOnly={setSavedOnly} savedCount={saved.size} />
       <LocationSheet visible={showLocation} onClose={() => setShowLocation(false)} loc={loc} state={state} onUseCurrent={requestCurrent} onChooseArea={chooseArea} />
@@ -188,6 +195,7 @@ export default function App() {
 const s = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.white },
   header: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 16, paddingTop: 12 },
+  plan: { flexDirection: 'row', alignItems: 'center', gap: 6, minHeight: 44, paddingHorizontal: 14, borderRadius: 22, borderWidth: 1, borderColor: colors.line, backgroundColor: colors.white },
   loc: { flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 2 },
     searchRow: { flexDirection: 'row', gap: 12, paddingHorizontal: 16, paddingTop: 16 },
   search: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8, minHeight: 52, paddingHorizontal: 16, borderRadius: 26, backgroundColor: colors.white, borderWidth: 1, borderColor: colors.line, shadowColor: '#000', shadowOpacity: 0.1, shadowRadius: 8, shadowOffset: { width: 0, height: 2 }, elevation: 3 },
