@@ -2,7 +2,7 @@ import type { Category, Coords, Place } from '../types';
 import { distanceKm } from './distance';
 import { priceFor } from './pricing';
 
-export const CATEGORIES: Category[] = ['Monuments', 'Modern Landmarks', 'Museums', 'Religious & spiritual', 'Gardens & Parks', 'Markets & Food', 'Entertainment'];
+export const CATEGORIES: Category[] = ['Monuments', 'Modern Landmarks', 'Museums', 'Religious & spiritual', 'Gardens & Parks'];
 /** Only places with collected data are shown for now; the rest stay in places.json until their data is added. */
 export const hasCollectedData = (p: Place) => p.source !== 'Not collected yet';
 export type Filters = { category: Category | 'All'; query: string; freeOnly: boolean; savedOnly: boolean; day: number };
