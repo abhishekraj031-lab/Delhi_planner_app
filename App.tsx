@@ -135,7 +135,7 @@ function Home() {
       </View>
       {loc ? <Txt style={s.hint}>Nearest first, by straight-line distance.</Txt> : null}
       {dayChoice !== 'today' ? <Txt style={s.hint}>Showing status for {choice.label}.</Txt> : null}
-      <FlatList data={rows} keyExtractor={(r) => r.place.id} contentContainerStyle={{ paddingBottom: 12 }}
+      <FlatList data={rows} keyExtractor={(r) => r.place.id} style={{ backgroundColor: colors.fill, marginTop: 8 }} contentContainerStyle={{ paddingBottom: 12 }}
         initialNumToRender={6} windowSize={7} keyboardShouldPersistTaps="handled"
         ListEmptyComponent={<Txt style={s.empty}>No places match. Try another category or clear the filters.</Txt>}
         renderItem={({ item }) => (

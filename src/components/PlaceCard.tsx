@@ -33,7 +33,7 @@ function PlaceCardBase({ place, km, day, today, saved, onOpen, onToggleSave }: P
   return (
     <Pressable onPress={onOpen} accessibilityRole="button" accessibilityLabel={`${place.name}. ${s.text}`} style={st.card}>
       <View>
-        <PlaceVisual place={place} height={147} radius={{ borderRadius: 12 }} />
+        <PlaceVisual place={place} height={144} radius={{ borderRadius: 12 }} />
         <Pressable onPress={onToggleSave} hitSlop={14} accessibilityRole="button"
           accessibilityLabel={saved ? `Remove ${place.name} from saved` : `Save ${place.name}`} style={st.heart}>
           <Heart size={26} color={saved ? '#ff3b5c' : colors.white} fill={saved ? '#ff3b5c' : 'rgba(0,0,0,0.3)'} />
@@ -77,12 +77,12 @@ function PlaceCardBase({ place, km, day, today, saved, onOpen, onToggleSave }: P
 export const PlaceCard = React.memo(PlaceCardBase);
 
 const st = StyleSheet.create({
-  card: { marginHorizontal: 16, marginTop: 12, padding: 0 },
-  heart: { position: 'absolute', top: 12, right: 12 },
-  titleRow: { flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 10 },
+  card: { marginHorizontal: 16, marginTop: 12, padding: 8, borderRadius: 16, backgroundColor: colors.white, borderWidth: 1, borderColor: colors.line },
+  heart: { position: 'absolute', top: 10, right: 10 },
+  titleRow: { flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 8 },
   row: { flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 2 },
-  fee: { flexDirection: 'row', alignItems: 'center', gap: 4, minHeight: 44, paddingHorizontal: 12, borderRadius: 8, backgroundColor: colors.dark, maxWidth: '55%' },
-  strip: { flexDirection: 'row', alignItems: 'center', marginTop: 10, marginBottom: 12, minHeight: 44, borderRadius: 10, backgroundColor: colors.fill, paddingHorizontal: 12, paddingVertical: 8 },
+  fee: { flexDirection: 'row', alignItems: 'center', gap: 4, minHeight: 40, paddingHorizontal: 12, borderRadius: 8, backgroundColor: colors.dark, maxWidth: '55%' },
+  strip: { flexDirection: 'row', alignItems: 'center', marginTop: 8, minHeight: 36, borderRadius: 8, backgroundColor: colors.fill, paddingHorizontal: 10, paddingVertical: 4 },
   stripItem: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 4 },
   sep: { width: 1, alignSelf: 'stretch', backgroundColor: colors.line, marginHorizontal: 8 },
 });
