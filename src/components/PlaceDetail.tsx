@@ -13,7 +13,8 @@ import { Button, Chip, NotAvailable, Txt, Unverified } from './ui';
 import { PlaceVisual } from './Visual';
 import { statusText } from './PlaceCard';
 
-type Props = { place: Place | null; km: number | null; day: number; today: Date | null; saved: boolean; onClose: () => void; onToggleSave: () => void };
+type Nearby = { place: Place; km: number };
+type Props = { place: Place | null; km: number | null; day: number; today: Date | null; saved: boolean; nearby: Nearby[]; onOpenPlace: (id: string) => void; onClose: () => void; onToggleSave: () => void };
 
 const PAGE_BG = '#f4f5fa';
 const HERO_H = 280;
@@ -55,7 +56,7 @@ const CircleBtn = ({ children, onPress, label, side, top }: { children: React.Re
   <Pressable onPress={onPress} accessibilityRole="button" accessibilityLabel={label} hitSlop={4} style={[s.circle, { top, [side]: 16 }]}>{children}</Pressable>
 );
 
-export function PlaceDetail({ place, km, day, today, saved, onClose, onToggleSave }: Props) {
+export function PlaceDetail({ place, km, day, today, saved, nearby, onOpenPlace, onClose, onToggleSave }: Props) {
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   const [who, setWho] = useState<VisitorType>('i');
@@ -72,6 +73,14 @@ export function PlaceDetail({ place, km, day, today, saved, onClose, onToggleSav
   const stText = statusText(p, day, today);
   const open = [1, 2, 3, 4, 5, 6, 0].filter((d) => !(p.closedDays ?? []).includes(d)).map((d) => DAY_NAMES[d]);
   const fee = formatFee(p, day);
+  // Quick facts, shown only when the data is known.
+  const facts: string[] = [];
+  if (hasPrice(p, day) && p.price.weekday.i === 0 && !p.price.unverified) facts.push('Free entry');
+  if (p.closedDays) {
+    if (p.closedDays.length === 0) facts.push('Open daily');
+    else if (p.closedDays.length < 7) facts.push(`Closed ${p.closedDays.map((d) => DAY_NAMES[d]).join(', ')}`);
+  }
+  if (p.metro && !p.metroUnverified) facts.push(`Metro: ${p.metro.replace(/\s*\(.*\)$/, '')}`);
   const total = estimateTotal(p, day, who, count);
   const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => setPage(Math.round(e.nativeEvent.contentOffset.x / width));
   const top = insets.top + 8;
@@ -79,7 +88,7 @@ export function PlaceDetail({ place, km, day, today, saved, onClose, onToggleSav
   return (
     <Modal visible animationType="slide" onRequestClose={onClose} statusBarTranslucent>
       <View style={{ flex: 1, backgroundColor: PAGE_BG }}>
-        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 24 }}>
+        <ScrollView key={p.id} showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 24 }}>
           {/* Photos */}
           <View style={{ height: HERO_H, backgroundColor: '#e9e9ef' }}>
             <ScrollView horizontal pagingEnabled showsHorizontalScrollIndicator={false} onMomentumScrollEnd={onScroll} scrollEnabled={slides > 1}>
@@ -110,6 +119,11 @@ export function PlaceDetail({ place, km, day, today, saved, onClose, onToggleSav
                   <View style={[s.pill, { backgroundColor: colors.fill }]}>
                     {p.duration ? <Txt w="semi" style={{ fontSize: 13 }}>{p.duration}</Txt> : <NotAvailable size={13} />}
                   </View>
+                  {facts.map((f) => (
+                    <View key={f} style={[s.pill, { backgroundColor: colors.white, borderWidth: 1, borderColor: colors.line }]}>
+                      <Txt w="semi" style={{ fontSize: 13 }}>{f}</Txt>
+                    </View>
+                  ))}
                 </View>
               </Card>
 
@@ -161,6 +175,22 @@ export function PlaceDetail({ place, km, day, today, saved, onClose, onToggleSav
                   </View>
                 ) : null}
               </Card>
+
+              {nearby.length ? (
+                <Card title="Nearby places">
+                  <Txt style={{ fontSize: 13, color: colors.sub }}>Close by, so you can visit more than one in a day.</Txt>
+                  <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 12, paddingTop: 4 }}>
+                    {nearby.map(({ place: n, km: d }) => (
+                      <Pressable key={n.id} onPress={() => onOpenPlace(n.id)} accessibilityRole="button" accessibilityLabel={`Open ${n.name}`}
+                        style={({ pressed }) => [s.near, { opacity: pressed ? 0.7 : 1 }]}>
+                        <View style={{ borderRadius: 12, overflow: 'hidden' }}><PlaceVisual place={n} height={84} radius={{}} /></View>
+                        <Txt w="semi" numberOfLines={1} style={{ fontSize: 14 }}>{n.name}</Txt>
+                        <Txt numberOfLines={1} style={{ fontSize: 12, color: colors.sub }}>{d < 1 ? 'Under 1 km' : `${d.toFixed(1)} km`} from here</Txt>
+                      </Pressable>
+                    ))}
+                  </ScrollView>
+                </Card>
+              ) : null}
 
               <Card title="Getting there">
                 <Row label="Nearest metro" value={p.metro ?? 'Not available'} unverified={!!p.metro && !!p.metroUnverified} />
@@ -215,6 +245,7 @@ const s = StyleSheet.create({
   cardTitle: { fontSize: 18, color: colors.ink },
   body: { fontSize: 15, lineHeight: 22, color: colors.heading },
   row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 16, minHeight: 28 },
+  near: { width: 150, gap: 4 },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 4 },
   pill: { minHeight: 30, paddingHorizontal: 12, borderRadius: 15, justifyContent: 'center' },
   tip: { flexDirection: 'row', gap: 10, alignItems: 'flex-start' },

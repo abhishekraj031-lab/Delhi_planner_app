@@ -8,6 +8,7 @@ import { Figtree_500Medium } from '@expo-google-fonts/figtree/500Medium';
 import { Figtree_600SemiBold } from '@expo-google-fonts/figtree/600SemiBold';
 import { Figtree_700Bold } from '@expo-google-fonts/figtree/700Bold';
 import { FadeSlide } from './src/components/motion';
+import { distanceKm } from './src/lib/distance';
 import { Church, Dome, FerrisWheel, Landmark, Lighthouse, Heart, MapPin, Search, ShoppingBag, SlidersHorizontal, Ticket, Trees } from 'lucide-react-native';
 import type { Category, Place } from './src/types';
 import { colors, font } from './src/theme';
@@ -89,6 +90,12 @@ function Home() {
   );
   const openKm = rows.find((r) => r.place.id === openId)?.km ?? null;
   const openPlace = places.find((p) => p.id === openId) ?? null;
+  const nearby = useMemo(
+    () => openPlace
+      ? places.filter((p) => p.id !== openPlace.id).map((place) => ({ place, km: distanceKm(openPlace, place) })).sort((a, b) => a.km - b.km).slice(0, 4)
+      : [],
+    [places, openPlace],
+  );
   const locLabel = state === 'asking' ? 'Finding your location…' : loc ? (loc.kind === 'gps' ? 'Near your current location' : `Near ${loc.label}`) : 'Location off. Choose an area';
 
   const tabs: Record<Exclude<TabKey, 'home'>, { title: string; hint: string; empty: string }> = {
@@ -163,7 +170,7 @@ function Home() {
       </FadeSlide>
       </FadeSlide>
       <TabBar key="tabbar" tab={tab} onChange={setTab} />
-      <PlaceDetail place={openPlace} km={openKm} day={day} today={today} saved={openId ? saved.has(openId) : false}
+      <PlaceDetail place={openPlace} km={openKm} day={day} today={today} saved={openId ? saved.has(openId) : false} nearby={nearby} onOpenPlace={setOpenId}
         onClose={() => setOpenId(null)} onToggleSave={() => openId && toggleSave(openId)} />
       <FilterSheet visible={showFilters} onClose={() => setShowFilters(false)} dayChoice={dayChoice} setDayChoice={setDayChoice}
         freeOnly={freeOnly} setFreeOnly={setFreeOnly} savedOnly={savedOnly} setSavedOnly={setSavedOnly} savedCount={saved.size} />
