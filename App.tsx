@@ -7,7 +7,7 @@ import { Figtree_400Regular } from '@expo-google-fonts/figtree/400Regular';
 import { Figtree_500Medium } from '@expo-google-fonts/figtree/500Medium';
 import { Figtree_600SemiBold } from '@expo-google-fonts/figtree/600SemiBold';
 import { Figtree_700Bold } from '@expo-google-fonts/figtree/700Bold';
-import { Church, Dome, FerrisWheel, Landmark, Lighthouse, MapPin, Search, ShoppingBag, SlidersHorizontal, Trees } from 'lucide-react-native';
+import { Church, Dome, FerrisWheel, Landmark, Lighthouse, Heart, MapPin, Search, ShoppingBag, SlidersHorizontal, Ticket, Trees } from 'lucide-react-native';
 import type { Category, Place } from './src/types';
 import { colors, font } from './src/theme';
 import { loadPlaces } from './src/data/repository';
@@ -19,6 +19,7 @@ import { PlaceCard } from './src/components/PlaceCard';
 import { PlaceSheet } from './src/components/PlaceSheet';
 import { TabBar, TabKey } from './src/components/TabBar';
 import { EmptyTab } from './src/components/LoginRequired';
+import { EmptyState } from './src/components/EmptyState';
 import { LoginScreen } from './src/components/LoginScreen';
 import { useAuth } from './src/hooks/useAuth';
 import { DAY_CHOICES, DayChoice, FilterSheet, LocationSheet } from './src/components/OptionSheets';
@@ -41,6 +42,7 @@ function Home() {
   const [showFilters, setShowFilters] = useState(false);
   const [showLocation, setShowLocation] = useState(false);
   const [tab, setTab] = useState<TabKey>('home');
+  const [loginOpen, setLoginOpen] = useState(false);
   const [now, setNow] = useState(() => new Date());
   const { user, ready: authReady, signIn, signOut } = useAuth();
   const { loc, state, requestCurrent, chooseArea } = useLocation();
@@ -78,15 +80,26 @@ function Home() {
     bookings: { title: 'Bookings', hint: 'Log in to see your bookings.', empty: 'Nothing here yet.' },
     profile: { title: 'Profile', hint: 'Log in to manage your profile.', empty: `Signed in as ${user?.name ?? ''}.` },
   };
+  const changeTab = (t: TabKey) => { setLoginOpen(false); setTab(t); };
   if (tab !== 'home') {
     const t = tabs[tab];
+    const empty = tab === 'favourites'
+      ? { icon: <Heart size={36} color={colors.primary} />, heading: 'Your wishlist is empty', message: 'Save places you want to visit and find them all here.', cta: user ? 'Explore places' : 'Log in to create wishlist' }
+      : { icon: <Ticket size={36} color={colors.primary} />, heading: 'No bookings yet', message: 'Tickets you book on official sites will be listed here.', cta: user ? 'Explore places' : 'Log in to see bookings' };
+    let body: React.ReactNode;
+    if (!authReady) body = <View style={{ flex: 1 }} />;
+    else if (tab === 'profile' || (!user && loginOpen)) {
+      body = user
+        ? <EmptyTab title={t.title} message={t.empty} onSignOut={signOut} />
+        : <LoginScreen title={t.title} hint={t.hint} onSignIn={signIn} />;
+    } else {
+      body = <EmptyState title={t.title} {...empty} onCta={() => (user ? changeTab('home') : setLoginOpen(true))} />;
+    }
     return (
       <View style={s.screen}>
         <StatusBar style="dark" />
-        {!authReady ? <View style={{ flex: 1 }} /> : user
-          ? <EmptyTab title={t.title} message={t.empty} onSignOut={tab === 'profile' ? signOut : undefined} />
-          : <LoginScreen title={t.title} hint={t.hint} onSignIn={signIn} />}
-        <TabBar tab={tab} onChange={setTab} />
+        {body}
+        <TabBar tab={tab} onChange={changeTab} />
       </View>
     );
   }

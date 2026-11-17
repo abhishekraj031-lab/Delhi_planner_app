@@ -24,30 +24,38 @@ const app = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta na
 const page = `<title>Delhi Explorer Preview</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
-:root{--bg:#eef0f6;--fg:#1e1b1b;--muted:#5c6477;--frame:#1e1b1b;--line:#d6d9e6;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14161d;--fg:#eceef6;--muted:#9aa1b5;--frame:#05060a;--line:#2a2e3b;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#14161d;--fg:#eceef6;--muted:#9aa1b5;--frame:#05060a;--line:#2a2e3b;color-scheme:dark}
-body{background:var(--bg);color:var(--fg);font:14px/1.45 Inter,system-ui,sans-serif;min-height:100%}
-.wrap{padding-block:16px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;align-items:center;gap:12px}
-h1{margin:0;font-size:15px;font-weight:600}
-.sub{margin:0;color:var(--muted);font-size:12px;text-align:center;max-width:46ch}
+:root{--bg:#e9ebf3;--frame:#111216;--bar:#fff;--barfg:#111216;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1015;--frame:#000;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1015;--frame:#000;color-scheme:dark}
+html,body{height:100%}
+body{background:var(--bg);margin:0;overflow:hidden}
+.wrap{height:100%;box-sizing:border-box;padding-block:12px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;align-items:center;justify-content:center}
 .slot{position:relative}
-.phone{position:absolute;top:0;left:0;width:390px;height:844px;box-sizing:content-box;border:10px solid var(--frame);border-radius:44px;overflow:hidden;transform-origin:top left;background:#fff;margin:-10px}
-iframe{width:390px;height:844px;border:0;display:block;background:#fff}
+.phone{position:absolute;top:0;left:0;width:390px;height:844px;box-sizing:content-box;border:10px solid var(--frame);border-radius:48px;overflow:hidden;transform-origin:top left;background:#fff;margin:-10px;display:flex;flex-direction:column}
+.status{height:47px;flex:none;display:flex;align-items:flex-end;justify-content:space-between;padding:0 28px 6px;background:var(--bar);color:var(--barfg);font:600 15px/1 -apple-system,system-ui,sans-serif;position:relative}
+.status i{display:flex;gap:5px;align-items:center}
+.status b{display:block;background:var(--barfg);border-radius:2px}
+.island{position:absolute;top:10px;left:50%;width:110px;height:30px;margin-left:-55px;background:#000;border-radius:16px}
+iframe{width:390px;flex:1;border:0;display:block;background:#fff;min-height:0}
+.home{height:0;position:relative}
+.home::after{content:"";position:absolute;left:50%;bottom:6px;width:134px;height:5px;margin-left:-67px;background:#111216;border-radius:3px;opacity:.9}
 </style>
 <div class="wrap">
-  <h1>Delhi Explorer</h1>
-  <p class="sub">Live preview of the current build. Try the search, categories, a place card and the Profile tab (demo login: demo / demo1234).</p>
-  <div class="slot" id="slot"><div class="phone" id="phone"><iframe id="app" title="Delhi Explorer app preview"></iframe></div></div>
+  <div class="slot" id="slot">
+    <div class="phone" id="phone">
+      <div class="status"><span>9:41</span><div class="island"></div><i><b style="width:17px;height:10px"></b><b style="width:15px;height:10px"></b><b style="width:25px;height:12px;border-radius:4px"></b></i></div>
+      <iframe id="app" title="Delhi Explorer app preview"></iframe>
+      <div class="home"></div>
+    </div>
+  </div>
 </div>
 <script>
 const APP = ${JSON.stringify(app).replace(/<\//g, '<\\/')};
 const phone = document.getElementById('phone'), slot = document.getElementById('slot');
 function fit(){
-  const s = Math.min(1, (window.innerWidth - 56) / 390, (window.innerHeight - 160) / 844);
-  const k = Math.max(0.4, s);
+  const k = Math.max(0.4, Math.min(1, (window.innerWidth - 32) / 410, (window.innerHeight - 24) / 864));
   phone.style.transform = 'scale(' + k + ')';
-  slot.style.width = (390 * k) + 'px'; slot.style.height = (844 * k) + 'px';
+  slot.style.width = (410 * k) + 'px'; slot.style.height = (864 * k) + 'px';
 }
 addEventListener('resize', fit); fit();
 document.getElementById('app').srcdoc = APP;
