@@ -41,6 +41,16 @@
         }
       ],
       [
+        "expo-speech-recognition",
+        {
+          "microphonePermission": "Delhi Explorer uses the microphone so you can search for places by voice.",
+          "speechRecognitionPermission": "Delhi Explorer uses speech recognition to understand your voice search.",
+          "androidSpeechServicePackages": [
+            "com.google.android.googlequicksearchbox"
+          ]
+        }
+      ],
+      [
         "expo-splash-screen",
         {
           "image": "./assets/splash-icon.png",
@@ -48,7 +58,8 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "expo-speech-recognition"
     ],
     "scheme": "delhiexplorer",
     "backgroundColor": "#ffffff"

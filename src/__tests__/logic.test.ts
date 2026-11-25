@@ -141,3 +141,39 @@ test('plan explains why: open that day, nearest chain, start point', () => {
   expect(why.startReason).toContain(plan[0].place.name);
   expect(explainPlan(all, 1, { lat: 28.6, lng: 77.2 }, plan)!.startReason).toContain('nearest to your location');
 });
+
+describe('voice search', () => {
+  const { answerQuery } = require('../lib/voiceSearch');
+  const all = (require('../data/places.json') as Place[]).filter(hasCollectedData);
+  const mon = new Date('2026-11-23T10:00:00'); // a Monday
+  const ctx = { loc: null, now: mon };
+  test('place price', () => {
+    const a = answerQuery('what is the ticket price for Qutub Minar', all, ctx);
+    expect(a.kind).toBe('place'); expect(a.places[0].id).toBe('qutub-minar'); expect(a.reply).toMatch(/50 rupees/);
+  });
+  test('free places', () => {
+    const a = answerQuery('show me free places', all, ctx);
+    expect(a.kind).toBe('list'); expect(a.places.every((p: Place) => p.price.weekday.i === 0)).toBe(true);
+  });
+  test('museums open on Tuesday excludes Tuesday-closed museums', () => {
+    const a = answerQuery('museums open on tuesday', all, ctx);
+    expect(a.places.length).toBeGreaterThan(0); expect(a.places.every((p: Place) => p.category === 'Museums' && !p.closedDays!.includes(2))).toBe(true);
+    expect(a.places.find((p: Place) => p.id === 'air-force-museum')).toBeUndefined();
+  });
+  test('no museum open on Monday says so', () => {
+    const a = answerQuery('museums open on monday', all, ctx); expect(a.places).toHaveLength(0); expect(a.reply).toMatch(/couldn't find/);
+  });
+  test('near me needs location', () => {
+    expect(answerQuery('temples near me', all, ctx).reply).toMatch(/location/i);
+  });
+  test('unsupported and unknown', () => {
+    expect(answerQuery('best street food', all, ctx).reply).toMatch(/not added yet/);
+    expect(answerQuery('blah blah', all, ctx).kind).toBe('none');
+  });
+  test('plan', () => {
+    const a = answerQuery('plan my day', all, ctx); expect(a.kind).toBe('plan'); expect(a.places.length).toBeGreaterThan(1);
+  });
+  test('alias', () => {
+    expect(answerQuery('timings of red fort', all, ctx).places[0].id).toBe('rf');
+  });
+});

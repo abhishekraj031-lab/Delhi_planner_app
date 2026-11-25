@@ -36,3 +36,8 @@
 
 ## Photos (to do)
 - [ ] Replace the current low-resolution photos (many are only 360-720px wide and look soft on phones) with sharp ones about 1100px wide, then run `node scripts/generate-photos-index.js`. Keep a credit for every photo (3 have none yet)
+
+## Voice search
+- [ ] Test on real iPhone and Android builds. Voice uses `expo-speech-recognition` (native), so it needs an EAS development or production build and does not work in Expo Go; the typed box still works there.
+- [ ] Check the microphone and speech-recognition permission texts in `app.json` and mention voice in the App Store and Play privacy answers (audio is processed by the phone's own recogniser).
+- [ ] Voice answers come from rules over our own place data (no AI service), so they only handle the supported question types. Add an AI backend later for free-form questions.

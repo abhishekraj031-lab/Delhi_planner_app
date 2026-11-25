@@ -9,9 +9,10 @@ import { Figtree_600SemiBold } from '@expo-google-fonts/figtree/600SemiBold';
 import { Figtree_700Bold } from '@expo-google-fonts/figtree/700Bold';
 import { FadeSlide } from './src/components/motion';
 import { AuthPrompt } from './src/components/AuthPrompt';
+import { VoiceSheet } from './src/components/VoiceSheet';
 import { PlanSheet } from './src/components/PlanSheet';
 import { distanceKm } from './src/lib/distance';
-import { Church, Dome, FerrisWheel, Landmark, Lighthouse, Heart, MapPin, Search, ShoppingBag, SlidersHorizontal, Ticket, Trees } from 'lucide-react-native';
+import { Church, Dome, FerrisWheel, Landmark, Lighthouse, Heart, MapPin, Mic, Search, ShoppingBag, SlidersHorizontal, Ticket, Trees } from 'lucide-react-native';
 import type { Category, Place } from './src/types';
 import { colors, font } from './src/theme';
 import { loadPlaces } from './src/data/repository';
@@ -61,6 +62,7 @@ function Home() {
   const [openId, setOpenId] = useState<string | null>(null);
   const [showFilters, setShowFilters] = useState(false);
   const [showLocation, setShowLocation] = useState(false);
+  const [showVoice, setShowVoice] = useState(false);
   const [showPlan, setShowPlan] = useState(false);
   const [tab, setTab] = useState<TabKey>('home');
   const [loginOpen, setLoginOpen] = useState(false);
@@ -199,6 +201,9 @@ function Home() {
           <Search size={20} color={colors.text} />
           <TextInput value={query} onChangeText={setQuery} placeholder="Search place, attractions..." placeholderTextColor="#333232"
             accessibilityLabel="Search places" returnKeyType="search" style={s.input} />
+          <Pressable onPress={() => setShowVoice(true)} hitSlop={{ top: 6, bottom: 6, left: 6, right: 12 }} accessibilityRole="button" accessibilityLabel="Voice search" style={s.mic}>
+            <Mic size={22} color={colors.ink} />
+          </Pressable>
         </View>
         <Pressable onPress={() => setShowFilters(true)} accessibilityRole="button" accessibilityLabel="Filters" style={s.filter}>
           <SlidersHorizontal size={24} color={colors.ink} />
@@ -227,6 +232,7 @@ function Home() {
       <TabBar key="tabbar" tab={tab} onChange={setTab} onPlan={() => setShowPlan(true)} />
       <PlaceDetail place={openPlace} km={openKm} day={day} today={today} saved={openId ? saved.has(openId) : false} nearby={nearby} onOpenPlace={setOpenId}
         onClose={() => setOpenId(null)} onToggleSave={() => openId && requestToggle(openId)} />
+      <VoiceSheet visible={showVoice} onClose={() => setShowVoice(false)} places={places} loc={loc} day={day} today={today} onOpenPlace={setOpenId} />
       <PlanSheet visible={showPlan} onClose={() => setShowPlan(false)} places={places} day={day} dayLabel={choice.label} today={today} loc={loc} saved={saved} onSaveAll={requestSaveAll} onOpenPlace={setOpenId} />
       <AuthPrompt visible={pendingSave !== null} onClose={closeLoginPrompt} onSignIn={signInThenSave} />
       <FilterSheet visible={showFilters} onClose={() => setShowFilters(false)} dayChoice={dayChoice} setDayChoice={setDayChoice}
@@ -250,6 +256,7 @@ const s = StyleSheet.create({
     searchRow: { flexDirection: 'row', gap: 12, paddingHorizontal: 16, paddingTop: 16 },
   search: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8, minHeight: 52, paddingHorizontal: 16, borderRadius: 26, backgroundColor: colors.white, borderWidth: 1, borderColor: colors.line, shadowColor: '#000', shadowOpacity: 0.1, shadowRadius: 8, shadowOffset: { width: 0, height: 2 }, elevation: 3 },
   input: { flex: 1, fontFamily: font.regular, fontSize: 16, color: '#333232', paddingVertical: 8 },
+  mic: { width: 36, height: 36, alignItems: 'center', justifyContent: 'center' },
   filter: { width: 48, height: 48, borderRadius: 24, backgroundColor: colors.white, borderWidth: 1, borderColor: colors.line, alignItems: 'center', justifyContent: 'center' },
   chips: { paddingHorizontal: 4, paddingTop: 8, borderBottomWidth: 0 },
   hint: { color: colors.sub, fontSize: 12, marginHorizontal: 16, marginTop: 8 },
