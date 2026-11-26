@@ -47,7 +47,7 @@ export function TabBar({ tab, onChange }: { tab: TabKey; onChange: (t: TabKey) =
 }
 const s = StyleSheet.create({
   bar: { flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', paddingTop: 12, paddingHorizontal: 8, backgroundColor: colors.white, borderTopWidth: 1, borderTopColor: colors.fill },
-  tab: { minHeight: 44, paddingHorizontal: 8, borderRadius: 10, justifyContent: 'center' },
-  content: { flexDirection: 'row', alignItems: 'center', gap: 4, zIndex: 1 },
-  pill: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, borderRadius: 10, backgroundColor: colors.dark, zIndex: 0 },
+  tab: { minHeight: 44, paddingHorizontal: 16, borderRadius: 12, justifyContent: 'center' },
+  content: { flexDirection: 'row', alignItems: 'center', gap: 6, zIndex: 1 },
+  pill: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, borderRadius: 12, backgroundColor: colors.dark, zIndex: 0 },
 });
