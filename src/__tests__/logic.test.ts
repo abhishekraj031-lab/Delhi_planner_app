@@ -29,6 +29,8 @@ describe('data integrity', () => {
       'national-museum': 'https://www.zoonga.com/national-museum',
       'national-zoological-park': 'https://nzpnewdelhi.gov.in/tickets/new?ln=en',
       rm: 'https://www.nrmindia.org',
+      rf: 'https://asimustsee.nic.in/red-fort.php',
+      'qutub-minar': 'https://asimustsee.nic.in/qutub-minar.php',
     };
     for (const p of all) {
       expect(p.bookUrl ?? null).toBe(verified[p.id] ?? null);
