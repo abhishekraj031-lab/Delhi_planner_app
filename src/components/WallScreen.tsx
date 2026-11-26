@@ -102,7 +102,7 @@ type Props = {
   onShare: (p: Post) => void; onDelete: (id: string) => void; onOpenPlace: (id: string) => void;
 };
 
-/** "Wall": photos of visited places, shared with friends and family, with likes and comments. */
+/** "My wall": photos of visited places, shared with friends and family, with likes and comments. */
 export function WallScreen(p: Props) {
   const insets = useSafeAreaInsets();
   const byId = (id?: string) => p.places.find((x) => x.id === id);
@@ -110,7 +110,7 @@ export function WallScreen(p: Props) {
     <View style={{ gap: 14, paddingBottom: 16 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16 }}>
         <View style={{ flex: 1 }}>
-          <Txt w="bold" style={{ fontSize: 20 }}>Wall</Txt>
+          <Txt w="bold" style={{ fontSize: 20 }}>My wall</Txt>
           <Txt style={{ fontSize: 13, color: colors.sub }}>Your visits, shared with friends and family</Txt>
         </View>
         <Pressable onPress={p.onNew} accessibilityRole="button" accessibilityLabel="Add a post" style={({ pressed }) => ({ flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: colors.primary, borderRadius: 22, paddingHorizontal: 16, height: 44, opacity: pressed ? 0.7 : 1 })}>

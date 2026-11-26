@@ -1,16 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Easing, Platform, Pressable, StyleSheet, View } from 'react-native';
-import { CircleUser, Heart, House, Images, Ticket } from 'lucide-react-native';
+import { CircleUser, Heart, House, Images } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '../theme';
 import { Txt } from './ui';
 
-export type TabKey = 'home' | 'wall' | 'favourites' | 'bookings' | 'profile';
+export type TabKey = 'home' | 'wall' | 'favourites' | 'profile';
 const TABS: { key: TabKey; label: string; Icon: React.ComponentType<{ size?: number; color?: string }> }[] = [
   { key: 'home', label: 'Home', Icon: House },
-  { key: 'wall', label: 'Wall', Icon: Images },
+  { key: 'wall', label: 'My wall', Icon: Images },
   { key: 'favourites', label: 'Favourites', Icon: Heart },
-  { key: 'bookings', label: 'Bookings', Icon: Ticket },
   { key: 'profile', label: 'Profile', Icon: CircleUser },
 ];
 const NATIVE = Platform.OS !== 'web';

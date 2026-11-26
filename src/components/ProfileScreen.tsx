@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Image, Linking, Platform, Pressable, ScrollView, TextInput, View } from 'react-native';
-import { Camera, ChevronRight, CircleUser, Heart, Info, LifeBuoy, LogOut, MapPin, Mic, Pencil, ShieldCheck, Trash2 } from 'lucide-react-native';
+import { Camera, ChevronRight, Ticket, CircleUser, Heart, Info, LifeBuoy, LogOut, MapPin, Mic, Pencil, ShieldCheck, Trash2 } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '../theme';
 import { LocationState } from '../hooks/useLocation';
@@ -10,7 +10,7 @@ import { Button, Txt } from './ui';
 
 type Props = {
   id: string; displayName?: string; photo?: string; onPhoto: (uri?: string) => void; savedCount: number; locLabel: string; gps: boolean; locState: LocationState;
-  onRename: (name: string) => void; onOpenSaved: () => void; onChangeStart: () => void; onAllowLocation: () => void;
+  onRename: (name: string) => void; onOpenSaved: () => void; onOpenBookings: () => void; onChangeStart: () => void; onAllowLocation: () => void;
   onSignOut: () => void; onDelete: () => void;
 };
 
@@ -116,7 +116,8 @@ export function ProfileScreen(p: Props) {
       </Card>
 
       <Card>
-        <Row last icon={<Heart size={20} color={colors.primary} />} label="Saved places" value={p.savedCount === 0 ? 'Nothing saved yet' : `${p.savedCount} saved`} onPress={p.onOpenSaved} />
+        <Row icon={<Heart size={20} color={colors.primary} />} label="Saved places" value={p.savedCount === 0 ? 'Nothing saved yet' : `${p.savedCount} saved`} onPress={p.onOpenSaved} />
+        <Row last icon={<Ticket size={20} color={colors.primary} />} label="Bookings" value="Tickets you booked" onPress={p.onOpenBookings} />
       </Card>
 
       <Section title="Preferences" />

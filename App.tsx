@@ -10,6 +10,7 @@ import { Figtree_700Bold } from '@expo-google-fonts/figtree/700Bold';
 import { FadeSlide } from './src/components/motion';
 import { AuthPrompt } from './src/components/AuthPrompt';
 import { VoiceSheet } from './src/components/VoiceSheet';
+import { BookingsPage } from './src/components/BookingsPage';
 import { SavedPlacesPage } from './src/components/SavedPlacesPage';
 import { WallScreen } from './src/components/WallScreen';
 import { NewPostSheet } from './src/components/NewPostSheet';
@@ -68,7 +69,7 @@ function Home() {
   const [showLocation, setShowLocation] = useState(false);
   const [showVoice, setShowVoice] = useState(false);
   const [showNew, setShowNew] = useState(false);
-  const [showSaved, setShowSaved] = useState(false);
+  const [sub, setSub] = useState<'saved' | 'bookings' | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [tab, setTab] = useState<TabKey>('home');
   const [loginOpen, setLoginOpen] = useState(false);
@@ -149,25 +150,24 @@ function Home() {
   const locLabel = state === 'asking' ? 'Finding your location…' : loc ? (loc.kind === 'gps' ? 'Near your current location' : `Near ${loc.label}`) : 'Location off. Choose an area';
 
   const tabs: Record<Exclude<TabKey, 'home'>, { title: string; hint: string; empty: string }> = {
-    wall: { title: 'Wall', hint: 'Log in to post on your wall.', empty: '' },
+    wall: { title: 'My wall', hint: 'Log in to post on your wall.', empty: '' },
     favourites: { title: 'Favourites', hint: 'Log in to see your saved places.', empty: 'Nothing here yet.' },
-    bookings: { title: 'Bookings', hint: 'Log in to see your bookings.', empty: 'Nothing here yet.' },
     profile: { title: 'Profile', hint: 'Log in to manage your profile.', empty: `Signed in as ${user?.name ?? ''}.` },
   };
-  const changeTab = (t: TabKey) => { setLoginOpen(false); setShowSaved(false); setTab(t); };
+  const changeTab = (t: TabKey) => { setLoginOpen(false); setSub(null); setTab(t); };
   if (tab !== 'home') {
     const t = tabs[tab];
-    const empty = tab === 'favourites'
-      ? { icon: <Heart size={36} color={colors.primary} />, heading: 'Your wishlist is empty', message: 'Save places you want to visit and find them all here.', cta: user ? 'Explore places' : 'Log in to create wishlist' }
-      : { icon: <Ticket size={36} color={colors.primary} />, heading: 'No bookings yet', message: 'Tickets you book on official sites will be listed here.', cta: user ? 'Explore places' : 'Log in to see bookings' };
+    const empty = { icon: <Heart size={36} color={colors.primary} />, heading: 'Your wishlist is empty', message: 'Save places you want to visit and find them all here.', cta: user ? 'Explore places' : 'Log in to create wishlist' };
     let body: React.ReactNode;
     if (!authReady) body = <View style={{ flex: 1 }} />;
-    else if (tab === 'profile' && user && showSaved) {
-      body = <SavedPlacesPage rows={favRows} day={day} today={today} nearestFirst={!!loc} onBack={() => setShowSaved(false)} onOpen={setOpenId} onToggleSave={toggleSave} onExplore={() => changeTab('home')} />;
+    else if (tab === 'profile' && user && sub === 'bookings') {
+      body = <BookingsPage onBack={() => setSub(null)} onExplore={() => changeTab('home')} />;
+    } else if (tab === 'profile' && user && sub === 'saved') {
+      body = <SavedPlacesPage rows={favRows} day={day} today={today} nearestFirst={!!loc} onBack={() => setSub(null)} onOpen={setOpenId} onToggleSave={toggleSave} onExplore={() => changeTab('home')} />;
     } else if (tab === 'profile' || (!user && loginOpen)) {
       body = user
         ? <ProfileScreen id={user.name} displayName={user.displayName} photo={user.photo} onPhoto={setPhoto} savedCount={saved.size} locLabel={locLabel} gps={loc?.kind === 'gps'} locState={state}
-            onRename={setDisplayName} onOpenSaved={() => setShowSaved(true)} onChangeStart={() => { changeTab('home'); setShowLocation(true); }}
+            onRename={setDisplayName} onOpenSaved={() => setSub('saved')} onOpenBookings={() => setSub('bookings')} onChangeStart={() => { changeTab('home'); setShowLocation(true); }}
             onAllowLocation={requestCurrent} onSignOut={signOut}
             onDelete={async () => { setSaved(new Set()); await saveJSON(KEYS.saved, []); await setDisplayName(''); await setPhoto(undefined); await signOut(); changeTab('home'); }} />
         : <LoginScreen title={t.title} hint={t.hint} onSignIn={signIn} />;
@@ -201,7 +201,7 @@ function Home() {
     return (
       <View style={s.screen}>
         <StatusBar style="dark" />
-        <FadeSlide k={`${tab}-${!user && loginOpen}-${showSaved}`} style={{ flex: 1 }}>{body}</FadeSlide>
+        <FadeSlide k={`${tab}-${!user && loginOpen}-${sub}`} style={{ flex: 1 }}>{body}</FadeSlide>
         <TabBar key="tabbar" tab={tab} onChange={changeTab} />
         <NewPostSheet visible={showNew} onClose={() => setShowNew(false)} places={places} onPost={(a) => wall.addPost({ author: me ?? 'You', ...a })} />
         <PlaceDetail place={openPlace} km={openKm} loc={loc?.kind === 'gps' ? loc : null} locState={state} onAllowLocation={requestCurrent} day={day} today={today} saved={openId ? saved.has(openId) : false} nearby={nearby} onOpenPlace={setOpenId}
