@@ -11,3 +11,6 @@ export const DEMO_OTP = '123456';
 
 /** Link added to invites and shared posts. Set to the live website once it has a public address. */
 export const APP_URL = '';
+
+/** Google Form that collects tester feedback. Opened from Profile. */
+export const FEEDBACK_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfdMIO2JYZm_ERKKWmqye5AbdIbr8McCvpO4Gjo47ZB1L3hsQ/viewform?usp=header';

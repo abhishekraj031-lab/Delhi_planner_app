@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Image, Linking, Platform, Pressable, ScrollView, TextInput, View } from 'react-native';
-import { Camera, ChevronDown, ChevronRight, ChevronUp, Ticket, UserPlus, CircleUser, Heart, Info, LifeBuoy, LogOut, MapPin, Mic, Pencil, ShieldCheck, Trash2 } from 'lucide-react-native';
+import { Camera, MessageSquareText, ChevronDown, ChevronRight, ChevronUp, Ticket, UserPlus, CircleUser, Heart, Info, LifeBuoy, LogOut, MapPin, Mic, Pencil, ShieldCheck, Trash2 } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '../theme';
 import { LocationState } from '../hooks/useLocation';
 import { MicState, micPermission, requestMic } from '../lib/speech';
 import { pickSquarePhoto } from '../lib/photo';
+import { useExtLink } from '../lib/links';
+import { FEEDBACK_URL } from '../config';
 import { Button, Txt } from './ui';
 
 type Props = {
@@ -22,7 +24,8 @@ export const initialOf = (name?: string, id?: string) => {
 function Card({ children }: { children: React.ReactNode }) {
   return <View style={{ backgroundColor: colors.white, borderRadius: 18, borderWidth: 1, borderColor: colors.line, overflow: 'hidden' }}>{children}</View>;
 }
-function Row({ icon, label, value, onPress, action, last, danger, open }: { icon: React.ReactNode; label: string; value?: string; onPress?: () => void; action?: React.ReactNode; last?: boolean; danger?: boolean; open?: boolean }) {
+function Row({ icon, label, value, onPress, action, last, danger, open, url }: { icon: React.ReactNode; label: string; value?: string; onPress?: () => void; action?: React.ReactNode; last?: boolean; danger?: boolean; open?: boolean; url?: string }) {
+  const ref = useExtLink(url);
   const body = (
     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 16, paddingVertical: 14, minHeight: 56, borderBottomWidth: last ? 0 : 1, borderBottomColor: colors.line }}>
       <View style={{ width: 36, height: 36, borderRadius: 10, backgroundColor: danger ? '#fdecea' : colors.fill, alignItems: 'center', justifyContent: 'center' }}>{icon}</View>
@@ -33,7 +36,7 @@ function Row({ icon, label, value, onPress, action, last, danger, open }: { icon
       {action ?? (open !== undefined ? (open ? <ChevronUp size={18} color={colors.sub} /> : <ChevronDown size={18} color={colors.sub} />) : onPress ? <ChevronRight size={18} color={colors.sub} /> : null)}
     </View>
   );
-  return onPress ? <Pressable onPress={onPress} accessibilityRole="button" accessibilityLabel={label} style={({ pressed }) => ({ opacity: pressed ? 0.6 : 1 })}>{body}</Pressable> : body;
+  return onPress ? <Pressable ref={ref} onPress={onPress} accessibilityRole="button" accessibilityLabel={label} style={({ pressed }) => ({ opacity: pressed ? 0.6 : 1 })}>{body}</Pressable> : body;
 }
 const Pill = ({ label, onPress }: { label: string; onPress: () => void }) => (
   <Pressable onPress={onPress} accessibilityRole="button" accessibilityLabel={label} style={({ pressed }) => ({ backgroundColor: colors.primary, borderRadius: 18, paddingHorizontal: 14, paddingVertical: 8, opacity: pressed ? 0.7 : 1 })}>
@@ -139,6 +142,7 @@ export function ProfileScreen(p: Props) {
             <Txt style={{ fontSize: 14, lineHeight: 21, color: colors.text }}>Metro and cab fares are estimates. The real price is shown in the booking app. Tickets are booked on official sites only.</Txt>
           </View>
         ) : null}
+        <Row icon={<MessageSquareText size={20} color={colors.ink} />} label="Send feedback" value="Tell us what to improve" url={FEEDBACK_URL} onPress={() => { Linking.openURL(FEEDBACK_URL).catch(() => {}); }} />
         <Row icon={<ShieldCheck size={20} color={colors.ink} />} label="Privacy" value="Not available yet" />
         <Row last icon={<LifeBuoy size={20} color={colors.ink} />} label="Support" value="Not available yet" />
       </Card>
