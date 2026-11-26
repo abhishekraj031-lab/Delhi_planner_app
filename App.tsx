@@ -12,6 +12,7 @@ import { AuthPrompt } from './src/components/AuthPrompt';
 import { VoiceSheet } from './src/components/VoiceSheet';
 import { BookingsPage } from './src/components/BookingsPage';
 import { SavedPlacesPage } from './src/components/SavedPlacesPage';
+import { Orb } from './src/components/AssistantOrb';
 import { ShareSheet } from './src/components/ShareSheet';
 import { WallScreen } from './src/components/WallScreen';
 import { NewPostSheet } from './src/components/NewPostSheet';
@@ -259,7 +260,7 @@ function Home() {
       {loc ? <Txt style={s.hint}>Nearest first, by straight-line distance.</Txt> : null}
       {dayChoice !== 'today' ? <Txt style={s.hint}>Showing status for {choice.label}.</Txt> : null}
       <FadeSlide k={query ? 'search' : String(category)} style={{ flex: 1 }}>
-      <FlatList data={rows} keyExtractor={(r) => r.place.id} style={{ backgroundColor: colors.white }} contentContainerStyle={{ paddingBottom: 12 }}
+      <FlatList data={rows} keyExtractor={(r) => r.place.id} style={{ backgroundColor: colors.white }} contentContainerStyle={{ paddingBottom: 100 }}
         initialNumToRender={6} windowSize={7} keyboardShouldPersistTaps="handled"
         ListEmptyComponent={<Txt style={s.empty}>Nothing here yet. More places are coming soon — try another category or clear the filters.</Txt>}
         renderItem={({ item }) => (
@@ -267,6 +268,11 @@ function Home() {
             onOpen={() => setOpenId(item.place.id)} onToggleSave={() => requestToggle(item.place.id)} />
         )} />
       </FadeSlide>
+      <Pressable onPress={() => setShowVoice(true)} accessibilityRole="button" accessibilityLabel="Ask the Delhi assistant"
+        style={({ pressed }) => ({ position: 'absolute', right: 20, bottom: 16, width: 68, height: 68, borderRadius: 34, alignItems: 'center', justifyContent: 'center', opacity: pressed ? 0.85 : 1,
+          shadowColor: '#2c7aef', shadowOpacity: 0.45, shadowRadius: 14, shadowOffset: { width: 0, height: 6 }, elevation: 8 })}>
+        <Orb mode="speaking" size={68} />
+      </Pressable>
       </FadeSlide>
       <TabBar key="tabbar" tab={tab} onChange={setTab} />
       <PlaceDetail place={openPlace} km={openKm} loc={loc?.kind === 'gps' ? loc : null} locState={state} onAllowLocation={requestCurrent} day={day} today={today} saved={openId ? saved.has(openId) : false} nearby={nearby} onOpenPlace={setOpenId}
