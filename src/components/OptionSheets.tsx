@@ -6,7 +6,7 @@ import type { LocationState } from '../hooks/useLocation';
 import type { Category, UserLocation } from '../types';
 import { Button, Chip, Txt } from './ui';
 import { Sheet } from './Sheet';
-import { BUDGETS, DAYS_FOR, Extra, HOURS, NO_EXTRA, WHEN_OPTIONS, WHERES } from '../lib/filters';
+import { BUDGETS, DAYS_FOR, Extra, NO_EXTRA, OPEN_TILL, OPENS_BY, WHEN_OPTIONS, WHERES } from '../lib/filters';
 import { FULL_DAY_NAMES } from '../lib/status';
 
 type FilterProps = {
@@ -41,7 +41,7 @@ export function FilterSheet(p: FilterProps) {
         {dirty ? <Pressable onPress={() => setX(NO_EXTRA)} hitSlop={8} accessibilityRole="button"><Txt w="semi" style={{ color: colors.primary }}>Clear all</Txt></Pressable> : null}
       </View>
       <Group title="When are you going?" note="Weekdays is Monday to Friday. Places with unknown opening days are left out of day choices.">
-        <Row>{WHEN_OPTIONS.map((o) => <Chip key={o.key} label={o.label} on={x.when === o.key} onPress={() => set({ when: o.key, pick: null, ...(o.key !== 'today' && x.hours === 'now' ? { hours: null } : {}) })} />)}</Row>
+        <Row>{WHEN_OPTIONS.map((o) => <Chip key={o.key} label={o.label} on={x.when === o.key} onPress={() => set({ when: o.key, pick: null, ...(o.key !== 'today' && x.now ? { now: false } : {}) })} />)}</Row>
         {x.when !== 'today' ? (
           <Row>{DAYS_FOR[x.when].map((d) => <Chip key={d} label={FULL_DAY_NAMES[d].slice(0, 3)} on={x.pick === d} onPress={() => set({ pick: x.pick === d ? null : d })} />)}</Row>
         ) : null}
@@ -49,8 +49,12 @@ export function FilterSheet(p: FilterProps) {
       <Group title="Budget" note="Entry fee for an Indian adult on the chosen day. Places with no fee on record are left out.">
         <Row>{BUDGETS.map((o) => <Chip key={o.key} label={o.label} on={x.budget === o.key} onPress={() => set({ budget: x.budget === o.key ? null : o.key })} />)}</Row>
       </Group>
-      <Group title="Open hours" note="Based on opening hours on record. Open now uses today's day and time.">
-        <Row>{HOURS.map((o) => <Chip key={o.key} label={o.label} on={x.hours === o.key} onPress={() => set({ hours: x.hours === o.key ? null : o.key, ...(o.key === 'now' ? { when: 'today', pick: null } : {}) })} />)}</Row>
+      <Group title="Open hours" note="Based on opening and closing times on record. Places with no hours on record are left out. Pick both to plan a window, for example opens by 9 am and open till 6 pm.">
+        <Row><Chip label="Open now" on={x.now} onPress={() => set(x.now ? { now: false } : { now: true, when: 'today', pick: null })} /></Row>
+        <Txt w="semi" style={{ fontSize: 13, color: colors.sub }}>Opening time (opens by)</Txt>
+        <Row>{OPENS_BY.map((o) => <Chip key={o.min} label={o.label} on={x.opensBy === o.min} onPress={() => set({ opensBy: x.opensBy === o.min ? null : o.min })} />)}</Row>
+        <Txt w="semi" style={{ fontSize: 13, color: colors.sub }}>Closing time (open till at least)</Txt>
+        <Row>{OPEN_TILL.map((o) => <Chip key={o.min} label={o.label} on={x.openTill === o.min} onPress={() => set({ openTill: x.openTill === o.min ? null : o.min })} />)}</Row>
       </Group>
       <Group title="Where" note="Pick one. Distances are straight-line from your location. Metro uses the stations listed for each place.">
         <Row>{WHERES.map((o) => (

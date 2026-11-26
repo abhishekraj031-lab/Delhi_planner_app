@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Linking, Modal, NativeScrollEvent, NativeSyntheticEvent, Platform, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { ChevronLeft, Heart } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -61,6 +61,9 @@ export function PlaceDetail({ place, km, loc, locState, onAllowLocation, day, to
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   const [page, setPage] = useState(0);
+  const scroller = useRef<any>(null);
+  // Every place opens at the top; the person scrolls down themselves.
+  useEffect(() => { setPage(0); scroller.current?.scrollTo({ y: 0, animated: false }); }, [place?.id]);
   const p = place;
   if (!p) return null;
 
@@ -86,7 +89,7 @@ export function PlaceDetail({ place, km, loc, locState, onAllowLocation, day, to
   return (
     <Modal visible animationType="slide" onRequestClose={onClose} statusBarTranslucent>
       <View style={{ flex: 1, backgroundColor: PAGE_BG }}>
-        <ScrollView key={p.id} showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 24 }}>
+        <ScrollView key={p.id} ref={scroller} showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 24 }}>
           {/* Photos */}
           <View style={{ height: HERO_H, backgroundColor: '#e9e9ef' }}>
             <ScrollView horizontal pagingEnabled showsHorizontalScrollIndicator={false} onMomentumScrollEnd={onScroll} scrollEnabled={slides > 1}>

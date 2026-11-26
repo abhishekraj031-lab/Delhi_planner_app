@@ -246,9 +246,12 @@ describe('grouped filters', () => {
     run({ budget: 'u30' }).forEach((p) => { expect(p.price.weekday.i).toBeGreaterThan(0); expect(p.price.weekday.i).toBeLessThanOrEqual(30); });
     shown.filter((p) => p.price.weekday.i == null).forEach((p) => expect(matchesBudget(p, 'o50', 3)).toBe(false));
   });
-  it('open-hours filters respect the hours on record', () => {
-    run({ hours: 'evening' }).forEach((p) => { expect(p.hours![0]).toBeLessThanOrEqual(1080); expect(p.hours![1]).toBeGreaterThan(1080); });
-    run({ hours: 'now' }).forEach((p) => expect(p.closedDays).not.toContain(3));
+  it('opening and closing time filters respect the hours on record', () => {
+    run({ openTill: 1080 }).forEach((p) => expect(p.hours![1]).toBeGreaterThanOrEqual(1080));
+    run({ opensBy: 540 }).forEach((p) => expect(p.hours![0]).toBeLessThanOrEqual(540));
+    run({ opensBy: 540, openTill: 1080 }).forEach((p) => { expect(p.hours![0]).toBeLessThanOrEqual(540); expect(p.hours![1]).toBeGreaterThanOrEqual(1080); });
+    run({ now: true }).forEach((p) => expect(p.closedDays).not.toContain(3));
+    shown.filter((p) => !p.hours).forEach((p) => expect(run({ openTill: 1020 }).includes(p)).toBe(false));
   });
   it('distance filter needs a location and keeps nearest first', () => {
     const here = { lat: 28.6129, lng: 77.2295 };
@@ -257,9 +260,11 @@ describe('grouped filters', () => {
     near.forEach((r) => expect(r.km!).toBeLessThanOrEqual(5));
     expect(visiblePlaces(shown, { ...base, category: 'All', extra: { where: 'w5' } }, none, null)).toHaveLength(shown.length);
   });
-  it('where options are single choice: nearest gives five, metro needs a station', () => {
+  it('nearest to me sorts by distance and metro needs a station', () => {
     const here = { lat: 28.6129, lng: 77.2295 };
-    expect(visiblePlaces(shown, { ...base, category: 'All', extra: { where: 'nearest' } }, none, here)).toHaveLength(5);
+    const rows = visiblePlaces(shown, { ...base, category: 'All', extra: { where: 'nearest' } }, none, here);
+    expect(rows).toHaveLength(shown.length);
+    for (let i = 1; i < rows.length; i++) expect(rows[i].km!).toBeGreaterThanOrEqual(rows[i - 1].km!);
     run({ where: 'metro' }).forEach((p) => expect(p.metro).toBeTruthy());
   });
   it('filters combine', () => {

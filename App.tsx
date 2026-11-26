@@ -98,7 +98,7 @@ function Home() {
   const day = info.day;
   const today = extra.when === 'today' ? now : null;
   const tags = activeTags(extra);
-  const clearTag = (k: string) => setExtra((x) => ({ ...x, ...(k === 'when' ? { when: 'today' as const, pick: null } : k === 'budget' ? { budget: null } : k === 'hours' ? { hours: null } : { where: null }) }));
+  const clearTag = (k: string) => setExtra((x) => ({ ...x, ...(k === 'when' ? { when: 'today' as const, pick: null } : k === 'budget' ? { budget: null } : k === 'now' ? { now: false } : k === 'opensBy' ? { opensBy: null } : k === 'openTill' ? { openTill: null } : { where: null }) }));
   const clearAll = () => setExtra(NO_EXTRA);
 
   const toggleSave = useCallback((id: string) => {

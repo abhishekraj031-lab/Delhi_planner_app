@@ -22,15 +22,14 @@ export function visiblePlaces(places: Place[], f: Filters, saved: Set<string>, l
     if (x) {
       if (x.when && !matchesWhen(p, x.when, x.pick ?? null)) return false;
       if (!matchesBudget(p, x.budget ?? null, f.day)) return false;
-      if (!matchesHours(p, x.hours ?? null, f.now ?? new Date())) return false;
+      if (!matchesHours(p, { now: !!x.now, opensBy: x.opensBy ?? null, openTill: x.openTill ?? null }, f.now ?? new Date())) return false;
       if (x.where === 'metro' && !p.metro) return false;
     }
     return true;
   });
   const within = whereKm(f.extra?.where);
-  const nearest = f.extra?.where === 'nearest';
   if (!loc) return list.map((place) => ({ place, km: null as number | null }));
   const rows = list.map((place) => ({ place, km: distanceKm(loc, place) as number | null }));
   const sorted = (within ? rows.filter((r) => (r.km as number) <= within) : rows).sort((a, b) => (a.km as number) - (b.km as number));
-  return nearest ? sorted.slice(0, 5) : sorted;
+  return sorted;
 }
