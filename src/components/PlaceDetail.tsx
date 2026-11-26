@@ -7,9 +7,9 @@ import { colors } from '../theme';
 import { SUPPORT_EMAIL } from '../config';
 import { photos } from '../data/photos';
 import { DAY_NAMES, FULL_DAY_NAMES, getStatus } from '../lib/status';
-import { estimateTotal, formatFee, hasPrice, VisitorType } from '../lib/pricing';
+import { formatFee, hasPrice } from '../lib/pricing';
 import { formatAway } from '../lib/distance';
-import { Button, Chip, NotAvailable, Txt, Unverified } from './ui';
+import { Button, NotAvailable, Txt, Unverified } from './ui';
 import { PlaceVisual } from './Visual';
 import { CommuteCards } from './CommuteCards';
 import { statusText } from './PlaceCard';
@@ -60,8 +60,6 @@ const CircleBtn = ({ children, onPress, label, side, top }: { children: React.Re
 export function PlaceDetail({ place, km, day, today, saved, nearby, onOpenPlace, onClose, onToggleSave }: Props) {
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
-  const [who, setWho] = useState<VisitorType>('i');
-  const [count, setCount] = useState(2);
   const [page, setPage] = useState(0);
   const p = place;
   if (!p) return null;
@@ -82,7 +80,6 @@ export function PlaceDetail({ place, km, day, today, saved, nearby, onOpenPlace,
     else if (p.closedDays.length < 7) facts.push(`Closed ${p.closedDays.map((d) => DAY_NAMES[d]).join(', ')}`);
   }
   if (p.metro && !p.metroUnverified) facts.push(`Metro: ${p.metro.replace(/\s*\(.*\)$/, '')}`);
-  const total = estimateTotal(p, day, who, count);
   const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => setPage(Math.round(e.nativeEvent.contentOffset.x / width));
   const top = insets.top + 8;
 
@@ -159,23 +156,10 @@ export function PlaceDetail({ place, km, day, today, saved, nearby, onOpenPlace,
 
               <Card title="Tickets">
                 {p.tickets.length ? p.tickets.map((t) => <Row key={t.label} label={t.label} value={t.value} unverified={t.unverified} />) : <NotAvailable size={15} />}
-                {hasPrice(p, day) && fee !== 'Free' ? (
-                  <View style={s.estimate}>
-                    <Txt w="semi" style={{ fontSize: 14 }}>Estimate for your group</Txt>
-                    <View style={s.chips}>
-                      <Chip label="Indian" on={who === 'i'} onPress={() => setWho('i')} />
-                      <Chip label="Foreign" on={who === 'f'} onPress={() => setWho('f')} />
-                    </View>
-                    <View style={[s.chips, { alignItems: 'center' }]}>
-                      <Chip label="−" on={false} onPress={() => setCount((c) => Math.max(1, c - 1))} />
-                      <Txt w="semi" style={{ fontSize: 15, minWidth: 84, textAlign: 'center' }}>{count} visitor{count > 1 ? 's' : ''}</Txt>
-                      <Chip label="+" on={false} onPress={() => setCount((c) => c + 1)} />
-                    </View>
-                    {total == null ? <NotAvailable size={15} /> : <Txt w="bold" style={{ fontSize: 18, color: '#1d5fc4' }}>Estimate ₹{total}</Txt>}
-                    <Txt style={{ fontSize: 12, color: colors.sub }}>Adult rate only. Children and seniors may pay less.</Txt>
-                  </View>
-                ) : null}
               </Card>
+
+
+              <CommuteCards place={p} km={km} day={day} />
 
               {nearby.length ? (
                 <Card title="Nearby places">
@@ -193,8 +177,6 @@ export function PlaceDetail({ place, km, day, today, saved, nearby, onOpenPlace,
                   </ScrollView>
                 </Card>
               ) : null}
-
-              <CommuteCards place={p} km={km} day={day} />
 
               <Card title="What’s allowed">
                 {p.rules.length ? p.rules.map((r) => <Row key={r.label} label={r.label} value={r.value} />) : <NotAvailable size={15} />}
@@ -250,7 +232,6 @@ const s = StyleSheet.create({
   tip: { flexDirection: 'row', gap: 10, alignItems: 'flex-start' },
   bullet: { width: 6, height: 6, borderRadius: 3, backgroundColor: colors.primary, marginTop: 9 },
   note: { backgroundColor: '#fef3c7', borderRadius: 10, padding: 10, marginTop: 4 },
-  estimate: { marginTop: 8, paddingTop: 12, borderTopWidth: 1, borderTopColor: colors.line, gap: 8 },
   circle: { position: 'absolute', width: 44, height: 44, borderRadius: 22, backgroundColor: colors.white, alignItems: 'center', justifyContent: 'center', shadowColor: '#000', shadowOpacity: 0.18, shadowRadius: 6, shadowOffset: { width: 0, height: 2 }, elevation: 4 },
   dots: { position: 'absolute', bottom: 36, left: 0, right: 0, flexDirection: 'row', justifyContent: 'center', gap: 6 },
   dot: { width: 7, height: 7, borderRadius: 4, backgroundColor: 'rgba(255,255,255,0.6)' },

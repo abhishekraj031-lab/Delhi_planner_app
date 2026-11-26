@@ -46,9 +46,7 @@ export function CommuteCards({ place: p, km, day }: { place: Place; km: number |
               Estimated one-way fare for one adult, {metro.sunday ? 'Sunday rate' : 'Monday to Saturday'}. The exact fare depends on the station you board at. Airport Express costs more.
             </Txt>
           </View>
-        ) : (
-          <View style={s.fareBox}><Txt style={{ fontSize: 14, color: colors.sub }}>Estimated fare needs your location.</Txt></View>
-        )}
+        ) : null}
         <Cta label="Book metro ticket on ixigo" hint="Opens ixigo in your browser or app" onPress={() => open(IXIGO_METRO_URL)} />
         <Txt style={{ fontSize: 12, color: colors.sub }}>You choose your stations on ixigo. Tickets are QR codes for Delhi Metro.</Txt>
       </View>
@@ -68,9 +66,7 @@ export function CommuteCards({ place: p, km, day }: { place: Place; km: number |
               Estimated for a basic cab, about {cab.roadKm.toFixed(1)} km by road. Real prices change with traffic and demand and are shown in each app before you book.
             </Txt>
           </View>
-        ) : (
-          <View style={s.fareBox}><Txt style={{ fontSize: 14, color: colors.sub }}>Estimated fare needs your location. Each app still shows its own price.</Txt></View>
-        )}
+        ) : null}
         {CAB_APPS.map((a) => (
           <Pressable key={a.id} onPress={() => open(a.url(p))} accessibilityRole="link" accessibilityLabel={`Check price and book on ${a.name}`} accessibilityHint={a.note}
             style={({ pressed }) => [s.app, { opacity: pressed ? 0.7 : 1 }]}>
