@@ -1,4 +1,4 @@
-import type { Place } from '../types';
+import type { Coords, Place } from '../types';
 
 /**
  * Commute estimates from the visitor's location to a place. There is no live fare feed behind
@@ -38,12 +38,15 @@ export function estimateCab(straightKm: number | null): CabEstimate | null {
 }
 
 export const IXIGO_METRO_URL = 'https://www.ixigo.com/book-metro-ticket/?cCode=std%3A011&source=Delhi+Explorer';
-export type CabApp = { id: 'uber' | 'ola' | 'rapido'; name: string; url: (p: Place) => string; note: string };
+export type CabApp = { id: 'uber' | 'ola' | 'rapido'; name: string; url: (p: Place, from?: Coords | null) => string; note: string };
 export const CAB_APPS: CabApp[] = [
   { id: 'uber', name: 'Uber', note: 'Pickup: your location. Drop is filled in.',
-    url: (p) => `https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[latitude]=${p.lat}&dropoff[longitude]=${p.lng}&dropoff[nickname]=${encodeURIComponent(p.name)}` },
+    url: (p, from) => {
+      const pickup = from ? `pickup[latitude]=${from.lat}&pickup[longitude]=${from.lng}&pickup[nickname]=${encodeURIComponent('Your location')}` : 'pickup=my_location';
+      return `https://m.uber.com/ul/?action=setPickup&${pickup}&dropoff[latitude]=${p.lat}&dropoff[longitude]=${p.lng}&dropoff[nickname]=${encodeURIComponent(p.name)}`;
+    } },
   { id: 'ola', name: 'Ola', note: 'Pickup: your location. Drop is filled in.',
-    url: (p) => `https://book.olacabs.com/?drop_lat=${p.lat}&drop_lng=${p.lng}` },
+    url: (p, from) => `https://book.olacabs.com/?${from ? `lat=${from.lat}&lng=${from.lng}&` : ''}drop_lat=${p.lat}&drop_lng=${p.lng}` },
   { id: 'rapido', name: 'Rapido', note: 'Opens Rapido. Enter the drop there.',
     url: () => 'https://www.rapido.bike/' },
 ];

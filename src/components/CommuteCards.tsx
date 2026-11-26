@@ -1,7 +1,7 @@
 import React from 'react';
 import { Linking, Platform, Pressable, StyleSheet, View } from 'react-native';
 import { Car, ChevronRight, MapPin, TrainFront } from 'lucide-react-native';
-import type { Place } from '../types';
+import type { Coords, Place } from '../types';
 import { colors } from '../theme';
 import { CAB_APPS, CabApp, estimateCab, estimateMetro, IXIGO_METRO_URL } from '../lib/commute';
 import { formatAway } from '../lib/distance';
@@ -19,8 +19,8 @@ function Cta({ label, onPress, hint, url }: { label: string; onPress: () => void
   );
 }
 
-function AppRow({ app: a, place: p }: { app: CabApp; place: Place }) {
-  const url = a.url(p);
+function AppRow({ app: a, place: p, from }: { app: CabApp; place: Place; from: Coords | null }) {
+  const url = a.url(p, from);
   const ref = useExtLink(url);
   return (
     <Pressable ref={ref} onPress={() => open(url)} accessibilityRole="link" accessibilityLabel={`Check price and book on ${a.name}`} accessibilityHint={a.note}
@@ -38,7 +38,7 @@ function AppRow({ app: a, place: p }: { app: CabApp; place: Place }) {
 }
 
 /** "Getting there": one card for the metro and one for a cab, each with an estimated fare and a way to book. */
-export function CommuteCards({ place: p, km, day, locState, onAllowLocation }: { place: Place; km: number | null; day: number; locState: 'idle' | 'asking' | 'denied' | 'error'; onAllowLocation: () => void }) {
+export function CommuteCards({ place: p, km, from, day, locState, onAllowLocation }: { place: Place; km: number | null; from: Coords | null; day: number; locState: 'idle' | 'asking' | 'denied' | 'error'; onAllowLocation: () => void }) {
   const metro = estimateMetro(km, day);
   const cab = estimateCab(km);
   return (
@@ -106,7 +106,7 @@ export function CommuteCards({ place: p, km, day, locState, onAllowLocation }: {
             </Txt>
           </View>
         ) : null}
-        {CAB_APPS.map((a) => <AppRow key={a.id} app={a} place={p} />)}
+        {CAB_APPS.map((a) => <AppRow key={a.id} app={a} place={p} from={from} />)}
       </View>
     </View>
   );

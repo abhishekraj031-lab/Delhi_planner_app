@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Linking, Modal, NativeScrollEvent, NativeSyntheticEvent, Platform, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { ChevronLeft, Heart } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import type { Place } from '../types';
+import type { Coords, Place } from '../types';
 import { colors } from '../theme';
 import { SUPPORT_EMAIL } from '../config';
 import { photos } from '../data/photos';
@@ -15,7 +15,7 @@ import { CommuteCards } from './CommuteCards';
 import { statusText } from './PlaceCard';
 
 type Nearby = { place: Place; km: number };
-type Props = { place: Place | null; km: number | null; locState: 'idle' | 'asking' | 'denied' | 'error'; onAllowLocation: () => void; day: number; today: Date | null; saved: boolean; nearby: Nearby[]; onOpenPlace: (id: string) => void; onClose: () => void; onToggleSave: () => void };
+type Props = { place: Place | null; km: number | null; loc: Coords | null; locState: 'idle' | 'asking' | 'denied' | 'error'; onAllowLocation: () => void; day: number; today: Date | null; saved: boolean; nearby: Nearby[]; onOpenPlace: (id: string) => void; onClose: () => void; onToggleSave: () => void };
 
 const PAGE_BG = '#f4f5fa';
 const HERO_H = 280;
@@ -57,7 +57,7 @@ const CircleBtn = ({ children, onPress, label, side, top }: { children: React.Re
   <Pressable onPress={onPress} accessibilityRole="button" accessibilityLabel={label} hitSlop={4} style={[s.circle, { top, [side]: 16 }]}>{children}</Pressable>
 );
 
-export function PlaceDetail({ place, km, locState, onAllowLocation, day, today, saved, nearby, onOpenPlace, onClose, onToggleSave }: Props) {
+export function PlaceDetail({ place, km, loc, locState, onAllowLocation, day, today, saved, nearby, onOpenPlace, onClose, onToggleSave }: Props) {
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   const [page, setPage] = useState(0);
@@ -159,7 +159,7 @@ export function PlaceDetail({ place, km, locState, onAllowLocation, day, today, 
               </Card>
 
 
-              <CommuteCards place={p} km={km} day={day} locState={locState} onAllowLocation={onAllowLocation} />
+              <CommuteCards place={p} km={km} from={loc} day={day} locState={locState} onAllowLocation={onAllowLocation} />
 
               {nearby.length ? (
                 <Card title="Nearby places">

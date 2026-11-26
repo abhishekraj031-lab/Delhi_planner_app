@@ -197,6 +197,11 @@ describe('commute estimates', () => {
     const uber = CAB_APPS.find((a: any) => a.id === 'uber').url(p);
     expect(uber).toContain('dropoff[latitude]=28.59'); expect(uber).toContain(encodeURIComponent(p.name));
     expect(CAB_APPS.find((a: any) => a.id === 'ola').url(p)).toContain('drop_lat=28.59');
+    const from = { lat: 28.5, lng: 77.2 };
+    expect(uber).toContain('pickup=my_location');
+    const uber2 = CAB_APPS.find((a: any) => a.id === 'uber').url(p, from);
+    expect(uber2).toContain('pickup[latitude]=28.5'); expect(uber2).toContain('pickup[longitude]=77.2'); expect(uber2).not.toContain('my_location');
+    expect(CAB_APPS.find((a: any) => a.id === 'ola').url(p, from)).toContain('lat=28.5&lng=77.2&drop_lat=28.59');
     expect(IXIGO_METRO_URL).toContain('ixigo.com/book-metro-ticket');
   });
 });
