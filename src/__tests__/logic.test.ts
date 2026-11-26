@@ -235,7 +235,7 @@ describe('grouped filters', () => {
   });
   it('weekend keeps only places open Saturday and Sunday, and a single day works too', () => {
     run({ when: 'weekend' }).forEach((p) => { expect(p.closedDays).not.toContain(0); expect(p.closedDays).not.toContain(6); });
-    run({ when: 'd1' }).forEach((p) => expect(p.closedDays).not.toContain(1));
+    run({ when: 'weekdays', pick: 1 }).forEach((p) => expect(p.closedDays).not.toContain(1));
   });
   it('places with unknown opening days never pass a day filter', () => {
     const unknown = shown.filter((p) => !p.closedDays).map((p) => p.id);
@@ -252,10 +252,15 @@ describe('grouped filters', () => {
   });
   it('distance filter needs a location and keeps nearest first', () => {
     const here = { lat: 28.6129, lng: 77.2295 };
-    const near = visiblePlaces(shown, { ...base, category: 'All', extra: { within: 5 } }, none, here);
+    const near = visiblePlaces(shown, { ...base, category: 'All', extra: { where: 'w5' } }, none, here);
     expect(near.length).toBeGreaterThan(0);
     near.forEach((r) => expect(r.km!).toBeLessThanOrEqual(5));
-    expect(visiblePlaces(shown, { ...base, category: 'All', extra: { within: 5 } }, none, null)).toHaveLength(shown.length);
+    expect(visiblePlaces(shown, { ...base, category: 'All', extra: { where: 'w5' } }, none, null)).toHaveLength(shown.length);
+  });
+  it('where options are single choice: nearest gives five, metro needs a station', () => {
+    const here = { lat: 28.6129, lng: 77.2295 };
+    expect(visiblePlaces(shown, { ...base, category: 'All', extra: { where: 'nearest' } }, none, here)).toHaveLength(5);
+    run({ where: 'metro' }).forEach((p) => expect(p.metro).toBeTruthy());
   });
   it('filters combine', () => {
     const both = run({ when: 'weekend', budget: 'free' });
@@ -263,9 +268,9 @@ describe('grouped filters', () => {
     expect(both.length).toBeLessThanOrEqual(run({ budget: 'free' }).length);
   });
   it('whenInfo maps choices to a display day', () => {
-    expect(whenInfo('today', 2).day).toBe(2);
-    expect(whenInfo('weekend', 2).day).toBe(6);
-    expect(whenInfo('d1', 2).label).toBe('Monday');
+    expect(whenInfo('today', null, 2).day).toBe(2);
+    expect(whenInfo('weekend', null, 2).day).toBe(6);
+    expect(whenInfo('weekdays', 1, 2).label).toBe('Monday');
     expect(NO_EXTRA.when).toBe('today');
   });
 });

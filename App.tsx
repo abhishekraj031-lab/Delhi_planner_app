@@ -65,7 +65,6 @@ function Home() {
   const [category, setCategory] = useState<Category | 'All'>('Monuments');
   const [query, setQuery] = useState('');
   const [extra, setExtra] = useState<Extra>(NO_EXTRA);
-  const [savedOnly, setSavedOnly] = useState(false);
   const [openId, setOpenId] = useState<string | null>(null);
   const [showFilters, setShowFilters] = useState(false);
   const [showLocation, setShowLocation] = useState(false);
@@ -95,15 +94,12 @@ function Home() {
     return () => clearInterval(t);
   }, []);
 
-  const info = whenInfo(extra.when, now.getDay());
+  const info = whenInfo(extra.when, extra.pick, now.getDay());
   const day = info.day;
   const today = extra.when === 'today' ? now : null;
-  const tags = activeTags(extra, savedOnly);
-  const clearTag = (k: string) => {
-    if (k === 'saved') setSavedOnly(false);
-    else setExtra((x) => ({ ...x, ...(k === 'when' ? { when: 'today' as const } : k === 'budget' ? { budget: null } : k === 'hours' ? { hours: null } : k === 'within' ? { within: null } : { metro: false }) }));
-  };
-  const clearAll = () => { setExtra(NO_EXTRA); setSavedOnly(false); };
+  const tags = activeTags(extra);
+  const clearTag = (k: string) => setExtra((x) => ({ ...x, ...(k === 'when' ? { when: 'today' as const, pick: null } : k === 'budget' ? { budget: null } : k === 'hours' ? { hours: null } : { where: null }) }));
+  const clearAll = () => setExtra(NO_EXTRA);
 
   const toggleSave = useCallback((id: string) => {
     setSaved((prev) => {
@@ -143,8 +139,8 @@ function Home() {
   };
 
   const rows = useMemo(
-    () => visiblePlaces(places, { category, query, savedOnly, day, extra, now }, saved, loc),
-    [places, category, query, savedOnly, day, extra, now, saved, loc],
+    () => visiblePlaces(places, { category, query, savedOnly: false, day, extra, now }, saved, loc),
+    [places, category, query, day, extra, now, saved, loc],
   );
   const favRows = useMemo(
     () => visiblePlaces(places, { category: 'All', query: '', savedOnly: true, day }, saved, loc),
@@ -298,9 +294,10 @@ function Home() {
         onClose={() => setOpenId(null)} onToggleSave={() => openId && requestToggle(openId)} />
       <VoiceSheet visible={showVoice} onClose={() => setShowVoice(false)} places={places} loc={loc} day={day} today={today} onOpenPlace={setOpenId} />
       <AuthPrompt visible={pendingSave !== null} onClose={closeLoginPrompt} onSignIn={signInThenSave} />
-      <FilterSheet visible={showFilters} onClose={() => setShowFilters(false)} extra={extra} setExtra={setExtra} savedOnly={savedOnly} setSavedOnly={setSavedOnly} savedCount={saved.size}
-        hasLocation={!!loc} onSetLocation={() => { setShowFilters(false); setShowLocation(true); }} count={rows.length} onClear={clearAll} activeCount={tags.length}
-        categories={categoriesWithPlaces(places)} category={category} setCategory={(c) => { setQuery(''); setCategory(c); }} />
+      <FilterSheet visible={showFilters} onClose={() => setShowFilters(false)} extra={extra} category={category} categories={categoriesWithPlaces(places)}
+        hasLocation={!!loc} onSetLocation={() => { setShowFilters(false); setShowLocation(true); }}
+        countFor={(x, c) => visiblePlaces(places, { category: c, query, savedOnly: false, day: whenInfo(x.when, x.pick, now.getDay()).day, extra: x, now }, saved, loc).length}
+        onApply={(x, c) => { setExtra(x); if (c !== category) { setQuery(''); setCategory(c); } setShowFilters(false); }} />
       <LocationSheet visible={showLocation} onClose={() => setShowLocation(false)} loc={loc} state={state} onUseCurrent={requestCurrent} onChooseArea={chooseArea} />
     </View>
   );

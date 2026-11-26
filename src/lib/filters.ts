@@ -3,43 +3,48 @@ import { priceFor } from './pricing';
 import { FULL_DAY_NAMES, getStatus } from './status';
 
 /** When the visit happens. 'today' shows everything with today's status; the others keep only places known to be open. */
-export type When = 'today' | 'weekdays' | 'weekend' | 'd0' | 'd1' | 'd2' | 'd3' | 'd4' | 'd5' | 'd6';
+export type When = 'today' | 'weekdays' | 'weekend';
 export type Budget = 'free' | 'u30' | 'u50' | 'o50';
 export type HoursPick = 'now' | 'morning' | 'evening';
+export type Where = 'nearest' | 'w2' | 'w5' | 'w10' | 'w20' | 'metro';
 
 export const WHEN_OPTIONS: { key: When; label: string }[] = [
   { key: 'today', label: 'Today' }, { key: 'weekdays', label: 'Weekdays' }, { key: 'weekend', label: 'Weekend' },
 ];
-/** Monday first, the way people plan a week. */
-export const DAY_OPTIONS: { key: When; label: string }[] = [1, 2, 3, 4, 5, 6, 0].map((d) => ({ key: `d${d}` as When, label: FULL_DAY_NAMES[d].slice(0, 3) }));
+/** Single days offered under each group. */
+export const DAYS_FOR: Record<'weekdays' | 'weekend', number[]> = { weekdays: [1, 2, 3, 4, 5], weekend: [6, 0] };
 export const BUDGETS: { key: Budget; label: string }[] = [
   { key: 'free', label: 'Free' }, { key: 'u30', label: 'Up to ₹30' }, { key: 'u50', label: '₹31 to ₹50' }, { key: 'o50', label: 'Above ₹50' },
 ];
 export const HOURS: { key: HoursPick; label: string }[] = [
   { key: 'now', label: 'Open now' }, { key: 'morning', label: 'Open at 10 am' }, { key: 'evening', label: 'Open at 6 pm' },
 ];
-export const WITHIN = [2, 5, 10, 20];
+export const WHERES: { key: Where; label: string; needsLocation: boolean }[] = [
+  { key: 'nearest', label: '5 nearest to me', needsLocation: true },
+  { key: 'w2', label: 'Within 2 km', needsLocation: true }, { key: 'w5', label: 'Within 5 km', needsLocation: true },
+  { key: 'w10', label: 'Within 10 km', needsLocation: true }, { key: 'w20', label: 'Within 20 km', needsLocation: true },
+  { key: 'metro', label: 'Near a metro station', needsLocation: false },
+];
+export const whereKm = (w: Where | null | undefined): number | null => (w && /^w\d+$/.test(w) ? Number(w.slice(1)) : null);
 
-export type Extra = { when: When; budget: Budget | null; hours: HoursPick | null; within: number | null; metro: boolean };
-export const NO_EXTRA: Extra = { when: 'today', budget: null, hours: null, within: null, metro: false };
+export type Extra = { when: When; pick: number | null; budget: Budget | null; hours: HoursPick | null; where: Where | null };
+export const NO_EXTRA: Extra = { when: 'today', pick: null, budget: null, hours: null, where: null };
 
 /** The weekday used to show prices and status for a choice. */
-export function whenInfo(when: When, todayDow: number): { day: number; label: string; hint: string | null } {
+export function whenInfo(when: When, pick: number | null, todayDow: number): { day: number; label: string; hint: string | null } {
   if (when === 'today') return { day: todayDow, label: 'Today', hint: null };
+  if (pick != null) return { day: pick, label: FULL_DAY_NAMES[pick], hint: `Showing places open on ${FULL_DAY_NAMES[pick]}.` };
   if (when === 'weekdays') return { day: 3, label: 'Weekdays', hint: 'Showing places open every weekday, Monday to Friday.' };
-  if (when === 'weekend') return { day: 6, label: 'Weekend', hint: 'Showing places open on both Saturday and Sunday.' };
-  const d = Number(when.slice(1));
-  return { day: d, label: FULL_DAY_NAMES[d], hint: `Showing places open on ${FULL_DAY_NAMES[d]}.` };
+  return { day: 6, label: 'Weekend', hint: 'Showing places open on both Saturday and Sunday.' };
 }
 
 /** Places with unknown opening days are left out of day filters, never guessed. */
-export function matchesWhen(p: Place, when: When): boolean {
+export function matchesWhen(p: Place, when: When, pick: number | null = null): boolean {
   if (when === 'today') return true;
   if (!p.closedDays) return false;
-  const shut = (days: number[]) => !days.some((d) => p.closedDays!.includes(d));
-  if (when === 'weekdays') return shut([1, 2, 3, 4, 5]);
-  if (when === 'weekend') return shut([0, 6]);
-  return shut([Number(when.slice(1))]);
+  const open = (days: number[]) => !days.some((d) => p.closedDays!.includes(d));
+  if (pick != null) return open([pick]);
+  return open(when === 'weekdays' ? DAYS_FOR.weekdays : DAYS_FOR.weekend);
 }
 
 export function matchesBudget(p: Place, b: Budget | null, day: number): boolean {
@@ -60,15 +65,11 @@ export function matchesHours(p: Place, h: HoursPick | null, now: Date): boolean 
   return p.hours[0] <= at && p.hours[1] > at;
 }
 
-export const extraCount = (x: Extra) => (x.when !== 'today' ? 1 : 0) + (x.budget ? 1 : 0) + (x.hours ? 1 : 0) + (x.within ? 1 : 0) + (x.metro ? 1 : 0);
-
-export function activeTags(x: Extra, saved: boolean): { key: string; label: string }[] {
+export function activeTags(x: Extra): { key: string; label: string }[] {
   const t: { key: string; label: string }[] = [];
-  if (x.when !== 'today') t.push({ key: 'when', label: whenInfo(x.when, 0).label });
+  if (x.when !== 'today') t.push({ key: 'when', label: whenInfo(x.when, x.pick, 0).label });
   if (x.budget) t.push({ key: 'budget', label: BUDGETS.find((b) => b.key === x.budget)!.label });
   if (x.hours) t.push({ key: 'hours', label: HOURS.find((h) => h.key === x.hours)!.label });
-  if (x.within) t.push({ key: 'within', label: `Within ${x.within} km` });
-  if (x.metro) t.push({ key: 'metro', label: 'Near metro' });
-  if (saved) t.push({ key: 'saved', label: 'Saved' });
+  if (x.where) t.push({ key: 'where', label: WHERES.find((w) => w.key === x.where)!.label });
   return t;
 }

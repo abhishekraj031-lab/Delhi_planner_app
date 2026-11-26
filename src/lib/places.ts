@@ -1,7 +1,7 @@
 import type { Category, Coords, Place } from '../types';
 import { distanceKm } from './distance';
 import { priceFor } from './pricing';
-import { Extra, matchesBudget, matchesHours, matchesWhen } from './filters';
+import { Extra, matchesBudget, matchesHours, matchesWhen, whereKm } from './filters';
 
 export const CATEGORIES: Category[] = ['Monuments', 'Modern Landmarks', 'Museums', 'Religious & spiritual', 'Gardens & Parks', 'Markets & Food', 'Entertainment'];
 /** Tabs are shown only for categories that currently have places. */
@@ -20,15 +20,17 @@ export function visiblePlaces(places: Place[], f: Filters, saved: Set<string>, l
     if (f.savedOnly && !saved.has(p.id)) return false;
     const x = f.extra;
     if (x) {
-      if (x.when && !matchesWhen(p, x.when)) return false;
+      if (x.when && !matchesWhen(p, x.when, x.pick ?? null)) return false;
       if (!matchesBudget(p, x.budget ?? null, f.day)) return false;
       if (!matchesHours(p, x.hours ?? null, f.now ?? new Date())) return false;
-      if (x.metro && !p.metro) return false;
+      if (x.where === 'metro' && !p.metro) return false;
     }
     return true;
   });
-  const within = f.extra?.within;
+  const within = whereKm(f.extra?.where);
+  const nearest = f.extra?.where === 'nearest';
   if (!loc) return list.map((place) => ({ place, km: null as number | null }));
   const rows = list.map((place) => ({ place, km: distanceKm(loc, place) as number | null }));
-  return (within ? rows.filter((r) => (r.km as number) <= within) : rows).sort((a, b) => (a.km as number) - (b.km as number));
+  const sorted = (within ? rows.filter((r) => (r.km as number) <= within) : rows).sort((a, b) => (a.km as number) - (b.km as number));
+  return nearest ? sorted.slice(0, 5) : sorted;
 }
