@@ -177,3 +177,26 @@ describe('voice search', () => {
     expect(answerQuery('timings of red fort', all, ctx).places[0].id).toBe('rf');
   });
 });
+
+describe('commute estimates', () => {
+  const { estimateMetro, estimateCab, CAB_APPS, IXIGO_METRO_URL } = require('../lib/commute');
+  test('metro slabs and Sunday rate', () => {
+    expect(estimateMetro(null, 1)).toBeNull();
+    expect(estimateMetro(1, 1).fare).toBe(11);          // 1.25 km track
+    expect(estimateMetro(6, 1).fare).toBe(32);          // 7.5 km track
+    expect(estimateMetro(6, 0).fare).toBe(21);          // Sunday
+    expect(estimateMetro(40, 1).fare).toBe(64);         // over 32 km track
+  });
+  test('cab range is ordered, rounded to 10 and has a floor', () => {
+    expect(estimateCab(null)).toBeNull();
+    const a = estimateCab(1); expect(a.low).toBe(80); expect(a.high).toBe(120);
+    const b = estimateCab(8); expect(b.low % 10).toBe(0); expect(b.high).toBeGreaterThan(b.low);
+  });
+  test('booking links carry the destination', () => {
+    const p = { name: "Humayun's Tomb", lat: 28.59, lng: 77.25 } as Place;
+    const uber = CAB_APPS.find((a: any) => a.id === 'uber').url(p);
+    expect(uber).toContain('dropoff[latitude]=28.59'); expect(uber).toContain(encodeURIComponent(p.name));
+    expect(CAB_APPS.find((a: any) => a.id === 'ola').url(p)).toContain('drop_lat=28.59');
+    expect(IXIGO_METRO_URL).toContain('ixigo.com/book-metro-ticket');
+  });
+});

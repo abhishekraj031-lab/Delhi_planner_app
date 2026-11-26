@@ -11,6 +11,7 @@ import { estimateTotal, formatFee, hasPrice, VisitorType } from '../lib/pricing'
 import { formatAway } from '../lib/distance';
 import { Button, Chip, NotAvailable, Txt, Unverified } from './ui';
 import { PlaceVisual } from './Visual';
+import { CommuteCards } from './CommuteCards';
 import { statusText } from './PlaceCard';
 
 type Nearby = { place: Place; km: number };
@@ -193,10 +194,7 @@ export function PlaceDetail({ place, km, day, today, saved, nearby, onOpenPlace,
                 </Card>
               ) : null}
 
-              <Card title="Getting there">
-                <Row label="Nearest metro" value={p.metro ?? 'Not available'} unverified={!!p.metro && !!p.metroUnverified} />
-                {km != null ? <Row label="From you" value={`${formatAway(km)} (straight line)`} /> : null}
-              </Card>
+              <CommuteCards place={p} km={km} day={day} />
 
               <Card title="What’s allowed">
                 {p.rules.length ? p.rules.map((r) => <Row key={r.label} label={r.label} value={r.value} />) : <NotAvailable size={15} />}
