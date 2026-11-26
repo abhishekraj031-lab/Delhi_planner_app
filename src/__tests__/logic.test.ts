@@ -150,13 +150,20 @@ test('plan explains why: open that day, nearest chain, start point', () => {
 });
 
 describe('voice search', () => {
-  const { answerQuery } = require('../lib/voiceSearch');
+  const { answerQuery, SUGGESTIONS } = require('../lib/voiceSearch');
   const all = (require('../data/places.json') as Place[]).filter(hasCollectedData);
   const mon = new Date('2026-11-23T10:00:00'); // a Monday
   const ctx = { loc: null, now: mon };
   test('place price', () => {
     const a = answerQuery('what is the ticket price for Qutub Minar', all, ctx);
     expect(a.kind).toBe('place'); expect(a.places[0].id).toBe('qutub-minar'); expect(a.reply).toMatch(/50 rupees/);
+  });
+  test('every suggestion chip gets a real answer', () => {
+    for (const q of SUGGESTIONS) {
+      const a = answerQuery(q, all, { ...ctx, loc: { lat: 28.6139, lng: 77.209 } });
+      expect([q, a.kind]).not.toEqual([q, 'none']);
+      expect([q, a.kind]).not.toEqual([q, 'help']);
+    }
   });
   test('free places', () => {
     const a = answerQuery('show me free places', all, ctx);

@@ -6,7 +6,7 @@ import { FULL_DAY_NAMES, getStatus } from './status';
 export type VoiceAnswer = { reply: string; places: Place[]; kind: 'place' | 'list' | 'plan' | 'help' | 'none' };
 type Ctx = { loc: Coords | null; now: Date };
 
-export const SUGGESTIONS = ['Free places to visit', 'Museums open on Monday', 'Ticket price for Qutub Minar', 'Nearest metro to Red Fort', 'Temples near me'];
+export const SUGGESTIONS = ['Free places to visit', 'Museums open on Tuesday', 'Ticket price for Qutub Minar', 'Nearest metro to Red Fort', 'Temples near me', 'Gardens to visit', 'Monuments open today'];
 
 const norm = (s: string) => s.toLowerCase().replace(/[’']/g, '').replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
 const has = (q: string, re: RegExp) => re.test(q);
@@ -110,7 +110,7 @@ export function answerQuery(text: string, places: Place[], ctx: Ctx): VoiceAnswe
   let rows = [...places];
   const reasons: string[] = [];
   const cat = CATEGORY_WORDS.find(([, re]) => re.test(q));
-  if (cat) { rows = rows.filter((p) => p.category === cat[0]); reasons.push(cat[0].toLowerCase()); }
+  if (cat) { rows = rows.filter((p) => p.category === cat[0]); reasons.push(`in the ${cat[0]} category`); }
   const areaHit = places.find((p) => q.includes(norm(p.area)) && norm(p.area).length > 3);
   const metroKey = (p: Place) => norm((p.metro ?? '').replace(/\s*\(.*?\)/, '').replace(/\bviolet line\b/i, ''));
   const metroHit = places.find((p) => metroKey(p).length > 3 && q.includes(metroKey(p)));

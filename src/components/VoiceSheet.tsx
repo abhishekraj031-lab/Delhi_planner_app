@@ -11,8 +11,11 @@ import { autoListen, micPermission, requestMic, startListening, speak, stopSpeak
 import { onBridge, post, useBridgeCaps } from '../lib/bridge';
 import { statusText } from './PlaceCard';
 import { Button, Txt } from './ui';
+import { FadeSlide } from './motion';
+import { Orb, OrbMode, Rings, StreamText, TypingDots } from './AssistantOrb';
 
-type Msg = { id: number; from: 'me' | 'bot'; text: string; places?: Place[] };
+type Msg = { id: number; from: 'me' | 'bot'; text: string; places?: Place[]; stream?: boolean };
+const STATUS: Record<OrbMode, string> = { idle: 'Ready to help', listening: 'Listening…', thinking: 'Thinking…', speaking: 'Answering…' };
 const GREETING = 'Hi! Ask me about places to visit in Delhi. Tap the mic and speak, or type.';
 
 type Props = { visible: boolean; onClose: () => void; places: Place[]; loc: Coords | null; day: number; today: Date | null; onOpenPlace: (id: string) => void };
@@ -24,6 +27,10 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
   const [text, setText] = useState('');
   const [listening, setListening] = useState(false);
   const [muted, setMuted] = useState(false);
+  const [thinking, setThinking] = useState(false);
+  const [speaking, setSpeaking] = useState(false);
+  const [lastQ, setLastQ] = useState('');
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
   const stopRef = useRef<null | (() => void)>(null);
   const idRef = useRef(1);
   const scroller = useRef<{ scrollToEnd: (o?: { animated?: boolean }) => void } | null>(null);
@@ -37,11 +44,20 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
   const ask = useCallback((q: string, spoken: boolean) => {
     const clean = q.trim();
     if (!clean) return;
-    const a: VoiceAnswer = answerQuery(clean, places, { loc, now: today ?? new Date() });
-    setMsgs((m) => [...m, { id: idRef.current++, from: 'me', text: clean }, { id: idRef.current++, from: 'bot', text: a.reply, places: a.places.slice(0, 5) }]);
-    setText('');
-    if (spoken && !mutedRef.current) speak(a.reply);
+    setMsgs((m) => [...m, { id: idRef.current++, from: 'me', text: clean }]);
+    setText(''); setThinking(true); setLastQ(clean);
+    // A short pause so the assistant visibly "thinks" before it answers.
+    timers.current.push(setTimeout(() => {
+      const a: VoiceAnswer = answerQuery(clean, places, { loc, now: today ?? new Date() });
+      setThinking(false);
+      setMsgs((m) => [...m, { id: idRef.current++, from: 'bot', text: a.reply, places: a.places.slice(0, 5), stream: true }]);
+      if (spoken && !mutedRef.current) {
+        speak(a.reply); setSpeaking(true);
+        timers.current.push(setTimeout(() => setSpeaking(false), Math.min(14000, 700 + a.reply.length * 60)));
+      }
+    }, 750));
   }, [places, loc, today]);
+  const endStream = useCallback((id: number) => setMsgs((m) => m.map((x) => (x.id === id ? { ...x, stream: false } : x))), []);
 
   const stopListen = useCallback(() => { stopRef.current?.(); stopRef.current = null; setListening(false); }, []);
   const listen = useCallback(async () => {
@@ -90,11 +106,14 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
     if (visible && autoListen()) listen();
     if (!visible) { stopListen(); stopSpeaking(); }
   }, [visible]); // eslint-disable-line react-hooks/exhaustive-deps
-  useEffect(() => { setTimeout(() => scroller.current?.scrollToEnd({ animated: true }), 60); }, [msgs.length]);
+  useEffect(() => { setTimeout(() => scroller.current?.scrollToEnd({ animated: true }), 60); }, [msgs.length, thinking]);
 
-  const close = () => { stopListen(); stopSpeaking(); onClose(); };
+  const close = () => { stopListen(); stopSpeaking(); timers.current.forEach(clearTimeout); timers.current = []; setThinking(false); setSpeaking(false); setMsgs((m) => m.map((x) => ({ ...x, stream: false }))); onClose(); };
   const open = (id: string) => { close(); setTimeout(() => onOpenPlace(id), 150); };
   const ready = text.trim().length > 0 && !listening;
+  const streaming = msgs.some((m) => m.stream);
+  const mode: OrbMode = listening ? 'listening' : thinking ? 'thinking' : speaking || streaming ? 'speaking' : 'idle';
+  const hero = msgs.length === 1 && !thinking;
 
   return (
     <Modal visible={visible} transparent animationType="slide" onRequestClose={close} statusBarTranslucent>
@@ -105,35 +124,55 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
         </Pressable>
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={s.sheet} accessibilityViewIsModal accessibilityLabel="Voice search">
           <View style={s.head}>
-            <Txt w="bold" style={{ fontSize: 18 }}>Ask about places</Txt>
-            <Pressable onPress={() => { setMuted((v) => !v); stopSpeaking(); }} accessibilityRole="button" accessibilityLabel={muted ? 'Turn on spoken answers' : 'Turn off spoken answers'} hitSlop={8} style={s.iconBtn}>
+            {hero ? null : <Orb mode={mode} size={40} />}
+            <View style={{ flex: 1 }}>
+              <Txt w="bold" style={{ fontSize: 18 }}>Delhi assistant</Txt>
+              <Txt style={{ fontSize: 13, color: mode === 'idle' ? colors.sub : colors.primary }}>{STATUS[mode]}</Txt>
+            </View>
+            <Pressable onPress={() => { setMuted((v) => !v); stopSpeaking(); setSpeaking(false); }} accessibilityRole="button" accessibilityLabel={muted ? 'Turn on spoken answers' : 'Turn off spoken answers'} hitSlop={8} style={s.iconBtn}>
               {muted ? <VolumeX size={22} color={colors.sub} /> : <Volume2 size={22} color={colors.ink} />}
             </Pressable>
           </View>
-          <ScrollView ref={scroller as never} style={{ flex: 1 }} contentContainerStyle={{ padding: 16, gap: 12 }} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
-            {msgs.map((m) => (
-              <View key={m.id} style={{ alignItems: m.from === 'me' ? 'flex-end' : 'flex-start', gap: 8 }}>
+          <ScrollView ref={scroller as never} style={{ flex: 1 }} contentContainerStyle={{ padding: 16, gap: 12 }} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false} onContentSizeChange={() => scroller.current?.scrollToEnd({ animated: true })}>
+            {hero ? (
+              <FadeSlide k="hero" style={{ alignItems: 'center', gap: 6, paddingTop: 24, paddingBottom: 8 }} dy={14} ms={400}>
+                <Orb mode={mode} size={120} />
+                <Txt w="bold" style={{ fontSize: 22, marginTop: 14 }}>How can I help?</Txt>
+                <Txt style={{ fontSize: 15, color: colors.text, textAlign: 'center' }}>Ask about free places, ticket prices, timings or the nearest metro. Tap the mic and speak, or type.</Txt>
+                <Txt style={{ fontSize: 12, color: colors.sub, textAlign: 'center' }}>Answers come from the app's own place data.</Txt>
+              </FadeSlide>
+            ) : msgs.map((m) => (
+              <FadeSlide key={m.id} k={String(m.id)} dy={12} ms={260} style={{ alignItems: m.from === 'me' ? 'flex-end' : 'flex-start', gap: 8 }}>
                 <View style={[s.bubble, m.from === 'me' ? s.me : s.bot]}>
-                  <Txt style={{ fontSize: 15, lineHeight: 21, color: m.from === 'me' ? colors.white : colors.ink }}>{m.text}</Txt>
+                  {m.stream
+                    ? <StreamText text={m.text} onDone={() => endStream(m.id)} style={{ fontSize: 15, lineHeight: 21, color: colors.ink }} />
+                    : <Txt style={{ fontSize: 15, lineHeight: 21, color: m.from === 'me' ? colors.white : colors.ink }}>{m.text}</Txt>}
                 </View>
-                {m.places?.map((p) => {
+                {!m.stream ? m.places?.map((p) => {
                   const st = statusText(p, day, today);
                   const fee = formatFee(p, day);
                   return (
-                    <Pressable key={p.id} onPress={() => open(p.id)} accessibilityRole="button" accessibilityLabel={`${p.name}. Open details`} style={({ pressed }) => [s.row, { opacity: pressed ? 0.7 : 1 }]}>
-                      <View style={[s.dot, { backgroundColor: p.color }]}><Txt style={{ fontSize: 20 }}>{p.emoji}</Txt></View>
-                      <View style={{ flex: 1 }}>
-                        <Txt w="semi" style={{ fontSize: 15 }} numberOfLines={1}>{p.name}</Txt>
-                        <Txt style={{ fontSize: 13, color: colors.sub }} numberOfLines={1}>
-                          {[p.area, fee ?? 'Price not available', st.text, loc ? formatAway(distanceKm(loc, p)) : null].filter(Boolean).join(' · ')}
-                        </Txt>
-                      </View>
-                    </Pressable>
+                    <FadeSlide key={p.id} k={p.id} dy={8} ms={260} style={{ alignSelf: 'stretch' }}>
+                      <Pressable onPress={() => open(p.id)} accessibilityRole="button" accessibilityLabel={`${p.name}. Open details`} style={({ pressed }) => [s.row, { opacity: pressed ? 0.7 : 1 }]}>
+                        <View style={[s.dot, { backgroundColor: p.color }]}><Txt style={{ fontSize: 20 }}>{p.emoji}</Txt></View>
+                        <View style={{ flex: 1 }}>
+                          <Txt w="semi" style={{ fontSize: 15 }} numberOfLines={1}>{p.name}</Txt>
+                          <Txt style={{ fontSize: 13, color: colors.sub }} numberOfLines={1}>
+                            {[p.area, fee ?? 'Price not available', st.text, loc ? formatAway(distanceKm(loc, p)) : null].filter(Boolean).join(' · ')}
+                          </Txt>
+                        </View>
+                      </Pressable>
+                    </FadeSlide>
                   );
-                })}
-              </View>
+                }) : null}
+              </FadeSlide>
             ))}
-            {msgs.length === 1 ? (
+            {thinking ? (
+              <FadeSlide k="typing" dy={8} ms={200} style={{ alignItems: 'flex-start' }}>
+                <View style={[s.bubble, s.bot]}><TypingDots /></View>
+              </FadeSlide>
+            ) : null}
+            {hero ? (
               <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
                 {SUGGESTIONS.map((q) => (
                   <Pressable key={q} onPress={() => ask(q, false)} accessibilityRole="button" style={s.chip}><Txt style={{ fontSize: 14, color: colors.primary }}>{q}</Txt></Pressable>
@@ -141,6 +180,21 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
               </View>
             ) : null}
           </ScrollView>
+          {!hero ? (
+            <View style={{ flexGrow: 0 }}>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} keyboardShouldPersistTaps="handled" contentContainerStyle={{ gap: 8, paddingHorizontal: 16, paddingVertical: 10 }}>
+                {SUGGESTIONS.map((q) => {
+                  const on = q === lastQ;
+                  return (
+                    <Pressable key={q} onPress={() => ask(q, false)} accessibilityRole="button" accessibilityLabel={q} accessibilityState={{ selected: on }}
+                      style={[s.chip, on && { backgroundColor: colors.primary }]}>
+                      <Txt style={{ fontSize: 14, color: on ? colors.white : colors.primary }}>{q}</Txt>
+                    </Pressable>
+                  );
+                })}
+              </ScrollView>
+            </View>
+          ) : null}
           {showAllow ? (
             <View style={s.allow}>
               <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
@@ -167,9 +221,12 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
             {ready ? (
               <Pressable onPress={() => ask(text, false)} accessibilityRole="button" accessibilityLabel="Send" style={[s.round, { backgroundColor: colors.primary }]}><ArrowUp size={24} color={colors.white} /></Pressable>
             ) : (
-              <Pressable ref={micRef as never} onPress={listening ? stopListen : listen} accessibilityRole="button" accessibilityLabel={listening ? 'Stop listening' : 'Speak'} style={[s.round, { backgroundColor: listening ? colors.warn : colors.dark }]}>
-                {listening ? <Square size={20} color={colors.white} fill={colors.white} /> : <Mic size={24} color={colors.white} />}
-              </Pressable>
+              <View style={{ width: 48, height: 48, alignItems: 'center', justifyContent: 'center' }}>
+                <Rings active={listening} size={48} color={colors.warn} />
+                <Pressable ref={micRef as never} onPress={listening ? stopListen : listen} accessibilityRole="button" accessibilityLabel={listening ? 'Stop listening' : 'Speak'} style={[s.round, { backgroundColor: listening ? colors.warn : colors.dark }]}>
+                  {listening ? <Square size={20} color={colors.white} fill={colors.white} /> : <Mic size={24} color={colors.white} />}
+                </Pressable>
+              </View>
             )}
           </View>
         </KeyboardAvoidingView>
@@ -182,7 +239,7 @@ const s = StyleSheet.create({
   wrap: { flex: 1, justifyContent: 'flex-end', backgroundColor: colors.overlay },
   fab: { alignSelf: 'center', width: 44, height: 44, borderRadius: 22, backgroundColor: colors.dark, alignItems: 'center', justifyContent: 'center', marginBottom: 12 },
   sheet: { height: '78%', backgroundColor: colors.white, borderTopLeftRadius: 16, borderTopRightRadius: 16, overflow: 'hidden' },
-  head: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingTop: 16, paddingBottom: 4 },
+  head: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 12, paddingTop: 12, paddingBottom: 4 },
   iconBtn: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' },
   bubble: { maxWidth: '86%', borderRadius: 16, paddingHorizontal: 14, paddingVertical: 10 },
   me: { backgroundColor: colors.primary, borderBottomRightRadius: 4 },
