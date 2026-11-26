@@ -19,7 +19,7 @@ import { NewPostSheet } from './src/components/NewPostSheet';
 import { useWall } from './src/hooks/useWall';
 import { shareText } from './src/lib/wall';
 import { distanceKm } from './src/lib/distance';
-import { Church, CircleUser, Dome, FerrisWheel, Landmark, Lighthouse, Heart, MapPin, Mic, Search, ShoppingBag, SlidersHorizontal, Ticket, Trees } from 'lucide-react-native';
+import { Church, CircleUser, Dome, FerrisWheel, Landmark, Lighthouse, Heart, MapPin, Mic, Search, ShoppingBag, SlidersHorizontal, Ticket, Trees, X } from 'lucide-react-native';
 import type { Category, Place } from './src/types';
 import { colors, font } from './src/theme';
 import { loadPlaces } from './src/data/repository';
@@ -34,7 +34,8 @@ import { ProfileScreen, initialOf } from './src/components/ProfileScreen';
 import { EmptyState } from './src/components/EmptyState';
 import { LoginScreen } from './src/components/LoginScreen';
 import { useAuth } from './src/hooks/useAuth';
-import { DAY_CHOICES, DayChoice, FilterSheet, LocationSheet } from './src/components/OptionSheets';
+import { FilterSheet, LocationSheet } from './src/components/OptionSheets';
+import { activeTags, Extra, NO_EXTRA, whenInfo } from './src/lib/filters';
 
 const ICONS: Record<Category, React.ComponentType<{ size?: number; color?: string }>> = {
   'Monuments': Dome, 'Modern Landmarks': Lighthouse, 'Museums': Landmark, 'Religious & spiritual': Church,
@@ -63,8 +64,7 @@ function Home() {
   const [pendingSave, setPendingSave] = useState<{ ids: string[]; reopen: string | null } | null>(null);
   const [category, setCategory] = useState<Category | 'All'>('Monuments');
   const [query, setQuery] = useState('');
-  const [dayChoice, setDayChoice] = useState<DayChoice>('today');
-  const [freeOnly, setFreeOnly] = useState(false);
+  const [extra, setExtra] = useState<Extra>(NO_EXTRA);
   const [savedOnly, setSavedOnly] = useState(false);
   const [openId, setOpenId] = useState<string | null>(null);
   const [showFilters, setShowFilters] = useState(false);
@@ -95,9 +95,15 @@ function Home() {
     return () => clearInterval(t);
   }, []);
 
-  const choice = DAY_CHOICES.find((d) => d.key === dayChoice)!;
-  const day = choice.day(now.getDay());
-  const today = dayChoice === 'today' ? now : null;
+  const info = whenInfo(extra.when, now.getDay());
+  const day = info.day;
+  const today = extra.when === 'today' ? now : null;
+  const tags = activeTags(extra, savedOnly);
+  const clearTag = (k: string) => {
+    if (k === 'saved') setSavedOnly(false);
+    else setExtra((x) => ({ ...x, ...(k === 'when' ? { when: 'today' as const } : k === 'budget' ? { budget: null } : k === 'hours' ? { hours: null } : k === 'within' ? { within: null } : { metro: false }) }));
+  };
+  const clearAll = () => { setExtra(NO_EXTRA); setSavedOnly(false); };
 
   const toggleSave = useCallback((id: string) => {
     setSaved((prev) => {
@@ -137,11 +143,11 @@ function Home() {
   };
 
   const rows = useMemo(
-    () => visiblePlaces(places, { category, query, freeOnly, savedOnly, day }, saved, loc),
-    [places, category, query, freeOnly, savedOnly, day, saved, loc],
+    () => visiblePlaces(places, { category, query, savedOnly, day, extra, now }, saved, loc),
+    [places, category, query, savedOnly, day, extra, now, saved, loc],
   );
   const favRows = useMemo(
-    () => visiblePlaces(places, { category: 'All', query: '', freeOnly: false, savedOnly: true, day }, saved, loc),
+    () => visiblePlaces(places, { category: 'All', query: '', savedOnly: true, day }, saved, loc),
     [places, day, saved, loc],
   );
   const openKm = rows.find((r) => r.place.id === openId)?.km ?? favRows.find((r) => r.place.id === openId)?.km ?? null;
@@ -258,7 +264,20 @@ function Home() {
           }} />
       </View>
       {loc ? <Txt style={s.hint}>Nearest first, by straight-line distance.</Txt> : null}
-      {dayChoice !== 'today' ? <Txt style={s.hint}>Showing status for {choice.label}.</Txt> : null}
+      {tags.length ? (
+        <View style={s.tagRow}>
+          <FlatList horizontal showsHorizontalScrollIndicator={false} data={tags} keyExtractor={(t) => t.key} style={{ flex: 1 }} contentContainerStyle={{ gap: 8, paddingHorizontal: 16 }}
+            renderItem={({ item }) => (
+              <Pressable onPress={() => clearTag(item.key)} accessibilityRole="button" accessibilityLabel={`Remove filter ${item.label}`} style={s.tag}>
+                <Txt w="medium" style={{ fontSize: 12, color: colors.primary }}>{item.label}</Txt>
+                <X size={14} color={colors.primary} />
+              </Pressable>
+            )} />
+          <Pressable onPress={clearAll} accessibilityRole="button" hitSlop={8} style={{ paddingRight: 16, paddingLeft: 4 }}><Txt w="semi" style={{ fontSize: 12, color: colors.sub }}>Clear</Txt></Pressable>
+        </View>
+      ) : null}
+      {info.hint ? <Txt style={s.hint}>{info.hint}</Txt> : null}
+      {rows.length === 0 && tags.length ? <Txt style={s.hint}>{rows.length} places match. Places with unknown opening days, prices or hours are left out of those filters.</Txt> : null}
       <FadeSlide k={query ? 'search' : String(category)} style={{ flex: 1 }}>
       <FlatList data={rows} keyExtractor={(r) => r.place.id} style={{ backgroundColor: colors.white }} contentContainerStyle={{ paddingBottom: 100 }}
         initialNumToRender={6} windowSize={7} keyboardShouldPersistTaps="handled"
@@ -279,8 +298,9 @@ function Home() {
         onClose={() => setOpenId(null)} onToggleSave={() => openId && requestToggle(openId)} />
       <VoiceSheet visible={showVoice} onClose={() => setShowVoice(false)} places={places} loc={loc} day={day} today={today} onOpenPlace={setOpenId} />
       <AuthPrompt visible={pendingSave !== null} onClose={closeLoginPrompt} onSignIn={signInThenSave} />
-      <FilterSheet visible={showFilters} onClose={() => setShowFilters(false)} dayChoice={dayChoice} setDayChoice={setDayChoice}
-        freeOnly={freeOnly} setFreeOnly={setFreeOnly} savedOnly={savedOnly} setSavedOnly={setSavedOnly} savedCount={saved.size} />
+      <FilterSheet visible={showFilters} onClose={() => setShowFilters(false)} extra={extra} setExtra={setExtra} savedOnly={savedOnly} setSavedOnly={setSavedOnly} savedCount={saved.size}
+        hasLocation={!!loc} onSetLocation={() => { setShowFilters(false); setShowLocation(true); }} count={rows.length} onClear={clearAll} activeCount={tags.length}
+        categories={categoriesWithPlaces(places)} category={category} setCategory={(c) => { setQuery(''); setCategory(c); }} />
       <LocationSheet visible={showLocation} onClose={() => setShowLocation(false)} loc={loc} state={state} onUseCurrent={requestCurrent} onChooseArea={chooseArea} />
     </View>
   );
@@ -305,5 +325,7 @@ const s = StyleSheet.create({
   filter: { width: 48, height: 48, borderRadius: 24, backgroundColor: colors.white, borderWidth: 1, borderColor: colors.line, alignItems: 'center', justifyContent: 'center' },
   chips: { paddingHorizontal: 4, paddingTop: 8, borderBottomWidth: 0 },
   hint: { color: colors.sub, fontSize: 12, marginHorizontal: 16, marginTop: 8 },
+  tagRow: { flexDirection: 'row', alignItems: 'center', marginTop: 8, flexGrow: 0 },
+  tag: { flexDirection: 'row', alignItems: 'center', gap: 4, height: 28, paddingHorizontal: 10, borderRadius: 14, backgroundColor: '#E8F0FE' },
   empty: { color: colors.sub, textAlign: 'center', padding: 48 },
 });

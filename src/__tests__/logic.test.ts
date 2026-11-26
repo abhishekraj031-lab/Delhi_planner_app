@@ -5,6 +5,7 @@ import { estimateTotal, formatFee, priceFor } from '../lib/pricing';
 import { distanceKm, formatAway } from '../lib/distance';
 import { buildPlan, explainPlan, planMapsUrl } from '../lib/plan';
 import { categoriesWithPlaces, hasCollectedData, visiblePlaces } from '../lib/places';
+import { matchesBudget, NO_EXTRA, whenInfo } from '../lib/filters';
 
 const all = places as unknown as Place[];
 const find = (id: string) => all.find((p) => p.id === id) as Place;
@@ -217,5 +218,54 @@ describe('commute estimates', () => {
     expect(uber2).toContain('pickup[latitude]=28.5'); expect(uber2).toContain('pickup[longitude]=77.2'); expect(uber2).not.toContain('my_location');
     expect(CAB_APPS.find((a: any) => a.id === 'ola').url(p, from)).toContain('lat=28.5&lng=77.2&drop_lat=28.59');
     expect(IXIGO_METRO_URL).toContain('ixigo.com/book-metro-ticket');
+  });
+});
+
+describe('grouped filters', () => {
+  const shown = all.filter(hasCollectedData);
+  const run = (extra: object, day = 3, loc: { lat: number; lng: number } | null = null, now = new Date(2026, 10, 25, 11, 0)) =>
+    visiblePlaces(shown, { ...base, category: 'All', day, extra, now }, none, loc).map((r) => r.place);
+  it('no extra filters keeps every place', () => {
+    expect(run({})).toHaveLength(shown.length);
+  });
+  it('weekdays keeps only places known to be open Monday to Friday', () => {
+    const r = run({ when: 'weekdays' });
+    expect(r.length).toBeGreaterThan(0);
+    r.forEach((p) => { expect(p.closedDays).not.toBeNull(); [1, 2, 3, 4, 5].forEach((d) => expect(p.closedDays).not.toContain(d)); });
+  });
+  it('weekend keeps only places open Saturday and Sunday, and a single day works too', () => {
+    run({ when: 'weekend' }).forEach((p) => { expect(p.closedDays).not.toContain(0); expect(p.closedDays).not.toContain(6); });
+    run({ when: 'd1' }).forEach((p) => expect(p.closedDays).not.toContain(1));
+  });
+  it('places with unknown opening days never pass a day filter', () => {
+    const unknown = shown.filter((p) => !p.closedDays).map((p) => p.id);
+    expect(run({ when: 'weekdays' }).some((p) => unknown.includes(p.id))).toBe(false);
+  });
+  it('budget bands use the fee for the chosen day and skip unknown fees', () => {
+    run({ budget: 'free' }).forEach((p) => expect(p.price.weekday.i).toBe(0));
+    run({ budget: 'u30' }).forEach((p) => { expect(p.price.weekday.i).toBeGreaterThan(0); expect(p.price.weekday.i).toBeLessThanOrEqual(30); });
+    shown.filter((p) => p.price.weekday.i == null).forEach((p) => expect(matchesBudget(p, 'o50', 3)).toBe(false));
+  });
+  it('open-hours filters respect the hours on record', () => {
+    run({ hours: 'evening' }).forEach((p) => { expect(p.hours![0]).toBeLessThanOrEqual(1080); expect(p.hours![1]).toBeGreaterThan(1080); });
+    run({ hours: 'now' }).forEach((p) => expect(p.closedDays).not.toContain(3));
+  });
+  it('distance filter needs a location and keeps nearest first', () => {
+    const here = { lat: 28.6129, lng: 77.2295 };
+    const near = visiblePlaces(shown, { ...base, category: 'All', extra: { within: 5 } }, none, here);
+    expect(near.length).toBeGreaterThan(0);
+    near.forEach((r) => expect(r.km!).toBeLessThanOrEqual(5));
+    expect(visiblePlaces(shown, { ...base, category: 'All', extra: { within: 5 } }, none, null)).toHaveLength(shown.length);
+  });
+  it('filters combine', () => {
+    const both = run({ when: 'weekend', budget: 'free' });
+    both.forEach((p) => expect(p.price.weekend.i).toBe(0));
+    expect(both.length).toBeLessThanOrEqual(run({ budget: 'free' }).length);
+  });
+  it('whenInfo maps choices to a display day', () => {
+    expect(whenInfo('today', 2).day).toBe(2);
+    expect(whenInfo('weekend', 2).day).toBe(6);
+    expect(whenInfo('d1', 2).label).toBe('Monday');
+    expect(NO_EXTRA.when).toBe('today');
   });
 });

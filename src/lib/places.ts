@@ -1,13 +1,14 @@
 import type { Category, Coords, Place } from '../types';
 import { distanceKm } from './distance';
 import { priceFor } from './pricing';
+import { Extra, matchesBudget, matchesHours, matchesWhen } from './filters';
 
 export const CATEGORIES: Category[] = ['Monuments', 'Modern Landmarks', 'Museums', 'Religious & spiritual', 'Gardens & Parks', 'Markets & Food', 'Entertainment'];
 /** Tabs are shown only for categories that currently have places. */
 export const categoriesWithPlaces = (places: Place[]) => CATEGORIES.filter((c) => places.some((p) => p.category === c));
 /** Places with no collected data are held back until their details are added. */
 export const hasCollectedData = (p: Place) => p.source !== 'Not collected yet';
-export type Filters = { category: Category | 'All'; query: string; freeOnly: boolean; savedOnly: boolean; day: number };
+export type Filters = { category: Category | 'All'; query: string; freeOnly?: boolean; savedOnly: boolean; day: number; extra?: Partial<Extra>; now?: Date };
 
 /** Search is global: when a query is typed, the category filter is ignored. */
 export function visiblePlaces(places: Place[], f: Filters, saved: Set<string>, loc: Coords | null) {
@@ -17,8 +18,17 @@ export function visiblePlaces(places: Place[], f: Filters, saved: Set<string>, l
     if (q && ![p.name, p.area, p.category, p.metro ?? ''].join(' ').toLowerCase().includes(q)) return false;
     if (f.freeOnly && priceFor(p, f.day).i !== 0) return false;
     if (f.savedOnly && !saved.has(p.id)) return false;
+    const x = f.extra;
+    if (x) {
+      if (x.when && !matchesWhen(p, x.when)) return false;
+      if (!matchesBudget(p, x.budget ?? null, f.day)) return false;
+      if (!matchesHours(p, x.hours ?? null, f.now ?? new Date())) return false;
+      if (x.metro && !p.metro) return false;
+    }
     return true;
   });
+  const within = f.extra?.within;
   if (!loc) return list.map((place) => ({ place, km: null as number | null }));
-  return list.map((place) => ({ place, km: distanceKm(loc, place) as number | null })).sort((a, b) => (a.km as number) - (b.km as number));
+  const rows = list.map((place) => ({ place, km: distanceKm(loc, place) as number | null }));
+  return (within ? rows.filter((r) => (r.km as number) <= within) : rows).sort((a, b) => (a.km as number) - (b.km as number));
 }
