@@ -12,6 +12,7 @@ import { AuthPrompt } from './src/components/AuthPrompt';
 import { VoiceSheet } from './src/components/VoiceSheet';
 import { BookingsPage } from './src/components/BookingsPage';
 import { SavedPlacesPage } from './src/components/SavedPlacesPage';
+import { ShareSheet } from './src/components/ShareSheet';
 import { WallScreen } from './src/components/WallScreen';
 import { NewPostSheet } from './src/components/NewPostSheet';
 import { useWall } from './src/hooks/useWall';
@@ -69,6 +70,7 @@ function Home() {
   const [showLocation, setShowLocation] = useState(false);
   const [showVoice, setShowVoice] = useState(false);
   const [showNew, setShowNew] = useState(false);
+  const [shareMsg, setShareMsg] = useState<string | null>(null);
   const [sub, setSub] = useState<'saved' | 'bookings' | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [tab, setTab] = useState<TabKey>('home');
@@ -81,6 +83,8 @@ function Home() {
   const wall = useWall();
   const me = user ? (user.displayName || 'You') : null;
   const toast = (m: string) => { setNotice(m); setTimeout(() => setNotice(null), 2200); };
+  const doShare = async (text: string) => { const r = await shareText(text); if (r === 'unsupported') setShareMsg(text); };
+  const invite = () => doShare('Join me on Delhi Explorer. We can share photos of the places we visit in Delhi.');
   const needLogin = (fn: () => void) => (user ? fn() : setLoginOpen(true));
 
   useEffect(() => {
@@ -167,19 +171,19 @@ function Home() {
     } else if (tab === 'profile' || (!user && loginOpen)) {
       body = user
         ? <ProfileScreen id={user.name} displayName={user.displayName} photo={user.photo} onPhoto={setPhoto} savedCount={saved.size} locLabel={locLabel} gps={loc?.kind === 'gps'} locState={state}
-            onRename={setDisplayName} onOpenSaved={() => setSub('saved')} onOpenBookings={() => setSub('bookings')} onChangeStart={() => { changeTab('home'); setShowLocation(true); }}
+            onRename={setDisplayName} onOpenSaved={() => setSub('saved')} onOpenBookings={() => setSub('bookings')} onInvite={invite} onChangeStart={() => { changeTab('home'); setShowLocation(true); }}
             onAllowLocation={requestCurrent} onSignOut={signOut}
             onDelete={async () => { setSaved(new Set()); await saveJSON(KEYS.saved, []); await setDisplayName(''); await setPhoto(undefined); await signOut(); changeTab('home'); }} />
         : <LoginScreen title={t.title} hint={t.hint} onSignIn={signIn} />;
     } else if (tab === 'wall') {
       const placeName = (id?: string) => places.find((x) => x.id === id)?.name;
       body = (
-        <WallScreen posts={wall.posts} places={places} me={me} myPhoto={user?.photo} notice={notice}
+        <WallScreen posts={wall.posts} places={places} me={me} myPhoto={user?.photo}
           onNew={() => needLogin(() => setShowNew(true))}
-          onInvite={() => needLogin(async () => { const r = await shareText('Join me on Delhi Explorer. We can share photos of the places we visit in Delhi.'); if (r === 'copied') toast('Invite copied. Paste it in WhatsApp or a message.'); })}
+          onInvite={() => needLogin(invite)}
           onLike={(id) => needLogin(() => wall.toggleLike(id))}
           onComment={(id, text) => needLogin(() => wall.addComment(id, me as string, text))}
-          onShare={async (post) => { const r = await shareText(`${post.caption ? `${post.caption} - ` : ''}${placeName(post.placeId) ? `${placeName(post.placeId)}, Delhi. ` : ''}Shared from Delhi Explorer.`); if (r === 'copied') toast('Copied. Paste it in WhatsApp or a message.'); }}
+          onShare={(post) => doShare(`${post.caption ? `${post.caption} - ` : ''}${placeName(post.placeId) ? `${placeName(post.placeId)}, Delhi. ` : ''}Shared from Delhi Explorer.`)}
           onDelete={wall.removePost} onOpenPlace={setOpenId} />
       );
     } else if (tab === 'favourites' && user && favRows.length > 0) {
@@ -202,7 +206,13 @@ function Home() {
       <View style={s.screen}>
         <StatusBar style="dark" />
         <FadeSlide k={`${tab}-${!user && loginOpen}-${sub}`} style={{ flex: 1 }}>{body}</FadeSlide>
+        {notice ? (
+          <View pointerEvents="none" style={{ position: 'absolute', left: 16, right: 16, bottom: Math.max(insets.bottom, 12) + 84, backgroundColor: colors.dark, borderRadius: 12, paddingVertical: 12, paddingHorizontal: 16 }}>
+            <Txt w="semi" style={{ color: colors.white, fontSize: 14, textAlign: 'center' }}>{notice}</Txt>
+          </View>
+        ) : null}
         <TabBar key="tabbar" tab={tab} onChange={changeTab} />
+        <ShareSheet text={shareMsg} onClose={() => setShareMsg(null)} />
         <NewPostSheet visible={showNew} onClose={() => setShowNew(false)} places={places} onPost={(a) => wall.addPost({ author: me ?? 'You', ...a })} />
         <PlaceDetail place={openPlace} km={openKm} loc={loc?.kind === 'gps' ? loc : null} locState={state} onAllowLocation={requestCurrent} day={day} today={today} saved={openId ? saved.has(openId) : false} nearby={nearby} onOpenPlace={setOpenId}
           onClose={() => setOpenId(null)} onToggleSave={() => openId && requestToggle(openId)} />

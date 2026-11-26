@@ -10,7 +10,7 @@ type Caps = { dictation: boolean; tts: boolean; links: boolean };
 let caps: Caps = { dictation: false, tts: false, links: false };
 const listeners = new Set<(m: any) => void>();
 const w: any = Platform.OS === 'web' && typeof window !== 'undefined' ? window : null;
-const inFrame = !!w && w.parent !== w;
+export const inFrame = !!w && w.parent !== w;
 
 if (inFrame) {
   w.addEventListener('message', (e: MessageEvent) => {

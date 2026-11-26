@@ -2,6 +2,7 @@ import { Platform, Share } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { loadJSON, saveJSON } from './storage';
 import { APP_URL } from '../config';
+import { inFrame } from './bridge';
 
 export type Comment = { id: string; who: string; text: string; t: number };
 export type Post = {
@@ -78,13 +79,15 @@ export function shrinkWeb(uri: string, max = 1080, quality = 0.72): Promise<stri
   });
 }
 
-/** Opens the phone's share sheet (WhatsApp, iMessage, ...). In a browser it falls back to copying the text. */
-export async function shareText(text: string): Promise<'shared' | 'copied' | 'failed'> {
-  const msg = APP_URL ? `${text}\n${APP_URL}` : text;
+export const withLink = (text: string) => (APP_URL ? `${text}\n${APP_URL}` : text);
+
+/** Opens the phone's own share sheet (WhatsApp, iMessage, ...). Returns 'unsupported' where the browser does not allow it. */
+export async function shareText(text: string): Promise<'shared' | 'cancelled' | 'unsupported'> {
+  const msg = withLink(text);
   try {
-    if (Platform.OS !== 'web') { await Share.share({ message: msg }); return 'shared'; }
+    if (Platform.OS !== 'web') { const r = await Share.share({ message: msg }); return r.action === Share.dismissedAction ? 'cancelled' : 'shared'; }
     const nav: any = (globalThis as any).navigator;
-    if (nav?.share) { try { await nav.share({ text: msg }); return 'shared'; } catch (e: any) { if (e?.name === 'AbortError') return 'failed'; } }
-    await nav.clipboard.writeText(msg); return 'copied';
-  } catch { return 'failed'; }
+    if (nav?.share && !inFrame) { await nav.share({ text: msg }); return 'shared'; }
+    return 'unsupported';
+  } catch (e: any) { return e?.name === 'AbortError' ? 'cancelled' : 'unsupported'; }
 }

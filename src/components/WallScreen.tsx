@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, Image, Pressable, TextInput, View } from 'react-native';
-import { Heart, Lock, MapPin, MessageCircle, Plus, Send, Share2, Trash2, UserPlus } from 'lucide-react-native';
+import { Heart, Lock, MapPin, MessageCircle, Plus, Send, Share2, Trash2, UserPlus, X } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '../theme';
 import { Place } from '../types';
 import { photos } from '../data/photos';
 import { PEOPLE, Post, ago } from '../lib/wall';
+import { loadJSON, saveJSON } from '../lib/storage';
 import { Txt } from './ui';
 
 const TINTS = ['#2c7aef', '#d9480f', '#2f9e44', '#9c36b5', '#c2255c', '#0b7285'];
@@ -97,7 +98,7 @@ function PostCard({ p, place, me, myPhoto, onLike, onComment, onShare, onDelete,
 }
 
 type Props = {
-  posts: Post[]; places: Place[]; me: string | null; myPhoto?: string; notice: string | null;
+  posts: Post[]; places: Place[]; me: string | null; myPhoto?: string;
   onNew: () => void; onInvite: () => void; onLike: (id: string) => void; onComment: (id: string, text: string) => void;
   onShare: (p: Post) => void; onDelete: (id: string) => void; onOpenPlace: (id: string) => void;
 };
@@ -106,40 +107,45 @@ type Props = {
 export function WallScreen(p: Props) {
   const insets = useSafeAreaInsets();
   const byId = (id?: string) => p.places.find((x) => x.id === id);
+  const [hideInvite, setHideInvite] = useState(true);
+  useEffect(() => { loadJSON<boolean>('wall-invite-dismissed-v1', false).then((d) => setHideInvite(d)); }, []);
+  const dismissInvite = () => { setHideInvite(true); saveJSON('wall-invite-dismissed-v1', true); };
   const header = (
     <View style={{ gap: 14, paddingBottom: 16 }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16 }}>
-        <View style={{ flex: 1 }}>
-          <Txt w="bold" style={{ fontSize: 20 }}>My wall</Txt>
-          <Txt style={{ fontSize: 13, color: colors.sub }}>Your visits, shared with friends and family</Txt>
-        </View>
-        <Pressable onPress={p.onNew} accessibilityRole="button" accessibilityLabel="Add a post" style={({ pressed }) => ({ flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: colors.primary, borderRadius: 22, paddingHorizontal: 16, height: 44, opacity: pressed ? 0.7 : 1 })}>
-          <Plus size={18} color={colors.white} /><Txt w="bold" style={{ color: colors.white, fontSize: 15 }}>Post</Txt>
-        </Pressable>
+      <View style={{ paddingHorizontal: 16 }}>
+        <Txt w="bold" style={{ fontSize: 20 }}>My wall</Txt>
+        <Txt style={{ fontSize: 13, color: colors.sub }}>Your visits, shared with friends and family</Txt>
       </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 16 }}>
-        <View style={{ flexDirection: 'row' }}>
-          {PEOPLE.map((x, i) => (<View key={x.name} style={{ marginLeft: i ? -10 : 0, borderWidth: 2, borderColor: colors.white, borderRadius: 22 }}><Avatar name={x.name} size={40} /></View>))}
+      {!hideInvite ? (
+        <View style={{ marginHorizontal: 16, padding: 14, borderRadius: 16, backgroundColor: '#f2f7ff', borderWidth: 1, borderColor: '#d6e6ff', gap: 12 }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+            <View style={{ flexDirection: 'row' }}>
+              {PEOPLE.map((x, i) => (<View key={x.name} style={{ marginLeft: i ? -10 : 0, borderWidth: 2, borderColor: '#f2f7ff', borderRadius: 22 }}><Avatar name={x.name} size={36} /></View>))}
+            </View>
+            <View style={{ flex: 1 }}>
+              <Txt w="bold" style={{ fontSize: 16 }}>Invite friends and family</Txt>
+              <Txt style={{ fontSize: 13, color: colors.sub }}>Only people you invite can see your wall. Riya, Papa and Aman are samples.</Txt>
+            </View>
+            <Pressable onPress={dismissInvite} hitSlop={10} accessibilityRole="button" accessibilityLabel="Close invite" style={{ alignSelf: 'flex-start', padding: 2 }}><X size={20} color={colors.sub} /></Pressable>
+          </View>
+          <Pressable onPress={p.onInvite} accessibilityRole="button" accessibilityLabel="Invite friends and family" style={({ pressed }) => ({ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, backgroundColor: colors.primary, borderRadius: 22, height: 44, opacity: pressed ? 0.7 : 1 })}>
+            <UserPlus size={18} color={colors.white} /><Txt w="bold" style={{ color: colors.white, fontSize: 15 }}>Invite</Txt>
+          </Pressable>
         </View>
-        <Txt style={{ flex: 1, fontSize: 13, color: colors.sub }} numberOfLines={2}>{PEOPLE.map((x) => x.name).join(', ')} are on your wall (samples)</Txt>
-        <Pressable onPress={p.onInvite} accessibilityRole="button" accessibilityLabel="Invite friends and family" style={({ pressed }) => ({ flexDirection: 'row', alignItems: 'center', gap: 6, borderWidth: 1, borderColor: colors.primary, borderRadius: 20, paddingHorizontal: 12, height: 38, opacity: pressed ? 0.6 : 1 })}>
-          <UserPlus size={16} color={colors.primary} /><Txt w="semi" style={{ color: colors.primary, fontSize: 14 }}>Invite</Txt>
-        </Pressable>
-      </View>
+      ) : null}
     </View>
   );
   return (
     <View style={{ flex: 1, backgroundColor: colors.white, paddingTop: insets.top + 12 }}>
-      <FlatList data={p.posts} keyExtractor={(x) => x.id} ListHeaderComponent={header} contentContainerStyle={{ paddingBottom: 120 }} keyboardShouldPersistTaps="handled"
+      <FlatList data={p.posts} keyExtractor={(x) => x.id} ListHeaderComponent={header} contentContainerStyle={{ paddingBottom: 100 }} keyboardShouldPersistTaps="handled"
         renderItem={({ item }) => (
           <PostCard p={item} place={byId(item.placeId)} me={p.me} myPhoto={p.myPhoto} onLike={() => p.onLike(item.id)} onComment={(t) => p.onComment(item.id, t)}
             onShare={() => p.onShare(item)} onDelete={() => p.onDelete(item.id)} onOpenPlace={() => item.placeId && p.onOpenPlace(item.placeId)} />
         )} />
-      {p.notice ? (
-        <View pointerEvents="none" style={{ position: 'absolute', left: 16, right: 16, bottom: 16, backgroundColor: colors.dark, borderRadius: 12, paddingVertical: 12, paddingHorizontal: 16 }}>
-          <Txt w="semi" style={{ color: colors.white, fontSize: 14, textAlign: 'center' }}>{p.notice}</Txt>
-        </View>
-      ) : null}
+      <Pressable onPress={p.onNew} accessibilityRole="button" accessibilityLabel="Add a post"
+        style={({ pressed }) => ({ position: 'absolute', right: 16, bottom: 16, flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: colors.primary, borderRadius: 28, paddingHorizontal: 20, height: 56, opacity: pressed ? 0.8 : 1, shadowColor: '#000', shadowOpacity: 0.25, shadowRadius: 10, shadowOffset: { width: 0, height: 4 }, elevation: 6 })}>
+        <Plus size={22} color={colors.white} /><Txt w="bold" style={{ color: colors.white, fontSize: 16 }}>Post</Txt>
+      </Pressable>
     </View>
   );
 }
