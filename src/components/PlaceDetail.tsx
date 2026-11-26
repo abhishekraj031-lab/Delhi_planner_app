@@ -210,8 +210,9 @@ export function PlaceDetail({ place, km, loc, locState, onAllowLocation, day, to
             </View>
           </View>
           <View style={{ flex: 1, flexDirection: 'row', gap: 8, justifyContent: 'flex-end' }}>
-            {p.bookUrl ? <View style={{ flex: 1 }}><Button label="Book tickets" outline url={p.bookUrl as string} onPress={() => Linking.openURL(p.bookUrl as string)} /></View> : null}
-            <View style={{ flex: 1 }}><Button label="Directions" url={directionsUrl(p)} onPress={() => Linking.openURL(directionsUrl(p))} /></View>
+            {p.bookUrl
+              ? <View style={{ flex: 1 }}><Button label="Book tickets" url={p.bookUrl} onPress={() => Linking.openURL(p.bookUrl as string)} /></View>
+              : <View style={{ flex: 1 }}><Button label="Directions" url={directionsUrl(p)} onPress={() => Linking.openURL(directionsUrl(p))} /></View>}
           </View>
         </View>
       </View>
