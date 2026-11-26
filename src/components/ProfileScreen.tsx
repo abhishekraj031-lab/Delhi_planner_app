@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Linking, Platform, Pressable, ScrollView, TextInput, View } from 'react-native';
-import { ChevronRight, CircleUser, Heart, Info, LifeBuoy, LogOut, MapPin, Mic, Pencil, ShieldCheck, Trash2 } from 'lucide-react-native';
+import { Image, Linking, Platform, Pressable, ScrollView, TextInput, View } from 'react-native';
+import { Camera, ChevronRight, CircleUser, Heart, Info, LifeBuoy, LogOut, MapPin, Mic, Pencil, ShieldCheck, Trash2 } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '../theme';
 import { LocationState } from '../hooks/useLocation';
 import { MicState, micPermission, requestMic } from '../lib/speech';
+import { pickSquarePhoto } from '../lib/photo';
 import { Button, Txt } from './ui';
 
 type Props = {
-  id: string; displayName?: string; savedCount: number; locLabel: string; gps: boolean; locState: LocationState;
-  onRename: (name: string) => void; onOpenFavourites: () => void; onChangeStart: () => void; onAllowLocation: () => void;
+  id: string; displayName?: string; photo?: string; onPhoto: (uri?: string) => void; savedCount: number; locLabel: string; gps: boolean; locState: LocationState;
+  onRename: (name: string) => void; onOpenSaved: () => void; onChangeStart: () => void; onAllowLocation: () => void;
   onSignOut: () => void; onDelete: () => void;
 };
 
@@ -52,6 +53,8 @@ export function ProfileScreen(p: Props) {
   const [confirm, setConfirm] = useState(false);
   useEffect(() => { micPermission().then(setMic); }, []);
   const ini = initialOf(p.displayName, p.id);
+  const [photoErr, setPhotoErr] = useState('');
+  const choosePhoto = async (camera: boolean) => { setPhotoErr(''); const r = await pickSquarePhoto(camera); if (r.error) setPhotoErr(r.error); else if (r.uri) p.onPhoto(r.uri); };
 
   const locValue = p.gps ? 'On' : p.locState === 'denied' ? 'Off in your phone settings' : 'Off';
   const micValue = mic === 'granted' ? 'On' : mic === 'denied' ? 'Off in your phone settings' : mic === 'unavailable' ? 'Not available' : 'Off';
@@ -64,15 +67,36 @@ export function ProfileScreen(p: Props) {
       <Card>
         <View style={{ padding: 16, gap: 14 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 14 }}>
-            <View style={{ width: 64, height: 64, borderRadius: 32, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center' }}>
-              {ini ? <Txt w="bold" style={{ color: colors.white, fontSize: 28 }}>{ini}</Txt> : <CircleUser size={34} color={colors.white} />}
-            </View>
+            <Pressable onPress={() => choosePhoto(false)} accessibilityRole="button" accessibilityLabel={p.photo ? 'Change profile photo' : 'Add profile photo'} style={{ width: 72, height: 72 }}>
+              <View style={{ width: 72, height: 72, borderRadius: 36, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                {p.photo ? <Image source={{ uri: p.photo }} accessibilityLabel="Your profile photo" style={{ width: 72, height: 72 }} /> : ini ? <Txt w="bold" style={{ color: colors.white, fontSize: 30 }}>{ini}</Txt> : <CircleUser size={38} color={colors.white} />}
+              </View>
+              <View style={{ position: 'absolute', right: -2, bottom: -2, width: 28, height: 28, borderRadius: 14, backgroundColor: colors.dark, borderWidth: 2, borderColor: colors.white, alignItems: 'center', justifyContent: 'center' }}>
+                <Camera size={14} color={colors.white} />
+              </View>
+            </Pressable>
             <View style={{ flex: 1 }}>
               <Txt w="bold" style={{ fontSize: 20 }} numberOfLines={1}>{p.displayName || 'Add your name'}</Txt>
               <Txt style={{ fontSize: 14, color: colors.sub }} numberOfLines={1}>{p.id}</Txt>
               <Txt style={{ fontSize: 12, color: colors.sub }}>{isEmail ? 'Signed in with email' : 'Signed in with phone'}</Txt>
             </View>
           </View>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 16 }}>
+            <Pressable onPress={() => choosePhoto(false)} accessibilityRole="button" accessibilityLabel="Choose photo" style={({ pressed }) => ({ flexDirection: 'row', alignItems: 'center', gap: 8, opacity: pressed ? 0.6 : 1 })}>
+              <Camera size={16} color={colors.primary} /><Txt w="semi" style={{ color: colors.primary, fontSize: 15 }}>{p.photo ? 'Change photo' : 'Add photo'}</Txt>
+            </Pressable>
+            {Platform.OS !== 'web' ? (
+              <Pressable onPress={() => choosePhoto(true)} accessibilityRole="button" accessibilityLabel="Take photo" style={({ pressed }) => ({ opacity: pressed ? 0.6 : 1, justifyContent: 'center' })}>
+                <Txt w="semi" style={{ color: colors.primary, fontSize: 15 }}>Take photo</Txt>
+              </Pressable>
+            ) : null}
+            {p.photo ? (
+              <Pressable onPress={() => p.onPhoto(undefined)} accessibilityRole="button" accessibilityLabel="Remove photo" style={({ pressed }) => ({ opacity: pressed ? 0.6 : 1, justifyContent: 'center' })}>
+                <Txt w="semi" style={{ color: colors.sub, fontSize: 15 }}>Remove photo</Txt>
+              </Pressable>
+            ) : null}
+          </View>
+          {photoErr ? <Txt style={{ color: colors.warn, fontSize: 13 }}>{photoErr}</Txt> : null}
           {editing ? (
             <View style={{ gap: 10 }}>
               <TextInput value={draft} onChangeText={setDraft} placeholder="Your name" placeholderTextColor="#777" autoFocus maxLength={40} accessibilityLabel="Your name"
@@ -92,7 +116,7 @@ export function ProfileScreen(p: Props) {
       </Card>
 
       <Card>
-        <Row last icon={<Heart size={20} color={colors.primary} />} label="Saved places" value={p.savedCount === 0 ? 'Nothing saved yet' : `${p.savedCount} saved`} onPress={p.onOpenFavourites} />
+        <Row last icon={<Heart size={20} color={colors.primary} />} label="Saved places" value={p.savedCount === 0 ? 'Nothing saved yet' : `${p.savedCount} saved`} onPress={p.onOpenSaved} />
       </Card>
 
       <Section title="Preferences" />

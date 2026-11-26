@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { FlatList, Pressable, StyleSheet, TextInput, View } from 'react-native';
+import { FlatList, Image, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useFonts } from 'expo-font';
@@ -10,7 +10,11 @@ import { Figtree_700Bold } from '@expo-google-fonts/figtree/700Bold';
 import { FadeSlide } from './src/components/motion';
 import { AuthPrompt } from './src/components/AuthPrompt';
 import { VoiceSheet } from './src/components/VoiceSheet';
-import { PlanSheet } from './src/components/PlanSheet';
+import { SavedPlacesPage } from './src/components/SavedPlacesPage';
+import { WallScreen } from './src/components/WallScreen';
+import { NewPostSheet } from './src/components/NewPostSheet';
+import { useWall } from './src/hooks/useWall';
+import { shareText } from './src/lib/wall';
 import { distanceKm } from './src/lib/distance';
 import { Church, CircleUser, Dome, FerrisWheel, Landmark, Lighthouse, Heart, MapPin, Mic, Search, ShoppingBag, SlidersHorizontal, Ticket, Trees } from 'lucide-react-native';
 import type { Category, Place } from './src/types';
@@ -63,14 +67,20 @@ function Home() {
   const [showFilters, setShowFilters] = useState(false);
   const [showLocation, setShowLocation] = useState(false);
   const [showVoice, setShowVoice] = useState(false);
-  const [showPlan, setShowPlan] = useState(false);
+  const [showNew, setShowNew] = useState(false);
+  const [showSaved, setShowSaved] = useState(false);
+  const [notice, setNotice] = useState<string | null>(null);
   const [tab, setTab] = useState<TabKey>('home');
   const [loginOpen, setLoginOpen] = useState(false);
   const [now, setNow] = useState(() => new Date());
-  const { user, ready: authReady, signIn, signOut, setDisplayName } = useAuth();
+  const { user, ready: authReady, signIn, signOut, setDisplayName, setPhoto } = useAuth();
   // Saving needs a login: logged-out visitors see nothing saved, and are asked to log in first.
   const saved = useMemo(() => (user ? savedAll : new Set<string>()), [user, savedAll]);
   const { loc, state, requestCurrent, chooseArea } = useLocation();
+  const wall = useWall();
+  const me = user ? (user.displayName || 'You') : null;
+  const toast = (m: string) => { setNotice(m); setTimeout(() => setNotice(null), 2200); };
+  const needLogin = (fn: () => void) => (user ? fn() : setLoginOpen(true));
 
   useEffect(() => {
     loadPlaces().then(setPlaces);
@@ -104,10 +114,8 @@ function Home() {
   const askLogin = (ids: string[]) => {
     setPendingSave({ ids, reopen: openId });
     setOpenId(null);
-    setShowPlan(false);
   };
   const requestToggle = (id: string) => (user ? toggleSave(id) : askLogin([id]));
-  const requestSaveAll = (ids: string[]) => (user ? saveMany(ids) : askLogin(ids));
   const closeLoginPrompt = () => {
     if (pendingSave?.reopen) setOpenId(pendingSave.reopen);
     setPendingSave(null);
@@ -141,11 +149,12 @@ function Home() {
   const locLabel = state === 'asking' ? 'Finding your location…' : loc ? (loc.kind === 'gps' ? 'Near your current location' : `Near ${loc.label}`) : 'Location off. Choose an area';
 
   const tabs: Record<Exclude<TabKey, 'home'>, { title: string; hint: string; empty: string }> = {
+    wall: { title: 'Wall', hint: 'Log in to post on your wall.', empty: '' },
     favourites: { title: 'Favourites', hint: 'Log in to see your saved places.', empty: 'Nothing here yet.' },
     bookings: { title: 'Bookings', hint: 'Log in to see your bookings.', empty: 'Nothing here yet.' },
     profile: { title: 'Profile', hint: 'Log in to manage your profile.', empty: `Signed in as ${user?.name ?? ''}.` },
   };
-  const changeTab = (t: TabKey) => { setLoginOpen(false); setTab(t); };
+  const changeTab = (t: TabKey) => { setLoginOpen(false); setShowSaved(false); setTab(t); };
   if (tab !== 'home') {
     const t = tabs[tab];
     const empty = tab === 'favourites'
@@ -153,13 +162,26 @@ function Home() {
       : { icon: <Ticket size={36} color={colors.primary} />, heading: 'No bookings yet', message: 'Tickets you book on official sites will be listed here.', cta: user ? 'Explore places' : 'Log in to see bookings' };
     let body: React.ReactNode;
     if (!authReady) body = <View style={{ flex: 1 }} />;
-    else if (tab === 'profile' || (!user && loginOpen)) {
+    else if (tab === 'profile' && user && showSaved) {
+      body = <SavedPlacesPage rows={favRows} day={day} today={today} nearestFirst={!!loc} onBack={() => setShowSaved(false)} onOpen={setOpenId} onToggleSave={toggleSave} onExplore={() => changeTab('home')} />;
+    } else if (tab === 'profile' || (!user && loginOpen)) {
       body = user
-        ? <ProfileScreen id={user.name} displayName={user.displayName} savedCount={saved.size} locLabel={locLabel} gps={loc?.kind === 'gps'} locState={state}
-            onRename={setDisplayName} onOpenFavourites={() => changeTab('favourites')} onChangeStart={() => { changeTab('home'); setShowLocation(true); }}
+        ? <ProfileScreen id={user.name} displayName={user.displayName} photo={user.photo} onPhoto={setPhoto} savedCount={saved.size} locLabel={locLabel} gps={loc?.kind === 'gps'} locState={state}
+            onRename={setDisplayName} onOpenSaved={() => setShowSaved(true)} onChangeStart={() => { changeTab('home'); setShowLocation(true); }}
             onAllowLocation={requestCurrent} onSignOut={signOut}
-            onDelete={async () => { setSaved(new Set()); await saveJSON(KEYS.saved, []); await setDisplayName(''); await signOut(); changeTab('home'); }} />
+            onDelete={async () => { setSaved(new Set()); await saveJSON(KEYS.saved, []); await setDisplayName(''); await setPhoto(undefined); await signOut(); changeTab('home'); }} />
         : <LoginScreen title={t.title} hint={t.hint} onSignIn={signIn} />;
+    } else if (tab === 'wall') {
+      const placeName = (id?: string) => places.find((x) => x.id === id)?.name;
+      body = (
+        <WallScreen posts={wall.posts} places={places} me={me} myPhoto={user?.photo} notice={notice}
+          onNew={() => needLogin(() => setShowNew(true))}
+          onInvite={() => needLogin(async () => { const r = await shareText('Join me on Delhi Explorer. We can share photos of the places we visit in Delhi.'); if (r === 'copied') toast('Invite copied. Paste it in WhatsApp or a message.'); })}
+          onLike={(id) => needLogin(() => wall.toggleLike(id))}
+          onComment={(id, text) => needLogin(() => wall.addComment(id, me as string, text))}
+          onShare={async (post) => { const r = await shareText(`${post.caption ? `${post.caption} - ` : ''}${placeName(post.placeId) ? `${placeName(post.placeId)}, Delhi. ` : ''}Shared from Delhi Explorer.`); if (r === 'copied') toast('Copied. Paste it in WhatsApp or a message.'); }}
+          onDelete={wall.removePost} onOpenPlace={setOpenId} />
+      );
     } else if (tab === 'favourites' && user && favRows.length > 0) {
       body = (
         <View style={{ flex: 1, paddingTop: insets.top + 12 }}>
@@ -179,8 +201,9 @@ function Home() {
     return (
       <View style={s.screen}>
         <StatusBar style="dark" />
-        <FadeSlide k={`${tab}-${!user && loginOpen}`} style={{ flex: 1 }}>{body}</FadeSlide>
-        <TabBar key="tabbar" tab={tab} onChange={changeTab} onPlan={() => { changeTab('home'); setShowPlan(true); }} />
+        <FadeSlide k={`${tab}-${!user && loginOpen}-${showSaved}`} style={{ flex: 1 }}>{body}</FadeSlide>
+        <TabBar key="tabbar" tab={tab} onChange={changeTab} />
+        <NewPostSheet visible={showNew} onClose={() => setShowNew(false)} places={places} onPost={(a) => wall.addPost({ author: me ?? 'You', ...a })} />
         <PlaceDetail place={openPlace} km={openKm} loc={loc?.kind === 'gps' ? loc : null} locState={state} onAllowLocation={requestCurrent} day={day} today={today} saved={openId ? saved.has(openId) : false} nearby={nearby} onOpenPlace={setOpenId}
           onClose={() => setOpenId(null)} onToggleSave={() => openId && requestToggle(openId)} />
       </View>
@@ -199,7 +222,7 @@ function Home() {
           </Pressable>
         </View>
         <Pressable onPress={() => changeTab('profile')} accessibilityRole="button" accessibilityLabel={user ? 'Open your profile' : 'Log in'} style={[s.avatar, user && { backgroundColor: colors.primary }]}>
-          {user && initialOf(user.displayName, user.name) ? <Txt w="bold" style={{ color: colors.white, fontSize: 18 }}>{initialOf(user.displayName, user.name)}</Txt> : <CircleUser size={user ? 22 : 24} color={user ? colors.white : colors.ink} />}
+          {user?.photo ? <Image source={{ uri: user.photo }} accessibilityLabel="Your profile photo" style={{ width: 44, height: 44, borderRadius: 22 }} /> : user && initialOf(user.displayName, user.name) ? <Txt w="bold" style={{ color: colors.white, fontSize: 18 }}>{initialOf(user.displayName, user.name)}</Txt> : <CircleUser size={user ? 22 : 24} color={user ? colors.white : colors.ink} />}
         </Pressable>
       </View>
       <View style={s.searchRow}>
@@ -235,11 +258,10 @@ function Home() {
         )} />
       </FadeSlide>
       </FadeSlide>
-      <TabBar key="tabbar" tab={tab} onChange={setTab} onPlan={() => setShowPlan(true)} />
+      <TabBar key="tabbar" tab={tab} onChange={setTab} />
       <PlaceDetail place={openPlace} km={openKm} loc={loc?.kind === 'gps' ? loc : null} locState={state} onAllowLocation={requestCurrent} day={day} today={today} saved={openId ? saved.has(openId) : false} nearby={nearby} onOpenPlace={setOpenId}
         onClose={() => setOpenId(null)} onToggleSave={() => openId && requestToggle(openId)} />
       <VoiceSheet visible={showVoice} onClose={() => setShowVoice(false)} places={places} loc={loc} day={day} today={today} onOpenPlace={setOpenId} />
-      <PlanSheet visible={showPlan} onClose={() => setShowPlan(false)} places={places} day={day} dayLabel={choice.label} today={today} loc={loc} saved={saved} onSaveAll={requestSaveAll} onOpenPlace={setOpenId} />
       <AuthPrompt visible={pendingSave !== null} onClose={closeLoginPrompt} onSignIn={signInThenSave} />
       <FilterSheet visible={showFilters} onClose={() => setShowFilters(false)} dayChoice={dayChoice} setDayChoice={setDayChoice}
         freeOnly={freeOnly} setFreeOnly={setFreeOnly} savedOnly={savedOnly} setSavedOnly={setSavedOnly} savedCount={saved.size} />

@@ -41,6 +41,13 @@
         }
       ],
       [
+        "expo-image-picker",
+        {
+          "photosPermission": "Delhi Explorer uses your photos so you can post pictures of places you visited.",
+          "cameraPermission": "Delhi Explorer uses the camera so you can take a photo of a place and post it."
+        }
+      ],
+      [
         "expo-speech-recognition",
         {
           "microphonePermission": "Delhi Explorer uses the microphone so you can search for places by voice.",

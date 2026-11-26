@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Easing, Platform, Pressable, StyleSheet, View } from 'react-native';
-import { CircleUser, Heart, House, Route, Ticket } from 'lucide-react-native';
+import { CircleUser, Heart, House, Images, Ticket } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '../theme';
 import { Txt } from './ui';
 
-export type TabKey = 'home' | 'favourites' | 'bookings' | 'profile';
+export type TabKey = 'home' | 'wall' | 'favourites' | 'bookings' | 'profile';
 const TABS: { key: TabKey; label: string; Icon: React.ComponentType<{ size?: number; color?: string }> }[] = [
   { key: 'home', label: 'Home', Icon: House },
+  { key: 'wall', label: 'Wall', Icon: Images },
   { key: 'favourites', label: 'Favourites', Icon: Heart },
   { key: 'bookings', label: 'Bookings', Icon: Ticket },
   { key: 'profile', label: 'Profile', Icon: CircleUser },
@@ -35,16 +36,11 @@ function TabItem({ on, label, Icon, onPress, alwaysLabel }: { on: boolean; label
   );
 }
 
-export function TabBar({ tab, onChange, onPlan }: { tab: TabKey; onChange: (t: TabKey) => void; onPlan: () => void }) {
+export function TabBar({ tab, onChange }: { tab: TabKey; onChange: (t: TabKey) => void }) {
   const insets = useSafeAreaInsets();
   return (
     <View style={[s.bar, { paddingBottom: Math.max(insets.bottom, 12) }]}>
-      {TABS.slice(0, 1).map(({ key, label, Icon }) => (
-        <TabItem key={key} on={tab === key} label={label} Icon={Icon} onPress={() => onChange(key)} />
-      ))}
-      {/* Opens the "Plan my day" sheet; it is an action, so it never stays highlighted. */}
-      <TabItem key="plan" on={false} alwaysLabel label="Plan" Icon={Route} onPress={onPlan} />
-      {TABS.slice(1).map(({ key, label, Icon }) => (
+      {TABS.map(({ key, label, Icon }) => (
         <TabItem key={key} on={tab === key} label={label} Icon={Icon} onPress={() => onChange(key)} />
       ))}
     </View>

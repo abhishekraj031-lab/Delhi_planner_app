@@ -8,3 +8,6 @@ export const PRIVACY_POLICY_URL = 'https://example.com/privacy';
  * email verification and delete this before launch.
  */
 export const DEMO_OTP = '123456';
+
+/** Link added to invites and shared posts. Set to the live website once it has a public address. */
+export const APP_URL = '';

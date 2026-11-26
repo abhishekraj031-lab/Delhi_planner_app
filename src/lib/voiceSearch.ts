@@ -1,13 +1,12 @@
 import type { Category, Coords, Place } from '../types';
 import { distanceKm } from './distance';
-import { buildPlan } from './plan';
 import { priceFor } from './pricing';
 import { FULL_DAY_NAMES, getStatus } from './status';
 
 export type VoiceAnswer = { reply: string; places: Place[]; kind: 'place' | 'list' | 'plan' | 'help' | 'none' };
 type Ctx = { loc: Coords | null; now: Date };
 
-export const SUGGESTIONS = ['Free places to visit', 'Museums open on Monday', 'Ticket price for Qutub Minar', 'Nearest metro to Red Fort', 'Plan my day', 'Temples near me'];
+export const SUGGESTIONS = ['Free places to visit', 'Museums open on Monday', 'Ticket price for Qutub Minar', 'Nearest metro to Red Fort', 'Temples near me'];
 
 const norm = (s: string) => s.toLowerCase().replace(/[’']/g, '').replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
 const has = (q: string, re: RegExp) => re.test(q);
@@ -91,7 +90,7 @@ export function answerQuery(text: string, places: Place[], ctx: Ctx): VoiceAnswe
   const d = dayFrom(q, ctx.now);
 
   if (has(q, /^(hi|hello|hey|help)\b|what can you do|how do you work/)) {
-    return { kind: 'help', places: [], reply: 'Ask me about places in Delhi. For example: free places to visit, museums open on Monday, ticket price for Qutub Minar, or plan my day.' };
+    return { kind: 'help', places: [], reply: 'Ask me about places in Delhi. For example: free places to visit, museums open on Monday, ticket price for Qutub Minar.' };
   }
 
   // 1. A specific place named in the question.
@@ -102,14 +101,6 @@ export function answerQuery(text: string, places: Place[], ctx: Ctx): VoiceAnswe
   }
   if (hits.length === 1) return { kind: 'place', places: hits, reply: describePlace(hits[0], q, ctx, d) };
   if (hits.length > 1) return { kind: 'list', places: hits, reply: `I found ${hits.length} places with that name: ${list(hits.map((h) => h.name))}. Which one do you mean?` };
-
-  // 2. A plan for the day.
-  if (has(q, /\b(plan|itinerary|one day|full day|day trip|suggest|recommend)\b|what should i (do|see|visit)/)) {
-    const stops = buildPlan(places, d.day, ctx.loc);
-    if (!stops.length) return { kind: 'none', places: [], reply: 'I could not find places with known opening days to plan with yet.' };
-    const names = stops.map((s) => s.place.name);
-    return { kind: 'plan', places: stops.map((s) => s.place), reply: `Here is a plan for ${d.label}: ${list(names)}. ${ctx.loc ? `${names[0]} is the closest to you, and the others are` : 'These places are'} close to each other, so they are easy to do in one day.` };
-  }
 
   if (has(q, UNSUPPORTED) && !CATEGORY_WORDS.some(([, re]) => re.test(q))) {
     return { kind: 'none', places: [], reply: 'Markets, food and entertainment places are not added yet. I can help with monuments, museums, temples, gardens and landmarks.' };

@@ -177,8 +177,8 @@ describe('voice search', () => {
     expect(answerQuery('best street food', all, ctx).reply).toMatch(/not added yet/);
     expect(answerQuery('blah blah', all, ctx).kind).toBe('none');
   });
-  test('plan', () => {
-    const a = answerQuery('plan my day', all, ctx); expect(a.kind).toBe('plan'); expect(a.places.length).toBeGreaterThan(1);
+  test('plan my day is no longer offered by voice', () => {
+    expect(answerQuery('plan my day', all, ctx).kind).not.toBe('plan');
   });
   test('alias', () => {
     expect(answerQuery('timings of red fort', all, ctx).places[0].id).toBe('rf');
