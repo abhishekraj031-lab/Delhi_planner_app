@@ -19,7 +19,7 @@ import { NewPostSheet } from './src/components/NewPostSheet';
 import { useWall } from './src/hooks/useWall';
 import { shareText } from './src/lib/wall';
 import { distanceKm } from './src/lib/distance';
-import { Church, CircleUser, Dome, FerrisWheel, Landmark, Lighthouse, Heart, MapPin, Mic, Search, ShoppingBag, SlidersHorizontal, Ticket, Trees, X } from 'lucide-react-native';
+import { Bell, ChevronDown, Church, CircleUser, Dome, FerrisWheel, Landmark, Lighthouse, Heart, MapPin, Mic, Search, ShoppingBag, SlidersHorizontal, Ticket, Trees, X } from 'lucide-react-native';
 import type { Category, Place } from './src/types';
 import { colors, font } from './src/theme';
 import { loadPlaces } from './src/data/repository';
@@ -35,6 +35,8 @@ import { EmptyState } from './src/components/EmptyState';
 import { LoginScreen } from './src/components/LoginScreen';
 import { useAuth } from './src/hooks/useAuth';
 import { FilterSheet, LocationSheet } from './src/components/OptionSheets';
+import { NotificationsSheet } from './src/components/NotificationsSheet';
+import { Place as GeoPlace, reverseGeocode } from './src/lib/geocode';
 import { activeTags, Extra, NO_EXTRA, whenInfo } from './src/lib/filters';
 
 const ICONS: Record<Category, React.ComponentType<{ size?: number; color?: string }>> = {
@@ -70,6 +72,8 @@ function Home() {
   const [showLocation, setShowLocation] = useState(false);
   const [showVoice, setShowVoice] = useState(false);
   const [showNew, setShowNew] = useState(false);
+  const [showNotes, setShowNotes] = useState(false);
+  const [geo, setGeo] = useState<{ key: string; p: GeoPlace | null } | null>(null);
   const [shareMsg, setShareMsg] = useState<string | null>(null);
   const [sub, setSub] = useState<'saved' | 'bookings' | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
@@ -154,6 +158,19 @@ function Home() {
       : [],
     [places, openPlace],
   );
+  // Once logged in, the top bar shows the city and street address of the current location, like food delivery apps.
+  const gpsKey = user && loc?.kind === 'gps' ? `${loc.lat.toFixed(3)},${loc.lng.toFixed(3)}` : null;
+  useEffect(() => {
+    if (!gpsKey || !loc) return;
+    let live = true;
+    reverseGeocode(loc.lat, loc.lng).then((p) => { if (live) setGeo({ key: gpsKey, p }); });
+    return () => { live = false; };
+  }, [gpsKey]);
+  const geoHere = geo && geo.key === gpsKey ? geo.p : null;
+  const place = state === 'asking' ? { title: 'Finding your location…', sub: 'One moment' }
+    : loc?.kind === 'gps' ? (geoHere ? { title: geoHere.city, sub: geoHere.address || 'Current location' } : { title: 'Current location', sub: geo && geo.key === gpsKey ? 'Address not available' : 'Finding your address…' })
+    : loc ? { title: loc.label, sub: 'Area you chose. Tap to change' }
+    : { title: 'Choose location', sub: 'Location is off. Tap to choose an area' };
   const locLabel = state === 'asking' ? 'Finding your location…' : loc ? (loc.kind === 'gps' ? 'Near your current location' : `Near ${loc.label}`) : 'Location off. Choose an area';
 
   const tabs: Record<Exclude<TabKey, 'home'>, { title: string; hint: string; empty: string }> = {
@@ -227,15 +244,26 @@ function Home() {
       <StatusBar style="dark" />
       <FadeSlide k="home" style={{ flex: 1 }}>
       <View style={s.header}>
-        <View style={{ flex: 1 }}>
-          <Txt w="bold" style={{ fontSize: 20 }}>Welcome</Txt>
-          <Pressable onPress={() => setShowLocation(true)} hitSlop={{ top: 8, bottom: 8, right: 16 }} accessibilityRole="button" accessibilityLabel={`Location: ${locLabel}. Change`} style={s.loc}>
-            <MapPin size={14} color={colors.sub} />
-            <Txt style={{ color: colors.sub, fontSize: 13 }}>{locLabel}</Txt>
+        {user ? (
+          <Pressable onPress={() => setShowLocation(true)} hitSlop={{ top: 8, bottom: 8, right: 16 }} accessibilityRole="button" accessibilityLabel={`Location: ${place.title}, ${place.sub}. Change`} style={{ flex: 1 }}>
+            <View style={s.loc}>
+              <MapPin size={20} color={colors.primary} />
+              <Txt w="bold" numberOfLines={1} style={{ fontSize: 20, flexShrink: 1 }}>{place.title}</Txt>
+              <ChevronDown size={18} color={colors.ink} />
+            </View>
+            <Txt numberOfLines={1} style={{ color: colors.sub, fontSize: 13, marginTop: 2 }}>{place.sub}</Txt>
           </Pressable>
-        </View>
-        <Pressable onPress={() => changeTab('profile')} accessibilityRole="button" accessibilityLabel={user ? 'Open your profile' : 'Log in'} style={[s.avatar, user && { backgroundColor: colors.primary }]}>
-          {user?.photo ? <Image source={{ uri: user.photo }} accessibilityLabel="Your profile photo" style={{ width: 44, height: 44, borderRadius: 22 }} /> : user && initialOf(user.displayName, user.name) ? <Txt w="bold" style={{ color: colors.white, fontSize: 18 }}>{initialOf(user.displayName, user.name)}</Txt> : <CircleUser size={user ? 22 : 24} color={user ? colors.white : colors.ink} />}
+        ) : (
+          <View style={{ flex: 1 }}>
+            <Txt w="bold" style={{ fontSize: 20 }}>Welcome</Txt>
+            <Pressable onPress={() => setShowLocation(true)} hitSlop={{ top: 8, bottom: 8, right: 16 }} accessibilityRole="button" accessibilityLabel={`Location: ${locLabel}. Change`} style={s.loc}>
+              <MapPin size={14} color={colors.sub} />
+              <Txt style={{ color: colors.sub, fontSize: 13 }}>{locLabel}</Txt>
+            </Pressable>
+          </View>
+        )}
+        <Pressable onPress={() => setShowNotes(true)} accessibilityRole="button" accessibilityLabel="Notifications" style={s.avatar}>
+          <Bell size={22} color={colors.ink} />
         </Pressable>
       </View>
       <View style={s.searchRow}>
@@ -298,6 +326,7 @@ function Home() {
         hasLocation={!!loc} onSetLocation={() => { setShowFilters(false); setShowLocation(true); }}
         countFor={(x, c) => visiblePlaces(places, { category: c, query, savedOnly: false, day: whenInfo(x.when, x.pick, now.getDay()).day, extra: x, now }, saved, loc).length}
         onApply={(x, c) => { setExtra(x); if (c !== category) { setQuery(''); setCategory(c); } setShowFilters(false); }} />
+      <NotificationsSheet visible={showNotes} onClose={() => setShowNotes(false)} />
       <LocationSheet visible={showLocation} onClose={() => setShowLocation(false)} loc={loc} state={state} onUseCurrent={requestCurrent} onChooseArea={chooseArea} />
     </View>
   );
