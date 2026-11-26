@@ -126,9 +126,9 @@ export function ProfileScreen(p: Props) {
       </Card>
 
       <Card>
-        <Row icon={<Heart size={20} color={colors.primary} />} label="Saved places" value={p.savedCount === 0 ? 'Nothing saved yet' : `${p.savedCount} saved`} onPress={p.onOpenSaved} />
-        <Row icon={<Ticket size={20} color={colors.primary} />} label="Bookings" value="Tickets you booked" onPress={p.onOpenBookings} />
-        <Row last icon={<UserPlus size={20} color={colors.primary} />} label="Invite friends and family" value="See your wall and your posts" onPress={p.onInvite} />
+        <Row icon={<Heart size={20} color={colors.ink} />} label="Saved places" value={p.savedCount === 0 ? 'Nothing saved yet' : `${p.savedCount} saved`} onPress={p.onOpenSaved} />
+        <Row icon={<Ticket size={20} color={colors.ink} />} label="Bookings" value="Tickets you booked" onPress={p.onOpenBookings} />
+        <Row last icon={<UserPlus size={20} color={colors.ink} />} label="Invite friends and family" value="See your wall and your posts" onPress={p.onInvite} />
       </Card>
 
       <Section title="Preferences" />
