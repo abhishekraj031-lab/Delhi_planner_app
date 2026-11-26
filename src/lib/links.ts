@@ -21,16 +21,35 @@ function scrollableParent(el: any): any {
   return null;
 }
 
+const COLS = 12, ROWS = 5;
+
+/** The part of a button that is really visible: sampled on a grid, so anything laid over it (a heart, a header) is left out. */
+function visibleBox(el: any, r: DOMRect) {
+  let minI = COLS, maxI = -1, minJ = ROWS, maxJ = -1, hits = 0;
+  for (let j = 0; j < ROWS; j++) {
+    for (let i = 0; i < COLS; i++) {
+      const x = r.left + ((i + 0.5) * r.width) / COLS, y = r.top + ((j + 0.5) * r.height) / ROWS;
+      if (x < 0 || y < 0 || x >= window.innerWidth || y >= window.innerHeight) continue;
+      const top = doc.elementFromPoint(x, y);
+      if (top && (el === top || el.contains(top))) { hits++; minI = Math.min(minI, i); maxI = Math.max(maxI, i); minJ = Math.min(minJ, j); maxJ = Math.max(maxJ, j); }
+    }
+  }
+  if (hits < COLS * ROWS * 0.6) return null; // mostly covered: leave it to the app's own button
+  // When part of the button is covered, pull the link in by one cell so it stays clear of the edge of whatever covers it.
+  const cut = hits < COLS * ROWS ? 1 : 0;
+  const i0 = Math.min(minI + cut, maxI), i1 = Math.max(maxI - cut, i0), j0 = Math.min(minJ + cut, maxJ), j1 = Math.max(maxJ - cut, j0);
+  const x0 = r.left + (i0 * r.width) / COLS, x1 = r.left + ((i1 + 1) * r.width) / COLS;
+  const y0 = r.top + (j0 * r.height) / ROWS, y1 = r.top + ((j1 + 1) * r.height) / ROWS;
+  return { x: Math.round(x0 + 1), y: Math.round(y0 + 1), w: Math.max(1, Math.round(x1 - x0 - 2)), h: Math.max(1, Math.round(y1 - y0 - 2)) };
+}
+
 function tick() {
   const items: { id: number; url: string; x: number; y: number; w: number; h: number }[] = [];
   registry.forEach((e, id) => {
     const r = e.el?.getBoundingClientRect?.();
     if (!r || !r.width || !r.height) return;
-    const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-    if (cx < 0 || cy < 0 || cx > window.innerWidth || cy > window.innerHeight) return;
-    const top = doc.elementFromPoint(cx, cy);
-    if (!top || !(e.el === top || e.el.contains(top))) return; // covered by something else
-    items.push({ id, url: e.url, x: Math.round(r.left), y: Math.round(r.top), w: Math.round(r.width), h: Math.round(r.height) });
+    const box = visibleBox(e.el, r);
+    if (box) items.push({ id, url: e.url, ...box });
   });
   const s = JSON.stringify(items);
   if (s !== last) { last = s; post({ dx: 'links', items }); }
@@ -39,7 +58,7 @@ function tick() {
 let unsub: null | (() => void) = null;
 function start() {
   if (timer) return;
-  timer = setInterval(tick, 90);
+  timer = setInterval(tick, 60);
   unsub = onBridge((m) => {
     if (m.dx !== 'scroll') return;
     const e = registry.get(m.id);
