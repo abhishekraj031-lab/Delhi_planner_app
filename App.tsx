@@ -178,7 +178,7 @@ function Home() {
         <StatusBar style="dark" />
         <FadeSlide k={`${tab}-${!user && loginOpen}`} style={{ flex: 1 }}>{body}</FadeSlide>
         <TabBar key="tabbar" tab={tab} onChange={changeTab} onPlan={() => { changeTab('home'); setShowPlan(true); }} />
-        <PlaceDetail place={openPlace} km={openKm} day={day} today={today} saved={openId ? saved.has(openId) : false} nearby={nearby} onOpenPlace={setOpenId}
+        <PlaceDetail place={openPlace} km={openKm} locState={state} onAllowLocation={requestCurrent} day={day} today={today} saved={openId ? saved.has(openId) : false} nearby={nearby} onOpenPlace={setOpenId}
           onClose={() => setOpenId(null)} onToggleSave={() => openId && requestToggle(openId)} />
       </View>
     );
@@ -230,7 +230,7 @@ function Home() {
       </FadeSlide>
       </FadeSlide>
       <TabBar key="tabbar" tab={tab} onChange={setTab} onPlan={() => setShowPlan(true)} />
-      <PlaceDetail place={openPlace} km={openKm} day={day} today={today} saved={openId ? saved.has(openId) : false} nearby={nearby} onOpenPlace={setOpenId}
+      <PlaceDetail place={openPlace} km={openKm} locState={state} onAllowLocation={requestCurrent} day={day} today={today} saved={openId ? saved.has(openId) : false} nearby={nearby} onOpenPlace={setOpenId}
         onClose={() => setOpenId(null)} onToggleSave={() => openId && requestToggle(openId)} />
       <VoiceSheet visible={showVoice} onClose={() => setShowVoice(false)} places={places} loc={loc} day={day} today={today} onOpenPlace={setOpenId} />
       <PlanSheet visible={showPlan} onClose={() => setShowPlan(false)} places={places} day={day} dayLabel={choice.label} today={today} loc={loc} saved={saved} onSaveAll={requestSaveAll} onOpenPlace={setOpenId} />

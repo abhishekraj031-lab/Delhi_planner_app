@@ -1,6 +1,6 @@
 import React from 'react';
-import { Linking, Pressable, StyleSheet, View } from 'react-native';
-import { Car, ChevronRight, TrainFront } from 'lucide-react-native';
+import { Linking, Platform, Pressable, StyleSheet, View } from 'react-native';
+import { Car, ChevronRight, MapPin, TrainFront } from 'lucide-react-native';
 import type { Place } from '../types';
 import { colors } from '../theme';
 import { CAB_APPS, estimateCab, estimateMetro, IXIGO_METRO_URL } from '../lib/commute';
@@ -18,15 +18,34 @@ function Cta({ label, onPress, hint }: { label: string; onPress: () => void; hin
 }
 
 /** "Getting there": one card for the metro and one for a cab, each with an estimated fare and a way to book. */
-export function CommuteCards({ place: p, km, day }: { place: Place; km: number | null; day: number }) {
+export function CommuteCards({ place: p, km, day, locState, onAllowLocation }: { place: Place; km: number | null; day: number; locState: 'idle' | 'asking' | 'denied' | 'error'; onAllowLocation: () => void }) {
   const metro = estimateMetro(km, day);
   const cab = estimateCab(km);
   return (
     <View style={{ gap: 12 }}>
       <View style={{ paddingHorizontal: 4, gap: 2 }}>
         <Txt w="bold" style={{ fontSize: 18, color: colors.ink }}>Getting there</Txt>
-        <Txt style={{ fontSize: 13, color: colors.sub }}>{km != null ? `${formatAway(km)} from you, in a straight line. Fares are estimates.` : 'Turn on location on the home screen to see estimated fares.'}</Txt>
+        {km != null ? <Txt style={{ fontSize: 13, color: colors.sub }}>{`${formatAway(km)} from you, in a straight line. Fares are estimates.`}</Txt> : null}
       </View>
+
+      {km == null ? (
+        <View style={s.card}>
+          <View style={s.head}>
+            <View style={[s.icon, { backgroundColor: '#e6f6ec' }]}><MapPin size={22} color="#166534" /></View>
+            <View style={{ flex: 1 }}>
+              <Txt w="bold" style={{ fontSize: 17 }}>Allow location</Txt>
+              <Txt style={{ fontSize: 14, color: colors.sub }}>See estimated metro and cab fares from where you are.</Txt>
+            </View>
+          </View>
+          {locState === 'denied' ? <Txt style={{ fontSize: 13, color: colors.warn }}>Location is turned off for this app, so your phone may not ask again. Allow it in your phone settings, then tap Allow location.</Txt> : null}
+          <Cta label={locState === 'asking' ? 'Finding your location…' : 'Allow location'} hint="Asks permission to use your location" onPress={onAllowLocation} />
+          {locState === 'denied' && Platform.OS !== 'web' ? (
+            <Pressable onPress={() => { Linking.openSettings().catch(() => {}); }} accessibilityRole="button" style={s.app}>
+              <Txt w="semi" style={{ flex: 1, fontSize: 15 }}>Open phone settings</Txt><ChevronRight size={18} color={colors.primary} />
+            </Pressable>
+          ) : null}
+        </View>
+      ) : null}
 
       <View style={s.card}>
         <View style={s.head}>

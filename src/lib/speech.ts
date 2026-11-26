@@ -10,6 +10,7 @@ import { bridgeTts, post } from './bridge';
 type Mod = {
   addListener: (name: string, cb: (e: any) => void) => { remove: () => void };
   requestPermissionsAsync: () => Promise<{ granted: boolean }>;
+  getPermissionsAsync?: () => Promise<{ granted: boolean; canAskAgain?: boolean }>;
   start: (o: Record<string, unknown>) => void;
   stop: () => void;
   abort: () => void;
@@ -28,6 +29,19 @@ const MESSAGES: Record<string, string> = {
   'audio-capture': 'I could not use the microphone. You can type your question instead.',
   'language-not-supported': 'Voice recognition for English (India) is not available on this device. You can type instead.',
 };
+
+export type MicState = 'granted' | 'prompt' | 'denied' | 'unavailable';
+const toState = (r: { granted: boolean; canAskAgain?: boolean }): MicState => (r.granted ? 'granted' : r.canAskAgain === false ? 'denied' : 'prompt');
+/** Current microphone and speech permission, without asking. */
+export async function micPermission(): Promise<MicState> {
+  if (!mod?.getPermissionsAsync) return mod ? 'prompt' : 'unavailable';
+  try { return toState(await mod.getPermissionsAsync()); } catch { return 'unavailable'; }
+}
+/** Shows the system permission dialog. */
+export async function requestMic(): Promise<MicState> {
+  if (!mod) return 'unavailable';
+  try { return toState(await mod.requestPermissionsAsync()); } catch { return 'denied'; }
+}
 
 export type ListenHandlers = { onText: (text: string, final: boolean) => void; onEnd: () => void; onError: (message: string) => void };
 

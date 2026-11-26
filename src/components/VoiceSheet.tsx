@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import { KeyboardAvoidingView, Linking, Modal, Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { ArrowUp, Mic, Square, Volume2, VolumeX, X } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { Coords, Place } from '../types';
@@ -7,10 +7,10 @@ import { colors, font } from '../theme';
 import { formatAway, distanceKm } from '../lib/distance';
 import { formatFee } from '../lib/pricing';
 import { answerQuery, SUGGESTIONS, VoiceAnswer } from '../lib/voiceSearch';
-import { autoListen, startListening, speak, stopSpeaking } from '../lib/speech';
+import { autoListen, micPermission, requestMic, startListening, speak, stopSpeaking, MicState } from '../lib/speech';
 import { onBridge, post, useBridgeCaps } from '../lib/bridge';
 import { statusText } from './PlaceCard';
-import { Txt } from './ui';
+import { Button, Txt } from './ui';
 
 type Msg = { id: number; from: 'me' | 'bot'; text: string; places?: Place[] };
 const GREETING = 'Hi! Ask me about places to visit in Delhi. Tap the mic and speak, or type.';
@@ -30,6 +30,9 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
   const mutedRef = useRef(muted); mutedRef.current = muted;
   const micRef = useRef<unknown>(null);
   const bridged = useBridgeCaps().dictation;
+  const [perm, setPerm] = useState<MicState | 'unknown'>('unknown');
+  const allowRef = useRef<unknown>(null);
+  const showAllow = (perm === 'prompt' || perm === 'denied');
 
   const ask = useCallback((q: string, spoken: boolean) => {
     const clean = q.trim();
@@ -53,12 +56,19 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
     void last;
   }, [ask, stopListen, bridged]);
 
+  useEffect(() => { if (visible && !bridged) micPermission().then(setPerm); }, [visible, bridged]);
+  const allowMic = useCallback(async () => {
+    const st = await requestMic(); setPerm(st);
+    if (st === 'granted') listen();
+  }, [listen]);
+
   const readyNow = text.trim().length > 0 && !listening;
   // Preview only: the page that hosts the preview owns the microphone, so tell it where our mic button is.
   useEffect(() => {
     if (!visible || !bridged) return;
     const off = onBridge((m) => {
       if (m.dx === 'partial') { setListening(true); setText(m.text); }
+      else if (m.dx === 'perm') setPerm(m.state);
       else if (m.dx === 'state') setListening(m.state !== 'idle');
       else if (m.dx === 'result') { setListening(false); ask(m.text, true); }
       else if (m.dx === 'error' && m.code !== 'stopped' && m.code !== 'dismissed') {
@@ -67,13 +77,14 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
       }
     });
     const send = () => {
-      const el: any = micRef.current;
-      const r = readyNow || !el?.getBoundingClientRect ? null : el.getBoundingClientRect();
+      const el: any = showAllow ? allowRef.current : micRef.current;
+      const r = (readyNow && !showAllow) || !el?.getBoundingClientRect ? null : el.getBoundingClientRect();
       post({ dx: 'mic', rect: r && r.width ? { x: r.left, y: r.top, w: r.width, h: r.height } : null });
     };
+    post({ dx: 'hello' }); // asks the preview page for the current microphone permission
     send(); const iv = setInterval(send, 250);
     return () => { off(); clearInterval(iv); post({ dx: 'mic', rect: null }); };
-  }, [visible, bridged, readyNow, ask]);
+  }, [visible, bridged, readyNow, ask, showAllow]);
 
   useEffect(() => {
     if (visible && autoListen()) listen();
@@ -130,6 +141,26 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
               </View>
             ) : null}
           </ScrollView>
+          {showAllow ? (
+            <View style={s.allow}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                <View style={s.allowIcon}><Mic size={22} color={colors.primary} /></View>
+                <View style={{ flex: 1 }}>
+                  <Txt w="bold" style={{ fontSize: 16 }}>Allow microphone</Txt>
+                  <Txt style={{ fontSize: 13, color: colors.sub }}>Search for places by speaking. Your voice is turned into text on your phone.</Txt>
+                </View>
+              </View>
+              {perm === 'denied' ? <Txt style={{ fontSize: 13, color: colors.warn }}>Microphone is turned off for this app, so your phone may not ask again. Allow it in your phone settings, or type your question.</Txt> : null}
+              <View ref={allowRef as never} style={{ flexDirection: 'row' }}>
+                <Button label="Allow microphone" onPress={allowMic} />
+              </View>
+              {perm === 'denied' && Platform.OS !== 'web' ? (
+                <Pressable onPress={() => { Linking.openSettings().catch(() => {}); }} accessibilityRole="button" style={{ minHeight: 44, justifyContent: 'center' }}>
+                  <Txt w="semi" style={{ fontSize: 15, color: colors.primary }}>Open phone settings</Txt>
+                </Pressable>
+              ) : null}
+            </View>
+          ) : null}
           <View style={[s.bar, { paddingBottom: 12 + insets.bottom }]}>
             <TextInput value={text} onChangeText={setText} editable={!listening} placeholder={listening ? 'Listening…' : 'Type your question'} placeholderTextColor="#333232"
               returnKeyType="send" onSubmitEditing={() => ready && ask(text, false)} accessibilityLabel="Type your question" style={s.input} />
@@ -159,6 +190,8 @@ const s = StyleSheet.create({
   row: { flexDirection: 'row', alignItems: 'center', gap: 12, alignSelf: 'stretch', minHeight: 56, borderRadius: 12, borderWidth: 1, borderColor: colors.line, padding: 8, backgroundColor: colors.white },
   dot: { width: 40, height: 40, borderRadius: 10, alignItems: 'center', justifyContent: 'center' },
   chip: { minHeight: 36, justifyContent: 'center', paddingHorizontal: 12, borderRadius: 18, borderWidth: 1, borderColor: colors.primary },
+  allow: { marginHorizontal: 16, marginBottom: 8, padding: 14, gap: 10, borderRadius: 14, backgroundColor: colors.fill },
+  allowIcon: { width: 40, height: 40, borderRadius: 20, backgroundColor: colors.white, alignItems: 'center', justifyContent: 'center' },
   bar: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 16, paddingTop: 10, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.line },
   input: { flex: 1, minHeight: 48, borderRadius: 24, backgroundColor: colors.fill, paddingHorizontal: 16, fontFamily: font.regular, fontSize: 16, color: '#333232' },
   round: { width: 48, height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center' },

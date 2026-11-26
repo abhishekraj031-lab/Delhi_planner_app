@@ -64,21 +64,25 @@ const frame = document.getElementById('app'), ov = document.getElementById('mico
 const send = (m) => frame.contentWindow && frame.contentWindow.postMessage(m, '*');
 // Voice in the preview: this page holds the microphone and speaker (Claude's dictation and tts), the app frame asks for them.
 const bridge = { d: null, t: null }; let acc = '', timer = null;
-const caps = () => send({ dx: 'caps', dictation: !!bridge.d, tts: !!bridge.t });
+const sendPerm = async () => {
+  try { const pm = await claude.use('permissions'); const st = await pm.state('dictation'); send({ dx: 'perm', state: st }); }
+  catch (e) { send({ dx: 'perm', state: 'prompt' }); }
+};
+const caps = () => { send({ dx: 'caps', dictation: !!bridge.d, tts: !!bridge.t }); if (bridge.d) sendPerm(); };
 const arm = () => { clearTimeout(timer); timer = setTimeout(() => { if (bridge.d && bridge.d.active()) bridge.d.stop().catch(() => {}); }, 1800); };
 (async () => {
   try { if (window.claude && claude.use) { bridge.d = await claude.use('dictation'); bridge.t = await claude.use('tts'); } } catch (e) {}
   if (bridge.d) {
     bridge.d.onPartial((e) => { send({ dx: 'partial', text: (acc + ' ' + e.text).trim() }); arm(); });
     bridge.d.onFinal((e) => { acc += e.text; send({ dx: 'partial', text: acc.trim() }); arm(); });
-    bridge.d.onState((e) => { send({ dx: 'state', state: e.state }); if (e.state === 'idle') { clearTimeout(timer); const t = acc.trim(); acc = ''; if (t) send({ dx: 'result', text: t }); } });
+    bridge.d.onState((e) => { send({ dx: 'state', state: e.state }); sendPerm(); if (e.state === 'idle') { clearTimeout(timer); const t = acc.trim(); acc = ''; if (t) send({ dx: 'result', text: t }); } });
   }
   caps();
 })();
 ov.onclick = () => {
   const d = bridge.d; if (!d) return;
   if (d.active()) { clearTimeout(timer); d.stop().catch(() => {}); }
-  else { acc = ''; d.start().catch((e) => send({ dx: 'error', code: (e && e.code) || 'upstream_error' })); }
+  else { acc = ''; d.start().then(sendPerm).catch((e) => { sendPerm(); send({ dx: 'error', code: (e && e.code) || 'upstream_error' }); }); }
 };
 addEventListener('message', (e) => {
   if (e.source !== frame.contentWindow || !e.data || typeof e.data.dx !== 'string') return;
