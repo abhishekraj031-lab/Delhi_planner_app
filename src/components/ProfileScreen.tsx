@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Image, Linking, Platform, Pressable, ScrollView, TextInput, View } from 'react-native';
-import { Camera, ChevronRight, Ticket, UserPlus, CircleUser, Heart, Info, LifeBuoy, LogOut, MapPin, Mic, Pencil, ShieldCheck, Trash2 } from 'lucide-react-native';
+import { Camera, ChevronDown, ChevronRight, ChevronUp, Ticket, UserPlus, CircleUser, Heart, Info, LifeBuoy, LogOut, MapPin, Mic, Pencil, ShieldCheck, Trash2 } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '../theme';
 import { LocationState } from '../hooks/useLocation';
@@ -22,7 +22,7 @@ export const initialOf = (name?: string, id?: string) => {
 function Card({ children }: { children: React.ReactNode }) {
   return <View style={{ backgroundColor: colors.white, borderRadius: 18, borderWidth: 1, borderColor: colors.line, overflow: 'hidden' }}>{children}</View>;
 }
-function Row({ icon, label, value, onPress, action, last, danger }: { icon: React.ReactNode; label: string; value?: string; onPress?: () => void; action?: React.ReactNode; last?: boolean; danger?: boolean }) {
+function Row({ icon, label, value, onPress, action, last, danger, open }: { icon: React.ReactNode; label: string; value?: string; onPress?: () => void; action?: React.ReactNode; last?: boolean; danger?: boolean; open?: boolean }) {
   const body = (
     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 16, paddingVertical: 14, minHeight: 56, borderBottomWidth: last ? 0 : 1, borderBottomColor: colors.line }}>
       <View style={{ width: 36, height: 36, borderRadius: 10, backgroundColor: danger ? '#fdecea' : colors.fill, alignItems: 'center', justifyContent: 'center' }}>{icon}</View>
@@ -30,7 +30,7 @@ function Row({ icon, label, value, onPress, action, last, danger }: { icon: Reac
         <Txt w="semi" style={{ fontSize: 16, color: danger ? '#b3261e' : colors.ink }}>{label}</Txt>
         {value ? <Txt style={{ fontSize: 13, color: colors.sub }}>{value}</Txt> : null}
       </View>
-      {action ?? (onPress ? <ChevronRight size={18} color={colors.sub} /> : null)}
+      {action ?? (open !== undefined ? (open ? <ChevronUp size={18} color={colors.sub} /> : <ChevronDown size={18} color={colors.sub} />) : onPress ? <ChevronRight size={18} color={colors.sub} /> : null)}
     </View>
   );
   return onPress ? <Pressable onPress={onPress} accessibilityRole="button" accessibilityLabel={label} style={({ pressed }) => ({ opacity: pressed ? 0.6 : 1 })}>{body}</Pressable> : body;
@@ -132,11 +132,11 @@ export function ProfileScreen(p: Props) {
 
       <Section title="About" />
       <Card>
-        <Row icon={<Info size={20} color={colors.ink} />} label="About and data sources" onPress={() => setAbout((v) => !v)} />
+        <Row icon={<Info size={20} color={colors.ink} />} label="About and data sources" open={about} onPress={() => setAbout((v) => !v)} />
         {about ? (
-          <View style={{ paddingHorizontal: 16, paddingBottom: 16, gap: 8, borderBottomWidth: 1, borderBottomColor: colors.line }}>
-            <Txt style={{ fontSize: 14, color: colors.text }}>Timings, prices and details come from official sources first. Where sources disagree, the value is marked Unverified, and every place shows its source and when it was last checked.</Txt>
-            <Txt style={{ fontSize: 14, color: colors.text }}>Metro and cab fares are estimates. The real price is shown in the booking app. Tickets are booked on official sites only.</Txt>
+          <View style={{ paddingLeft: 64, paddingRight: 16, paddingTop: 2, paddingBottom: 16, gap: 10, borderBottomWidth: 1, borderBottomColor: colors.line }}>
+            <Txt style={{ fontSize: 14, lineHeight: 21, color: colors.text }}>Timings, prices and details come from official sources first. Where sources disagree, the value is marked Unverified, and every place shows its source and when it was last checked.</Txt>
+            <Txt style={{ fontSize: 14, lineHeight: 21, color: colors.text }}>Metro and cab fares are estimates. The real price is shown in the booking app. Tickets are booked on official sites only.</Txt>
           </View>
         ) : null}
         <Row icon={<ShieldCheck size={20} color={colors.ink} />} label="Privacy" value="Not available yet" />
