@@ -59,6 +59,11 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
   }, [places, loc, today]);
   const endStream = useCallback((id: number) => setMsgs((m) => m.map((x) => (x.id === id ? { ...x, stream: false } : x))), []);
 
+  /** Every visit starts a fresh conversation. */
+  const reset = useCallback(() => {
+    setMsgs([{ id: 0, from: 'bot', text: GREETING }]); idRef.current = 1;
+    setText(''); setThinking(false); setSpeaking(false); setLastQ('');
+  }, []);
   const stopListen = useCallback(() => { stopRef.current?.(); stopRef.current = null; setListening(false); }, []);
   const listen = useCallback(async () => {
     if (bridged) return;
@@ -103,12 +108,13 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
   }, [visible, bridged, readyNow, ask, showAllow]);
 
   useEffect(() => {
+    if (visible) { timers.current.forEach(clearTimeout); timers.current = []; reset(); }
     if (visible && autoListen()) listen();
     if (!visible) { stopListen(); stopSpeaking(); }
   }, [visible]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { setTimeout(() => scroller.current?.scrollToEnd({ animated: true }), 60); }, [msgs.length, thinking]);
 
-  const close = () => { stopListen(); stopSpeaking(); timers.current.forEach(clearTimeout); timers.current = []; setThinking(false); setSpeaking(false); setMsgs((m) => m.map((x) => ({ ...x, stream: false }))); onClose(); };
+  const close = () => { stopListen(); stopSpeaking(); timers.current.forEach(clearTimeout); timers.current = []; setThinking(false); setSpeaking(false); onClose(); timers.current.push(setTimeout(reset, 350)); };
   const open = (id: string) => { close(); setTimeout(() => onOpenPlace(id), 150); };
   const ready = text.trim().length > 0 && !listening;
   const streaming = msgs.some((m) => m.stream);
