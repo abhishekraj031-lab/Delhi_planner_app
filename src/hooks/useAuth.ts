@@ -6,11 +6,11 @@ const KEY = 'demo-auth-v1';
 
 /** Demo-only sign-in. Swap the body of signIn/signOut for the real provider later; screens stay the same. */
 export function useAuth() {
-  const [user, setUser] = useState<{ name: string } | null>(null);
+  const [user, setUser] = useState<{ name: string; displayName?: string } | null>(null);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    loadJSON<{ name: string } | null>(KEY, null).then((u) => { setUser(u); setReady(true); });
+    loadJSON<{ name: string; displayName?: string } | null>(KEY, null).then((u) => { setUser(u); setReady(true); });
   }, []);
 
   /** `id` is the verified phone number or email; `code` is the one-time code sent to it. */
@@ -23,6 +23,11 @@ export function useAuth() {
     return false;
   }, []);
 
+  /** `name` is the verified phone or email; `displayName` is what the person chose to be called. */
+  const setDisplayName = useCallback(async (displayName: string) => {
+    setUser((u) => { if (!u) return u; const n = { ...u, displayName: displayName || undefined }; saveJSON(KEY, n); return n; });
+  }, []);
+
   const signOut = useCallback(async () => { setUser(null); await saveJSON(KEY, null); }, []);
-  return { user, ready, signIn, signOut };
+  return { user, ready, signIn, signOut, setDisplayName };
 }

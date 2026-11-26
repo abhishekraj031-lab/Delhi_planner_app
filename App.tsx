@@ -12,7 +12,7 @@ import { AuthPrompt } from './src/components/AuthPrompt';
 import { VoiceSheet } from './src/components/VoiceSheet';
 import { PlanSheet } from './src/components/PlanSheet';
 import { distanceKm } from './src/lib/distance';
-import { Church, Dome, FerrisWheel, Landmark, Lighthouse, Heart, MapPin, Mic, Search, ShoppingBag, SlidersHorizontal, Ticket, Trees } from 'lucide-react-native';
+import { Church, CircleUser, Dome, FerrisWheel, Landmark, Lighthouse, Heart, MapPin, Mic, Search, ShoppingBag, SlidersHorizontal, Ticket, Trees } from 'lucide-react-native';
 import type { Category, Place } from './src/types';
 import { colors, font } from './src/theme';
 import { loadPlaces } from './src/data/repository';
@@ -23,7 +23,7 @@ import { Chip, Txt } from './src/components/ui';
 import { PlaceCard } from './src/components/PlaceCard';
 import { PlaceDetail } from './src/components/PlaceDetail';
 import { TabBar, TabKey } from './src/components/TabBar';
-import { EmptyTab } from './src/components/LoginRequired';
+import { ProfileScreen, initialOf } from './src/components/ProfileScreen';
 import { EmptyState } from './src/components/EmptyState';
 import { LoginScreen } from './src/components/LoginScreen';
 import { useAuth } from './src/hooks/useAuth';
@@ -67,7 +67,7 @@ function Home() {
   const [tab, setTab] = useState<TabKey>('home');
   const [loginOpen, setLoginOpen] = useState(false);
   const [now, setNow] = useState(() => new Date());
-  const { user, ready: authReady, signIn, signOut } = useAuth();
+  const { user, ready: authReady, signIn, signOut, setDisplayName } = useAuth();
   // Saving needs a login: logged-out visitors see nothing saved, and are asked to log in first.
   const saved = useMemo(() => (user ? savedAll : new Set<string>()), [user, savedAll]);
   const { loc, state, requestCurrent, chooseArea } = useLocation();
@@ -155,7 +155,10 @@ function Home() {
     if (!authReady) body = <View style={{ flex: 1 }} />;
     else if (tab === 'profile' || (!user && loginOpen)) {
       body = user
-        ? <EmptyTab title={t.title} message={t.empty} onSignOut={signOut} />
+        ? <ProfileScreen id={user.name} displayName={user.displayName} savedCount={saved.size} locLabel={locLabel} gps={loc?.kind === 'gps'} locState={state}
+            onRename={setDisplayName} onOpenFavourites={() => changeTab('favourites')} onChangeStart={() => { changeTab('home'); setShowLocation(true); }}
+            onAllowLocation={requestCurrent} onSignOut={signOut}
+            onDelete={async () => { setSaved(new Set()); await saveJSON(KEYS.saved, []); await setDisplayName(''); await signOut(); changeTab('home'); }} />
         : <LoginScreen title={t.title} hint={t.hint} onSignIn={signIn} />;
     } else if (tab === 'favourites' && user && favRows.length > 0) {
       body = (
@@ -195,6 +198,9 @@ function Home() {
             <Txt style={{ color: colors.sub, fontSize: 13 }}>{locLabel}</Txt>
           </Pressable>
         </View>
+        <Pressable onPress={() => changeTab('profile')} accessibilityRole="button" accessibilityLabel={user ? 'Open your profile' : 'Log in'} style={[s.avatar, user && { backgroundColor: colors.primary }]}>
+          {user && initialOf(user.displayName, user.name) ? <Txt w="bold" style={{ color: colors.white, fontSize: 18 }}>{initialOf(user.displayName, user.name)}</Txt> : <CircleUser size={user ? 22 : 24} color={user ? colors.white : colors.ink} />}
+        </Pressable>
       </View>
       <View style={s.searchRow}>
         <View style={s.search}>
@@ -256,6 +262,7 @@ const s = StyleSheet.create({
     searchRow: { flexDirection: 'row', gap: 12, paddingHorizontal: 16, paddingTop: 16 },
   search: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8, minHeight: 52, paddingHorizontal: 16, borderRadius: 26, backgroundColor: colors.white, borderWidth: 1, borderColor: colors.line, shadowColor: '#000', shadowOpacity: 0.1, shadowRadius: 8, shadowOffset: { width: 0, height: 2 }, elevation: 3 },
   input: { flex: 1, fontFamily: font.regular, fontSize: 16, color: '#333232', paddingVertical: 8 },
+  avatar: { width: 44, height: 44, borderRadius: 22, backgroundColor: colors.fill, alignItems: 'center', justifyContent: 'center' },
   mic: { width: 36, height: 36, alignItems: 'center', justifyContent: 'center' },
   filter: { width: 48, height: 48, borderRadius: 24, backgroundColor: colors.white, borderWidth: 1, borderColor: colors.line, alignItems: 'center', justifyContent: 'center' },
   chips: { paddingHorizontal: 4, paddingTop: 8, borderBottomWidth: 0 },
