@@ -48,25 +48,6 @@ export function CommuteCards({ place: p, km, from, day, locState, onAllowLocatio
         {km != null ? <Txt style={{ fontSize: 13, color: colors.sub }}>{`${formatAway(km)} from you, in a straight line. Fares are estimates.`}</Txt> : null}
       </View>
 
-      {km == null ? (
-        <View style={s.card}>
-          <View style={s.head}>
-            <View style={[s.icon, { backgroundColor: '#e6f6ec' }]}><MapPin size={22} color="#166534" /></View>
-            <View style={{ flex: 1 }}>
-              <Txt w="bold" style={{ fontSize: 17 }}>Allow location</Txt>
-              <Txt style={{ fontSize: 14, color: colors.sub }}>See estimated metro and cab fares from where you are.</Txt>
-            </View>
-          </View>
-          {locState === 'denied' ? <Txt style={{ fontSize: 13, color: colors.warn }}>Location is turned off for this app, so your phone may not ask again. Allow it in your phone settings, then tap Allow location.</Txt> : null}
-          <Cta label={locState === 'asking' ? 'Finding your location…' : 'Allow location'} hint="Asks permission to use your location" onPress={onAllowLocation} />
-          {locState === 'denied' && Platform.OS !== 'web' ? (
-            <Pressable onPress={() => { Linking.openSettings().catch(() => {}); }} accessibilityRole="button" style={s.app}>
-              <Txt w="semi" style={{ flex: 1, fontSize: 15 }}>Open phone settings</Txt><ChevronRight size={18} color={colors.primary} />
-            </Pressable>
-          ) : null}
-        </View>
-      ) : null}
-
       <View style={s.card}>
         <View style={s.head}>
           <View style={[s.icon, { backgroundColor: '#e6efff' }]}><TrainFront size={22} color={colors.primary} /></View>
