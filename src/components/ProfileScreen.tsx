@@ -76,6 +76,12 @@ export function ProfileScreen(p: Props) {
 
       <Card>
         <View style={{ padding: 16, gap: 14 }}>
+          {!editing ? (
+            <Pressable onPress={() => { setDraft(p.displayName ?? ''); setEditing(true); }} accessibilityRole="button" accessibilityLabel="Edit name" hitSlop={6}
+              style={({ pressed }) => ({ position: 'absolute', top: 12, right: 12, zIndex: 2, width: 36, height: 36, borderRadius: 18, backgroundColor: colors.fill, alignItems: 'center', justifyContent: 'center', opacity: pressed ? 0.6 : 1 })}>
+              <Pencil size={18} color={colors.ink} />
+            </Pressable>
+          ) : null}
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 14 }}>
             <Pressable onPress={() => choosePhoto(false)} accessibilityRole="button" accessibilityLabel={p.photo ? 'Change profile photo' : 'Add profile photo'} style={{ width: 72, height: 72 }}>
               <View style={{ width: 72, height: 72, borderRadius: 36, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
@@ -85,27 +91,17 @@ export function ProfileScreen(p: Props) {
                 <Camera size={14} color={colors.white} />
               </View>
             </Pressable>
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, paddingRight: 36 }}>
               <Txt w="bold" style={{ fontSize: 20 }} numberOfLines={1}>{p.displayName || 'Add your name'}</Txt>
               <Txt style={{ fontSize: 14, color: colors.sub }} numberOfLines={1}>{p.id}</Txt>
               <Txt style={{ fontSize: 12, color: colors.sub }}>{isEmail ? 'Signed in with email' : 'Signed in with phone'}</Txt>
             </View>
           </View>
-          <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 16 }}>
-            <Pressable onPress={() => choosePhoto(false)} accessibilityRole="button" accessibilityLabel="Choose photo" style={({ pressed }) => ({ flexDirection: 'row', alignItems: 'center', gap: 8, opacity: pressed ? 0.6 : 1 })}>
-              <Camera size={16} color={colors.primary} /><Txt w="semi" style={{ color: colors.primary, fontSize: 15 }}>{p.photo ? 'Change photo' : 'Add photo'}</Txt>
+          {p.photo ? (
+            <Pressable onPress={() => p.onPhoto(undefined)} accessibilityRole="button" accessibilityLabel="Remove photo" style={({ pressed }) => ({ alignSelf: 'flex-start', opacity: pressed ? 0.6 : 1 })}>
+              <Txt w="semi" style={{ color: colors.sub, fontSize: 14 }}>Remove photo</Txt>
             </Pressable>
-            {Platform.OS !== 'web' ? (
-              <Pressable onPress={() => choosePhoto(true)} accessibilityRole="button" accessibilityLabel="Take photo" style={({ pressed }) => ({ opacity: pressed ? 0.6 : 1, justifyContent: 'center' })}>
-                <Txt w="semi" style={{ color: colors.primary, fontSize: 15 }}>Take photo</Txt>
-              </Pressable>
-            ) : null}
-            {p.photo ? (
-              <Pressable onPress={() => p.onPhoto(undefined)} accessibilityRole="button" accessibilityLabel="Remove photo" style={({ pressed }) => ({ opacity: pressed ? 0.6 : 1, justifyContent: 'center' })}>
-                <Txt w="semi" style={{ color: colors.sub, fontSize: 15 }}>Remove photo</Txt>
-              </Pressable>
-            ) : null}
-          </View>
+          ) : null}
           {photoErr ? <Txt style={{ color: colors.warn, fontSize: 13 }}>{photoErr}</Txt> : null}
           {editing ? (
             <View style={{ gap: 10 }}>
@@ -116,12 +112,7 @@ export function ProfileScreen(p: Props) {
                 <Button label="Save" onPress={() => { p.onRename(draft.trim()); setEditing(false); }} />
               </View>
             </View>
-          ) : (
-            <Pressable onPress={() => { setDraft(p.displayName ?? ''); setEditing(true); }} accessibilityRole="button" accessibilityLabel="Edit name"
-              style={({ pressed }) => ({ flexDirection: 'row', alignItems: 'center', gap: 8, alignSelf: 'flex-start', opacity: pressed ? 0.6 : 1 })}>
-              <Pencil size={16} color={colors.primary} /><Txt w="semi" style={{ color: colors.primary, fontSize: 15 }}>{p.displayName ? 'Edit name' : 'Add name'}</Txt>
-            </Pressable>
-          )}
+          ) : null}
         </View>
       </Card>
 
