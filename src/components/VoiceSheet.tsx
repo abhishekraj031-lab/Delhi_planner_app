@@ -8,6 +8,7 @@ import { formatAway, distanceKm } from '../lib/distance';
 import { formatFee } from '../lib/pricing';
 import { answerQuery, SUGGESTIONS, VoiceAnswer } from '../lib/voiceSearch';
 import { autoListen, startListening, speak, stopSpeaking } from '../lib/speech';
+import { onBridge, post, useBridgeCaps } from '../lib/bridge';
 import { statusText } from './PlaceCard';
 import { Txt } from './ui';
 
@@ -27,6 +28,8 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
   const idRef = useRef(1);
   const scroller = useRef<{ scrollToEnd: (o?: { animated?: boolean }) => void } | null>(null);
   const mutedRef = useRef(muted); mutedRef.current = muted;
+  const micRef = useRef<unknown>(null);
+  const bridged = useBridgeCaps().dictation;
 
   const ask = useCallback((q: string, spoken: boolean) => {
     const clean = q.trim();
@@ -39,6 +42,7 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
 
   const stopListen = useCallback(() => { stopRef.current?.(); stopRef.current = null; setListening(false); }, []);
   const listen = useCallback(async () => {
+    if (bridged) return;
     stopSpeaking(); setText(''); setListening(true);
     let last = '';
     stopRef.current = await startListening({
@@ -47,7 +51,29 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
       onError: (message) => setMsgs((m) => [...m, { id: idRef.current++, from: 'bot', text: message }]),
     });
     void last;
-  }, [ask, stopListen]);
+  }, [ask, stopListen, bridged]);
+
+  const readyNow = text.trim().length > 0 && !listening;
+  // Preview only: the page that hosts the preview owns the microphone, so tell it where our mic button is.
+  useEffect(() => {
+    if (!visible || !bridged) return;
+    const off = onBridge((m) => {
+      if (m.dx === 'partial') { setListening(true); setText(m.text); }
+      else if (m.dx === 'state') setListening(m.state !== 'idle');
+      else if (m.dx === 'result') { setListening(false); ask(m.text, true); }
+      else if (m.dx === 'error' && m.code !== 'stopped' && m.code !== 'dismissed') {
+        const msg = m.code === 'not_granted' ? "Microphone access is off for this preview. Turn it on in the page's Permissions menu, or type your question." : 'Voice input is not available right now. You can type your question instead.';
+        setMsgs((x) => [...x, { id: idRef.current++, from: 'bot', text: msg }]);
+      }
+    });
+    const send = () => {
+      const el: any = micRef.current;
+      const r = readyNow || !el?.getBoundingClientRect ? null : el.getBoundingClientRect();
+      post({ dx: 'mic', rect: r && r.width ? { x: r.left, y: r.top, w: r.width, h: r.height } : null });
+    };
+    send(); const iv = setInterval(send, 250);
+    return () => { off(); clearInterval(iv); post({ dx: 'mic', rect: null }); };
+  }, [visible, bridged, readyNow, ask]);
 
   useEffect(() => {
     if (visible && autoListen()) listen();
@@ -110,7 +136,7 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
             {ready ? (
               <Pressable onPress={() => ask(text, false)} accessibilityRole="button" accessibilityLabel="Send" style={[s.round, { backgroundColor: colors.primary }]}><ArrowUp size={24} color={colors.white} /></Pressable>
             ) : (
-              <Pressable onPress={listening ? stopListen : listen} accessibilityRole="button" accessibilityLabel={listening ? 'Stop listening' : 'Speak'} style={[s.round, { backgroundColor: listening ? colors.warn : colors.dark }]}>
+              <Pressable ref={micRef as never} onPress={listening ? stopListen : listen} accessibilityRole="button" accessibilityLabel={listening ? 'Stop listening' : 'Speak'} style={[s.round, { backgroundColor: listening ? colors.warn : colors.dark }]}>
                 {listening ? <Square size={20} color={colors.white} fill={colors.white} /> : <Mic size={24} color={colors.white} />}
               </Pressable>
             )}

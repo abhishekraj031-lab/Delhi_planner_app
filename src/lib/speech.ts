@@ -1,5 +1,6 @@
 import { Platform } from 'react-native';
 import * as Speech from 'expo-speech';
+import { bridgeTts, post } from './bridge';
 
 /**
  * Speech to text uses expo-speech-recognition (the phone's own recogniser; the browser's on web).
@@ -51,6 +52,7 @@ export async function startListening(h: ListenHandlers): Promise<() => void> {
 }
 
 export function speak(text: string) {
+  if (bridgeTts()) { post({ dx: 'speak', text }); return; }
   try { Speech.stop(); Speech.speak(text, { language: 'en-IN', rate: 0.98 }); } catch { /* speech is optional */ }
 }
-export function stopSpeaking() { try { Speech.stop(); } catch { /* ignore */ } }
+export function stopSpeaking() { post({ dx: 'tts-stop' }); try { Speech.stop(); } catch { /* ignore */ } }
