@@ -62,7 +62,7 @@ export function PlanSheet({ visible, onClose, places, day, dayLabel, today, loc,
       </View>
       {stops.length ? (
         <View style={{ gap: 8 }}>
-          {url ? <Button label="Open route in Maps" onPress={() => Linking.openURL(url)} /> : null}
+          {url ? <Button label="Open route in Maps" url={url} onPress={() => Linking.openURL(url)} /> : null}
           <Button label={allSaved ? 'Saved to Favourites' : 'Save all to Favourites'} outline onPress={() => { if (!allSaved) onSaveAll(stops.map((x) => x.place.id)); }} />
         </View>
       ) : null}

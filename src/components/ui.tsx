@@ -1,3 +1,4 @@
+import { useExtLink } from '../lib/links';
 import React from 'react';
 import { Pressable, StyleSheet, Text, TextProps, View } from 'react-native';
 import { colors, font } from '../theme';
@@ -20,9 +21,11 @@ export const Unverified = () => (
 export const NotAvailable = ({ size = 14 }: { size?: number }) => (
   <Txt style={{ color: colors.sub, fontStyle: 'italic', fontSize: size }}>Not available</Txt>
 );
-export function Button({ label, onPress, outline }: { label: string; onPress: () => void; outline?: boolean }) {
+/** `url` is for buttons that open a website or app: it lets the web preview put a real link over the button. */
+export function Button({ label, onPress, outline, url }: { label: string; onPress: () => void; outline?: boolean; url?: string }) {
+  const ref = useExtLink(url);
   return (
-    <Pressable onPress={onPress} accessibilityRole="button" style={[s.btn, outline && s.btnOutline]}>
+    <Pressable ref={ref} onPress={onPress} accessibilityRole={url ? 'link' : 'button'} style={[s.btn, outline && s.btnOutline]}>
       <Txt w="bold" style={{ fontSize: 16, color: outline ? colors.primary : colors.white }}>{label}</Txt>
     </Pressable>
   );

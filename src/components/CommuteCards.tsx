@@ -3,16 +3,34 @@ import { Linking, Platform, Pressable, StyleSheet, View } from 'react-native';
 import { Car, ChevronRight, MapPin, TrainFront } from 'lucide-react-native';
 import type { Place } from '../types';
 import { colors } from '../theme';
-import { CAB_APPS, estimateCab, estimateMetro, IXIGO_METRO_URL } from '../lib/commute';
+import { CAB_APPS, CabApp, estimateCab, estimateMetro, IXIGO_METRO_URL } from '../lib/commute';
 import { formatAway } from '../lib/distance';
+import { useExtLink } from '../lib/links';
 import { NotAvailable, Txt, Unverified } from './ui';
 
 const open = (url: string) => { Linking.openURL(url).catch(() => {}); };
 
-function Cta({ label, onPress, hint }: { label: string; onPress: () => void; hint: string }) {
+function Cta({ label, onPress, hint, url }: { label: string; onPress: () => void; hint: string; url?: string }) {
+  const ref = useExtLink(url);
   return (
-    <Pressable onPress={onPress} accessibilityRole="link" accessibilityLabel={label} accessibilityHint={hint} style={({ pressed }) => [s.cta, { opacity: pressed ? 0.8 : 1 }]}>
+    <Pressable ref={ref} onPress={onPress} accessibilityRole="link" accessibilityLabel={label} accessibilityHint={hint} style={({ pressed }) => [s.cta, { opacity: pressed ? 0.8 : 1 }]}>
       <Txt w="bold" style={{ fontSize: 16, color: colors.white }}>{label}</Txt>
+    </Pressable>
+  );
+}
+
+function AppRow({ app: a, place: p }: { app: CabApp; place: Place }) {
+  const url = a.url(p);
+  const ref = useExtLink(url);
+  return (
+    <Pressable ref={ref} onPress={() => open(url)} accessibilityRole="link" accessibilityLabel={`Check price and book on ${a.name}`} accessibilityHint={a.note}
+      style={({ pressed }) => [s.app, { opacity: pressed ? 0.7 : 1 }]}>
+      <View style={{ flex: 1 }}>
+        <Txt w="semi" style={{ fontSize: 16 }}>{a.name}</Txt>
+        <Txt style={{ fontSize: 12, color: colors.sub }}>{a.note}</Txt>
+      </View>
+      <Txt w="bold" style={{ fontSize: 14, color: colors.primary }}>Check price</Txt>
+      <ChevronRight size={18} color={colors.primary} />
     </Pressable>
   );
 }
@@ -66,7 +84,7 @@ export function CommuteCards({ place: p, km, day, locState, onAllowLocation }: {
             </Txt>
           </View>
         ) : null}
-        <Cta label="Book metro ticket on ixigo" hint="Opens ixigo in your browser or app" onPress={() => open(IXIGO_METRO_URL)} />
+        <Cta label="Book metro ticket on ixigo" hint="Opens ixigo in your browser or app" url={IXIGO_METRO_URL} onPress={() => open(IXIGO_METRO_URL)} />
         <Txt style={{ fontSize: 12, color: colors.sub }}>You choose your stations on ixigo. Tickets are QR codes for Delhi Metro.</Txt>
       </View>
 
@@ -86,17 +104,7 @@ export function CommuteCards({ place: p, km, day, locState, onAllowLocation }: {
             </Txt>
           </View>
         ) : null}
-        {CAB_APPS.map((a) => (
-          <Pressable key={a.id} onPress={() => open(a.url(p))} accessibilityRole="link" accessibilityLabel={`Check price and book on ${a.name}`} accessibilityHint={a.note}
-            style={({ pressed }) => [s.app, { opacity: pressed ? 0.7 : 1 }]}>
-            <View style={{ flex: 1 }}>
-              <Txt w="semi" style={{ fontSize: 16 }}>{a.name}</Txt>
-              <Txt style={{ fontSize: 12, color: colors.sub }}>{a.note}</Txt>
-            </View>
-            <Txt w="bold" style={{ fontSize: 14, color: colors.primary }}>Check price</Txt>
-            <ChevronRight size={18} color={colors.primary} />
-          </Pressable>
-        ))}
+        {CAB_APPS.map((a) => <AppRow key={a.id} app={a} place={p} />)}
       </View>
     </View>
   );

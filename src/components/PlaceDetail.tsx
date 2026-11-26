@@ -108,7 +108,7 @@ export function PlaceDetail({ place, km, locState, onAllowLocation, day, today, 
             <View style={s.cards}>
               <Card>
                 <Txt w="bold" style={{ fontSize: 24, lineHeight: 30 }}>{p.name}</Txt>
-                <Txt style={{ fontSize: 15, color: colors.sub }}>{areaText(p)}{km != null ? ` · ${formatAway(km)} away` : ''}</Txt>
+                <Txt style={{ fontSize: 15, color: colors.sub }}>{areaText(p)}{km != null ? ` · ${formatAway(km)}` : ''}</Txt>
                 <View style={s.chips}>
                   <View style={[s.pill, { backgroundColor: tone.bg, flexDirection: 'row', alignItems: 'center' }]}>
                     <Txt w="semi" style={{ fontSize: 13, color: tone.fg }}>{stText.text}</Txt>
@@ -210,8 +210,8 @@ export function PlaceDetail({ place, km, locState, onAllowLocation, day, today, 
             </View>
           </View>
           <View style={{ flex: 1, flexDirection: 'row', gap: 8, justifyContent: 'flex-end' }}>
-            {p.bookUrl ? <View style={{ flex: 1 }}><Button label="Book tickets" outline onPress={() => Linking.openURL(p.bookUrl as string)} /></View> : null}
-            <View style={{ flex: 1 }}><Button label="Directions" onPress={() => Linking.openURL(directionsUrl(p))} /></View>
+            {p.bookUrl ? <View style={{ flex: 1 }}><Button label="Book tickets" outline url={p.bookUrl as string} onPress={() => Linking.openURL(p.bookUrl as string)} /></View> : null}
+            <View style={{ flex: 1 }}><Button label="Directions" url={directionsUrl(p)} onPress={() => Linking.openURL(directionsUrl(p))} /></View>
           </View>
         </View>
       </View>

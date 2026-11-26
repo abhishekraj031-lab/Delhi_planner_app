@@ -38,6 +38,7 @@ body{background:var(--bg);margin:0;overflow:hidden}
 .island{position:absolute;top:10px;left:50%;width:110px;height:30px;margin-left:-55px;background:#000;border-radius:16px}
 iframe{width:390px;flex:1;border:0;display:block;background:#fff;min-height:0}
 #micov{position:absolute;display:none;z-index:5;background:transparent;border:0;border-radius:50%;padding:0;cursor:pointer}
+#links a{position:absolute;display:block;z-index:6;background:transparent;-webkit-tap-highlight-color:transparent;border-radius:10px;touch-action:none}
 .home{height:0;position:relative}
 .home::after{content:"";position:absolute;left:50%;bottom:6px;width:134px;height:5px;margin-left:-67px;background:#111216;border-radius:3px;opacity:.9}
 </style>
@@ -46,6 +47,7 @@ iframe{width:390px;flex:1;border:0;display:block;background:#fff;min-height:0}
     <div class="phone" id="phone">
       <div class="status"><span>9:41</span><div class="island"></div><i><b style="width:17px;height:10px"></b><b style="width:15px;height:10px"></b><b style="width:25px;height:12px;border-radius:4px"></b></i></div>
       <iframe id="app" title="Delhi Explorer app preview"></iframe>
+      <div id="links"></div>
       <button id="micov" aria-label="Speak" title="Speak"></button>
       <div class="home"></div>
     </div>
@@ -53,10 +55,11 @@ iframe{width:390px;flex:1;border:0;display:block;background:#fff;min-height:0}
 </div>
 <script>
 const APP = ${JSON.stringify(app).replace(/<\//g, '<\\/')};
+let scaleK = 1;
 const phone = document.getElementById('phone'), slot = document.getElementById('slot');
 function fit(){
   const k = Math.max(0.4, Math.min(1, (window.innerWidth - 32) / 410, (window.innerHeight - 24) / 864));
-  phone.style.transform = 'scale(' + k + ')';
+  phone.style.transform = 'scale(' + k + ')'; scaleK = k;
   slot.style.width = (410 * k) + 'px'; slot.style.height = (864 * k) + 'px';
 }
 addEventListener('resize', fit); fit();
@@ -68,7 +71,7 @@ const sendPerm = async () => {
   try { const pm = await claude.use('permissions'); const st = await pm.state('dictation'); send({ dx: 'perm', state: st }); }
   catch (e) { send({ dx: 'perm', state: 'prompt' }); }
 };
-const caps = () => { send({ dx: 'caps', dictation: !!bridge.d, tts: !!bridge.t }); if (bridge.d) sendPerm(); };
+const caps = () => { send({ dx: 'caps', dictation: !!bridge.d, tts: !!bridge.t, links: true }); if (bridge.d) sendPerm(); };
 const arm = () => { clearTimeout(timer); timer = setTimeout(() => { if (bridge.d && bridge.d.active()) bridge.d.stop().catch(() => {}); }, 1800); };
 (async () => {
   try { if (window.claude && claude.use) { bridge.d = await claude.use('dictation'); bridge.t = await claude.use('tts'); } } catch (e) {}
@@ -84,6 +87,27 @@ ov.onclick = () => {
   if (d.active()) { clearTimeout(timer); d.stop().catch(() => {}); }
   else { acc = ''; d.start().then(sendPerm).catch((e) => { sendPerm(); send({ dx: 'error', code: (e && e.code) || 'upstream_error' }); }); }
 };
+// Real links laid over the app's buttons that open other sites (see src/lib/links.ts in the app).
+const linkEls = new Map();
+function drawLinks(items) {
+  const box = document.getElementById('links'), seen = new Set();
+  items.forEach((it) => {
+    seen.add(it.id);
+    let a = linkEls.get(it.id);
+    if (!a) {
+      a = document.createElement('a'); a.target = '_blank'; a.rel = 'noopener noreferrer'; a.dataset.id = it.id;
+      let y0 = 0, moved = 0;
+      a.addEventListener('touchstart', (e) => { y0 = e.touches[0].clientY; moved = 0; }, { passive: true });
+      a.addEventListener('touchmove', (e) => { const y = e.touches[0].clientY, dy = y0 - y; y0 = y; moved += Math.abs(dy); send({ dx: 'scroll', id: it.id, dy: dy / scaleK }); }, { passive: true });
+      a.addEventListener('wheel', (e) => { e.preventDefault(); send({ dx: 'scroll', id: it.id, dy: e.deltaY / scaleK }); }, { passive: false });
+      a.addEventListener('click', (e) => { if (moved > 8) { e.preventDefault(); moved = 0; } });
+      box.appendChild(a); linkEls.set(it.id, a);
+    }
+    if (a.href !== it.url) a.href = it.url;
+    Object.assign(a.style, { left: it.x + 'px', top: (47 + it.y) + 'px', width: it.w + 'px', height: it.h + 'px' });
+  });
+  linkEls.forEach((a, id) => { if (!seen.has(id)) { a.remove(); linkEls.delete(id); } });
+}
 addEventListener('message', (e) => {
   if (e.source !== frame.contentWindow || !e.data || typeof e.data.dx !== 'string') return;
   const m = e.data;
@@ -92,6 +116,7 @@ addEventListener('message', (e) => {
     if (!m.rect || !bridge.d) { ov.style.display = 'none'; return; }
     Object.assign(ov.style, { display: 'block', left: m.rect.x + 'px', top: (47 + m.rect.y) + 'px', width: m.rect.w + 'px', height: m.rect.h + 'px' });
   }
+  else if (m.dx === 'links') drawLinks(m.items || []);
   else if (m.dx === 'speak' && bridge.t) bridge.t.speak(String(m.text).slice(0, 1900)).catch(() => {});
   else if (m.dx === 'tts-stop' && bridge.t) { try { bridge.t.stop(); } catch (x) {} }
 });
