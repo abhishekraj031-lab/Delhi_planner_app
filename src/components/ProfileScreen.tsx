@@ -5,7 +5,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '../theme';
 import { LocationState } from '../hooks/useLocation';
 import { MicState, micPermission, requestMic } from '../lib/speech';
-import { pickSquarePhoto } from '../lib/photo';
+import { pickRawPhoto, pickSquarePhoto } from '../lib/photo';
+import { CropSheet } from './CropSheet';
 import { useExtLink } from '../lib/links';
 import { FEEDBACK_URL } from '../config';
 import { Button, Txt } from './ui';
@@ -57,7 +58,13 @@ export function ProfileScreen(p: Props) {
   useEffect(() => { micPermission().then(setMic); }, []);
   const ini = initialOf(p.displayName, p.id);
   const [photoErr, setPhotoErr] = useState('');
-  const choosePhoto = async (camera: boolean) => { setPhotoErr(''); const r = await pickSquarePhoto(camera); if (r.error) setPhotoErr(r.error); else if (r.uri) p.onPhoto(r.uri); };
+  const [cropUri, setCropUri] = useState<string | null>(null);
+  // Phones show their own crop screen. On the web the app shows one so the person can move and zoom the photo.
+  const choosePhoto = async (camera: boolean) => {
+    setPhotoErr('');
+    if (Platform.OS === 'web') { const r = await pickRawPhoto(camera); if (r.error) setPhotoErr(r.error); else if (r.uri) setCropUri(r.uri); return; }
+    const r = await pickSquarePhoto(camera); if (r.error) setPhotoErr(r.error); else if (r.uri) p.onPhoto(r.uri);
+  };
 
   const locValue = p.gps ? 'On' : p.locState === 'denied' ? 'Off in your phone settings' : 'Off';
   const micValue = mic === 'granted' ? 'On' : mic === 'denied' ? 'Off in your phone settings' : mic === 'unavailable' ? 'Not available' : 'Off';
@@ -170,6 +177,7 @@ export function ProfileScreen(p: Props) {
           <Trash2 size={16} color="#b3261e" /><Txt w="semi" style={{ color: '#b3261e', fontSize: 14 }}>Delete account</Txt>
         </Pressable>
       )}
+      <CropSheet uri={cropUri} onCancel={() => setCropUri(null)} onDone={(u) => { setCropUri(null); p.onPhoto(u); }} />
     </ScrollView>
   );
 }

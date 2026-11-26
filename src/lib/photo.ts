@@ -15,3 +15,13 @@ export async function pickSquarePhoto(camera: boolean, max = 480): Promise<{ uri
     return { uri: Platform.OS === 'web' ? await shrinkWeb(uri, max, 0.8) : uri };
   } catch { return { error: 'Could not open your photos. Please try again.' }; }
 }
+
+/** Web only: picks a photo with no built-in crop, so the app can show its own crop screen. */
+export async function pickRawPhoto(camera: boolean): Promise<{ uri?: string; error?: string }> {
+  try {
+    const opts = { mediaTypes: ['images'] as ImagePicker.MediaType[], quality: 1, allowsEditing: false };
+    const r = camera ? await ImagePicker.launchCameraAsync(opts) : await ImagePicker.launchImageLibraryAsync(opts);
+    if (r.canceled || !r.assets?.[0]) return {};
+    return { uri: r.assets[0].uri };
+  } catch { return { error: 'Could not open your photos. Please try again.' }; }
+}
