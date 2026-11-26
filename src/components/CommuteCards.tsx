@@ -25,12 +25,14 @@ function AppRow({ app: a, place: p }: { app: CabApp; place: Place }) {
   return (
     <Pressable ref={ref} onPress={() => open(url)} accessibilityRole="link" accessibilityLabel={`Check price and book on ${a.name}`} accessibilityHint={a.note}
       style={({ pressed }) => [s.app, { opacity: pressed ? 0.7 : 1 }]}>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, gap: 2 }}>
         <Txt w="semi" style={{ fontSize: 16 }}>{a.name}</Txt>
         <Txt style={{ fontSize: 12, color: colors.sub }}>{a.note}</Txt>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>
+          <Txt w="bold" style={{ fontSize: 14, color: colors.primary }}>Check price</Txt>
+          <ChevronRight size={18} color={colors.primary} />
+        </View>
       </View>
-      <Txt w="bold" style={{ fontSize: 14, color: colors.primary }}>Check price</Txt>
-      <ChevronRight size={18} color={colors.primary} />
     </Pressable>
   );
 }
