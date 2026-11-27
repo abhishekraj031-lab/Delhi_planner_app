@@ -190,6 +190,19 @@ export function PlaceDetail({ place, km, loc, locState, onAllowLocation, day, to
                 </Pressable>
               </Card>
 
+              <Card title={tr('What’s allowed')}>
+                {p.rules.length ? p.rules.map((r) => <Row key={r.label} label={r.label} value={r.value} />) : <NotAvailable size={15} />}
+              </Card>
+
+              <Card>
+                <Txt style={{ fontSize: 12, lineHeight: 18, color: colors.sub }}>
+                  {tr('Source: {source}.', { source: p.source })} {p.verifiedNote}
+                  {p.photoCredit ? `\n${tr('Photo: {credit} (Wikimedia Commons)', { credit: p.photoCredit })}` : ''}
+                </Txt>
+                <Pressable accessibilityRole="link" hitSlop={{ top: 12, bottom: 12 }} onPress={() => Linking.openURL(`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(`Correction: ${p.name}`)}`)}>
+                  <Txt style={{ fontSize: 14, color: colors.primaryText, textDecorationLine: 'underline' }}>{tr('Report wrong information')}</Txt>
+                </Pressable>
+              </Card>
               {nearby.length ? (
                 <Card title={tr('Nearby places')}>
                   <Txt style={{ fontSize: 13, color: colors.sub }}>{tr('Close by, so you can visit more than one in a day.')}</Txt>
@@ -207,19 +220,6 @@ export function PlaceDetail({ place, km, loc, locState, onAllowLocation, day, to
                 </Card>
               ) : null}
 
-              <Card title={tr('What’s allowed')}>
-                {p.rules.length ? p.rules.map((r) => <Row key={r.label} label={r.label} value={r.value} />) : <NotAvailable size={15} />}
-              </Card>
-
-              <Card>
-                <Txt style={{ fontSize: 12, lineHeight: 18, color: colors.sub }}>
-                  {tr('Source: {source}.', { source: p.source })} {p.verifiedNote}
-                  {p.photoCredit ? `\n${tr('Photo: {credit} (Wikimedia Commons)', { credit: p.photoCredit })}` : ''}
-                </Txt>
-                <Pressable accessibilityRole="link" hitSlop={{ top: 12, bottom: 12 }} onPress={() => Linking.openURL(`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(`Correction: ${p.name}`)}`)}>
-                  <Txt style={{ fontSize: 14, color: colors.primaryText, textDecorationLine: 'underline' }}>{tr('Report wrong information')}</Txt>
-                </Pressable>
-              </Card>
             </View>
           </View>
         </ScrollView>
