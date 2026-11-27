@@ -16,7 +16,7 @@ type FilterProps = {
 };
 function Group({ title, note, children }: { title: string; note?: string; children: React.ReactNode }) {
   return (
-    <View style={{ gap: 12, padding: 16, borderRadius: 18, borderWidth: 1, borderColor: '#E4D8CA', backgroundColor: colors.white }}>
+    <View style={{ gap: 12, padding: 16, borderRadius: 18, borderWidth: 1, borderColor: '#E3E3E3', backgroundColor: colors.white }}>
       <View style={{ gap: 3 }}>
         <Txt w="bold" style={{ fontSize: 16 }}>{title}</Txt>
         {note ? <Txt style={{ color: colors.sub, fontSize: 12, lineHeight: 17 }}>{note}</Txt> : null}
@@ -25,7 +25,7 @@ function Group({ title, note, children }: { title: string; note?: string; childr
     </View>
   );
 }
-const Divider = () => <View style={{ height: 1, backgroundColor: colors.line }} />;
+const Divider = () => <View style={{ height: 1, backgroundColor: '#ECECEC' }} />;
 const Row = ({ children }: { children: React.ReactNode }) => <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap' }}>{children}</View>;
 
 /** One sheet, grouped by what the visitor is deciding. Choices apply straight away; tapping a chosen chip clears it. */
