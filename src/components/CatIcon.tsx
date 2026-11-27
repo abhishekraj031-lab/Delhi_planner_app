@@ -3,7 +3,17 @@ import Svg, { Circle, Defs, Ellipse, G, Line, LinearGradient, Path, Polygon, Rec
 import type { Category } from '../types';
 
 /** Original, hand-drawn 3D-style category icons: lit face, shaded side, soft ground shadow. Warm sandstone palette with one blue accent. */
-const C = { hi: '#FFC9A0', lit: '#FF9A55', mid: '#F2681C', shade: '#C4500F', deep: '#8F3A0A', cream: '#FFEBDA', blue: '#1D5FC4', blueHi: '#6FA2EE' };
+const BASE = { hi: '#FFC9A0', lit: '#FF9A55', mid: '#F2681C', shade: '#C4500F', deep: '#8F3A0A', cream: '#FFEBDA', blue: '#1D5FC4', blueHi: '#6FA2EE' };
+
+const PAL = {
+  Monuments: {},
+  Landmarks: { hi: '#FBE3B0', lit: '#EDBE6A', mid: '#D69A35', shade: '#A87020', deep: '#6B4510', cream: '#FFF4D9' },
+  Museums: { hi: '#CFE0FA', lit: '#8DB4EE', mid: '#4F86DB', shade: '#2F5FAE', deep: '#1B3B73', cream: '#F3F8FF' },
+  Religious: { hi: '#E3D6FF', lit: '#B697FA', mid: '#8A5CF0', shade: '#5F36C0', deep: '#3A1F82', cream: '#F6F1FF', blue: '#F2B01E', blueHi: '#FFD76A' },
+  Gardens: { hi: '#D3F5C6', lit: '#7FD36B', mid: '#3FAE4B', shade: '#2A8038', deep: '#1B5226', cream: '#F0FFE9' },
+  Markets: { hi: '#FFC2D6', lit: '#F77AA6', mid: '#E0457F', shade: '#B02A5E', deep: '#701638', cream: '#FFE6EF', blue: '#F5B01B', blueHi: '#FFD86B' },
+  Entertainment: { hi: '#BBD3FA', lit: '#6FA2EE', mid: '#2C7AEF', shade: '#1D5FC4', deep: '#123A7A', cream: '#FFF3C9', blue: '#F2681C', blueHi: '#FF9A55' },
+};
 
 function Grad({ id, a, b, vertical }: { id: string; a: string; b: string; vertical?: boolean }) {
   return (
@@ -25,12 +35,13 @@ function Tier({ yb, yt, hb, ht }: { yb: number; yt: number; hb: number; ht: numb
 }
 const Slab = ({ y, hw }: { y: number; hw: number }) => (
   <>
-    <Rect x={24 - hw} y={y} width={hw * 2} height={1.8} rx={0.9} fill={C.hi} />
-    <Rect x={24 - hw} y={y + 1.2} width={hw * 2} height={1} rx={0.5} fill={C.deep} opacity={0.55} />
+    <Rect x={24 - hw} y={y} width={hw * 2} height={1.8} rx={0.9} fill={BASE.hi} />
+    <Rect x={24 - hw} y={y + 1.2} width={hw * 2} height={1} rx={0.5} fill={BASE.deep} opacity={0.55} />
   </>
 );
 
 function Monuments() {
+  const C = { ...BASE, ...PAL.Monuments };
   return (
     <>
       <Defs><Grad id="qL" a={C.hi} b={C.lit} /><Grad id="qR" a={C.shade} b={C.deep} /><Grad id="qD" a={C.lit} b={C.shade} /></Defs>
@@ -46,6 +57,7 @@ function Monuments() {
 }
 
 function Landmarks() {
+  const C = { ...BASE, ...PAL.Landmarks };
   return (
     <>
       <Defs><Grad id="gF" a={C.hi} b={C.lit} vertical /><Grad id="gS" a={C.shade} b={C.deep} vertical /><Grad id="gT" a={C.cream} b={C.hi} /></Defs>
@@ -62,6 +74,7 @@ function Landmarks() {
 }
 
 function Museums() {
+  const C = { ...BASE, ...PAL.Museums };
   return (
     <>
       <Defs><Grad id="mC" a={C.cream} b={C.lit} /><Grad id="mL" a={C.hi} b={C.mid} /><Grad id="mR" a={C.shade} b={C.deep} /></Defs>
@@ -80,6 +93,7 @@ function Museums() {
 }
 
 function Religious() {
+  const C = { ...BASE, ...PAL.Religious };
   return (
     <>
       <Defs>
@@ -103,15 +117,16 @@ function Religious() {
 }
 
 function Gardens() {
+  const C = { ...BASE, ...PAL.Gardens };
   return (
     <>
       <Defs>
         <LinearGradient id="tC" x1="0.2" y1="0" x2="0.9" y2="1"><Stop offset="0" stopColor={C.cream} /><Stop offset="0.4" stopColor={C.lit} /><Stop offset="1" stopColor={C.shade} /></LinearGradient>
-        <Grad id="tT" a={C.shade} b={C.deep} />
+        <Grad id="tT" a="#B07A4A" b="#6B4426" />
       </Defs>
       <Shadow rx={16} />
       <Path d="M21.2 42 L22.2 27 H26 L27 42 Z" fill="url(#tT)" />
-      <Path d="M24 33 L18.5 27.5 M24 31 L29.5 26" stroke={C.deep} strokeWidth={1.6} strokeLinecap="round" />
+      <Path d="M24 33 L18.5 27.5 M24 31 L29.5 26" stroke="#6B4426" strokeWidth={1.6} strokeLinecap="round" />
       <Circle cx={15.5} cy={22.5} r={8} fill="url(#tC)" />
       <Circle cx={32.5} cy={22.5} r={8} fill="url(#tC)" />
       <Circle cx={24} cy={14.5} r={10} fill="url(#tC)" />
@@ -123,6 +138,7 @@ function Gardens() {
 }
 
 function Markets() {
+  const C = { ...BASE, ...PAL.Markets };
   return (
     <>
       <Defs><Grad id="bF" a={C.hi} b={C.mid} vertical /><Grad id="bS" a={C.shade} b={C.deep} vertical /><Grad id="bT" a={C.cream} b={C.hi} /><Grad id="bB" a={C.blueHi} b={C.blue} /></Defs>
@@ -140,6 +156,7 @@ function Markets() {
 }
 
 function Entertainment() {
+  const C = { ...BASE, ...PAL.Entertainment };
   const spokes = Array.from({ length: 8 }, (_, i) => (i * Math.PI) / 4);
   return (
     <>
@@ -166,7 +183,7 @@ const ART: Record<Category, React.ComponentType> = {
 export function CatIcon({ cat, size = 40, on }: { cat: Category; size?: number; on: boolean }) {
   const Art = ART[cat];
   return (
-    <Svg width={size} height={size} viewBox="0 0 48 48" opacity={on ? 1 : 0.5}>
+    <Svg width={size} height={size} viewBox="0 0 48 48" opacity={on ? 1 : 0.8}>
       <Art />
     </Svg>
   );
