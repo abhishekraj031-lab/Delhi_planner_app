@@ -352,9 +352,13 @@ export default function App() {
 function Root() {
   const { ready, chosen } = useLang();
   const [splash, setSplash] = useState(true);
-  if (splash) return <Splash onDone={() => setSplash(false)} />;
-  if (!ready) return null;
-  return chosen ? <Home /> : <LanguageGate />;
+  // The app loads underneath while the splash plays, then the splash slides off to the left.
+  return (
+    <View style={{ flex: 1, backgroundColor: '#fff' }}>
+      {ready ? (chosen ? <Home /> : <LanguageGate />) : null}
+      {splash ? <Splash onDone={() => setSplash(false)} /> : null}
+    </View>
+  );
 }
 
 const s = StyleSheet.create({

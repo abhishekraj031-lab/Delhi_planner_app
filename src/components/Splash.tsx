@@ -42,14 +42,14 @@ export function Splash({ onDone, ms = 4200 }: { onDone: () => void; ms?: number 
       Animated.stagger(Math.round(ms * 0.1), draw.map((v) => Animated.timing(v, { toValue: 1, duration: seg, easing: Easing.inOut(Easing.cubic), useNativeDriver: false }))),
       Animated.sequence([Animated.delay(Math.round(ms * 0.4)), Animated.spring(pin, { toValue: 1, friction: 5, tension: 90, useNativeDriver: true })]),
       Animated.sequence([Animated.delay(Math.round(ms * 0.55)), Animated.timing(title, { toValue: 1, duration: Math.round(ms * 0.2), useNativeDriver: true })]),
-      Animated.sequence([Animated.delay(ms - 280), Animated.timing(out, { toValue: 0, duration: 280, useNativeDriver: true })]),
+      Animated.sequence([Animated.delay(ms - 450), Animated.timing(out, { toValue: 0, duration: 450, easing: Easing.inOut(Easing.cubic), useNativeDriver: true })]),
     ]).start(() => onDone());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const w = Math.min(width - 32, 460);
   return (
-    <Animated.View accessibilityLabel="Delhi Explorer" style={{ flex: 1, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', opacity: out }}>
+    <Animated.View accessibilityLabel="Delhi Explorer" style={{ flex: 1, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 50, transform: [{ translateX: out.interpolate({ inputRange: [0, 1], outputRange: [-width, 0] }) }] }}>
       <Animated.View style={{ marginBottom: 12, opacity: pin.interpolate({ inputRange: [0, 0.3, 1], outputRange: [0, 1, 1] }), transform: [{ translateY: pin.interpolate({ inputRange: [0, 1], outputRange: [-60, 0] }) }, { scale: pin.interpolate({ inputRange: [0, 1], outputRange: [0.6, 1] }) }] }}>
         <Logo size={96} />
       </Animated.View>
