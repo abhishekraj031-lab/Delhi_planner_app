@@ -129,31 +129,6 @@ export function PlaceDetail({ place, km, loc, locState, onAllowLocation, day, to
                 </View>
               </Card>
 
-              <Card title={tr('Google rating')}>
-                {p.rating ? (
-                  <>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-                      <Txt w="bold" style={{ fontSize: 34, lineHeight: 40 }}>{p.rating.score.toFixed(1)}</Txt>
-                      <View style={{ gap: 2 }}>
-                        <View style={{ flexDirection: 'row', gap: 2 }}>
-                          {[1, 2, 3, 4, 5].map((i) => (
-                            <Star key={i} size={16} color={colors.ink} strokeWidth={2}
-                              fill={p.rating!.score >= i - 0.25 ? colors.ink : 'transparent'} />
-                          ))}
-                        </View>
-                        <Txt style={{ fontSize: 13, color: colors.sub }}>{tr('{count} Google reviews', { count: formatCount(p.rating.count) })}</Txt>
-                      </View>
-                    </View>
-                    <Txt style={{ fontSize: 12, lineHeight: 18, color: colors.sub }}>
-                      {tr('Source: {source}. Checked {date}. Ratings change over time.', { source: p.rating.source, date: formatChecked(p.rating.checked) })}
-                    </Txt>
-                  </>
-                ) : <NotAvailable size={15} />}
-                <Pressable accessibilityRole="link" hitSlop={{ top: 12, bottom: 12 }} onPress={() => Linking.openURL(googleReviewsUrl(p))}>
-                  <Txt w="semi" style={{ fontSize: 14, color: colors.secondary, textDecorationLine: 'underline' }}>{tr('See reviews on Google Maps')}</Txt>
-                </Pressable>
-              </Card>
-
               <Card title={tr('About')}>{p.description ? <Body>{p.description}</Body> : <NotAvailable size={15} />}</Card>
 
               {p.thingsToKnow?.length ? (
@@ -189,6 +164,31 @@ export function PlaceDetail({ place, km, loc, locState, onAllowLocation, day, to
 
 
               <CommuteCards place={p} km={km} from={loc} day={day} locState={locState} onAllowLocation={onAllowLocation} />
+
+              <Card title={tr('Google rating')}>
+                {p.rating ? (
+                  <>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                      <Txt w="bold" style={{ fontSize: 34, lineHeight: 40 }}>{p.rating.score.toFixed(1)}</Txt>
+                      <View style={{ gap: 2 }}>
+                        <View style={{ flexDirection: 'row', gap: 2 }}>
+                          {[1, 2, 3, 4, 5].map((i) => (
+                            <Star key={i} size={16} color={colors.ink} strokeWidth={2}
+                              fill={p.rating!.score >= i - 0.25 ? colors.ink : 'transparent'} />
+                          ))}
+                        </View>
+                        <Txt style={{ fontSize: 13, color: colors.sub }}>{tr('{count} Google reviews', { count: formatCount(p.rating.count) })}</Txt>
+                      </View>
+                    </View>
+                    <Txt style={{ fontSize: 12, lineHeight: 18, color: colors.sub }}>
+                      {tr('Source: {source}. Checked {date}. Ratings change over time.', { source: p.rating.source, date: formatChecked(p.rating.checked) })}
+                    </Txt>
+                  </>
+                ) : <NotAvailable size={15} />}
+                <Pressable accessibilityRole="link" hitSlop={{ top: 12, bottom: 12 }} onPress={() => Linking.openURL(googleReviewsUrl(p))}>
+                  <Txt w="semi" style={{ fontSize: 14, color: colors.secondary, textDecorationLine: 'underline' }}>{tr('See reviews on Google Maps')}</Txt>
+                </Pressable>
+              </Card>
 
               {nearby.length ? (
                 <Card title={tr('Nearby places')}>
