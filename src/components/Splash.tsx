@@ -65,6 +65,11 @@ export function Splash({ onDone, ms = 5600 }: { onDone: () => void; ms?: number 
   return (
     <Animated.View accessibilityLabel="Ghummakad" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 50, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', transform: [{ translateX: out.interpolate({ inputRange: [0, 1], outputRange: [-width, 0] }) }] }}>
       <StatusBar style="light" />
+      {BIRDS.map((b, i) => (
+        <Animated.View key={`b${i}`} pointerEvents="none" style={{ position: 'absolute', left: (b.x / SKY_W) * width, top: 72 + b.y * 2.4, opacity: Animated.multiply(birdIn[i], merge.interpolate({ inputRange: [0, 0.6], outputRange: [0.85, 0], extrapolate: 'clamp' })), transform: [{ translateX: fly.interpolate({ inputRange: [0, 1], outputRange: [0, (b.x > 300 ? -1 : 1) * 110 * sc * b.k] }) }, { translateY: flap.interpolate({ inputRange: [0, 1], outputRange: [0, -4 * sc * b.k] }) }, { scaleY: flap.interpolate({ inputRange: [0, 1], outputRange: [1, 0.35] }) }] }}>
+          <Svg width={44 * sc * b.k} height={18 * sc * b.k} viewBox="-1 -2 22 11"><Path d={BIRD} stroke="#fff" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" fill="none" /></Svg>
+        </Animated.View>
+      ))}
       <View style={{ width: BW, height: BH }}>
         <Animated.View style={{ position: 'absolute', width: BW, height: BH, opacity: merge.interpolate({ inputRange: [0, 0.75, 1], outputRange: [0.7, 0.7, 0] }), transform: [{ scale: merge.interpolate({ inputRange: [0, 1], outputRange: [1, 0.25] }) }] }}>
           <Svg width={BW} height={BH} viewBox={`0 ${TOP} ${SKY_W} ${SKY_H - TOP}`}>
@@ -74,11 +79,6 @@ export function Splash({ onDone, ms = 5600 }: { onDone: () => void; ms?: number 
               <G key={i} transform={`translate(${c.x} ${c.y})`}>{line(c.d, c.len, cloud[i], `c${i}`, 1.2)}</G>
             ))}
           </Svg>
-          {BIRDS.map((b, i) => (
-            <Animated.View key={`b${i}`} style={{ position: 'absolute', left: b.x * sc, top: (b.y - TOP) * sc, opacity: birdIn[i], transform: [{ translateX: fly.interpolate({ inputRange: [0, 1], outputRange: [0, (b.x > 300 ? -1 : 1) * 90 * sc * b.k] }) }, { translateY: flap.interpolate({ inputRange: [0, 1], outputRange: [0, -4 * sc * b.k] }) }, { scaleY: flap.interpolate({ inputRange: [0, 1], outputRange: [1, 0.35] }) }] }}>
-              <Svg width={40 * sc * b.k} height={16 * sc * b.k} viewBox="-1 -2 22 11"><Path d={BIRD} stroke="#fff" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" fill="none" /></Svg>
-            </Animated.View>
-          ))}
           {SPARKS.map((sp, i) => (
             <Animated.View key={i} style={{ position: 'absolute', left: sp.x * sc - 12 * sc, top: (sp.y - TOP) * sc - 12 * sc, opacity: spark[i], transform: [{ scale: spark[i] }, { rotate: spark[i].interpolate({ inputRange: [0, 1], outputRange: ['-45deg', '0deg'] }) }] }}>
               <Svg width={24 * sc} height={24 * sc} viewBox="-12 -12 24 24"><Path d={SPARK} stroke="#fff" strokeWidth={1.2} strokeLinecap="round" fill="none" /></Svg>
