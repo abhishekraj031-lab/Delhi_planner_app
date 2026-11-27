@@ -32,6 +32,8 @@ export const photos: Record<string, PhotoEntry> = {
   'majnu-ka-tila': { src: require('../../assets/photos/majnu-ka-tila.jpg'), w: 720, h: 540 },
   'mehrauli-archaeological-park': { src: require('../../assets/photos/mehrauli-archaeological-park.jpg'), w: 720, h: 540 },
   'national-museum': { src: require('../../assets/photos/national-museum.jpg'), w: 720, h: 453 },
+  'national-war-memorial': { src: require('../../assets/photos/national-war-memorial.jpg'), w: 1100, h: 619 },
+  'national-zoological-park': { src: require('../../assets/photos/national-zoological-park.jpg'), w: 1100, h: 825 },
   'okhla-bird-sanctuary': { src: require('../../assets/photos/okhla-bird-sanctuary.jpg'), w: 720, h: 479 },
   'paranthe-wali-gali': { src: require('../../assets/photos/paranthe-wali-gali.jpg'), w: 720, h: 540 },
   'pq': { src: require('../../assets/photos/pq.jpg'), w: 1100, h: 730 },

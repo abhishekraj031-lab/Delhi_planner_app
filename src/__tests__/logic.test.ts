@@ -13,9 +13,9 @@ const none = new Set<string>();
 const base = { category: 'All' as const, query: '', freeOnly: false, savedOnly: false, day: 3 };
 
 describe('data integrity', () => {
-  it('has 65 unique places', () => {
-    expect(all).toHaveLength(65);
-    expect(new Set(all.map((p) => p.id)).size).toBe(65);
+  it('has 67 unique places', () => {
+    expect(all).toHaveLength(67);
+    expect(new Set(all.map((p) => p.id)).size).toBe(67);
   });
   it('every place has valid coordinates inside Delhi-NCR', () => {
     for (const p of all) {
@@ -101,7 +101,7 @@ describe('distance and ordering', () => {
   it('keeps default order and no distances without a location', () => {
     const rows = visiblePlaces(all, base, none, null);
     expect(rows[0].km).toBeNull();
-    expect(rows).toHaveLength(65);
+    expect(rows).toHaveLength(67);
   });
 });
 
@@ -125,9 +125,9 @@ describe('filters and search', () => {
 
 test('places without collected data are hidden, tabs follow the rest', () => {
   const shown = (places as unknown as Place[]).filter(hasCollectedData);
-  expect(shown.length).toBe(28);
+  expect(shown.length).toBe(30);
   expect(shown.every((p) => p.source !== 'Not collected yet')).toBe(true);
-  expect(categoriesWithPlaces(shown).length).toBe(5);
+  expect(categoriesWithPlaces(shown).length).toBe(6);
 });
 
 test('plan my day chains nearby places that are open that day', () => {

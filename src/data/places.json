@@ -973,7 +973,7 @@
     "bookable": false,
     "source": "Travel guides",
     "verifiedNote": "Opening hours not collected yet.",
-    "photoCredit": null,
+    "photoCredit": "Pinakpani · CC BY-SA 4.0",
     "lat": 28.6118,
     "lng": 77.2336,
     "metroUnverified": false,
@@ -2659,7 +2659,7 @@
     "bookable": true,
     "source": "A travel site (official page not reached)",
     "verifiedNote": "Prices differ across sources. Booking link: National Zoological Park official site.",
-    "photoCredit": null,
+    "photoCredit": "Cutest Penguin · CC BY-SA 3.0",
     "lat": 28.6083,
     "lng": 77.2475,
     "metroUnverified": false,
@@ -3880,5 +3880,175 @@
       "source": "Google (via Wanderlog)",
       "checked": "2026-11-27"
     }
+  },
+  {
+    "closedDays": [],
+    "hoursUnverified": true,
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "duration": null,
+    "bookUrl": null,
+    "bookable": false,
+    "photoCredit": null,
+    "metroUnverified": false,
+    "category": "Entertainment",
+    "color": "#ffd1e8",
+    "id": "adventure-island-rohini",
+    "name": "Adventure Island",
+    "area": "Rohini",
+    "emoji": "🎢",
+    "hours": [
+      660,
+      1140
+    ],
+    "hoursText": "11:00 AM – 7:00 PM",
+    "price": {
+      "weekday": {
+        "i": 500,
+        "f": null
+      },
+      "weekend": {
+        "i": 600,
+        "f": null
+      },
+      "unverified": true
+    },
+    "tickets": [
+      {
+        "label": "Standard, weekdays",
+        "value": "₹500",
+        "unverified": true
+      },
+      {
+        "label": "Standard, weekends and holidays",
+        "value": "₹600",
+        "unverified": true
+      },
+      {
+        "label": "Happy Tuesday",
+        "value": "₹399",
+        "unverified": true
+      },
+      {
+        "label": "Entry only (rides paid inside)",
+        "value": "₹300 + ₹100 per ride",
+        "unverified": true
+      },
+      {
+        "label": "Children under 90 cm",
+        "value": "Free",
+        "unverified": true
+      },
+      {
+        "label": "Price on District ticket page",
+        "value": "From ₹699",
+        "unverified": true
+      }
+    ],
+    "rules": [
+      {
+        "label": "Entry",
+        "value": "Age 2+ and height 80 cm+"
+      },
+      {
+        "label": "Ticket needed",
+        "value": "Age 3+ and height 90 cm+"
+      },
+      {
+        "label": "Outside food and drinks",
+        "value": "Not allowed"
+      }
+    ],
+    "metro": "Rithala (Red Line)",
+    "description": "Amusement and water park beside Metro Walk mall in Rohini, with thrill rides, family rides, water rides and games, so you can spend the whole day.",
+    "thingsToKnow": [
+      "Thrill rides include Z-Force, Side Winder and Sky Riders; water rides include Aqua Bump and Splash Pool.",
+      "SkyJumper trampoline park is a separate paid attraction inside the park, according to reviewers.",
+      "Swimwear is on sale for water rides, and changing rooms have showers.",
+      "Some rides may be closed on the day, so check before you go.",
+      "Opening hours can change with the weather."
+    ],
+    "source": "Delhi Tourism listing (delhitourism.travel, updated 17 Oct 2025) and District ticket page",
+    "verifiedNote": "Prices differ between sources (₹500–₹600 against \"from ₹699\"). No official booking link found. Check before you go.",
+    "rating": {
+      "score": 4.0,
+      "count": 28668,
+      "source": "Google (via District)",
+      "checked": "2026-11-27"
+    },
+    "lat": 28.7207,
+    "lng": 77.1073
+  },
+  {
+    "closedDays": [],
+    "hoursUnverified": true,
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "duration": null,
+    "bookUrl": null,
+    "bookable": false,
+    "photoCredit": null,
+    "metroUnverified": true,
+    "category": "Entertainment",
+    "color": "#ffd1e8",
+    "id": "fun-n-food-village",
+    "name": "Fun N Food Village",
+    "area": "Kapashera",
+    "emoji": "🎡",
+    "hours": [
+      600,
+      1140
+    ],
+    "hoursText": "10:00 AM – 7:00 PM",
+    "price": {
+      "weekday": {
+        "i": 1200,
+        "f": null
+      },
+      "weekend": {
+        "i": 1400,
+        "f": null
+      },
+      "unverified": true
+    },
+    "tickets": [
+      {
+        "label": "Adult (above 4.5 ft), weekday",
+        "value": "₹1,200",
+        "unverified": true
+      },
+      {
+        "label": "Adult (above 4.5 ft), weekend",
+        "value": "₹1,400",
+        "unverified": true
+      },
+      {
+        "label": "Child (below 4.5 ft), weekday",
+        "value": "₹800",
+        "unverified": true
+      },
+      {
+        "label": "Child (below 4.5 ft), weekend",
+        "value": "₹1,000",
+        "unverified": true
+      }
+    ],
+    "rules": [
+      {
+        "label": "Child ticket",
+        "value": "Below 4.5 ft"
+      }
+    ],
+    "metro": "Guru Dronacharya (Yellow Line)",
+    "description": "Water and amusement park with more than 20 rides, water slides, a snow park, an 800 ft lazy river, a rain dance area and a kids' zone, with food courts inside.",
+    "thingsToKnow": [
+      "Delhi Tourism lists rides such as Magic Carpet and Rock n Roll, plus a kids' pool and play zone.",
+      "Another site says ticket counters close at 4:00 PM and the park shuts at 6:00 PM.",
+      "Swimwear is needed for the water slides."
+    ],
+    "source": "Delhi Tourism (delhitourism.gov.in) for hours and rides; ticket prices from Plumint (2025)",
+    "verifiedNote": "Delhi Tourism gives no ticket prices. Another site lists ₹500 onwards and closing at 6 PM, so prices and hours are unverified. The Delhi Tourism page also gives a Defence Colony address that does not match Kapashera.",
+    "lat": 28.527,
+    "lng": 77.045
   }
 ]
