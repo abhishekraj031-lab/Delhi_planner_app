@@ -3,6 +3,7 @@ import { Animated, Easing, FlatList, Image, Pressable, StyleSheet, TextInput, Vi
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
 import { Outfit_800ExtraBold } from '@expo-google-fonts/outfit/800ExtraBold';
 import { Figtree_400Regular } from '@expo-google-fonts/figtree/400Regular';
 import { Figtree_500Medium } from '@expo-google-fonts/figtree/500Medium';
@@ -401,9 +402,13 @@ function RotatingHint({ items }: { items: string[] }) {
   );
 }
 
+SplashScreen.preventAutoHideAsync().catch(() => {});
+
 export default function App() {
   const [loaded] = useFonts({ Outfit_800ExtraBold, Figtree_400Regular, Figtree_500Medium, Figtree_600SemiBold, Figtree_700Bold, NotoSansDevanagari_400Regular, NotoSansDevanagari_500Medium, NotoSansDevanagari_600SemiBold, NotoSansDevanagari_700Bold });
-  if (!loaded) return null;
+  // Keep the orange launch colour on screen while fonts load, so the app never flashes white before the splash plays.
+  useEffect(() => { if (loaded) requestAnimationFrame(() => { SplashScreen.hideAsync().catch(() => {}); }); }, [loaded]);
+  if (!loaded) return <View style={{ flex: 1, backgroundColor: colors.primary }} />;
   return <SafeAreaProvider><LangProvider><Root /></LangProvider></SafeAreaProvider>;
 }
 
