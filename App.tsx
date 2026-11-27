@@ -381,6 +381,6 @@ const s = StyleSheet.create({
   chips: { paddingHorizontal: 4, paddingTop: 8, borderBottomWidth: 0 },
   hint: { color: colors.sub, fontSize: 12, marginHorizontal: 16, marginTop: 8 },
   tagRow: { flexDirection: 'row', alignItems: 'center', marginTop: 8, flexGrow: 0 },
-  tag: { flexDirection: 'row', alignItems: 'center', gap: 4, height: 28, paddingHorizontal: 10, borderRadius: 14, backgroundColor: colors.secondaryTint },
+  tag: { flexDirection: 'row', alignItems: 'center', gap: 4, height: 28, paddingHorizontal: 10, borderRadius: 14, backgroundColor: colors.primaryTint },
   empty: { color: colors.sub, textAlign: 'center', padding: 48 },
 });

@@ -68,7 +68,7 @@ const st = StyleSheet.create({
   badge: { position: 'absolute', top: 12, left: 12, flexDirection: 'row', alignItems: 'center', maxWidth: '75%', minHeight: 28, paddingHorizontal: 12, paddingVertical: 4, borderRadius: 14, backgroundColor: colors.white, shadowColor: '#000', shadowOpacity: 0.12, shadowRadius: 4, shadowOffset: { width: 0, height: 1 }, elevation: 2 },
   text: { marginTop: 6, gap: 0 },
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  fee: { flexDirection: 'row', minHeight: 28, paddingHorizontal: 10, borderRadius: 14, backgroundColor: colors.secondaryTint, alignItems: 'center' },
+  fee: { flexDirection: 'row', minHeight: 28, paddingHorizontal: 10, borderRadius: 14, backgroundColor: colors.primaryTint, alignItems: 'center' },
   feeFree: { backgroundColor: colors.fill },
   feeNone: { minHeight: 28, paddingHorizontal: 10, borderRadius: 14, backgroundColor: colors.fill, justifyContent: 'center' },
   grey: { color: colors.sub, fontSize: 14, lineHeight: 18, marginTop: -2 },
