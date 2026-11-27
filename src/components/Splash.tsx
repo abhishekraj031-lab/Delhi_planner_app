@@ -85,7 +85,7 @@ export function Splash({ onDone, ms = 5600 }: { onDone: () => void; ms?: number 
         <View style={{ position: 'absolute', left: 0, right: 0, top: 466 * k, flexDirection: 'row', justifyContent: 'center' }}>
           {WORD.map((c, i) => (
             <Animated.View key={i} style={{ opacity: a.letters[i].op, transform: [{ translateY: a.letters[i].y }, { scale: a.letters[i].sc }] }}>
-              <Txt style={{ fontSize: 92 * k, color: colors.white, fontFamily: 'Outfit_800ExtraBold', letterSpacing: -2 * k, lineHeight: 100 * k }}>{c}</Txt>
+              <Txt style={{ fontSize: 92 * k, color: colors.white, fontFamily: 'Outfit_900Black', letterSpacing: -2 * k, lineHeight: 100 * k }}>{c}</Txt>
             </Animated.View>
           ))}
         </View>
