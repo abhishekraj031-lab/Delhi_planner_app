@@ -7,7 +7,7 @@ import { Txt } from './ui';
 /** Share of the cropped-away height removed from the top (0 = keep the very top, 1 = keep the very bottom). */
 const FOCUS_FROM_TOP = 0.15;
 /** Photos whose subject sits low in the picture (a dome seen against open sky): keep their lower part in view instead. */
-const FOCUS_BY_PLACE: Record<string, number> = { 'gurudwara-bangla-sahib': 1, 'national-zoological-park': 0.33 };
+const FOCUS_BY_PLACE: Record<string, number> = { 'gurudwara-bangla-sahib': 1, 'national-zoological-park': 0.33, 'raj-ghat': 0 };
 
 /**
  * Photo if we have one, otherwise a coloured placeholder with the place's emoji.
