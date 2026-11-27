@@ -20,14 +20,13 @@ import { AuthPrompt } from './src/components/AuthPrompt';
 import { VoiceSheet } from './src/components/VoiceSheet';
 import { BookingsPage } from './src/components/BookingsPage';
 import { SavedPlacesPage } from './src/components/SavedPlacesPage';
-import { Orb } from './src/components/AssistantOrb';
 import { ShareSheet } from './src/components/ShareSheet';
 import { WallScreen } from './src/components/WallScreen';
 import { NewPostSheet } from './src/components/NewPostSheet';
 import { useWall } from './src/hooks/useWall';
 import { shareText } from './src/lib/wall';
 import { distanceKm } from './src/lib/distance';
-import { Bell, ChevronDown, Church, CircleUser, Dome, FerrisWheel, Landmark, Lighthouse, Heart, MapPin, Mic, Search, ShoppingBag, SlidersHorizontal, Ticket, Trees, X } from 'lucide-react-native';
+import { Bell, ChevronDown, Church, CircleUser, Dome, FerrisWheel, Landmark, Lighthouse, Heart, MapPin, Search, Sparkles, ShoppingBag, SlidersHorizontal, Ticket, Trees, X } from 'lucide-react-native';
 import type { Category, Place } from './src/types';
 import { colors, font, fontFor } from './src/theme';
 import { loadPlaces } from './src/data/repository';
@@ -289,8 +288,8 @@ function Home() {
           <Search size={20} color={colors.text} />
           <TextInput value={query} onChangeText={setQuery} placeholder={tt('Search place, attractions...')} placeholderTextColor="#333232"
             accessibilityLabel={tt('Search places')} returnKeyType="search" style={[s.input, { fontFamily: fontFor('regular') }]} />
-          <Pressable onPress={() => setShowVoice(true)} hitSlop={{ top: 6, bottom: 6, left: 6, right: 12 }} accessibilityRole="button" accessibilityLabel={tt('Voice search')} style={s.mic}>
-            <Mic size={22} color={colors.ink} />
+          <Pressable onPress={() => setShowVoice(true)} hitSlop={{ top: 6, bottom: 6, left: 6, right: 8 }} accessibilityRole="button" accessibilityLabel={tt('Ask the Delhi assistant')} style={({ pressed }) => [s.mic, { opacity: pressed ? 0.8 : 1 }]}>
+            <View style={s.ai}><Sparkles size={18} color={colors.white} /></View>
           </Pressable>
         </View>
         <Pressable onPress={() => setShowFilters(true)} accessibilityRole="button" accessibilityLabel={tt('Filters')} style={s.filter}>
@@ -320,7 +319,7 @@ function Home() {
       {info.hint ? <Txt style={s.hint}>{info.hint}</Txt> : null}
       {rows.length === 0 && tags.length ? <Txt style={s.hint}>{tt('{n} places match. Places with unknown opening days, prices or hours are left out of those filters.', { n: rows.length })}</Txt> : null}
       <FadeSlide k={query ? 'search' : String(category)} style={{ flex: 1 }}>
-      <FlatList data={rows} extraData={lang} keyExtractor={(r) => r.place.id} style={{ backgroundColor: colors.white }} contentContainerStyle={{ paddingBottom: 100 }}
+      <FlatList data={rows} extraData={lang} keyExtractor={(r) => r.place.id} style={{ backgroundColor: colors.white }} contentContainerStyle={{ paddingBottom: 24 }}
         initialNumToRender={6} windowSize={7} keyboardShouldPersistTaps="handled"
         ListEmptyComponent={<Txt style={s.empty}>{tt('Nothing here yet. More places are coming soon — try another category or clear the filters.')}</Txt>}
         renderItem={({ item }) => (
@@ -328,11 +327,6 @@ function Home() {
             onOpen={() => setOpenId(item.place.id)} onToggleSave={() => requestToggle(item.place.id)} />
         )} />
       </FadeSlide>
-      <Pressable onPress={() => setShowVoice(true)} accessibilityRole="button" accessibilityLabel={tt('Ask the Delhi assistant')}
-        style={({ pressed }) => ({ position: 'absolute', right: 20, bottom: 16, width: 68, height: 68, borderRadius: 34, alignItems: 'center', justifyContent: 'center', opacity: pressed ? 0.85 : 1,
-          shadowColor: colors.primary, shadowOpacity: 0.45, shadowRadius: 14, shadowOffset: { width: 0, height: 6 }, elevation: 8 })}>
-        <Orb mode="speaking" size={68} />
-      </Pressable>
       </FadeSlide>
       <TabBar key="tabbar" tab={tab} onChange={setTab} />
       <PlaceDetail place={openPlace} km={openKm} loc={loc?.kind === 'gps' ? loc : null} locState={state} onAllowLocation={requestCurrent} day={day} today={today} saved={openId ? saved.has(openId) : false} nearby={nearby} onOpenPlace={setOpenId}
@@ -377,7 +371,8 @@ const s = StyleSheet.create({
   search: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8, minHeight: 52, paddingHorizontal: 16, borderRadius: 26, backgroundColor: colors.white, borderWidth: 1, borderColor: colors.line, shadowColor: '#000', shadowOpacity: 0.1, shadowRadius: 8, shadowOffset: { width: 0, height: 2 }, elevation: 3 },
   input: { flex: 1, fontFamily: font.regular, fontSize: 16, color: '#333232', paddingVertical: 8 },
   avatar: { width: 44, height: 44, borderRadius: 22, backgroundColor: colors.fill, alignItems: 'center', justifyContent: 'center' },
-  mic: { width: 36, height: 36, alignItems: 'center', justifyContent: 'center' },
+  ai: { width: 34, height: 34, borderRadius: 17, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center' },
+  mic: { width: 38, height: 38, alignItems: 'center', justifyContent: 'center' },
   filter: { width: 48, height: 48, borderRadius: 24, backgroundColor: colors.white, borderWidth: 1, borderColor: colors.line, alignItems: 'center', justifyContent: 'center' },
   chips: { paddingHorizontal: 4, paddingTop: 8, borderBottomWidth: 0 },
   hint: { color: colors.sub, fontSize: 12, marginHorizontal: 16, marginTop: 8 },
