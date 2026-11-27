@@ -182,7 +182,7 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
             {hero ? (
               <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
                 {SUGGESTIONS.map((q) => (
-                  <Pressable key={q} onPress={() => ask(q, false)} accessibilityRole="button" style={s.chip}><Txt style={{ fontSize: 14, color: colors.secondary }}>{tr(q)}</Txt></Pressable>
+                  <Pressable key={q} onPress={() => ask(q, false)} accessibilityRole="button" style={s.chip}><Txt style={{ fontSize: 14, color: colors.primaryText }}>{tr(q)}</Txt></Pressable>
                 ))}
               </View>
             ) : null}
@@ -217,7 +217,7 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
               </View>
               {perm === 'denied' && Platform.OS !== 'web' ? (
                 <Pressable onPress={() => { Linking.openSettings().catch(() => {}); }} accessibilityRole="button" style={{ minHeight: 44, justifyContent: 'center' }}>
-                  <Txt w="semi" style={{ fontSize: 15, color: colors.secondary }}>{tr('Open phone settings')}</Txt>
+                  <Txt w="semi" style={{ fontSize: 15, color: colors.primaryText }}>{tr('Open phone settings')}</Txt>
                 </Pressable>
               ) : null}
             </View>

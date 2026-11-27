@@ -1,6 +1,6 @@
 import { getLang } from './i18n';
 export const colors = {
-  ink: '#000000', sub: '#6b6464', text: '#3a3535', fill: '#f6f2ec', primary: '#E8590C', primaryText: '#C2410C', primaryTint: '#FFEFE5', secondary: '#0F766E', secondaryTint: '#E1F3F0', secondarySoft: '#F0FAF8', primarySoft: '#FFF6F0', primaryLine: '#FFD9C2',
+  ink: '#000000', sub: '#6b6464', text: '#3a3535', fill: '#f6f2ec', primary: '#E8590C', primaryText: '#C2410C', primaryTint: '#FFEFE5', secondary: '#1D5FC4', secondaryTint: '#E6EEFB', secondarySoft: '#F2F7FF', primarySoft: '#FFF6F0', primaryLine: '#FFD9C2',
   dark: '#1e1b1b', heading: '#334155', line: '#e9e3da', white: '#ffffff',
   warn: '#9a5b00', unvBg: '#ece4fb', unv: '#6a3fb5', overlay: 'rgba(0,0,0,0.5)',
 };

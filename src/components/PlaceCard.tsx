@@ -47,7 +47,7 @@ function PlaceCardBase({ place, km, day, today, saved, onOpen, onToggleSave }: P
           {fee ? (
             <View style={[st.fee, fee === tr('Free') && st.feeFree]}>
               {fee === tr('Free')
-                ? <Txt w="bold" style={{ fontSize: 15, color: '#166534' }}>{tr('Free entry')}</Txt>
+                ? <Txt w="bold" style={{ fontSize: 15, color: colors.ink }}>{tr('Free entry')}</Txt>
                 : <><Txt w="bold" style={{ fontSize: 17, color: colors.ink }}>{fee}</Txt><Txt style={{ fontSize: 12, color: colors.secondary }}> {tr('entry fee')}</Txt></>}
               {place.price.unverified ? <Unverified /> : null}
             </View>
@@ -69,7 +69,7 @@ const st = StyleSheet.create({
   text: { marginTop: 6, gap: 0 },
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   fee: { flexDirection: 'row', minHeight: 28, paddingHorizontal: 10, borderRadius: 14, backgroundColor: colors.secondaryTint, alignItems: 'center' },
-  feeFree: { backgroundColor: '#dcfce7' },
+  feeFree: { backgroundColor: colors.fill },
   feeNone: { minHeight: 28, paddingHorizontal: 10, borderRadius: 14, backgroundColor: colors.fill, justifyContent: 'center' },
   grey: { color: colors.sub, fontSize: 14, lineHeight: 18, marginTop: -2 },
 });

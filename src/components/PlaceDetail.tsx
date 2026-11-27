@@ -21,7 +21,7 @@ type Props = { place: Place | null; km: number | null; loc: Coords | null; locSt
 const PAGE_BG = '#f4f5fa';
 const HERO_H = 280;
 const STATUS_TONE = {
-  open: { bg: '#dcfce7', fg: '#166534' },
+  open: { bg: colors.fill, fg: colors.ink },
   closed: { bg: '#fee2e2', fg: '#991b1b' },
   partial: { bg: '#fef3c7', fg: '#92400e' },
   unknown: { bg: colors.fill, fg: colors.sub },
@@ -191,7 +191,7 @@ export function PlaceDetail({ place, km, loc, locState, onAllowLocation, day, to
                   {p.photoCredit ? `\n${tr('Photo: {credit} (Wikimedia Commons)', { credit: p.photoCredit })}` : ''}
                 </Txt>
                 <Pressable accessibilityRole="link" hitSlop={{ top: 12, bottom: 12 }} onPress={() => Linking.openURL(`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(`Correction: ${p.name}`)}`)}>
-                  <Txt style={{ fontSize: 14, color: colors.secondary, textDecorationLine: 'underline' }}>{tr('Report wrong information')}</Txt>
+                  <Txt style={{ fontSize: 14, color: colors.primaryText, textDecorationLine: 'underline' }}>{tr('Report wrong information')}</Txt>
                 </Pressable>
               </Card>
             </View>

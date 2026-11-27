@@ -30,7 +30,7 @@ function AppRow({ app: a, place: p, from }: { app: CabApp; place: Place; from: C
         <Txt w="semi" style={{ fontSize: 16 }}>{a.name}</Txt>
         <Txt style={{ fontSize: 12, color: colors.sub }}>{tr(a.note)}</Txt>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>
-          <Txt w="bold" style={{ fontSize: 14, color: colors.secondary }}>{tr('Check price')}</Txt>
+          <Txt w="bold" style={{ fontSize: 14, color: colors.primaryText }}>{tr('Check price')}</Txt>
           <ChevronRight size={18} color={colors.primary} />
         </View>
       </View>
