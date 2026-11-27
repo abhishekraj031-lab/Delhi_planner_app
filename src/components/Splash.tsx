@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Animated, Easing, View, useWindowDimensions } from 'react-native';
-import Svg, { Circle, Path } from 'react-native-svg';
+import Svg, { Path } from 'react-native-svg';
 import { colors } from '../theme';
 import { Txt } from './ui';
 import { post } from '../lib/bridge';
@@ -31,10 +31,7 @@ export function Splash({ onDone, ms = 6200 }: { onDone: () => void; ms?: number 
   const ICON = 64;
   const pop = useRef(ICONS.map(() => new Animated.Value(0))).current;
   const merge = useRef(new Animated.Value(0)).current;
-  /** The first "a" of the name is drawn as a map pin. */
-const PIN_AT = 5;
-const PIN = 'M0 -13 C7.5 -13 12 -7.5 12 -2.5 C12 6 0 15 0 15 C0 15 -12 6 -12 -2.5 C-12 -7.5 -7.5 -13 0 -13 Z';
-const WORD = 'Ghummakad'.split('');
+  const WORD = 'Ghummakad'.split('');
   const TY = 0; // wordmark sits at the exact centre; icons fly into it
   const letters = useRef(WORD.map(() => new Animated.Value(0))).current;
   const land = useRef(new Animated.Value(0)).current;
@@ -94,14 +91,8 @@ const WORD = 'Ghummakad'.split('');
         <Animated.View style={{ position: 'absolute', alignItems: 'center', transform: [{ translateY: TY }, { scale: land.interpolate({ inputRange: [0, 1], outputRange: [1, 1.08] }) }] }}>
           <View style={{ flexDirection: 'row' }}>
             {WORD.map((c, i) => (
-              <Animated.View key={i} style={{ opacity: letters[i], transform: [{ translateY: letters[i].interpolate({ inputRange: [0, 1], outputRange: [i === PIN_AT ? -34 : 14, 0] }) }, { scale: letters[i].interpolate({ inputRange: [0, 1], outputRange: [0.4, 1] }) }] }}>
-                {i === PIN_AT ? (
-                  <View style={{ height: 54, justifyContent: 'flex-end', paddingBottom: 12, paddingHorizontal: 1 }}>
-                    <Svg width={25} height={31} viewBox="-13 -15 26 32"><Path d={PIN} fill={colors.white} /><Circle r={4.6} cy={-3} fill={colors.primary} /></Svg>
-                  </View>
-                ) : (
-                  <Txt style={{ fontSize: 46, color: colors.white, fontFamily: 'Outfit_800ExtraBold', letterSpacing: -0.5, lineHeight: 54 }}>{c}</Txt>
-                )}
+              <Animated.View key={i} style={{ opacity: letters[i], transform: [{ translateY: letters[i].interpolate({ inputRange: [0, 1], outputRange: [14, 0] }) }, { scale: letters[i].interpolate({ inputRange: [0, 1], outputRange: [0.4, 1] }) }] }}>
+                <Txt style={{ fontSize: 46, color: colors.white, fontFamily: 'Outfit_800ExtraBold', letterSpacing: -0.5, lineHeight: 54 }}>{c}</Txt>
               </Animated.View>
             ))}
           </View>
