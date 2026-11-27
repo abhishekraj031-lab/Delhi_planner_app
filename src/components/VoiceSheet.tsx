@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Linking, Modal, Platform, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
 import { ArrowUp, Mic, Square, Volume2, VolumeX, X } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -14,7 +14,7 @@ import { onBridge, post, useBridgeCaps } from '../lib/bridge';
 import { statusText } from './PlaceCard';
 import { Button, Txt } from './ui';
 import { FadeSlide } from './motion';
-import { OrbMode, Rings, SpeakingBars, StreamText, TypingDots } from './AssistantOrb';
+import { Orb, OrbMode, Rings, StreamText, TypingDots } from './AssistantOrb';
 
 type Msg = { id: number; from: 'me' | 'bot'; text: string; places?: Place[]; stream?: boolean };
 const STATUS: Record<OrbMode, string> = { idle: 'Ready to help', listening: 'Listening…', thinking: 'Thinking…', speaking: 'Answering…' }; // shown through tr()
@@ -23,7 +23,8 @@ const GREETING = 'Hi! Ask me about places to visit in Delhi. Tap the mic and spe
 type Props = { visible: boolean; onClose: () => void; places: Place[]; loc: Coords | null; day: number; today: Date | null; onOpenPlace: (id: string) => void };
 
 /** Voice assistant for finding places. It answers from the app's own place data, so it never makes up details. */
-export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPlace }: Props) {
+export type VoiceHandle = { /** Call straight from the tap that opens the sheet: browsers only allow the microphone to start inside a tap. */ startNow: () => void };
+export const VoiceSheet = forwardRef<VoiceHandle, Props>(function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPlace }, ref) {
   const insets = useSafeAreaInsets();
   const [msgs, setMsgs] = useState<Msg[]>([{ id: 0, from: 'bot', text: GREETING }]);
   const [text, setText] = useState('');
@@ -79,6 +80,7 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
     void last;
   }, [ask, stopListen, bridged]);
 
+  useImperativeHandle(ref, () => ({ startNow: () => { if (!bridged && !stopRef.current) listen(); } }), [bridged, listen]);
   useEffect(() => { if (visible && !bridged) micPermission().then(setPerm); }, [visible, bridged]);
   const allowMic = useCallback(async () => {
     const st = await requestMic(); setPerm(st);
@@ -111,7 +113,7 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
 
   useEffect(() => {
     if (visible) { timers.current.forEach(clearTimeout); timers.current = []; reset(); }
-    if (visible && autoListen()) listen();
+    if (visible && autoListen() && !stopRef.current) listen();
     if (!visible) { stopListen(); stopSpeaking(); }
   }, [visible]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { setTimeout(() => scroller.current?.scrollToEnd({ animated: true }), 60); }, [msgs.length, thinking]);
@@ -132,7 +134,7 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
         </Pressable>
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={s.sheet} accessibilityViewIsModal accessibilityLabel={tr('Voice search')}>
           <View style={s.head}>
-            {hero ? null : <SpeakingBars size={30} />}
+            {hero ? null : <Orb mode={mode} size={40} />}
             <View style={{ flex: 1 }}>
               <Txt w="bold" style={{ fontSize: 18 }}>{tr('Delhi assistant')}</Txt>
               <Txt style={{ fontSize: 13, color: mode === 'idle' ? colors.sub : colors.primary }}>{tr(STATUS[mode])}</Txt>
@@ -144,7 +146,7 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
           <ScrollView ref={scroller as never} style={{ flex: 1 }} contentContainerStyle={{ padding: 16, gap: 12 }} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false} onContentSizeChange={() => scroller.current?.scrollToEnd({ animated: true })}>
             {hero ? (
               <FadeSlide k="hero" style={{ alignItems: 'center', gap: 6, paddingTop: 24, paddingBottom: 8 }} dy={14} ms={400}>
-                <SpeakingBars size={80} />
+                <Orb mode={mode} size={120} />
                 <Txt w="bold" style={{ fontSize: 22, marginTop: 14 }}>{tr('How can I help?')}</Txt>
                 <Txt style={{ fontSize: 15, color: colors.text, textAlign: 'center' }}>{tr('Ask about free places, ticket prices, timings or the nearest metro. Tap the mic and speak, or type.')}</Txt>
                 <Txt style={{ fontSize: 12, color: colors.sub, textAlign: 'center' }}>{tr("Answers come from the app's own place data.")}</Txt>
@@ -241,7 +243,7 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
       </View>
     </Modal>
   );
-}
+});
 
 const s = StyleSheet.create({
   wrap: { flex: 1, justifyContent: 'flex-end', backgroundColor: colors.overlay },

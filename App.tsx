@@ -18,7 +18,7 @@ import { localizePlace } from './src/i18n/places';
 import { Splash } from './src/components/Splash';
 import { FadeSlide } from './src/components/motion';
 import { AuthPrompt } from './src/components/AuthPrompt';
-import { VoiceSheet } from './src/components/VoiceSheet';
+import { VoiceSheet, VoiceHandle } from './src/components/VoiceSheet';
 import { BookingsPage } from './src/components/BookingsPage';
 import { SavedPlacesPage } from './src/components/SavedPlacesPage';
 import { ShareSheet } from './src/components/ShareSheet';
@@ -85,6 +85,7 @@ function Home() {
   const [showFilters, setShowFilters] = useState(false);
   const [showLocation, setShowLocation] = useState(false);
   const [showVoice, setShowVoice] = useState(false);
+  const voiceRef = useRef<VoiceHandle>(null);
   const aiRef = useRef<any>(null);
   // Scrolling down tucks the Welcome/location row away so more cards fit; it only comes back once the list is back at the very top.
   const hdr = useRef(new Animated.Value(1)).current;
@@ -326,7 +327,7 @@ function Home() {
             <TextInput value={query} onChangeText={setQuery} placeholder="" accessibilityLabel={tt('Search places')} returnKeyType="search" style={[s.input, { fontFamily: fontFor('regular') }]} />
             {query ? null : <RotatingHint items={['India Gate', 'free places', 'Qutub Minar', 'nearest metro', 'Lotus Temple']} />}
           </View>
-          <Pressable ref={aiRef} onPress={() => setShowVoice(true)} hitSlop={{ top: 6, bottom: 6, left: 6, right: 8 }} accessibilityRole="button" accessibilityLabel={tt('Ask the Delhi assistant')} style={({ pressed }) => [s.mic, { opacity: pressed ? 0.8 : 1 }]}>
+          <Pressable ref={aiRef} onPress={() => { setShowVoice(true); voiceRef.current?.startNow(); }} hitSlop={{ top: 6, bottom: 6, left: 6, right: 8 }} accessibilityRole="button" accessibilityLabel={tt('Ask the Delhi assistant')} style={({ pressed }) => [s.mic, { opacity: pressed ? 0.8 : 1 }]}>
             <SpeakingBars size={24} />
           </Pressable>
         </View>
@@ -368,7 +369,7 @@ function Home() {
       <TabBar key="tabbar" tab={tab} onChange={setTab} />
       <PlaceDetail place={openPlace} km={openKm} loc={loc?.kind === 'gps' ? loc : null} locState={state} onAllowLocation={requestCurrent} day={day} today={today} saved={openId ? saved.has(openId) : false} nearby={nearby} onOpenPlace={setOpenId}
         onClose={() => setOpenId(null)} onToggleSave={() => openId && requestToggle(openId)} />
-      <VoiceSheet visible={showVoice} onClose={() => setShowVoice(false)} places={placesEn} loc={loc} day={day} today={today} onOpenPlace={setOpenId} />
+      <VoiceSheet ref={voiceRef} visible={showVoice} onClose={() => setShowVoice(false)} places={placesEn} loc={loc} day={day} today={today} onOpenPlace={setOpenId} />
       <AuthPrompt visible={pendingSave !== null} onClose={closeLoginPrompt} onSignIn={signInThenSave} />
       <FilterSheet visible={showFilters} onClose={() => setShowFilters(false)} extra={extra} category={category} categories={categoriesWithPlaces(places)}
         hasLocation={!!loc} onSetLocation={() => { setShowFilters(false); setShowLocation(true); }}
