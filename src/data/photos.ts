@@ -25,7 +25,6 @@ export const photos: Record<string, PhotoEntry> = {
   'jantar-mantar': { src: require('../../assets/photos/jantar-mantar.jpg'), w: 1100, h: 733 },
   'karol-bagh': { src: require('../../assets/photos/karol-bagh.jpg'), w: 720, h: 479 },
   'khan-market': { src: require('../../assets/photos/khan-market.jpg'), w: 720, h: 540 },
-  'kingdom-of-dreams': { src: require('../../assets/photos/kingdom-of-dreams.jpg'), w: 720, h: 540 },
   'lodhi-garden': { src: require('../../assets/photos/lodhi-garden.jpg'), w: 720, h: 476 },
   'lodhi-garden-tombs': { src: require('../../assets/photos/lodhi-garden-tombs.jpg'), w: 720, h: 476 },
   'lt': { src: require('../../assets/photos/lt.jpg'), w: 360, h: 140 },

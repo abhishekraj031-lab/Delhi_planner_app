@@ -3723,108 +3723,91 @@
     }
   },
   {
-    "id": "kingdom-of-dreams",
-    "name": "Kingdom of Dreams",
-    "area": "Gurugram",
-    "category": "Entertainment",
-    "emoji": "🎭",
-    "color": "#ffd1e8",
-    "closedDays": null,
-    "hours": null,
-    "hoursText": null,
-    "hoursUnverified": false,
-    "price": {
-      "weekday": {
-        "i": null,
-        "f": null
-      },
-      "weekend": {
-        "i": null,
-        "f": null
-      },
-      "unverified": false
-    },
-    "tickets": [
-      {
-        "label": "Ticket prices",
-        "value": "Not available",
-        "unverified": false
-      }
-    ],
-    "rules": [
-      {
-        "label": "Rules",
-        "value": "Not available"
-      }
-    ],
-    "partialNote": null,
-    "partialNoteByDay": {},
-    "metro": null,
-    "duration": null,
-    "description": null,
-    "bookUrl": null,
-    "bookable": false,
-    "source": "Not collected yet",
-    "verifiedNote": "Details for this place have not been collected yet.",
-    "photoCredit": "Ekabhishek · CC BY-SA 3.0",
-    "lat": 28.47,
-    "lng": 77.072,
-    "metroUnverified": false
-  },
-  {
     "id": "worlds-of-wonder",
     "name": "Worlds of Wonder",
     "area": "Noida",
     "category": "Entertainment",
     "emoji": "🎡",
     "color": "#ffd1e8",
-    "closedDays": null,
-    "hours": null,
-    "hoursText": null,
-    "hoursUnverified": false,
+    "closedDays": [],
+    "hours": [
+      600,
+      1080
+    ],
+    "hoursText": "10:00 AM – 6:00 PM",
+    "hoursUnverified": true,
     "price": {
       "weekday": {
-        "i": null,
+        "i": 1299,
         "f": null
       },
       "weekend": {
-        "i": null,
+        "i": 1299,
         "f": null
       },
-      "unverified": false
+      "unverified": true
     },
     "tickets": [
       {
-        "label": "Ticket prices",
-        "value": "Not available",
-        "unverified": false
+        "label": "Adult (130 cm and above)",
+        "value": "₹1,299, includes ₹200 food voucher",
+        "unverified": true
+      },
+      {
+        "label": "Child (90–129 cm)",
+        "value": "₹799",
+        "unverified": true
+      },
+      {
+        "label": "Senior citizen (60+)",
+        "value": "₹299",
+        "unverified": true
+      },
+      {
+        "label": "Armed forces",
+        "value": "₹799",
+        "unverified": true
+      },
+      {
+        "label": "Differently abled",
+        "value": "₹300–₹399 (listing differs)",
+        "unverified": true
       }
     ],
     "rules": [
       {
-        "label": "Rules",
-        "value": "Not available"
+        "label": "Adult ticket",
+        "value": "Height 130 cm and above"
+      },
+      {
+        "label": "Child ticket",
+        "value": "Height 90–129 cm"
       }
     ],
     "partialNote": null,
     "partialNoteByDay": {},
-    "metro": null,
+    "metro": "Sector 18 or Botanical Garden (Blue Line)",
     "duration": null,
-    "description": null,
+    "description": "Amusement and water park inside The Great India Place mall in Noida, with a teen zone, a family zone, water slides, a wave pool and an underwater world.",
     "bookUrl": null,
     "bookable": false,
-    "source": "Not collected yet",
-    "verifiedNote": "Details for this place have not been collected yet.",
+    "source": "Delhi Tourism listing (delhitourism.travel, updated 17 Oct 2025)",
+    "verifiedNote": "Prices and hours come from one listing and another site shows different prices. No official booking link found. Check before you go.",
     "photoCredit": null,
-    "lat": 28.5665,
-    "lng": 77.334,
+    "lat": 28.5649,
+    "lng": 77.326,
     "metroUnverified": false,
     "rating": {
       "score": 4.3,
       "count": 31347,
       "source": "Google (via Wanderlog)",
       "checked": "2026-11-27"
-    }
+    },
+    "thingsToKnow": [
+      "Rides include Free Fall, Rapid Racer, Turbo Tunnel and a wave pool; the teen zone has Mega Disco and Mad Bull (₹100 extra).",
+      "Enter from Gate 11 of the mall.",
+      "Another site lists tickets from ₹799, so check the price before you go."
+    ]
   },
   {
     "id": "dilli-haat-janakpuri",
@@ -3976,8 +3959,8 @@
       "source": "Google (via District)",
       "checked": "2026-11-27"
     },
-    "lat": 28.7207,
-    "lng": 77.1073
+    "lat": 28.7252,
+    "lng": 77.1151
   },
   {
     "closedDays": [],
@@ -4048,7 +4031,166 @@
     ],
     "source": "Delhi Tourism (delhitourism.gov.in) for hours and rides; ticket prices from Plumint (2025)",
     "verifiedNote": "Delhi Tourism gives no ticket prices. Another site lists ₹500 onwards and closing at 6 PM, so prices and hours are unverified. The Delhi Tourism page also gives a Defence Colony address that does not match Kapashera.",
-    "lat": 28.527,
-    "lng": 77.045
+    "lat": 28.5245,
+    "lng": 77.0845
+  },
+  {
+    "id": "atlantic-water-world",
+    "name": "Atlantic Water World",
+    "area": "Kalindi Kunj",
+    "category": "Entertainment",
+    "emoji": "🌊",
+    "color": "#ffd1e8",
+    "closedDays": [],
+    "hours": [
+      600,
+      1080
+    ],
+    "hoursText": "10:00 AM – 6:00 PM",
+    "hoursUnverified": false,
+    "price": {
+      "weekday": {
+        "i": 1199,
+        "f": null
+      },
+      "weekend": {
+        "i": 1199,
+        "f": null
+      },
+      "unverified": true
+    },
+    "tickets": [
+      {
+        "label": "Single (table)",
+        "value": "₹1,199",
+        "unverified": true
+      },
+      {
+        "label": "Single (entry fee section)",
+        "value": "₹1,299",
+        "unverified": true
+      },
+      {
+        "label": "Kids",
+        "value": "₹600–₹899 (listing differs)",
+        "unverified": true
+      },
+      {
+        "label": "Senior citizen",
+        "value": "₹999–₹1,099",
+        "unverified": true
+      },
+      {
+        "label": "Couple",
+        "value": "₹2,299",
+        "unverified": true
+      },
+      {
+        "label": "Students",
+        "value": "₹799",
+        "unverified": true
+      },
+      {
+        "label": "Children under 3 ft",
+        "value": "Free",
+        "unverified": true
+      }
+    ],
+    "rules": [
+      {
+        "label": "Height limits",
+        "value": "None stated for rides"
+      },
+      {
+        "label": "Seniors",
+        "value": "Advised to avoid slides"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": "Kalindi Kunj (Magenta Line)",
+    "duration": null,
+    "description": "Water park beside Kalindi Kunj in South Delhi, with slides, a wave pool, a lazy river, a rain dance stage and an artificial beach.",
+    "thingsToKnow": [
+      "Slides include Tornado, Racer, Gravity and Storm Eye; Slow Flow is the lazy river.",
+      "A vegetarian lunch buffet and a cafe are on site.",
+      "Best months are March–April and October–November.",
+      "The listing says it is open all year, including public holidays."
+    ],
+    "bookUrl": "https://booking.atlanticwaterworld.com",
+    "bookable": true,
+    "source": "Atlantic Water World website (hours, booking); ticket prices from Delhi Tourism listing (delhitourism.travel, updated 17 Oct 2025)",
+    "verifiedNote": "Hours and booking link are from the park's own website. Its site does not show prices here, and the listing gives different prices in different places, so prices are unverified.",
+    "photoCredit": null,
+    "lat": 28.5464,
+    "lng": 77.3086,
+    "metroUnverified": false
+  },
+  {
+    "id": "drizzling-land",
+    "name": "Drizzling Land",
+    "area": "Ghaziabad",
+    "category": "Entertainment",
+    "emoji": "🎠",
+    "color": "#ffd1e8",
+    "closedDays": [],
+    "hours": [
+      600,
+      1080
+    ],
+    "hoursText": "10:00 AM – 6:00 PM",
+    "hoursUnverified": true,
+    "price": {
+      "weekday": {
+        "i": 1500,
+        "f": null
+      },
+      "weekend": {
+        "i": 1500,
+        "f": null
+      },
+      "unverified": true
+    },
+    "tickets": [
+      {
+        "label": "Adult",
+        "value": "₹1,500",
+        "unverified": true
+      },
+      {
+        "label": "Child",
+        "value": "₹1,100",
+        "unverified": true
+      },
+      {
+        "label": "Senior citizen (60+)",
+        "value": "₹1,100",
+        "unverified": true
+      }
+    ],
+    "rules": [
+      {
+        "label": "Child ticket",
+        "value": "Height 90–129 cm (listing also says up to 120 cm)"
+      }
+    ],
+    "partialNote": null,
+    "partialNoteByDay": {},
+    "metro": null,
+    "duration": null,
+    "description": "Water and amusement park on the Delhi–Meerut road, with a roller coaster, water slides, a wave pool and an adventure club with ziplining and wall climbing.",
+    "thingsToKnow": [
+      "Amusement rides include Rock N Roll, Roller Coaster and Disc Coaster.",
+      "The adventure club offers ziplining, wall climbing, rappelling and a commando net.",
+      "Water slides include Pendulum and Cyclone, plus a wave pool and rain dance."
+    ],
+    "bookUrl": null,
+    "bookable": false,
+    "source": "Delhi Tourism listing (delhitourism.travel, updated 17 Oct 2025)",
+    "verifiedNote": "Details come from one listing. No official booking link found. Check before you go.",
+    "photoCredit": null,
+    "lat": 28.7265,
+    "lng": 77.4695,
+    "metroUnverified": false
   }
 ]
