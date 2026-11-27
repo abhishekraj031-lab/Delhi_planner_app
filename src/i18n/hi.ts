@@ -91,6 +91,7 @@ export const HI: Record<string, string> = {
   "Change number": "नंबर बदलें",
   "Change profile photo": "प्रोफ़ाइल फ़ोटो बदलें",
   "Chawri Bazaar": "चावड़ी बाज़ार",
+  "Check out {name} ({area}) on Ghummakad": "घुमक्कड़ पर {name} ({area}) देखिए",
   "Check price": "कीमत देखें",
   "Check price and book on {app}": "{app} पर कीमत देखें और बुक करें",
   "Checked 17 Nov 2026. Not confirmed by an official source.": "17 नवंबर 2026 को जाँचा गया। आधिकारिक स्रोत से पुष्टि नहीं हुई।",

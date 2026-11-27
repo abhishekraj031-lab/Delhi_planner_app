@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Linking, Modal, NativeScrollEvent, NativeSyntheticEvent, Platform, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
-import { ChevronLeft, Heart, Star } from 'lucide-react-native';
+import { ChevronLeft, Heart, Share2, Star } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { Coords, Place } from '../types';
 import { colors } from '../theme';
@@ -16,6 +16,8 @@ import { CommuteCards } from './CommuteCards';
 import { areaLabel, statusText } from './PlaceCard';
 import { tr } from '../i18n';
 import { inFrame, post } from '../lib/bridge';
+import { shareText } from '../lib/wall';
+import { ShareSheet } from './ShareSheet';
 
 type Nearby = { place: Place; km: number };
 type Props = { place: Place | null; km: number | null; loc: Coords | null; locState: 'idle' | 'asking' | 'denied' | 'error'; onAllowLocation: () => void; day: number; today: Date | null; saved: boolean; nearby: Nearby[]; onOpenPlace: (id: string) => void; onClose: () => void; onToggleSave: () => void };
@@ -62,6 +64,7 @@ const CircleBtn = ({ children, onPress, label, side, top }: { children: React.Re
 export function PlaceDetail({ place, km, loc, locState, onAllowLocation, day, today, saved, nearby, onOpenPlace, onClose, onToggleSave }: Props) {
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
+  const [shareMsg, setShareMsg] = useState<string | null>(null);
   const [page, setPage] = useState(0);
   const scroller = useRef<any>(null);
   // Every place opens at the top; the person scrolls down themselves.
@@ -93,6 +96,15 @@ export function PlaceDetail({ place, km, loc, locState, onAllowLocation, day, to
   if (p.metro && !p.metroUnverified) facts.push(tr('Metro: {station}', { station: p.metro.replace(/\s*\(.*\)$/, '') }));
   const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => setPage(Math.round(e.nativeEvent.contentOffset.x / width));
   const top = insets.top + 8 + (inFrame ? 53 : 0);
+  // Message for friends and family: only facts we actually have.
+  const onShare = async () => {
+    const lines = [tr('Check out {name} ({area}) on Ghummakad', { name: p.name, area: p.area })];
+    if (p.hoursText) lines.push(`🕐 ${p.hoursText}`);
+    if (fee) lines.push(`🎟 ${fee}`);
+    if (p.metro) lines.push(`🚇 ${p.metro}`);
+    const text = lines.join('\n');
+    if ((await shareText(text)) === 'unsupported') setShareMsg(text);
+  };
 
   return (
     <Modal visible animationType="slide" onRequestClose={onClose} statusBarTranslucent>
@@ -232,10 +244,15 @@ export function PlaceDetail({ place, km, loc, locState, onAllowLocation, day, to
         </ScrollView>
 
         <CircleBtn onPress={onClose} label={tr('Back')} side="left" top={top}><ChevronLeft size={26} color={colors.ink} /></CircleBtn>
+        <Pressable onPress={onShare} hitSlop={14} accessibilityRole="button" accessibilityLabel={tr('Share')} style={{ position: 'absolute', top: top + 8, right: 60 }}>
+          <Share2 size={26} color={colors.white} fill="none" strokeWidth={2.2} />
+        </Pressable>
         {/* Same heart as on the home cards: bare, white with a soft dark fill, top right of the photo. */}
         <Pressable onPress={onToggleSave} hitSlop={14} accessibilityRole="button" accessibilityLabel={saved ? tr('Remove from saved') : tr('Save place')} style={{ position: 'absolute', top: top + 8, right: 16 }}>
           <Heart size={28} color={saved ? '#ff385c' : colors.white} fill={saved ? '#ff385c' : 'rgba(0,0,0,0.35)'} strokeWidth={2} />
         </Pressable>
+
+        <ShareSheet text={shareMsg} onClose={() => setShareMsg(null)} />
 
         {/* Bottom bar */}
         <View style={[s.bar, { paddingBottom: Math.max(insets.bottom, 12) }]}>
