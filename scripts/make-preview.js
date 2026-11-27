@@ -17,11 +17,11 @@ js = js.replace(/"(\/assets\/[^"]+\.(?:jpg|png|ttf))"/g, (m, p) => {
 });
 js = js.replace(/<\/script/gi, '<\\/script');
 
-const app = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Delhi Explorer</title>
+const app = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Ghummakad</title>
 <style>html,body{height:100%;margin:0}body{overflow:hidden}#root{display:flex;height:100%;flex:1}</style></head>
 <body><div id="root"></div><script>${js}</script></body></html>`;
 
-const page = `<title>Delhi Explorer Preview</title>
+const page = `<title>Ghummakad Preview</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 :root{--bg:#e9ebf3;--frame:#111216;--bar:#fff;--barfg:#111216;color-scheme:light}
@@ -46,7 +46,7 @@ iframe{width:390px;flex:1;border:0;display:block;background:#fff;min-height:0}
   <div class="slot" id="slot">
     <div class="phone" id="phone">
       <div class="status"><span>9:41</span><div class="island"></div><i><b style="width:17px;height:10px"></b><b style="width:15px;height:10px"></b><b style="width:25px;height:12px;border-radius:4px"></b></i></div>
-      <iframe id="app" title="Delhi Explorer app preview"></iframe>
+      <iframe id="app" title="Ghummakad app preview"></iframe>
       <div id="links"></div>
       <button id="micov" aria-label="Speak" title="Speak"></button>
       <div class="home"></div>

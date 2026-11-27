@@ -2,10 +2,10 @@ import React from 'react';
 import Svg, { Circle, Path, Rect } from 'react-native-svg';
 import { colors } from '../theme';
 
-/** Delhi Explorer mark: a map pin holding a domed monument with an arched gate. */
+/** Ghummakad mark: a map pin holding a domed monument with an arched gate. */
 export function Logo({ size = 80, pin = colors.white, detail = colors.primary }: { size?: number; pin?: string; detail?: string }) {
   return (
-    <Svg width={size} height={size} viewBox="0 0 120 120" accessibilityLabel="Delhi Explorer logo">
+    <Svg width={size} height={size} viewBox="0 0 120 120" accessibilityLabel="Ghummakad logo">
       <Path d="M60 8 C37 8 20 26 20 48 C20 78 60 112 60 112 C60 112 100 78 100 48 C100 26 83 8 60 8 Z" fill={pin} />
       {/* spire, dome, band, body with arched gate */}
       <Rect x={59} y={20} width={2} height={9} rx={1} fill={detail} />

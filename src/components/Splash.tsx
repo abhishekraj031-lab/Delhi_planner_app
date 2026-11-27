@@ -72,7 +72,7 @@ export function Splash({ onDone, ms = 4600 }: { onDone: () => void; ms?: number 
   };
 
   return (
-    <Animated.View accessibilityLabel="Delhi Explorer" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 50, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', transform: [{ translateX: out.interpolate({ inputRange: [0, 1], outputRange: [-width, 0] }) }] }}>
+    <Animated.View accessibilityLabel="Ghummakad" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 50, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', transform: [{ translateX: out.interpolate({ inputRange: [0, 1], outputRange: [-width, 0] }) }] }}>
       <View style={{ width: R * 2 + ICON, height: R * 2 + ICON, alignItems: 'center', justifyContent: 'center' }}>
         {ripple.map((v, i) => (
           <Animated.View key={i} style={{ position: 'absolute', width: R * 1.2, height: R * 1.2, borderRadius: R * 0.6, borderWidth: 1.5, borderColor: 'rgba(255,255,255,0.5)',
@@ -88,8 +88,8 @@ export function Splash({ onDone, ms = 4600 }: { onDone: () => void; ms?: number 
         </Animated.View>
       </View>
       <Animated.View style={{ position: 'absolute', bottom: '14%', alignItems: 'center', gap: 4, opacity: title, transform: [{ translateY: title.interpolate({ inputRange: [0, 1], outputRange: [12, 0] }) }] }}>
-        <Txt w="bold" style={{ fontSize: 32, color: colors.white }}>Delhi Explorer</Txt>
-        <Txt style={{ fontSize: 15, color: 'rgba(255,255,255,0.85)' }}>दिल्ली एक्सप्लोरर</Txt>
+        <Txt w="bold" style={{ fontSize: 32, color: colors.white }}>Ghummakad</Txt>
+        <Txt style={{ fontSize: 15, color: 'rgba(255,255,255,0.85)' }}>घुमक्कड़</Txt>
       </Animated.View>
     </Animated.View>
   );

@@ -1,4 +1,4 @@
-# Delhi Explorer
+# Ghummakad
 
 Delhi-NCR attractions planner (65 places, 7 categories). One Expo / React Native codebase for **iOS and Android**.
 

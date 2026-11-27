@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Delhi Explorer",
+    "name": "Ghummakad",
     "slug": "delhi-explorer",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -36,22 +36,22 @@
       [
         "expo-location",
         {
-          "locationWhenInUsePermission": "Delhi Explorer uses your location to show the places nearest to you.",
+          "locationWhenInUsePermission": "Ghummakad uses your location to show the places nearest to you.",
           "isAndroidBackgroundLocationEnabled": false
         }
       ],
       [
         "expo-image-picker",
         {
-          "photosPermission": "Delhi Explorer uses your photos so you can post pictures of places you visited.",
-          "cameraPermission": "Delhi Explorer uses the camera so you can take a photo of a place and post it."
+          "photosPermission": "Ghummakad uses your photos so you can post pictures of places you visited.",
+          "cameraPermission": "Ghummakad uses the camera so you can take a photo of a place and post it."
         }
       ],
       [
         "expo-speech-recognition",
         {
-          "microphonePermission": "Delhi Explorer uses the microphone so you can search for places by voice.",
-          "speechRecognitionPermission": "Delhi Explorer uses speech recognition to understand your voice search.",
+          "microphonePermission": "Ghummakad uses the microphone so you can search for places by voice.",
+          "speechRecognitionPermission": "Ghummakad uses speech recognition to understand your voice search.",
           "androidSpeechServicePackages": [
             "com.google.android.googlequicksearchbox"
           ]

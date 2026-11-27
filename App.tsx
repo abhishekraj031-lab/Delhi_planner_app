@@ -98,7 +98,7 @@ function Home() {
   const me = user ? (user.displayName || tt('You')) : null;
   const toast = (m: string) => { setNotice(m); setTimeout(() => setNotice(null), 2200); };
   const doShare = async (text: string) => { const r = await shareText(text); if (r === 'unsupported') setShareMsg(text); };
-  const invite = () => doShare(tt('Join me on Delhi Explorer. We can share photos of the places we visit in Delhi.'));
+  const invite = () => doShare(tt('Join me on Ghummakad. We can share photos of the places we visit in Delhi.'));
   const needLogin = (fn: () => void) => (user ? fn() : setLoginOpen(true));
 
   useEffect(() => {
@@ -213,7 +213,7 @@ function Home() {
           onInvite={() => needLogin(invite)}
           onLike={(id) => needLogin(() => wall.toggleLike(id))}
           onComment={(id, text) => needLogin(() => wall.addComment(id, me as string, text))}
-          onShare={(post) => doShare(`${post.caption ? `${post.caption} - ` : ''}${placeName(post.placeId) ? `${placeName(post.placeId)}, ${tt('Delhi')}. ` : ''}${tt('Shared from Delhi Explorer.')}`)}
+          onShare={(post) => doShare(`${post.caption ? `${post.caption} - ` : ''}${placeName(post.placeId) ? `${placeName(post.placeId)}, ${tt('Delhi')}. ` : ''}${tt('Shared from Ghummakad.')}`)}
           onDelete={wall.removePost} onOpenPlace={setOpenId} />
       );
     } else if (tab === 'favourites' && user && favRows.length > 0) {
