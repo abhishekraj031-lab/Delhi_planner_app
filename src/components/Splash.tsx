@@ -11,17 +11,24 @@ const AnimatedPath = Animated.createAnimatedComponent(Path);
 const WORD = 'Ghummakad'.split('');
 /** A small burst of rays, drawn around (0,0). */
 const SPARK = Array.from({ length: 8 }, (_, i) => { const a = (i * Math.PI) / 4; return `M${(Math.cos(a) * 5).toFixed(1)} ${(Math.sin(a) * 5).toFixed(1)} L${(Math.cos(a) * 11).toFixed(1)} ${(Math.sin(a) * 11).toFixed(1)}`; }).join(' ');
+/** Extra clouds up in the sky (same outlines, new places), and a few birds. */
+const SKYCLOUDS = [...CLOUDS, { ...CLOUDS[2], x: 66, y: -6 }, { ...CLOUDS[0], x: 176, y: -14 }, { ...CLOUDS[1], x: 296, y: 4 }];
+const BIRD = 'M0 7 Q5 -1 10 7 Q15 -1 20 7';
+const BIRDS = [{ x: 104, y: 6, k: 1 }, { x: 124, y: 20, k: 0.8 }, { x: 140, y: 2, k: 0.7 }, { x: 322, y: 28, k: 1 }, { x: 340, y: 14, k: 0.75 }, { x: 40, y: 8, k: 0.8 }];
 const SPARKS = [{ x: 38, y: 62 }, { x: 118, y: 74 }, { x: 204, y: 44 }, { x: 300, y: 70 }];
 
 /** Launch screen: a Delhi skyline draws itself in outline, then collapses into the Ghummakad wordmark. */
 export function Splash({ onDone, ms = 5600 }: { onDone: () => void; ms?: number }) {
   const { width } = useWindowDimensions();
   const sc = Math.min(width / SKY_W, 1.15);
-  const TOP = 20; // crop empty sky so the skyline sits in the middle of the screen
+  const TOP = -18; // crop empty sky so the skyline sits in the middle of the screen
   const BW = SKY_W * sc, BH = (SKY_H - TOP) * sc;
   const ground = useRef(new Animated.Value(0)).current;
   const monu = useRef(SKY.map(() => new Animated.Value(0))).current;
-  const cloud = useRef(CLOUDS.map(() => new Animated.Value(0))).current;
+  const cloud = useRef(SKYCLOUDS.map(() => new Animated.Value(0))).current;
+  const birdIn = useRef(BIRDS.map(() => new Animated.Value(0))).current;
+  const fly = useRef(new Animated.Value(0)).current;
+  const flap = useRef(new Animated.Value(0)).current;
   const spark = useRef(SPARKS.map(() => new Animated.Value(0))).current;
   const merge = useRef(new Animated.Value(0)).current;
   const letters = useRef(WORD.map(() => new Animated.Value(0))).current;
@@ -36,14 +43,18 @@ export function Splash({ onDone, ms = 5600 }: { onDone: () => void; ms?: number 
       draw(ground, 150, 700),
       ...monu.map((v, i) => draw(v, 550 + i * 430, 900)),
       ...cloud.map((v, i) => draw(v, 1500 + i * 450, 1000)),
+      ...birdIn.map((v, i) => Animated.sequence([Animated.delay(1700 + i * 180), Animated.timing(v, { toValue: 1, duration: 500, useNativeDriver: true })])),
+      Animated.timing(fly, { toValue: 1, duration: ms, easing: Easing.linear, useNativeDriver: true }),
       ...spark.map((v, i) => Animated.sequence([Animated.delay(2500 + i * 220), Animated.spring(v, { toValue: 1, friction: 4, tension: 110, useNativeDriver: true })])),
       Animated.sequence([Animated.delay(M), Animated.timing(merge, { toValue: 1, duration: 650, easing: Easing.in(Easing.cubic), useNativeDriver: true })]),
       Animated.sequence([Animated.delay(M + 380), Animated.stagger(60, letters.map((v) => Animated.spring(v, { toValue: 1, friction: 5, tension: 120, useNativeDriver: true })))]),
       Animated.sequence([Animated.delay(M + 380), Animated.timing(land, { toValue: 1, duration: 140, useNativeDriver: true }), Animated.timing(land, { toValue: 0, duration: 260, useNativeDriver: true })]),
       Animated.sequence([Animated.delay(ms - 450), Animated.timing(out, { toValue: 0, duration: 450, easing: Easing.inOut(Easing.cubic), useNativeDriver: true })]),
     ]);
+    const wing = Animated.loop(Animated.sequence([Animated.timing(flap, { toValue: 1, duration: 320, easing: Easing.inOut(Easing.sin), useNativeDriver: true }), Animated.timing(flap, { toValue: 0, duration: 320, easing: Easing.inOut(Easing.sin), useNativeDriver: true })]));
+    wing.start();
     run.start(() => { post({ dx: 'bar', bg: '#ffffff', fg: '#111216' }); onDone(); });
-    return () => run.stop();
+    return () => { run.stop(); wing.stop(); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -55,14 +66,19 @@ export function Splash({ onDone, ms = 5600 }: { onDone: () => void; ms?: number 
     <Animated.View accessibilityLabel="Ghummakad" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 50, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', transform: [{ translateX: out.interpolate({ inputRange: [0, 1], outputRange: [-width, 0] }) }] }}>
       <StatusBar style="light" />
       <View style={{ width: BW, height: BH }}>
-        <Animated.View style={{ position: 'absolute', width: BW, height: BH, opacity: merge.interpolate({ inputRange: [0, 0.75, 1], outputRange: [1, 1, 0] }), transform: [{ scale: merge.interpolate({ inputRange: [0, 1], outputRange: [1, 0.25] }) }] }}>
+        <Animated.View style={{ position: 'absolute', width: BW, height: BH, opacity: merge.interpolate({ inputRange: [0, 0.75, 1], outputRange: [0.7, 0.7, 0] }), transform: [{ scale: merge.interpolate({ inputRange: [0, 1], outputRange: [1, 0.25] }) }] }}>
           <Svg width={BW} height={BH} viewBox={`0 ${TOP} ${SKY_W} ${SKY_H - TOP}`}>
             {line(GROUND.d, GROUND.len, ground, 'ground', 1.6)}
             {SKY.map((m, i) => line(m.d, m.len, monu[i], m.name))}
-            {CLOUDS.map((c, i) => (
+            {SKYCLOUDS.map((c, i) => (
               <G key={i} transform={`translate(${c.x} ${c.y})`}>{line(c.d, c.len, cloud[i], `c${i}`, 1.2)}</G>
             ))}
           </Svg>
+          {BIRDS.map((b, i) => (
+            <Animated.View key={`b${i}`} style={{ position: 'absolute', left: b.x * sc, top: (b.y - TOP) * sc, opacity: birdIn[i], transform: [{ translateX: fly.interpolate({ inputRange: [0, 1], outputRange: [0, (b.x > 300 ? -1 : 1) * 90 * sc * b.k] }) }, { translateY: flap.interpolate({ inputRange: [0, 1], outputRange: [0, -4 * sc * b.k] }) }, { scaleY: flap.interpolate({ inputRange: [0, 1], outputRange: [1, 0.35] }) }] }}>
+              <Svg width={40 * sc * b.k} height={16 * sc * b.k} viewBox="-1 -2 22 11"><Path d={BIRD} stroke="#fff" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" fill="none" /></Svg>
+            </Animated.View>
+          ))}
           {SPARKS.map((sp, i) => (
             <Animated.View key={i} style={{ position: 'absolute', left: sp.x * sc - 12 * sc, top: (sp.y - TOP) * sc - 12 * sc, opacity: spark[i], transform: [{ scale: spark[i] }, { rotate: spark[i].interpolate({ inputRange: [0, 1], outputRange: ['-45deg', '0deg'] }) }] }}>
               <Svg width={24 * sc} height={24 * sc} viewBox="-12 -12 24 24"><Path d={SPARK} stroke="#fff" strokeWidth={1.2} strokeLinecap="round" fill="none" /></Svg>
