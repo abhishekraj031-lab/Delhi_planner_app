@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Animated, Easing, View, useWindowDimensions } from 'react-native';
-import Svg, { Path } from 'react-native-svg';
+import Svg, { Circle, Path } from 'react-native-svg';
 import { colors } from '../theme';
 import { Txt } from './ui';
 import { post } from '../lib/bridge';
@@ -25,13 +25,16 @@ const ICONS: { name: string; d: string }[] = [
 const TILTS = [-8, 6, -4, 8, -6, 5];
 
 /** Launch screen: monument icons burst out around the logo, then fly into the Ghummakad wordmark, which fills in letter by letter as they land. */
-export function Splash({ onDone, ms = 4600 }: { onDone: () => void; ms?: number }) {
+export function Splash({ onDone, ms = 6200 }: { onDone: () => void; ms?: number }) {
   const { width } = useWindowDimensions();
   const R = Math.min(width * 0.34, 150);
   const ICON = 64;
   const pop = useRef(ICONS.map(() => new Animated.Value(0))).current;
   const merge = useRef(new Animated.Value(0)).current;
-  const WORD = 'Ghummakad'.split('');
+  /** The first "a" of the name is drawn as a map pin. */
+const PIN_AT = 5;
+const PIN = 'M0 -13 C7.5 -13 12 -7.5 12 -2.5 C12 6 0 15 0 15 C0 15 -12 6 -12 -2.5 C-12 -7.5 -7.5 -13 0 -13 Z';
+const WORD = 'Ghummakad'.split('');
   const TY = 0; // wordmark sits at the exact centre; icons fly into it
   const letters = useRef(WORD.map(() => new Animated.Value(0))).current;
   const land = useRef(new Animated.Value(0)).current;
@@ -47,10 +50,10 @@ export function Splash({ onDone, ms = 4600 }: { onDone: () => void; ms?: number 
     bob.start();
     const run = Animated.parallel([
       Animated.stagger(130, pop.map((v) => Animated.spring(v, { toValue: 1, friction: 5, tension: 70, useNativeDriver: true }))),
-      Animated.sequence([Animated.delay(Math.round(ms * 0.5)), Animated.timing(merge, { toValue: 1, duration: 650, easing: Easing.in(Easing.back(1.4)), useNativeDriver: true })]),
-      Animated.sequence([Animated.delay(Math.round(ms * 0.5) + 380), Animated.stagger(60, letters.map((v) => Animated.spring(v, { toValue: 1, friction: 5, tension: 120, useNativeDriver: true })))]),
-      Animated.sequence([Animated.delay(Math.round(ms * 0.5) + 380), Animated.sequence([Animated.timing(land, { toValue: 1, duration: 140, useNativeDriver: true }), Animated.timing(land, { toValue: 0, duration: 260, useNativeDriver: true })])]),
-      Animated.sequence([Animated.delay(ms - 450), Animated.timing(out, { toValue: 0, duration: 450, easing: Easing.inOut(Easing.cubic), useNativeDriver: true })]),
+      Animated.sequence([Animated.delay(2300), Animated.timing(merge, { toValue: 1, duration: 650, easing: Easing.in(Easing.back(1.4)), useNativeDriver: true })]),
+      Animated.sequence([Animated.delay(2300 + 380), Animated.stagger(60, letters.map((v) => Animated.spring(v, { toValue: 1, friction: 5, tension: 120, useNativeDriver: true })))]),
+      Animated.sequence([Animated.delay(2300 + 380), Animated.sequence([Animated.timing(land, { toValue: 1, duration: 140, useNativeDriver: true }), Animated.timing(land, { toValue: 0, duration: 260, useNativeDriver: true })])]),
+      Animated.sequence([Animated.delay(ms - 600), Animated.timing(out, { toValue: 0, duration: 600, easing: Easing.inOut(Easing.quad), useNativeDriver: true })]),
     ]);
     run.start(() => { loops.forEach((l) => l.stop()); bob.stop(); post({ dx: 'bar', bg: '#ffffff', fg: '#111216' }); onDone(); });
     return () => { loops.forEach((l) => l.stop()); bob.stop(); run.stop(); };
@@ -76,7 +79,7 @@ export function Splash({ onDone, ms = 4600 }: { onDone: () => void; ms?: number 
   };
 
   return (
-    <Animated.View accessibilityLabel="Ghummakad" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 50, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', transform: [{ translateX: out.interpolate({ inputRange: [0, 1], outputRange: [-width, 0] }) }] }}>
+    <Animated.View accessibilityLabel="Ghummakad" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 50, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', opacity: out, transform: [{ scale: out.interpolate({ inputRange: [0, 1], outputRange: [1.06, 1] }) }] }}>
       <StatusBar style="light" />
       <View style={{ width: R * 2 + ICON, height: R * 2 + ICON, alignItems: 'center', justifyContent: 'center' }}>
         {ripple.map((v, i) => (
@@ -91,8 +94,14 @@ export function Splash({ onDone, ms = 4600 }: { onDone: () => void; ms?: number 
         <Animated.View style={{ position: 'absolute', alignItems: 'center', transform: [{ translateY: TY }, { scale: land.interpolate({ inputRange: [0, 1], outputRange: [1, 1.08] }) }] }}>
           <View style={{ flexDirection: 'row' }}>
             {WORD.map((c, i) => (
-              <Animated.View key={i} style={{ opacity: letters[i], transform: [{ translateY: letters[i].interpolate({ inputRange: [0, 1], outputRange: [14, 0] }) }, { scale: letters[i].interpolate({ inputRange: [0, 1], outputRange: [0.4, 1] }) }] }}>
-                <Txt style={{ fontSize: 46, color: colors.white, fontFamily: 'Outfit_800ExtraBold', letterSpacing: -0.5, lineHeight: 54 }}>{c}</Txt>
+              <Animated.View key={i} style={{ opacity: letters[i], transform: [{ translateY: letters[i].interpolate({ inputRange: [0, 1], outputRange: [i === PIN_AT ? -34 : 14, 0] }) }, { scale: letters[i].interpolate({ inputRange: [0, 1], outputRange: [0.4, 1] }) }] }}>
+                {i === PIN_AT ? (
+                  <View style={{ height: 54, justifyContent: 'flex-end', paddingBottom: 12, paddingHorizontal: 1 }}>
+                    <Svg width={25} height={31} viewBox="-13 -15 26 32"><Path d={PIN} fill={colors.white} /><Circle r={4.6} cy={-3} fill={colors.primary} /></Svg>
+                  </View>
+                ) : (
+                  <Txt style={{ fontSize: 46, color: colors.white, fontFamily: 'Outfit_800ExtraBold', letterSpacing: -0.5, lineHeight: 54 }}>{c}</Txt>
+                )}
               </Animated.View>
             ))}
           </View>
