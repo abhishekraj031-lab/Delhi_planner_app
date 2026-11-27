@@ -2,6 +2,39 @@ import { Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { shrinkWeb } from './wall';
 
+/**
+ * Web only: sets the colour of the browser's top bar. `null` goes back to white.
+ * With a picture, the bar takes that picture's top-edge colour so the photo seems to run up behind it.
+ */
+export function setTopBarColor(color: string | null) {
+  if (Platform.OS !== 'web') return;
+  try {
+    const m = (globalThis as any).document.querySelector('meta[name="theme-color"]');
+    m?.setAttribute('content', color ?? '#ffffff');
+  } catch { /* cosmetic only */ }
+}
+
+/** Web only: the average colour of the top edge of a picture, or null if it cannot be read. */
+export function topEdgeColor(uri: string): Promise<string | null> {
+  return new Promise((resolve) => {
+    try {
+      const doc = (globalThis as any).document;
+      const img = new (globalThis as any).Image();
+      img.onload = () => {
+        try {
+          const c = doc.createElement('canvas'); c.width = 1; c.height = 1;
+          const g = c.getContext('2d');
+          g.drawImage(img, 0, 0, img.width, Math.max(1, Math.round(img.height * 0.06)), 0, 0, 1, 1);
+          const [r, gg, b] = g.getImageData(0, 0, 1, 1).data;
+          resolve(`rgb(${r}, ${gg}, ${b})`);
+        } catch { resolve(null); }
+      };
+      img.onerror = () => resolve(null);
+      img.src = uri;
+    } catch { resolve(null); }
+  });
+}
+
 /** Picks or takes a square photo and returns it as a small data URI that fits in local storage. */
 export async function pickSquarePhoto(camera: boolean, max = 480): Promise<{ uri?: string; error?: string }> {
   try {

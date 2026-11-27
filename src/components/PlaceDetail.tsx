@@ -17,6 +17,7 @@ import { areaLabel, statusText } from './PlaceCard';
 import { tr } from '../i18n';
 import { inFrame, post } from '../lib/bridge';
 import { shareText } from '../lib/wall';
+import { setTopBarColor, topEdgeColor } from '../lib/photo';
 import { ShareSheet } from './ShareSheet';
 
 type Nearby = { place: Place; km: number };
@@ -72,7 +73,16 @@ export function PlaceDetail({ place, km, loc, locState, onAllowLocation, day, to
   useEffect(() => {
     if (!place) return;
     post({ dx: 'bar', bg: 'transparent', fg: '#ffffff' });
-    return () => post({ dx: 'bar', bg: '#ffffff', fg: '#111216' });
+    // On the live website the browser's top bar takes the photo's top-edge colour, so there is no white strip.
+    let live = true;
+    const t = setTimeout(() => {
+      try {
+        const els = (globalThis as any).document?.querySelectorAll(`[aria-label="Photo of ${place.name.replace(/"/g, '\\"')}"] img`);
+        const uri = els && els.length ? els[els.length - 1].src : null; // the page on top is the last one drawn
+        if (uri) topEdgeColor(uri).then((c) => { if (live && c) setTopBarColor(c); });
+      } catch { /* cosmetic only */ }
+    }, 450);
+    return () => { live = false; clearTimeout(t); setTopBarColor(null); post({ dx: 'bar', bg: '#ffffff', fg: '#111216' }); };
   }, [!!place]);
   useEffect(() => { setPage(0); scroller.current?.scrollTo({ y: 0, animated: false }); }, [place?.id]);
   const p = place;
