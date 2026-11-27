@@ -48,7 +48,7 @@ function PlaceCardBase({ place, km, day, today, saved, onOpen, onToggleSave }: P
             <View style={[st.fee, fee === tr('Free') && st.feeFree]}>
               {fee === tr('Free')
                 ? <Txt w="bold" style={{ fontSize: 15, color: colors.ink }}>{tr('Free entry')}</Txt>
-                : <><Txt w="bold" style={{ fontSize: 17, color: colors.ink }}>{fee}</Txt><Txt style={{ fontSize: 12, color: colors.secondary }}> {tr('entry fee')}</Txt></>}
+                : <><Txt w="bold" style={{ fontSize: 17, color: colors.ink }}>{fee}</Txt><Txt style={{ fontSize: 12, color: colors.ink }}> {tr('entry fee')}</Txt></>}
               {place.price.unverified ? <Unverified /> : null}
             </View>
           ) : <View style={st.feeNone}><Txt style={{ fontSize: 12, color: colors.sub }}>{tr('Fee not available')}</Txt></View>}
