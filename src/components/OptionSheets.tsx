@@ -74,7 +74,8 @@ export function FilterSheet(p: FilterProps) {
           {p.categories.map((c) => <Chip key={c} label={tr(c)} on={cat === c} onPress={() => setCat(c)} />)}
         </Row>
       </Group>
-      <View style={{ flexDirection: 'row' }}><Button label={count === 0 ? tr('No places match') : count === 1 ? tr('Show 1 place') : tr('Show {n} places', { n: count })} onPress={() => p.onApply(x, cat)} /></View>
+      <Txt style={{ color: count === 0 ? colors.warn : colors.sub, fontSize: 13, textAlign: 'center' }}>{count === 0 ? tr('No places match') : count === 1 ? tr('1 place') : tr('{n} places', { n: count })}</Txt>
+      <View style={{ flexDirection: 'row' }}><Button label={tr('Apply filters')} onPress={() => p.onApply(x, cat)} /></View>
     </Sheet>
   );
 }
