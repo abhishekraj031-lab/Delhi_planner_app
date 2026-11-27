@@ -304,6 +304,7 @@ export const HI: Record<string, string> = {
   "No official page found Booking link: National Rail Museum official site.": "कोई आधिकारिक पेज नहीं मिला। बुकिंग लिंक: राष्ट्रीय रेल संग्रहालय की आधिकारिक साइट।",
   "No password needed.": "पासवर्ड की ज़रूरत नहीं।",
   "No places match": "कोई जगह मेल नहीं खाती",
+  "No rating": "रेटिंग नहीं",
   "No weekly closed day": "साप्ताहिक बंद का कोई दिन नहीं",
   "Noida": "नोएडा",
   "North Delhi": "उत्तरी दिल्ली",

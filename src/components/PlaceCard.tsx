@@ -61,7 +61,12 @@ function PlaceCardBase({ place, km, day, today, saved, onOpen, onToggleSave }: P
               <Txt w="semi" style={{ fontSize: 14, lineHeight: 18, color: colors.ink }}>{place.rating.score.toFixed(1)}</Txt>
               <Txt style={st.grey}>({formatCount(place.rating.count)})</Txt>
             </View>
-          ) : null}
+          ) : (
+            <View style={st.rate}>
+              <Star size={13} color={colors.sub} strokeWidth={2} />
+              <Txt style={st.grey}>{tr('No rating')}</Txt>
+            </View>
+          )}
           <Txt style={[st.grey, { flex: 1 }]} numberOfLines={1}>
             {[place.area, km != null ? formatAway(km) : null, metro ? tr('{station} metro', { station: metro }) : null].filter(Boolean).join(' · ')}
           </Txt>
