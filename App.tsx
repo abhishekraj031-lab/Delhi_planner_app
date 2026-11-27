@@ -11,9 +11,8 @@ import { NotoSansDevanagari_400Regular } from '@expo-google-fonts/noto-sans-deva
 import { NotoSansDevanagari_500Medium } from '@expo-google-fonts/noto-sans-devanagari/500Medium';
 import { NotoSansDevanagari_600SemiBold } from '@expo-google-fonts/noto-sans-devanagari/600SemiBold';
 import { NotoSansDevanagari_700Bold } from '@expo-google-fonts/noto-sans-devanagari/700Bold';
-import { LangProvider, useLang } from './src/i18n';
+import { LangProvider, LANGUAGES, useLang } from './src/i18n';
 import { localizePlace } from './src/i18n/places';
-import { LanguageGate } from './src/components/LanguageGate';
 import { Splash } from './src/components/Splash';
 import { FadeSlide } from './src/components/motion';
 import { AuthPrompt } from './src/components/AuthPrompt';
@@ -69,7 +68,7 @@ function CategoryTab({ label, color, on, Icon, onPress }: { label: string; color
 
 function Home() {
   const insets = useSafeAreaInsets();
-  const { lang, t: tt } = useLang();
+  const { lang, setLang, t: tt } = useLang();
   const [placesEn, setPlaces] = useState<Place[]>([]);
   const places = useMemo(() => (lang === 'hi' ? placesEn.map(localizePlace) : placesEn), [placesEn, lang]);
   const [savedAll, setSaved] = useState<Set<string>>(new Set());
@@ -272,6 +271,13 @@ function Home() {
             </Pressable>
           </View>
         )}
+        <View accessibilityRole="radiogroup" accessibilityLabel={tt('Language')} style={{ flexDirection: 'row', height: 40, borderRadius: 20, backgroundColor: colors.fill, padding: 3, marginRight: 8 }}>
+          {([['en', 'EN'], ['hi', 'हि']] as const).map(([k, lab]) => (
+            <Pressable key={k} onPress={() => setLang(k)} accessibilityRole="radio" accessibilityState={{ checked: lang === k }} accessibilityLabel={LANGUAGES.find((l) => l.key === k)?.label}
+              style={{ minWidth: 36, paddingHorizontal: 8, borderRadius: 17, alignItems: 'center', justifyContent: 'center', backgroundColor: lang === k ? colors.primary : 'transparent' }}>
+              <Txt w="bold" style={{ fontSize: 14, color: lang === k ? colors.white : colors.text, fontFamily: k === 'hi' ? 'NotoSansDevanagari_700Bold' : undefined }}>{lab}</Txt>
+            </Pressable>))}
+        </View>
         <Pressable onPress={() => setShowNotes(true)} accessibilityRole="button" accessibilityLabel={tt('Notifications')} style={s.avatar}>
           <Bell size={22} color={colors.ink} />
         </Pressable>
@@ -303,7 +309,7 @@ function Home() {
           <FlatList horizontal showsHorizontalScrollIndicator={false} data={tags} keyExtractor={(t) => t.key} style={{ flex: 1 }} contentContainerStyle={{ gap: 8, paddingHorizontal: 16 }}
             renderItem={({ item }) => (
               <Pressable onPress={() => clearTag(item.key)} accessibilityRole="button" accessibilityLabel={tt('Remove filter {name}', { name: item.label })} style={s.tag}>
-                <Txt w="medium" style={{ fontSize: 12, color: colors.primary }}>{item.label}</Txt>
+                <Txt w="medium" style={{ fontSize: 12, color: colors.primaryText }}>{item.label}</Txt>
                 <X size={14} color={colors.primary} />
               </Pressable>
             )} />
@@ -323,7 +329,7 @@ function Home() {
       </FadeSlide>
       <Pressable onPress={() => setShowVoice(true)} accessibilityRole="button" accessibilityLabel={tt('Ask the Delhi assistant')}
         style={({ pressed }) => ({ position: 'absolute', right: 20, bottom: 16, width: 68, height: 68, borderRadius: 34, alignItems: 'center', justifyContent: 'center', opacity: pressed ? 0.85 : 1,
-          shadowColor: '#2c7aef', shadowOpacity: 0.45, shadowRadius: 14, shadowOffset: { width: 0, height: 6 }, elevation: 8 })}>
+          shadowColor: colors.primary, shadowOpacity: 0.45, shadowRadius: 14, shadowOffset: { width: 0, height: 6 }, elevation: 8 })}>
         <Orb mode="speaking" size={68} />
       </Pressable>
       </FadeSlide>
@@ -350,12 +356,12 @@ export default function App() {
 
 /** The first time the app opens, ask which language to use. */
 function Root() {
-  const { ready, chosen } = useLang();
+  const { ready } = useLang();
   const [splash, setSplash] = useState(true);
   // The app loads underneath while the splash plays, then the splash slides off to the left.
   return (
     <View style={{ flex: 1, backgroundColor: '#fff' }}>
-      {ready ? (chosen ? <Home /> : <LanguageGate />) : null}
+      {ready ? <Home /> : null}
       {splash ? <Splash onDone={() => setSplash(false)} /> : null}
     </View>
   );
@@ -375,6 +381,6 @@ const s = StyleSheet.create({
   chips: { paddingHorizontal: 4, paddingTop: 8, borderBottomWidth: 0 },
   hint: { color: colors.sub, fontSize: 12, marginHorizontal: 16, marginTop: 8 },
   tagRow: { flexDirection: 'row', alignItems: 'center', marginTop: 8, flexGrow: 0 },
-  tag: { flexDirection: 'row', alignItems: 'center', gap: 4, height: 28, paddingHorizontal: 10, borderRadius: 14, backgroundColor: '#E8F0FE' },
+  tag: { flexDirection: 'row', alignItems: 'center', gap: 4, height: 28, paddingHorizontal: 10, borderRadius: 14, backgroundColor: colors.primaryTint },
   empty: { color: colors.sub, textAlign: 'center', padding: 48 },
 });

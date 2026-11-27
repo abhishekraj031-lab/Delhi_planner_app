@@ -118,10 +118,10 @@ export function WallScreen(p: Props) {
         <Txt style={{ fontSize: 13, color: colors.sub }}>{tr('Your visits, shared with friends and family')}</Txt>
       </View>
       {!hideInvite ? (
-        <View style={{ marginHorizontal: 16, padding: 14, borderRadius: 16, backgroundColor: '#f2f7ff', borderWidth: 1, borderColor: '#d6e6ff', gap: 12 }}>
+        <View style={{ marginHorizontal: 16, padding: 14, borderRadius: 16, backgroundColor: colors.primarySoft, borderWidth: 1, borderColor: colors.primaryLine, gap: 12 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
             <View style={{ flexDirection: 'row' }}>
-              {PEOPLE.map((x, i) => (<View key={x.name} style={{ marginLeft: i ? -10 : 0, borderWidth: 2, borderColor: '#f2f7ff', borderRadius: 22 }}><Avatar name={x.name} size={36} /></View>))}
+              {PEOPLE.map((x, i) => (<View key={x.name} style={{ marginLeft: i ? -10 : 0, borderWidth: 2, borderColor: colors.primarySoft, borderRadius: 22 }}><Avatar name={x.name} size={36} /></View>))}
             </View>
             <View style={{ flex: 1 }}>
               <Txt w="bold" style={{ fontSize: 16 }}>{tr('Invite friends and family')}</Txt>

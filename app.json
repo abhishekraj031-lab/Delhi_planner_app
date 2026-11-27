@@ -21,7 +21,7 @@
       "package": "com.example.delhiexplorer",
       "versionCode": 1,
       "adaptiveIcon": {
-        "backgroundColor": "#2c7aef",
+        "backgroundColor": "#E8590C",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
@@ -63,7 +63,7 @@
           "image": "./assets/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#2c7aef"
+          "backgroundColor": "#E8590C"
         }
       ],
       "expo-speech-recognition"

@@ -30,7 +30,7 @@ function AppRow({ app: a, place: p, from }: { app: CabApp; place: Place; from: C
         <Txt w="semi" style={{ fontSize: 16 }}>{a.name}</Txt>
         <Txt style={{ fontSize: 12, color: colors.sub }}>{tr(a.note)}</Txt>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>
-          <Txt w="bold" style={{ fontSize: 14, color: colors.primary }}>{tr('Check price')}</Txt>
+          <Txt w="bold" style={{ fontSize: 14, color: colors.primaryText }}>{tr('Check price')}</Txt>
           <ChevronRight size={18} color={colors.primary} />
         </View>
       </View>
@@ -62,7 +62,7 @@ export function CommuteCards({ place: p, km, from, day, locState, onAllowLocatio
         </View>
         {metro ? (
           <View style={s.fareBox}>
-            <Txt w="bold" style={{ fontSize: 22, color: '#1d5fc4' }}>{tr('About ₹{fare}', { fare: metro.fare })}</Txt>
+            <Txt w="bold" style={{ fontSize: 22, color: colors.primaryText }}>{tr('About ₹{fare}', { fare: metro.fare })}</Txt>
             <Txt style={{ fontSize: 13, color: colors.sub }}>
               {tr('Estimated one-way fare for one adult, {kind}. The exact fare depends on the station you board at. Airport Express costs more.', { kind: metro.sunday ? tr('Sunday rate') : tr('Monday to Saturday') })}
             </Txt>
@@ -82,7 +82,7 @@ export function CommuteCards({ place: p, km, from, day, locState, onAllowLocatio
         </View>
         {cab ? (
           <View style={s.fareBox}>
-            <Txt w="bold" style={{ fontSize: 22, color: '#1d5fc4' }}>{tr('₹{low} to ₹{high}', { low: cab.low, high: cab.high })}</Txt>
+            <Txt w="bold" style={{ fontSize: 22, color: colors.primaryText }}>{tr('₹{low} to ₹{high}', { low: cab.low, high: cab.high })}</Txt>
             <Txt style={{ fontSize: 13, color: colors.sub }}>
               {tr('Estimated for a basic cab, about {km} km by road. Real prices change with traffic and demand and are shown in each app before you book.', { km: cab.roadKm.toFixed(1) })}
             </Txt>

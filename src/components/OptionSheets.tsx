@@ -38,7 +38,7 @@ export function FilterSheet(p: FilterProps) {
     <Sheet visible={p.visible} onClose={p.onClose} label={tr('Filters')}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Txt w="bold" style={{ fontSize: 20, flex: 1 }}>{tr('Filters')}</Txt>
-        {dirty ? <Pressable onPress={() => setX(NO_EXTRA)} hitSlop={8} accessibilityRole="button"><Txt w="semi" style={{ color: colors.primary }}>{tr('Clear all')}</Txt></Pressable> : null}
+        {dirty ? <Pressable onPress={() => setX(NO_EXTRA)} hitSlop={8} accessibilityRole="button"><Txt w="semi" style={{ color: colors.primaryText }}>{tr('Clear all')}</Txt></Pressable> : null}
       </View>
       <Group title={tr('When are you going?')} note={tr('Weekdays is Monday to Friday. Places with unknown opening days are left out of day choices.')}>
         <Row>{WHEN_OPTIONS.map((o) => <Chip key={o.key} label={tr(o.label)} on={x.when === o.key} onPress={() => set({ when: o.key, pick: null, ...(o.key !== 'today' && x.now ? { now: false } : {}) })} />)}</Row>
@@ -61,7 +61,7 @@ export function FilterSheet(p: FilterProps) {
           <Chip key={o.key} label={tr(o.label)} on={x.where === o.key}
             onPress={() => (o.needsLocation && !p.hasLocation ? p.onSetLocation() : set({ where: x.where === o.key ? null : o.key }))} />
         ))}</Row>
-        {!p.hasLocation ? <Pressable onPress={p.onSetLocation} accessibilityRole="button"><Txt w="semi" style={{ color: colors.primary, fontSize: 13 }}>{tr('Set your location to use distance options')}</Txt></Pressable> : null}
+        {!p.hasLocation ? <Pressable onPress={p.onSetLocation} accessibilityRole="button"><Txt w="semi" style={{ color: colors.primaryText, fontSize: 13 }}>{tr('Set your location to use distance options')}</Txt></Pressable> : null}
       </Group>
       <Group title={tr('Type')} note={tr('All shows every type together, so you can compare places across the city.')}>
         <Row>

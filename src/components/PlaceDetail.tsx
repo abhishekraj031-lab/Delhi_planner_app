@@ -191,7 +191,7 @@ export function PlaceDetail({ place, km, loc, locState, onAllowLocation, day, to
                   {p.photoCredit ? `\n${tr('Photo: {credit} (Wikimedia Commons)', { credit: p.photoCredit })}` : ''}
                 </Txt>
                 <Pressable accessibilityRole="link" hitSlop={{ top: 12, bottom: 12 }} onPress={() => Linking.openURL(`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(`Correction: ${p.name}`)}`)}>
-                  <Txt style={{ fontSize: 14, color: colors.primary, textDecorationLine: 'underline' }}>{tr('Report wrong information')}</Txt>
+                  <Txt style={{ fontSize: 14, color: colors.primaryText, textDecorationLine: 'underline' }}>{tr('Report wrong information')}</Txt>
                 </Pressable>
               </Card>
             </View>
