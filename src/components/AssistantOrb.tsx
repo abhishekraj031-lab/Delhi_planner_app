@@ -90,6 +90,26 @@ export function Orb({ mode, size = 40 }: { mode: OrbMode; size?: number }) {
   );
 }
 
+/** Just the animated voice bars, no circle: used as a quiet assistant button inside the search bar. */
+export function SpeakingBars({ size = 24, color = colors.ink }: { size?: number; color?: string }) {
+  const reduce = useReduceMotion();
+  const bars = useRef([0, 1, 2, 3, 4].map(() => new Animated.Value(0))).current;
+  useEffect(() => {
+    if (reduce) { bars.forEach((b) => b.setValue(1)); return; }
+    const ls = bars.map((b, i) => loop(b, 420 + i * 90, i * 60, true));
+    ls.forEach((l) => l.start());
+    return () => ls.forEach((l) => l.stop());
+  }, [reduce, bars]);
+  const w = Math.max(2.5, size * 0.11);
+  return (
+    <View style={{ width: size, height: size, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: w * 0.75 }}>
+      {bars.map((b, i) => (
+        <Animated.View key={i} style={{ width: w, height: size * 0.9, borderRadius: w, backgroundColor: color, transform: [{ scaleY: b.interpolate({ inputRange: [0, 1], outputRange: [reduce ? 0.7 : 0.25, 1] }) }] }} />
+      ))}
+    </View>
+  );
+}
+
 /** Three bouncing dots, shown while the assistant is working out an answer. */
 export function TypingDots() {
   const reduce = useReduceMotion();

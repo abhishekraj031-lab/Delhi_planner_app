@@ -33,7 +33,7 @@ import { loadPlaces } from './src/data/repository';
 import { categoriesWithPlaces, visiblePlaces } from './src/lib/places';
 import { KEYS, loadJSON, saveJSON } from './src/lib/storage';
 import { useLocation } from './src/hooks/useLocation';
-import { Orb } from './src/components/AssistantOrb';
+import { SpeakingBars } from './src/components/AssistantOrb';
 import { Chip, Txt } from './src/components/ui';
 import { PlaceCard } from './src/components/PlaceCard';
 import { PlaceDetail } from './src/components/PlaceDetail';
@@ -292,7 +292,7 @@ function Home() {
             {query ? null : <RotatingHint items={['India Gate', 'free places', 'Qutub Minar', 'nearest metro', 'Lotus Temple']} />}
           </View>
           <Pressable onPress={() => setShowVoice(true)} hitSlop={{ top: 6, bottom: 6, left: 6, right: 8 }} accessibilityRole="button" accessibilityLabel={tt('Ask the Delhi assistant')} style={({ pressed }) => [s.mic, { opacity: pressed ? 0.8 : 1 }]}>
-            <Orb mode="speaking" size={38} />
+            <SpeakingBars size={24} />
           </Pressable>
         </View>
         <Pressable onPress={() => setShowFilters(true)} accessibilityRole="button" accessibilityLabel={tt('Filters')} style={s.filter}>
