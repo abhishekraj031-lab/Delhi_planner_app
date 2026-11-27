@@ -16,7 +16,7 @@ type FilterProps = {
 };
 function Group({ title, note, children }: { title: string; note?: string; children: React.ReactNode }) {
   return (
-    <View style={{ gap: 12, padding: 16, borderRadius: 18, borderWidth: 1, borderColor: colors.line, backgroundColor: colors.primarySoft }}>
+    <View style={{ gap: 12, padding: 16, borderRadius: 18, borderWidth: 1, borderColor: '#E4D8CA', backgroundColor: colors.white }}>
       <View style={{ gap: 3 }}>
         <Txt w="bold" style={{ fontSize: 16 }}>{title}</Txt>
         {note ? <Txt style={{ color: colors.sub, fontSize: 12, lineHeight: 17 }}>{note}</Txt> : null}

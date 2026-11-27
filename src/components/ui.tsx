@@ -32,7 +32,7 @@ export function Button({ label, onPress, outline, url }: { label: string; onPres
   );
 }
 const s = StyleSheet.create({
-  chip: { flexDirection: 'row', alignItems: 'center', gap: 4, minHeight: 36, paddingHorizontal: 12, borderRadius: 8, borderWidth: 1, borderColor: colors.fill, backgroundColor: colors.white },
+  chip: { flexDirection: 'row', alignItems: 'center', gap: 4, minHeight: 36, paddingHorizontal: 12, borderRadius: 8, borderWidth: 1, borderColor: '#E4D8CA', backgroundColor: colors.white },
   chipOn: { backgroundColor: colors.primary, borderColor: colors.primary },
   unv: { backgroundColor: colors.unvBg, borderRadius: 99, paddingHorizontal: 5, paddingVertical: 1, marginLeft: 4 },
   btn: { flex: 1, minHeight: 48, paddingVertical: 8, borderRadius: 10, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: colors.primary },
