@@ -56,7 +56,8 @@ const CAT_COLOR: Record<Category, string> = {
   'Gardens & Parks': '#2e9e4f', 'Markets & Food': '#d99100', 'Entertainment': '#2c7aef',
 };
 
-function CategoryTab({ label, color, on, Icon, onPress }: { label: string; color: string; on: boolean; Icon: React.ComponentType<{ size?: number; color?: string; fill?: string; strokeWidth?: number }>; onPress: () => void }) {
+function CategoryTab({ label, color: _own, on, Icon, onPress }: { label: string; color: string; on: boolean; Icon: React.ComponentType<{ size?: number; color?: string; fill?: string; strokeWidth?: number }>; onPress: () => void }) {
+  const color = colors.primary; // the active category always uses the app's orange
   return (
     <Pressable onPress={onPress} hitSlop={4} accessibilityRole="button" accessibilityState={{ selected: on }}
       style={({ pressed }) => ({ alignItems: 'center', gap: 6, minHeight: 60, paddingHorizontal: 14, paddingTop: 8, borderBottomWidth: 2, borderBottomColor: on ? color : 'transparent', opacity: pressed ? 0.6 : 1, transform: [{ scale: pressed ? 0.96 : 1 }] })}>

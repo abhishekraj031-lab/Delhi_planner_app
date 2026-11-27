@@ -15,7 +15,7 @@ const TABS: { key: TabKey; label: string; Icon: React.ComponentType<{ size?: num
 ];
 const NATIVE = Platform.OS !== 'web';
 
-/** The dark pill fades and grows in behind the active tab; the colours switch halfway so text never disappears. */
+/** The orange pill fades and grows in behind the active tab; the colours switch halfway so text never disappears. */
 function TabItem({ on, label, Icon, onPress, alwaysLabel }: { on: boolean; label: string; alwaysLabel?: boolean; Icon: (typeof TABS)[number]['Icon']; onPress: () => void }) {
   const v = useRef(new Animated.Value(on ? 1 : 0)).current;
   const [shown, setShown] = useState(on);
@@ -50,5 +50,5 @@ const s = StyleSheet.create({
   bar: { flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', paddingTop: 12, paddingHorizontal: 8, backgroundColor: colors.white, borderTopWidth: 1, borderTopColor: colors.fill },
   tab: { minHeight: 44, paddingHorizontal: 16, borderRadius: 12, justifyContent: 'center' },
   content: { flexDirection: 'row', alignItems: 'center', gap: 6, zIndex: 1 },
-  pill: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, borderRadius: 12, backgroundColor: colors.dark, zIndex: 0 },
+  pill: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, borderRadius: 12, backgroundColor: colors.primary, zIndex: 0 },
 });
