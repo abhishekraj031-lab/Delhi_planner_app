@@ -84,6 +84,16 @@ function Home() {
   const [showLocation, setShowLocation] = useState(false);
   const [showVoice, setShowVoice] = useState(false);
   const aiRef = useRef<any>(null);
+  // Scrolling down tucks the Welcome/location row away so more cards fit; it only comes back once the list is back at the very top.
+  const hdr = useRef(new Animated.Value(1)).current;
+  const hdrOpen = useRef(true);
+  const onListScroll = useCallback((e: { nativeEvent: { contentOffset: { y: number } } }) => {
+    const y = e.nativeEvent.contentOffset.y;
+    const want = hdrOpen.current ? y < 56 : y <= 4;
+    if (want === hdrOpen.current) return;
+    hdrOpen.current = want;
+    Animated.timing(hdr, { toValue: want ? 1 : 0, duration: 220, easing: Easing.out(Easing.cubic), useNativeDriver: false }).start();
+  }, [hdr]);
   // Preview only: the page around the preview owns the microphone, so it needs a real tap on the assistant button to start
   // listening. We tell it where the button is (only while it is actually visible) and it tells us when it was tapped.
   useEffect(() => {
@@ -273,6 +283,7 @@ function Home() {
     <View style={[s.screen, { paddingTop: insets.top }]}>
       <StatusBar style="dark" />
       <FadeSlide k="home" dy={6} ms={240} style={{ flex: 1 }}>
+      <Animated.View style={{ overflow: 'hidden', opacity: hdr, maxHeight: hdr.interpolate({ inputRange: [0, 1], outputRange: [0, 90] }) }}>
       <View style={s.header}>
         {user ? (
           <Pressable onPress={() => setShowLocation(true)} hitSlop={{ top: 8, bottom: 8, right: 16 }} accessibilityRole="button" accessibilityLabel={tt('Location: {where}. Change', { where: `${place.title}, ${place.sub}` })} style={{ flex: 1 }}>
@@ -303,6 +314,7 @@ function Home() {
           <Bell size={22} color={colors.ink} />
         </Pressable>
       </View>
+      </Animated.View>
       <View style={s.searchRow}>
         <View style={s.search}>
           <Search size={20} color={colors.text} />
@@ -342,7 +354,7 @@ function Home() {
       {rows.length === 0 && tags.length ? <Txt style={s.hint}>{tt('{n} places match. Places with unknown opening days, prices or hours are left out of those filters.', { n: rows.length })}</Txt> : null}
       <FadeSlide k={query ? 'search' : String(category)} style={{ flex: 1 }}>
       <FlatList data={rows} extraData={lang} keyExtractor={(r) => r.place.id} style={{ backgroundColor: colors.white }} contentContainerStyle={{ paddingBottom: 24 }}
-        initialNumToRender={6} windowSize={7} keyboardShouldPersistTaps="handled"
+        initialNumToRender={6} windowSize={7} keyboardShouldPersistTaps="handled" onScroll={onListScroll} scrollEventThrottle={16}
         ListEmptyComponent={<Txt style={s.empty}>{tt('Nothing here yet. More places are coming soon — try another category or clear the filters.')}</Txt>}
         renderItem={({ item }) => (
           <PlaceCard place={item.place} km={item.km} day={day} today={today} saved={saved.has(item.place.id)}
