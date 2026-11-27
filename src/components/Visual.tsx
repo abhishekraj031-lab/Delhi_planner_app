@@ -6,6 +6,8 @@ import { Txt } from './ui';
 
 /** Share of the cropped-away height removed from the top (0 = keep the very top, 1 = keep the very bottom). */
 const FOCUS_FROM_TOP = 0.15;
+/** Photos whose subject sits low in the picture (a dome seen against open sky): keep their lower part in view instead. */
+const FOCUS_BY_PLACE: Record<string, number> = { 'gurudwara-bangla-sahib': 1 };
 
 /**
  * Photo if we have one, otherwise a coloured placeholder with the place's emoji.
@@ -27,7 +29,7 @@ export function PlaceVisual({ place, height, radius }: { place: Place; height: n
   // Image taller than the frame: show it at full width, shifted so the top stays visible.
   const tall = ratio < frameRatio;
   const imgH = w ? w / ratio : height;
-  const top = tall ? -(imgH - height) * FOCUS_FROM_TOP : 0;
+  const top = tall ? -(imgH - height) * (FOCUS_BY_PLACE[place.id] ?? FOCUS_FROM_TOP) : 0;
   return (
     <View onLayout={onLayout} style={[{ width: '100%', height, overflow: 'hidden', backgroundColor: '#e9e9ef' }, radius]}>
       {w > 0 ? (
