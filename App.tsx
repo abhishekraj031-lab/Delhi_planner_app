@@ -305,7 +305,6 @@ function Home() {
             return <CategoryTab label={tt(item)} color={CAT_COLOR[item]} on={on} Icon={Icon} onPress={() => { setQuery(''); setCategory(item); }} />;
           }} />
       </View>
-      {loc ? <Txt style={s.hint}>{tt('Nearest first, by straight-line distance.')}</Txt> : null}
       {tags.length ? (
         <View style={s.tagRow}>
           <FlatList horizontal showsHorizontalScrollIndicator={false} data={tags} keyExtractor={(t) => t.key} style={{ flex: 1 }} contentContainerStyle={{ gap: 8, paddingHorizontal: 16 }}
