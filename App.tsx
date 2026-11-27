@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { FlatList, Image, Pressable, StyleSheet, TextInput, View } from 'react-native';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Animated, Easing, FlatList, Image, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useFonts } from 'expo-font';
@@ -286,8 +286,10 @@ function Home() {
       <View style={s.searchRow}>
         <View style={s.search}>
           <Search size={20} color={colors.text} />
-          <TextInput value={query} onChangeText={setQuery} placeholder={tt('Search place, attractions...')} placeholderTextColor="#333232"
-            accessibilityLabel={tt('Search places')} returnKeyType="search" style={[s.input, { fontFamily: fontFor('regular') }]} />
+          <View style={{ flex: 1, justifyContent: 'center' }}>
+            <TextInput value={query} onChangeText={setQuery} placeholder="" accessibilityLabel={tt('Search places')} returnKeyType="search" style={[s.input, { fontFamily: fontFor('regular') }]} />
+            {query ? null : <RotatingHint items={['India Gate', 'free places', 'Qutub Minar', 'nearest metro', 'Lotus Temple']} />}
+          </View>
           <Pressable onPress={() => setShowVoice(true)} hitSlop={{ top: 6, bottom: 6, left: 6, right: 8 }} accessibilityRole="button" accessibilityLabel={tt('Ask the Delhi assistant')} style={({ pressed }) => [s.mic, { opacity: pressed ? 0.8 : 1 }]}>
             <View style={s.ai}><Sparkles size={18} color={colors.white} /></View>
           </Pressable>
@@ -340,6 +342,28 @@ function Home() {
       <NotificationsSheet visible={showNotes} onClose={() => setShowNotes(false)} />
       <LocationSheet visible={showLocation} onClose={() => setShowLocation(false)} loc={loc} state={state} onUseCurrent={requestCurrent} onChooseArea={chooseArea} />
     </View>
+  );
+}
+
+/** Placeholder that rolls through example searches, like Blinkit's search bar. Taps pass through to the input underneath. */
+function RotatingHint({ items }: { items: string[] }) {
+  const { t: tt } = useLang();
+  const [i, setI] = useState(0);
+  const y = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    const id = setInterval(() => {
+      Animated.timing(y, { toValue: -1, duration: 220, easing: Easing.in(Easing.quad), useNativeDriver: true }).start(() => {
+        setI((n) => (n + 1) % items.length);
+        y.setValue(1);
+        Animated.timing(y, { toValue: 0, duration: 260, easing: Easing.out(Easing.quad), useNativeDriver: true }).start();
+      });
+    }, 2600);
+    return () => clearInterval(id);
+  }, [items.length, y]);
+  return (
+    <Animated.View pointerEvents="none" style={{ position: 'absolute', left: 0, right: 0, opacity: y.interpolate({ inputRange: [-1, 0, 1], outputRange: [0, 1, 0] }), transform: [{ translateY: y.interpolate({ inputRange: [-1, 0, 1], outputRange: [-12, 0, 12] }) }] }}>
+      <Txt numberOfLines={1} style={{ fontSize: 16, color: '#333232' }}>{tt('Search “{x}”', { x: tt(items[i]) })}</Txt>
+    </Animated.View>
   );
 }
 
