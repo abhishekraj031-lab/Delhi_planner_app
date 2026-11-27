@@ -37,7 +37,7 @@ body{background:var(--bg);margin:0;overflow:hidden}
 .status b{display:block;background:var(--barfg);border-radius:2px}
 .island{position:absolute;top:10px;left:50%;width:110px;height:30px;margin-left:-55px;background:#000;border-radius:16px}
 iframe{width:390px;flex:1;border:0;display:block;background:#fff;min-height:0}
-.phone.ovl iframe{margin-top:-47px}
+.phone.ovl iframe{margin-top:-53px}
 #aiov{position:absolute;display:none;z-index:6;background:transparent;border:0;border-radius:50%;padding:0;cursor:pointer}
 #micov{position:absolute;display:none;z-index:5;background:transparent;border:0;border-radius:50%;padding:0;cursor:pointer}
 #links a{position:absolute;display:block;z-index:6;background:transparent;-webkit-tap-highlight-color:transparent;border-radius:10px;touch-action:none}

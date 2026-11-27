@@ -92,7 +92,7 @@ export function PlaceDetail({ place, km, loc, locState, onAllowLocation, day, to
   }
   if (p.metro && !p.metroUnverified) facts.push(tr('Metro: {station}', { station: p.metro.replace(/\s*\(.*\)$/, '') }));
   const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => setPage(Math.round(e.nativeEvent.contentOffset.x / width));
-  const top = insets.top + 8 + (inFrame ? 47 : 0);
+  const top = insets.top + 8 + (inFrame ? 53 : 0);
 
   return (
     <Modal visible animationType="slide" onRequestClose={onClose} statusBarTranslucent>
