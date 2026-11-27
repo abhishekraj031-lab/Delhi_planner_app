@@ -90,6 +90,6 @@ const st = StyleSheet.create({
   feeFree: {},
   feeNone: { minHeight: 30, paddingHorizontal: 12, borderRadius: 15, backgroundColor: colors.white, justifyContent: 'center', shadowColor: '#000', shadowOpacity: 0.12, shadowRadius: 4, shadowOffset: { width: 0, height: 1 }, elevation: 2 },
   grey: { color: colors.sub, fontSize: 14, lineHeight: 18 },
-  metaRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: -2 },
+  metaRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 3 },
   rate: { flexDirection: 'row', alignItems: 'center', gap: 3 },
 });
