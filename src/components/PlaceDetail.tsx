@@ -130,7 +130,12 @@ export function PlaceDetail({ place, km, loc, locState, onAllowLocation, day, to
           <View style={s.sheet}>
             <View style={s.cards}>
               <Card>
-                <Txt w="bold" style={{ fontSize: 24, lineHeight: 30 }}>{p.name}</Txt>
+                <View style={{ flexDirection: 'row', alignItems: 'flex-start', gap: 12 }}>
+                  <Txt w="bold" style={{ flex: 1, fontSize: 24, lineHeight: 30 }}>{p.name}</Txt>
+                  <Pressable onPress={onShare} hitSlop={8} accessibilityRole="button" accessibilityLabel={tr('Share')} style={({ pressed }) => ({ width: 40, height: 40, borderRadius: 20, backgroundColor: colors.fill, alignItems: 'center', justifyContent: 'center', opacity: pressed ? 0.6 : 1 })}>
+                    <Share2 size={20} color={colors.ink} strokeWidth={2.2} />
+                  </Pressable>
+                </View>
                 <Txt style={{ fontSize: 15, color: colors.sub }}>{areaLabel(p)}{km != null ? ` · ${formatAway(km)}` : ''}</Txt>
                 <View style={s.chips}>
                   <View style={[s.pill, { backgroundColor: tone.bg, flexDirection: 'row', alignItems: 'center' }]}>
@@ -244,9 +249,6 @@ export function PlaceDetail({ place, km, loc, locState, onAllowLocation, day, to
         </ScrollView>
 
         <CircleBtn onPress={onClose} label={tr('Back')} side="left" top={top}><ChevronLeft size={26} color={colors.ink} /></CircleBtn>
-        <Pressable onPress={onShare} hitSlop={14} accessibilityRole="button" accessibilityLabel={tr('Share')} style={{ position: 'absolute', top: top + 8, right: 60 }}>
-          <Share2 size={26} color={colors.white} fill="none" strokeWidth={2.2} />
-        </Pressable>
         {/* Same heart as on the home cards: bare, white with a soft dark fill, top right of the photo. */}
         <Pressable onPress={onToggleSave} hitSlop={14} accessibilityRole="button" accessibilityLabel={saved ? tr('Remove from saved') : tr('Save place')} style={{ position: 'absolute', top: top + 8, right: 16 }}>
           <Heart size={28} color={saved ? '#ff385c' : colors.white} fill={saved ? '#ff385c' : 'rgba(0,0,0,0.35)'} strokeWidth={2} />
