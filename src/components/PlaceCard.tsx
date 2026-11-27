@@ -41,18 +41,20 @@ function PlaceCardBase({ place, km, day, today, saved, onOpen, onToggleSave }: P
           accessibilityLabel={saved ? tr('Remove {name} from saved', { name: place.name }) : tr('Save {name}', { name: place.name })} style={st.heart}>
           <Heart size={28} color={saved ? '#ff385c' : colors.white} fill={saved ? '#ff385c' : 'rgba(0,0,0,0.35)'} strokeWidth={2} />
         </Pressable>
+        <View style={st.feeOn} pointerEvents="none">
+  {fee ? (
+    <View style={[st.fee, fee === tr('Free') && st.feeFree]}>
+      {fee === tr('Free')
+        ? <Txt w="bold" style={{ fontSize: 15, color: colors.ink }}>{tr('Free entry')}</Txt>
+        : <><Txt w="bold" style={{ fontSize: 17, color: colors.ink }}>{fee}</Txt><Txt style={{ fontSize: 12, color: colors.ink }}> {tr('entry fee')}</Txt></>}
+      {place.price.unverified ? <Unverified /> : null}
+    </View>
+  ) : <View style={st.feeNone}><Txt style={{ fontSize: 12, color: colors.sub }}>{tr('Fee not available')}</Txt></View>}
+        </View>
       </View>
       <View style={st.text}>
         <View style={st.titleRow}>
           <Txt w="semi" style={{ fontSize: 16, lineHeight: 22, flex: 1 }} numberOfLines={1}>{place.name}</Txt>
-          {fee ? (
-            <View style={[st.fee, fee === tr('Free') && st.feeFree]}>
-              {fee === tr('Free')
-                ? <Txt w="bold" style={{ fontSize: 15, color: colors.ink }}>{tr('Free entry')}</Txt>
-                : <><Txt w="bold" style={{ fontSize: 17, color: colors.ink }}>{fee}</Txt><Txt style={{ fontSize: 12, color: colors.ink }}> {tr('entry fee')}</Txt></>}
-              {place.price.unverified ? <Unverified /> : null}
-            </View>
-          ) : <View style={st.feeNone}><Txt style={{ fontSize: 12, color: colors.sub }}>{tr('Fee not available')}</Txt></View>}
         </View>
         <View style={st.metaRow}>
           {place.rating ? (
@@ -83,9 +85,10 @@ const st = StyleSheet.create({
   badge: { position: 'absolute', top: 12, left: 12, flexDirection: 'row', alignItems: 'center', maxWidth: '75%', minHeight: 28, paddingHorizontal: 12, paddingVertical: 4, borderRadius: 14, backgroundColor: colors.white, shadowColor: '#000', shadowOpacity: 0.12, shadowRadius: 4, shadowOffset: { width: 0, height: 1 }, elevation: 2 },
   text: { marginTop: 6, gap: 0 },
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  fee: { flexDirection: 'row', minHeight: 28, paddingHorizontal: 10, borderRadius: 14, backgroundColor: colors.primaryTint, alignItems: 'center' },
-  feeFree: { backgroundColor: colors.fill },
-  feeNone: { minHeight: 28, paddingHorizontal: 10, borderRadius: 14, backgroundColor: colors.fill, justifyContent: 'center' },
+  feeOn: { position: 'absolute', right: 12, bottom: 12 },
+  fee: { flexDirection: 'row', minHeight: 30, paddingHorizontal: 12, borderRadius: 15, backgroundColor: colors.white, alignItems: 'center', shadowColor: '#000', shadowOpacity: 0.12, shadowRadius: 4, shadowOffset: { width: 0, height: 1 }, elevation: 2 },
+  feeFree: {},
+  feeNone: { minHeight: 30, paddingHorizontal: 12, borderRadius: 15, backgroundColor: colors.white, justifyContent: 'center', shadowColor: '#000', shadowOpacity: 0.12, shadowRadius: 4, shadowOffset: { width: 0, height: 1 }, elevation: 2 },
   grey: { color: colors.sub, fontSize: 14, lineHeight: 18 },
   metaRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: -2 },
   rate: { flexDirection: 'row', alignItems: 'center', gap: 3 },
