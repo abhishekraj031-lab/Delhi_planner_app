@@ -32,7 +32,7 @@ const WORD = 'Ghummakad'.split('');
 /** Launch screen: the G-pin draws itself, pops with ripples, then moves up as "Ghummakad" pops in letter by letter. */
 export function Splash({ onDone, ms = 5600 }: { onDone: () => void; ms?: number }) {
   const { width } = useWindowDimensions();
-  const k = Math.min(width / 720, 0.7); // everything is laid out on a 720-unit stage
+  const k = Math.min((width / 720) * 0.74, 0.55); // everything is laid out on a 720-unit stage
   const T = useRef(new Animated.Value(0)).current;
 
   const a = useMemo(() => {
@@ -70,7 +70,7 @@ export function Splash({ onDone, ms = 5600 }: { onDone: () => void; ms?: number 
   return (
     <Animated.View accessibilityLabel="Ghummakad" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 50, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', opacity: a.out, transform: [{ scale: a.out.interpolate({ inputRange: [0, 1], outputRange: [1.06, 1] }) }] }}>
       <StatusBar style="light" />
-      <View style={{ width: S, height: S }}>
+      <View style={{ width: S, height: S, marginTop: -46 }}>
         <Svg width={S} height={S} viewBox="0 0 720 720" style={{ position: 'absolute', left: 0, top: 0 }}>
           {a.ripple.map((r, i) => (
             <AnimatedEllipse key={i} cx={360} cy={450} rx={r.rx} ry={r.ry} stroke="#ffffff" strokeWidth={4} fill="none" opacity={r.op} />
@@ -82,7 +82,7 @@ export function Splash({ onDone, ms = 5600 }: { onDone: () => void; ms?: number 
               strokeDasharray={[G_LEN, G_LEN]} strokeDashoffset={a.dash} opacity={a.show} />
           </Svg>
         </Animated.View>
-        <View style={{ position: 'absolute', left: 0, right: 0, top: 482 * k, flexDirection: 'row', justifyContent: 'center' }}>
+        <View style={{ position: 'absolute', left: 0, right: 0, top: 466 * k, flexDirection: 'row', justifyContent: 'center' }}>
           {WORD.map((c, i) => (
             <Animated.View key={i} style={{ opacity: a.letters[i].op, transform: [{ translateY: a.letters[i].y }, { scale: a.letters[i].sc }] }}>
               <Txt style={{ fontSize: 92 * k, color: colors.white, fontFamily: 'Outfit_800ExtraBold', letterSpacing: -2 * k, lineHeight: 100 * k }}>{c}</Txt>
