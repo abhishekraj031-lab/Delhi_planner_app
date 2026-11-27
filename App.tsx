@@ -35,6 +35,7 @@ import { KEYS, loadJSON, saveJSON } from './src/lib/storage';
 import { useLocation } from './src/hooks/useLocation';
 import { SpeakingBars } from './src/components/AssistantOrb';
 import { Chip, Txt } from './src/components/ui';
+import { inFrame, onBridge, post } from './src/lib/bridge';
 import { PlaceCard } from './src/components/PlaceCard';
 import { PlaceDetail } from './src/components/PlaceDetail';
 import { TabBar, TabKey } from './src/components/TabBar';
@@ -82,6 +83,24 @@ function Home() {
   const [showFilters, setShowFilters] = useState(false);
   const [showLocation, setShowLocation] = useState(false);
   const [showVoice, setShowVoice] = useState(false);
+  const aiRef = useRef<any>(null);
+  // Preview only: the page around the preview owns the microphone, so it needs a real tap on the assistant button to start
+  // listening. We tell it where the button is (only while it is actually visible) and it tells us when it was tapped.
+  useEffect(() => {
+    if (!inFrame) return;
+    const off = onBridge((m) => { if (m.dx === 'open-ai') setShowVoice(true); });
+    const send = () => {
+      const el: any = aiRef.current; let rect = null;
+      if (el?.getBoundingClientRect && typeof document !== 'undefined') {
+        const r = el.getBoundingClientRect();
+        const hit = r.width ? document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2) : null;
+        if (hit && el.contains(hit)) rect = { x: r.left, y: r.top, w: r.width, h: r.height };
+      }
+      post({ dx: 'ai', rect });
+    };
+    send(); const iv = setInterval(send, 250);
+    return () => { off(); clearInterval(iv); post({ dx: 'ai', rect: null }); };
+  }, []);
   const [showNew, setShowNew] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
   const [geo, setGeo] = useState<{ key: string; p: GeoPlace | null } | null>(null);
@@ -291,7 +310,7 @@ function Home() {
             <TextInput value={query} onChangeText={setQuery} placeholder="" accessibilityLabel={tt('Search places')} returnKeyType="search" style={[s.input, { fontFamily: fontFor('regular') }]} />
             {query ? null : <RotatingHint items={['India Gate', 'free places', 'Qutub Minar', 'nearest metro', 'Lotus Temple']} />}
           </View>
-          <Pressable onPress={() => setShowVoice(true)} hitSlop={{ top: 6, bottom: 6, left: 6, right: 8 }} accessibilityRole="button" accessibilityLabel={tt('Ask the Delhi assistant')} style={({ pressed }) => [s.mic, { opacity: pressed ? 0.8 : 1 }]}>
+          <Pressable ref={aiRef} onPress={() => setShowVoice(true)} hitSlop={{ top: 6, bottom: 6, left: 6, right: 8 }} accessibilityRole="button" accessibilityLabel={tt('Ask the Delhi assistant')} style={({ pressed }) => [s.mic, { opacity: pressed ? 0.8 : 1 }]}>
             <SpeakingBars size={24} />
           </Pressable>
         </View>

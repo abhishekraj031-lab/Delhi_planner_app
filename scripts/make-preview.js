@@ -37,6 +37,7 @@ body{background:var(--bg);margin:0;overflow:hidden}
 .status b{display:block;background:var(--barfg);border-radius:2px}
 .island{position:absolute;top:10px;left:50%;width:110px;height:30px;margin-left:-55px;background:#000;border-radius:16px}
 iframe{width:390px;flex:1;border:0;display:block;background:#fff;min-height:0}
+#aiov{position:absolute;display:none;z-index:6;background:transparent;border:0;border-radius:50%;padding:0;cursor:pointer}
 #micov{position:absolute;display:none;z-index:5;background:transparent;border:0;border-radius:50%;padding:0;cursor:pointer}
 #links a{position:absolute;display:block;z-index:6;background:transparent;-webkit-tap-highlight-color:transparent;border-radius:10px;touch-action:none}
 .home{height:0;position:relative}
@@ -49,6 +50,7 @@ iframe{width:390px;flex:1;border:0;display:block;background:#fff;min-height:0}
       <iframe id="app" title="Ghummakad app preview"></iframe>
       <div id="links"></div>
       <button id="micov" aria-label="Speak" title="Speak"></button>
+      <button id="aiov" aria-label="Ask the Delhi assistant" title="Ask the Delhi assistant"></button>
       <div class="home"></div>
     </div>
   </div>
@@ -63,7 +65,7 @@ function fit(){
   slot.style.width = (410 * k) + 'px'; slot.style.height = (864 * k) + 'px';
 }
 addEventListener('resize', fit); fit();
-const frame = document.getElementById('app'), ov = document.getElementById('micov');
+const frame = document.getElementById('app'), ov = document.getElementById('micov'), aiov = document.getElementById('aiov');
 const send = (m) => frame.contentWindow && frame.contentWindow.postMessage(m, '*');
 // Voice in the preview: this page holds the microphone and speaker (Claude's dictation and tts), the app frame asks for them.
 const bridge = { d: null, t: null }; let acc = '', timer = null;
@@ -86,6 +88,15 @@ ov.onclick = () => {
   const d = bridge.d; if (!d) return;
   if (d.active()) { clearTimeout(timer); d.stop().catch(() => {}); }
   else { acc = ''; d.start().then(sendPerm).catch((e) => { sendPerm(); send({ dx: 'error', code: (e && e.code) || 'upstream_error' }); }); }
+};
+// Tapping the assistant button opens the assistant and starts listening straight away (the tap is the gesture the microphone needs).
+aiov.onclick = () => {
+  const d = bridge.d;
+  send({ dx: 'open-ai' });
+  if (d && !d.active()) { acc = ''; d.start().then(sendPerm).catch((e) => { sendPerm(); send({ dx: 'error', code: (e && e.code) || 'upstream_error' }); });
+    // the sheet mounts a moment after the tap, so say again that we are listening
+    setTimeout(() => { if (d.active()) send({ dx: 'state', state: 'listening' }); }, 350);
+  }
 };
 // Real links laid over the app's buttons that open other sites (see src/lib/links.ts in the app).
 const linkEls = new Map();
@@ -116,6 +127,10 @@ addEventListener('message', (e) => {
   else if (m.dx === 'mic') {
     if (!m.rect || !bridge.d) { ov.style.display = 'none'; return; }
     Object.assign(ov.style, { display: 'block', left: m.rect.x + 'px', top: (47 + m.rect.y) + 'px', width: m.rect.w + 'px', height: m.rect.h + 'px' });
+  }
+  else if (m.dx === 'ai') {
+    if (!m.rect || !bridge.d) { aiov.style.display = 'none'; return; }
+    Object.assign(aiov.style, { display: 'block', left: m.rect.x + 'px', top: (47 + m.rect.y) + 'px', width: m.rect.w + 'px', height: m.rect.h + 'px' });
   }
   else if (m.dx === 'links') drawLinks(m.items || []);
   else if (m.dx === 'speak' && bridge.t) bridge.t.speak(String(m.text).slice(0, 1900)).catch(() => {});
