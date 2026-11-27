@@ -14,6 +14,7 @@ import { NotoSansDevanagari_700Bold } from '@expo-google-fonts/noto-sans-devanag
 import { LangProvider, useLang } from './src/i18n';
 import { localizePlace } from './src/i18n/places';
 import { LanguageGate } from './src/components/LanguageGate';
+import { Splash } from './src/components/Splash';
 import { FadeSlide } from './src/components/motion';
 import { AuthPrompt } from './src/components/AuthPrompt';
 import { VoiceSheet } from './src/components/VoiceSheet';
@@ -350,6 +351,8 @@ export default function App() {
 /** The first time the app opens, ask which language to use. */
 function Root() {
   const { ready, chosen } = useLang();
+  const [splash, setSplash] = useState(true);
+  if (splash) return <Splash onDone={() => setSplash(false)} />;
   if (!ready) return null;
   return chosen ? <Home /> : <LanguageGate />;
 }
