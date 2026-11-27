@@ -68,7 +68,13 @@
     "photoCredit": null,
     "lat": 28.6562,
     "lng": 77.241,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.5,
+      "count": 183818,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "pq",
@@ -132,7 +138,13 @@
     "photoCredit": "Slyronit · CC BY-SA 4.0",
     "lat": 28.6096,
     "lng": 77.2437,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.2,
+      "count": 33533,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "humayun-s-tomb",
@@ -203,7 +215,13 @@
     "photoCredit": "Anupam Calcutta · CC BY-SA 4.0",
     "lat": 28.5933,
     "lng": 77.2507,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.5,
+      "count": 52448,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "qutub-minar",
@@ -279,7 +297,13 @@
     "photoCredit": "Akbarzoda · CC BY-SA 4.0",
     "lat": 28.5245,
     "lng": 77.1855,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.5,
+      "count": 164450,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "mehrauli-archaeological-park",
@@ -328,7 +352,13 @@
     "photoCredit": "Varun Shiv Kapur from New Delhi, India · CC BY 2.0",
     "lat": 28.5195,
     "lng": 77.184,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.4,
+      "count": 4075,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "safdarjung-tomb",
@@ -390,7 +420,13 @@
     "photoCredit": "Dey.sandip · CC BY-SA 4.0",
     "lat": 28.5897,
     "lng": 77.2108,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.4,
+      "count": 16421,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "tughlaqabad-fort",
@@ -439,7 +475,13 @@
     "photoCredit": "Shannon.Mathew · CC BY-SA 3.0",
     "lat": 28.5126,
     "lng": 77.261,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.2,
+      "count": 14156,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "hauz-khas-fort",
@@ -496,7 +538,13 @@
     "photoCredit": "Varun Shiv Kapur from New Delhi, India · CC BY 2.0",
     "lat": 28.5494,
     "lng": 77.1943,
-    "metroUnverified": true
+    "metroUnverified": true,
+    "rating": {
+      "score": 4.4,
+      "count": 6322,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "agrasen-ki-baoli",
@@ -548,7 +596,13 @@
     "photoCredit": "Indrajit Das · CC BY-SA 4.0",
     "lat": 28.6265,
     "lng": 77.2252,
-    "metroUnverified": true
+    "metroUnverified": true,
+    "rating": {
+      "score": 4.2,
+      "count": 47099,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "jantar-mantar",
@@ -610,7 +664,13 @@
     "photoCredit": "Alessio · CC BY-SA 4.0",
     "lat": 28.627,
     "lng": 77.2166,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.2,
+      "count": 36651,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "feroz-shah-kotla",
@@ -794,7 +854,13 @@
     "photoCredit": "Nehasinha18 · CC BY-SA 4.0",
     "lat": 28.5886,
     "lng": 77.2423,
-    "metroUnverified": true
+    "metroUnverified": true,
+    "rating": {
+      "score": 4.6,
+      "count": 27322,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "ig",
@@ -855,7 +921,13 @@
     "photoCredit": null,
     "lat": 28.6129,
     "lng": 77.2295,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.6,
+      "count": 287820,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "national-war-memorial",
@@ -904,7 +976,13 @@
     "photoCredit": null,
     "lat": 28.6118,
     "lng": 77.2336,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.8,
+      "count": 15831,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "rashtrapati-bhavan-and-amrit-udyan",
@@ -953,7 +1031,13 @@
     "photoCredit": null,
     "lat": 28.6143,
     "lng": 77.1995,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.7,
+      "count": 11276,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "raj-ghat",
@@ -1009,7 +1093,13 @@
     "photoCredit": "Humayunn Niaz Ahmed Peerzaada from Mumbai, India · CC BY-SA 2.0",
     "lat": 28.6406,
     "lng": 77.2495,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.5,
+      "count": 34281,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "gandhi-smriti",
@@ -1058,7 +1148,13 @@
     "photoCredit": null,
     "lat": 28.6008,
     "lng": 77.215,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.5,
+      "count": 6007,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "rm",
@@ -1127,7 +1223,13 @@
     "photoCredit": "Bruno Corpet (Quoique) · CC BY-SA 3.0",
     "lat": 28.5836,
     "lng": 77.1805,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.4,
+      "count": 27979,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "national-museum",
@@ -1191,7 +1293,13 @@
     "photoCredit": "Miya.m · CC BY-SA 3.0",
     "lat": 28.6117,
     "lng": 77.2196,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.6,
+      "count": 21375,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "national-gallery-of-modern-art",
@@ -1240,7 +1348,13 @@
     "photoCredit": null,
     "lat": 28.6119,
     "lng": 77.2342,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.5,
+      "count": 9609,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "pm-sangrahalaya-teen-murti-",
@@ -1289,7 +1403,13 @@
     "photoCredit": null,
     "lat": 28.6006,
     "lng": 77.1967,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.7,
+      "count": 8604,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "crafts-museum",
@@ -1353,7 +1473,13 @@
     "photoCredit": null,
     "lat": 28.612,
     "lng": 77.243,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.6,
+      "count": 8986,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "national-science-centre",
@@ -1402,7 +1528,13 @@
     "photoCredit": null,
     "lat": 28.6119,
     "lng": 77.244,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.4,
+      "count": 28873,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "indira-gandhi-memorial-museum",
@@ -1451,7 +1583,13 @@
     "photoCredit": "Vinayaraj · CC BY-SA 4.0",
     "lat": 28.5996,
     "lng": 77.21,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.5,
+      "count": 16317,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "air-force-museum",
@@ -1506,7 +1644,13 @@
     "photoCredit": "Rahul buddala · CC BY-SA 3.0",
     "lat": 28.569,
     "lng": 77.128,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.6,
+      "count": 8474,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "sanskriti-kendra-museums",
@@ -1555,7 +1699,13 @@
     "photoCredit": null,
     "lat": 28.493,
     "lng": 77.19,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.5,
+      "count": 1081,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "lt",
@@ -1613,7 +1763,13 @@
     "photoCredit": null,
     "lat": 28.5535,
     "lng": 77.2588,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.5,
+      "count": 75290,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "akshardham-temple",
@@ -1716,7 +1872,13 @@
     "photoCredit": "Shiprasarangi · CC BY-SA 4.0",
     "lat": 28.6127,
     "lng": 77.2773,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.6,
+      "count": 58595,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "iskcon-temple",
@@ -1768,7 +1930,13 @@
     "photoCredit": "Goutam1962 · CC BY-SA 4.0",
     "lat": 28.5574,
     "lng": 77.2426,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.7,
+      "count": 33351,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "gurudwara-bangla-sahib",
@@ -1828,7 +1996,13 @@
     "photoCredit": "Slyronit · CC BY-SA 4.0",
     "lat": 28.6264,
     "lng": 77.2092,
-    "metroUnverified": true
+    "metroUnverified": true,
+    "rating": {
+      "score": 4.8,
+      "count": 117249,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "jama-masjid",
@@ -1898,7 +2072,13 @@
     "photoCredit": "Bintladen · CC BY-SA 4.0",
     "lat": 28.6507,
     "lng": 77.2334,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.5,
+      "count": 71683,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "birla-mandir-laxminarayan-temple-",
@@ -1950,7 +2130,13 @@
     "photoCredit": "Goutam1962 · CC BY-SA 4.0",
     "lat": 28.6327,
     "lng": 77.1996,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.6,
+      "count": 18138,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "chhatarpur-temple",
@@ -1999,7 +2185,13 @@
     "photoCredit": "Akshatha Inamdar · CC BY-SA 4.0",
     "lat": 28.5053,
     "lng": 77.18,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.7,
+      "count": 26264,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "sacred-heart-cathedral",
@@ -2048,7 +2240,13 @@
     "photoCredit": null,
     "lat": 28.6295,
     "lng": 77.2115,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.7,
+      "count": 6209,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "sn",
@@ -2115,7 +2313,13 @@
     "photoCredit": "Danish971 · CC BY-SA 4.0",
     "lat": 28.5937,
     "lng": 77.2463,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.6,
+      "count": 22310,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "lodhi-garden",
@@ -2179,7 +2383,13 @@
     "photoCredit": "Amaninder · CC BY-SA 3.0",
     "lat": 28.593,
     "lng": 77.219,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.6,
+      "count": 58570,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "garden-of-five-senses",
@@ -2228,7 +2438,13 @@
     "photoCredit": "Sanskari · CC BY-SA 4.0",
     "lat": 28.517,
     "lng": 77.203,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.1,
+      "count": 24663,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "deer-park",
@@ -2326,7 +2542,13 @@
     "photoCredit": null,
     "lat": 28.5865,
     "lng": 77.1895,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.4,
+      "count": 1777,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "buddha-jayanti-park",
@@ -2375,7 +2597,13 @@
     "photoCredit": null,
     "lat": 28.61,
     "lng": 77.175,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.2,
+      "count": 5538,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "national-zoological-park",
@@ -2434,7 +2662,13 @@
     "photoCredit": null,
     "lat": 28.6083,
     "lng": 77.2475,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.1,
+      "count": 53673,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "yamuna-biodiversity-park",
@@ -2483,7 +2717,13 @@
     "photoCredit": null,
     "lat": 28.7,
     "lng": 77.23,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.1,
+      "count": 11909,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "sanjay-van",
@@ -2532,7 +2772,13 @@
     "photoCredit": null,
     "lat": 28.533,
     "lng": 77.174,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.5,
+      "count": 1784,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "okhla-bird-sanctuary",
@@ -2581,7 +2827,13 @@
     "photoCredit": "Akhilan · CC BY-SA 3.0",
     "lat": 28.562,
     "lng": 77.317,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.0,
+      "count": 9650,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "noida-botanical-garden",
@@ -2630,7 +2882,13 @@
     "photoCredit": null,
     "lat": 28.564,
     "lng": 77.334,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.3,
+      "count": 4479,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "aravalli-biodiversity-park",
@@ -2679,7 +2937,13 @@
     "photoCredit": null,
     "lat": 28.469,
     "lng": 77.1,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.4,
+      "count": 1650,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "leisure-valley-park",
@@ -2728,7 +2992,13 @@
     "photoCredit": null,
     "lat": 28.462,
     "lng": 77.064,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.3,
+      "count": 18519,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "sultanpur-national-park",
@@ -2777,7 +3047,13 @@
     "photoCredit": "Ekabhishek · CC BY-SA 3.0",
     "lat": 28.47,
     "lng": 76.885,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.2,
+      "count": 8619,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "chandni-chowk",
@@ -2875,7 +3151,13 @@
     "photoCredit": "Sripathroy · CC0",
     "lat": 28.656,
     "lng": 77.232,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 3.8,
+      "count": 1342,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "connaught-place",
@@ -2973,7 +3255,13 @@
     "photoCredit": "Varun Shiv Kapur from New Delhi, India · CC BY 2.0",
     "lat": 28.5998,
     "lng": 77.227,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.4,
+      "count": 67881,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "janpath-and-dilli-haat-ina",
@@ -3022,7 +3310,13 @@
     "photoCredit": null,
     "lat": 28.5728,
     "lng": 77.2085,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.4,
+      "count": 47655,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "sarojini-nagar-market",
@@ -3120,7 +3414,13 @@
     "photoCredit": null,
     "lat": 28.57,
     "lng": 77.243,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.3,
+      "count": 16137,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "hauz-khas-village",
@@ -3414,7 +3714,13 @@
     "photoCredit": "AjayDas · CC BY-SA 4.0",
     "lat": 28.5675,
     "lng": 77.3215,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.6,
+      "count": 159564,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "kingdom-of-dreams",
@@ -3512,7 +3818,13 @@
     "photoCredit": null,
     "lat": 28.5665,
     "lng": 77.334,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 4.3,
+      "count": 31347,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   },
   {
     "id": "dilli-haat-janakpuri",
@@ -3561,6 +3873,12 @@
     "photoCredit": null,
     "lat": 28.62,
     "lng": 77.083,
-    "metroUnverified": false
+    "metroUnverified": false,
+    "rating": {
+      "score": 3.9,
+      "count": 16191,
+      "source": "Google (via Wanderlog)",
+      "checked": "2026-11-27"
+    }
   }
 ]

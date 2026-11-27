@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Linking, Modal, NativeScrollEvent, NativeSyntheticEvent, Platform, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
-import { ChevronLeft, Heart } from 'lucide-react-native';
+import { ChevronLeft, Heart, Star } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { Coords, Place } from '../types';
 import { colors } from '../theme';
@@ -9,6 +9,7 @@ import { photos } from '../data/photos';
 import { DAY_NAMES, FULL_DAY_NAMES, getStatus } from '../lib/status';
 import { formatFee, hasPrice } from '../lib/pricing';
 import { formatAway } from '../lib/distance';
+import { formatChecked, formatCount, googleReviewsUrl } from '../lib/rating';
 import { Button, NotAvailable, Txt, Unverified } from './ui';
 import { PlaceVisual } from './Visual';
 import { CommuteCards } from './CommuteCards';
@@ -126,6 +127,31 @@ export function PlaceDetail({ place, km, loc, locState, onAllowLocation, day, to
                     </View>
                   ))}
                 </View>
+              </Card>
+
+              <Card title={tr('Google rating')}>
+                {p.rating ? (
+                  <>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                      <Txt w="bold" style={{ fontSize: 34, lineHeight: 40 }}>{p.rating.score.toFixed(1)}</Txt>
+                      <View style={{ gap: 2 }}>
+                        <View style={{ flexDirection: 'row', gap: 2 }}>
+                          {[1, 2, 3, 4, 5].map((i) => (
+                            <Star key={i} size={16} color={colors.ink} strokeWidth={2}
+                              fill={p.rating!.score >= i - 0.25 ? colors.ink : 'transparent'} />
+                          ))}
+                        </View>
+                        <Txt style={{ fontSize: 13, color: colors.sub }}>{tr('{count} Google reviews', { count: formatCount(p.rating.count) })}</Txt>
+                      </View>
+                    </View>
+                    <Txt style={{ fontSize: 12, lineHeight: 18, color: colors.sub }}>
+                      {tr('Source: {source}. Checked {date}. Ratings change over time.', { source: p.rating.source, date: formatChecked(p.rating.checked) })}
+                    </Txt>
+                  </>
+                ) : <NotAvailable size={15} />}
+                <Pressable accessibilityRole="link" hitSlop={{ top: 12, bottom: 12 }} onPress={() => Linking.openURL(googleReviewsUrl(p))}>
+                  <Txt w="semi" style={{ fontSize: 14, color: colors.secondary, textDecorationLine: 'underline' }}>{tr('See reviews on Google Maps')}</Txt>
+                </Pressable>
               </Card>
 
               <Card title={tr('About')}>{p.description ? <Body>{p.description}</Body> : <NotAvailable size={15} />}</Card>

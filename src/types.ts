@@ -25,6 +25,8 @@ export type Place = {
   /** Official booking page. The Book tickets button stays hidden while this is null. */
   bookUrl: string | null; bookable: boolean;
   source: string; verifiedNote: string; photoCredit: string | null;
+  /** Saved snapshot of the Google rating. The rating stays hidden while this is missing. */
+  rating?: { score: number; count: number; source: string; checked: string };
   lat: number; lng: number;
 };
 export type Coords = { lat: number; lng: number };

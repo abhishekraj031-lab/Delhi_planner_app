@@ -1,11 +1,12 @@
 import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
-import { Heart } from 'lucide-react-native';
+import { Heart, Star } from 'lucide-react-native';
 import type { Place } from '../types';
 import { colors } from '../theme';
 import { getStatus } from '../lib/status';
 import { formatFee } from '../lib/pricing';
 import { formatAway } from '../lib/distance';
+import { formatCount } from '../lib/rating';
 import { Txt, Unverified } from './ui';
 import { clock, tr } from '../i18n';
 import { PlaceVisual } from './Visual';
@@ -53,9 +54,18 @@ function PlaceCardBase({ place, km, day, today, saved, onOpen, onToggleSave }: P
             </View>
           ) : <View style={st.feeNone}><Txt style={{ fontSize: 12, color: colors.sub }}>{tr('Fee not available')}</Txt></View>}
         </View>
-        <Txt style={st.grey} numberOfLines={1}>
-          {[place.area, km != null ? formatAway(km) : null, metro ? tr('{station} metro', { station: metro }) : null].filter(Boolean).join(' · ')}
-        </Txt>
+        <View style={st.metaRow}>
+          {place.rating ? (
+            <View style={st.rate} accessible accessibilityLabel={tr('Google rating {score} out of 5, {count} reviews', { score: place.rating.score.toFixed(1), count: formatCount(place.rating.count) })}>
+              <Star size={13} color={colors.ink} fill={colors.ink} strokeWidth={2} />
+              <Txt w="semi" style={{ fontSize: 14, lineHeight: 18, color: colors.ink }}>{place.rating.score.toFixed(1)}</Txt>
+              <Txt style={st.grey}>({formatCount(place.rating.count)})</Txt>
+            </View>
+          ) : null}
+          <Txt style={[st.grey, { flex: 1 }]} numberOfLines={1}>
+            {[place.area, km != null ? formatAway(km) : null, metro ? tr('{station} metro', { station: metro }) : null].filter(Boolean).join(' · ')}
+          </Txt>
+        </View>
       </View>
     </Pressable>
   );
@@ -71,5 +81,7 @@ const st = StyleSheet.create({
   fee: { flexDirection: 'row', minHeight: 28, paddingHorizontal: 10, borderRadius: 14, backgroundColor: colors.primaryTint, alignItems: 'center' },
   feeFree: { backgroundColor: colors.fill },
   feeNone: { minHeight: 28, paddingHorizontal: 10, borderRadius: 14, backgroundColor: colors.fill, justifyContent: 'center' },
-  grey: { color: colors.sub, fontSize: 14, lineHeight: 18, marginTop: -2 },
+  grey: { color: colors.sub, fontSize: 14, lineHeight: 18 },
+  metaRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: -2 },
+  rate: { flexDirection: 'row', alignItems: 'center', gap: 3 },
 });

@@ -25,7 +25,7 @@ describe('data integrity', () => {
       expect(p.lng).toBeLessThan(77.6);
     }
   });
-  it('only has booking links that were checked on official pages, and no ratings', () => {
+  it('only has booking links that were checked on official pages, and ratings that carry a source and date', () => {
     const verified: Record<string, string> = {
       'national-museum': 'https://www.zoonga.com/national-museum',
       'national-zoological-park': 'https://nzpnewdelhi.gov.in/tickets/new?ln=en',
@@ -35,7 +35,13 @@ describe('data integrity', () => {
     };
     for (const p of all) {
       expect(p.bookUrl ?? null).toBe(verified[p.id] ?? null);
-      expect(p).not.toHaveProperty('rating');
+      if (p.rating) {
+        expect(p.rating.score).toBeGreaterThanOrEqual(1);
+        expect(p.rating.score).toBeLessThanOrEqual(5);
+        expect(p.rating.count).toBeGreaterThan(0);
+        expect(p.rating.source).toMatch(/Google/);
+        expect(p.rating.checked).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      }
     }
   });
 });
