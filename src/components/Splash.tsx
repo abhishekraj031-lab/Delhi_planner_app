@@ -32,7 +32,7 @@ export function Splash({ onDone, ms = 4600 }: { onDone: () => void; ms?: number 
   const pop = useRef(ICONS.map(() => new Animated.Value(0))).current;
   const merge = useRef(new Animated.Value(0)).current;
   const title = useRef(new Animated.Value(0)).current;
-  const WORD = 'Ghummakad'.split('');
+  const WORD = ['घु', 'म', 'क्क', 'ड़']; // Hindi only on the splash; split at syllables so conjuncts stay intact
   const TY = 0; // wordmark sits at the exact centre; icons fly into it
   const letters = useRef(WORD.map(() => new Animated.Value(0))).current;
   const land = useRef(new Animated.Value(0)).current;
@@ -94,13 +94,10 @@ export function Splash({ onDone, ms = 4600 }: { onDone: () => void; ms?: number 
           <View style={{ flexDirection: 'row' }}>
             {WORD.map((c, i) => (
               <Animated.View key={i} style={{ opacity: letters[i], transform: [{ translateY: letters[i].interpolate({ inputRange: [0, 1], outputRange: [14, 0] }) }, { scale: letters[i].interpolate({ inputRange: [0, 1], outputRange: [0.4, 1] }) }] }}>
-                <Txt style={{ fontSize: 46, color: colors.white, fontFamily: 'Outfit_800ExtraBold', letterSpacing: -0.5, lineHeight: 54 }}>{c}</Txt>
+                <Txt style={{ fontSize: 64, color: colors.white, fontFamily: 'NotoSansDevanagari_700Bold', lineHeight: 96 }}>{c}</Txt>
               </Animated.View>
             ))}
           </View>
-          <Animated.View style={{ opacity: title, transform: [{ translateY: title.interpolate({ inputRange: [0, 1], outputRange: [6, 0] }) }] }}>
-            <Txt style={{ fontSize: 15, color: 'rgba(255,255,255,0.85)' }}>घुमक्कड़</Txt>
-          </Animated.View>
         </Animated.View>
       </View>
     </Animated.View>
