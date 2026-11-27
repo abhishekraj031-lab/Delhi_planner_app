@@ -165,7 +165,7 @@ export function ProfileScreen(p: Props) {
             <View style={{ flexDirection: 'row', gap: 10 }}>
               <Button label={tr('Keep account')} outline onPress={() => setConfirm(false)} />
               <Pressable onPress={p.onDelete} accessibilityRole="button" accessibilityLabel={tr('Delete account')}
-                style={({ pressed }) => ({ flex: 1, height: 48, borderRadius: 24, backgroundColor: '#b3261e', alignItems: 'center', justifyContent: 'center', opacity: pressed ? 0.7 : 1 })}>
+                style={({ pressed }) => ({ flex: 1, height: 48, borderRadius: 24, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', opacity: pressed ? 0.7 : 1 })}>
                 <Txt w="bold" style={{ color: colors.white, fontSize: 16 }}>{tr('Delete')}</Txt>
               </Pressable>
             </View>
@@ -173,7 +173,7 @@ export function ProfileScreen(p: Props) {
         </Card>
       ) : (
         <Pressable onPress={() => setConfirm(true)} accessibilityRole="button" accessibilityLabel={tr('Delete account')} style={({ pressed }) => ({ alignSelf: 'center', flexDirection: 'row', gap: 8, alignItems: 'center', padding: 10, opacity: pressed ? 0.6 : 1 })}>
-          <Trash2 size={16} color="#b3261e" /><Txt w="semi" style={{ color: '#b3261e', fontSize: 14 }}>{tr('Delete account')}</Txt>
+          <Trash2 size={16} color={colors.primary} /><Txt w="semi" style={{ color: colors.primary, fontSize: 14 }}>{tr('Delete account')}</Txt>
         </Pressable>
       )}
       <CropSheet uri={cropUri} onCancel={() => setCropUri(null)} onDone={(u) => { setCropUri(null); p.onPhoto(u); }} />
