@@ -37,6 +37,7 @@ body{background:var(--bg);margin:0;overflow:hidden}
 .status b{display:block;background:var(--barfg);border-radius:2px}
 .island{position:absolute;top:10px;left:50%;width:110px;height:30px;margin-left:-55px;background:#000;border-radius:16px}
 iframe{width:390px;flex:1;border:0;display:block;background:#fff;min-height:0}
+.phone.ovl iframe{margin-top:-47px}
 #aiov{position:absolute;display:none;z-index:6;background:transparent;border:0;border-radius:50%;padding:0;cursor:pointer}
 #micov{position:absolute;display:none;z-index:5;background:transparent;border:0;border-radius:50%;padding:0;cursor:pointer}
 #links a{position:absolute;display:block;z-index:6;background:transparent;-webkit-tap-highlight-color:transparent;border-radius:10px;touch-action:none}
@@ -123,7 +124,7 @@ addEventListener('message', (e) => {
   if (e.source !== frame.contentWindow || !e.data || typeof e.data.dx !== 'string') return;
   const m = e.data;
   if (m.dx === 'hello') caps();
-  else if (m.dx === 'bar') { document.documentElement.style.setProperty('--bar', String(m.bg || '#fff')); document.documentElement.style.setProperty('--barfg', String(m.fg || '#111216')); }
+  else if (m.dx === 'bar') { phone.classList.toggle('ovl', m.bg === 'transparent'); document.documentElement.style.setProperty('--bar', String(m.bg || '#fff')); document.documentElement.style.setProperty('--barfg', String(m.fg || '#111216')); }
   else if (m.dx === 'mic') {
     if (!m.rect || !bridge.d) { ov.style.display = 'none'; return; }
     Object.assign(ov.style, { display: 'block', left: m.rect.x + 'px', top: (47 + m.rect.y) + 'px', width: m.rect.w + 'px', height: m.rect.h + 'px' });

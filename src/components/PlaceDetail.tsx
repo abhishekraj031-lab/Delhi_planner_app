@@ -15,6 +15,7 @@ import { PlaceVisual } from './Visual';
 import { CommuteCards } from './CommuteCards';
 import { areaLabel, statusText } from './PlaceCard';
 import { tr } from '../i18n';
+import { inFrame, post } from '../lib/bridge';
 
 type Nearby = { place: Place; km: number };
 type Props = { place: Place | null; km: number | null; loc: Coords | null; locState: 'idle' | 'asking' | 'denied' | 'error'; onAllowLocation: () => void; day: number; today: Date | null; saved: boolean; nearby: Nearby[]; onOpenPlace: (id: string) => void; onClose: () => void; onToggleSave: () => void };
@@ -64,6 +65,12 @@ export function PlaceDetail({ place, km, loc, locState, onAllowLocation, day, to
   const [page, setPage] = useState(0);
   const scroller = useRef<any>(null);
   // Every place opens at the top; the person scrolls down themselves.
+  // Preview only: let the photo run under the phone's status bar, with no white strip above it.
+  useEffect(() => {
+    if (!place) return;
+    post({ dx: 'bar', bg: 'transparent', fg: '#ffffff' });
+    return () => post({ dx: 'bar', bg: '#ffffff', fg: '#111216' });
+  }, [!!place]);
   useEffect(() => { setPage(0); scroller.current?.scrollTo({ y: 0, animated: false }); }, [place?.id]);
   const p = place;
   if (!p) return null;
@@ -85,7 +92,7 @@ export function PlaceDetail({ place, km, loc, locState, onAllowLocation, day, to
   }
   if (p.metro && !p.metroUnverified) facts.push(tr('Metro: {station}', { station: p.metro.replace(/\s*\(.*\)$/, '') }));
   const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => setPage(Math.round(e.nativeEvent.contentOffset.x / width));
-  const top = insets.top + 8;
+  const top = insets.top + 8 + (inFrame ? 47 : 0);
 
   return (
     <Modal visible animationType="slide" onRequestClose={onClose} statusBarTranslucent>
