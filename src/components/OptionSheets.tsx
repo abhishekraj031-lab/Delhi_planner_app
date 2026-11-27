@@ -16,13 +16,16 @@ type FilterProps = {
 };
 function Group({ title, note, children }: { title: string; note?: string; children: React.ReactNode }) {
   return (
-    <View style={{ gap: 8 }}>
-      <Txt w="bold" style={{ fontSize: 16 }}>{title}</Txt>
+    <View style={{ gap: 12, padding: 16, borderRadius: 18, borderWidth: 1, borderColor: colors.line, backgroundColor: colors.primarySoft }}>
+      <View style={{ gap: 3 }}>
+        <Txt w="bold" style={{ fontSize: 16 }}>{title}</Txt>
+        {note ? <Txt style={{ color: colors.sub, fontSize: 12, lineHeight: 17 }}>{note}</Txt> : null}
+      </View>
       {children}
-      {note ? <Txt style={{ color: colors.sub, fontSize: 12 }}>{note}</Txt> : null}
     </View>
   );
 }
+const Divider = () => <View style={{ height: 1, backgroundColor: colors.line }} />;
 const Row = ({ children }: { children: React.ReactNode }) => <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap' }}>{children}</View>;
 
 /** One sheet, grouped by what the visitor is deciding. Choices apply straight away; tapping a chosen chip clears it. */
@@ -51,9 +54,11 @@ export function FilterSheet(p: FilterProps) {
       </Group>
       <Group title={tr('Open hours')} note={tr('Based on opening and closing times on record. Places with no hours on record are left out. Pick both to plan a window, for example opens by 9 am and open till 6 pm.')}>
         <Row><Chip label={tr('Open now')} on={x.now} onPress={() => set(x.now ? { now: false } : { now: true, when: 'today', pick: null })} /></Row>
-        <Txt w="semi" style={{ fontSize: 13, color: colors.sub }}>{tr('Opening time (opens by)')}</Txt>
+        <Divider />
+        <Txt w="semi" style={{ fontSize: 13, color: colors.text }}>{tr('Opening time (opens by)')}</Txt>
         <Row>{OPENS_BY.map((o) => <Chip key={o.min} label={clock(o.min)} on={x.opensBy === o.min} onPress={() => set({ opensBy: x.opensBy === o.min ? null : o.min })} />)}</Row>
-        <Txt w="semi" style={{ fontSize: 13, color: colors.sub }}>{tr('Closing time (open till at least)')}</Txt>
+        <Divider />
+        <Txt w="semi" style={{ fontSize: 13, color: colors.text }}>{tr('Closing time (open till at least)')}</Txt>
         <Row>{OPEN_TILL.map((o) => <Chip key={o.min} label={clock(o.min)} on={x.openTill === o.min} onPress={() => set({ openTill: x.openTill === o.min ? null : o.min })} />)}</Row>
       </Group>
       <Group title={tr('Where')} note={tr('Pick one. Distances are straight-line from your location. Metro uses the stations listed for each place.')}>
