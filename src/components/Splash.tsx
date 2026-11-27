@@ -47,8 +47,8 @@ export function Splash({ onDone, ms = 5600 }: { onDone: () => void; ms?: number 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const line = (d: string, len: number, v: Animated.Value, key: string, w = 2.4) => (
-    <AnimatedPath key={key} d={d} stroke="#fff" strokeWidth={w} strokeLinecap="round" strokeLinejoin="round" strokeDasharray={[len, len]} strokeDashoffset={v.interpolate({ inputRange: [0, 1], outputRange: [len, 0] }) as unknown as number} fill="none" />
+  const line = (d: string, len: number, v: Animated.Value, key: string, w = 1.4) => (
+    <AnimatedPath key={key} d={d} stroke="rgba(255,255,255,0.92)" strokeWidth={w} strokeLinecap="round" strokeLinejoin="round" strokeDasharray={[len, len]} strokeDashoffset={v.interpolate({ inputRange: [0, 1], outputRange: [len, 0] }) as unknown as number} fill="none" />
   );
 
   return (
@@ -57,15 +57,15 @@ export function Splash({ onDone, ms = 5600 }: { onDone: () => void; ms?: number 
       <View style={{ width: BW, height: BH }}>
         <Animated.View style={{ position: 'absolute', width: BW, height: BH, opacity: merge.interpolate({ inputRange: [0, 0.75, 1], outputRange: [1, 1, 0] }), transform: [{ scale: merge.interpolate({ inputRange: [0, 1], outputRange: [1, 0.25] }) }] }}>
           <Svg width={BW} height={BH} viewBox={`0 ${TOP} ${SKY_W} ${SKY_H - TOP}`}>
-            {line(GROUND.d, GROUND.len, ground, 'ground', 2.6)}
+            {line(GROUND.d, GROUND.len, ground, 'ground', 1.6)}
             {SKY.map((m, i) => line(m.d, m.len, monu[i], m.name))}
             {CLOUDS.map((c, i) => (
-              <G key={i} transform={`translate(${c.x} ${c.y})`}>{line(c.d, c.len, cloud[i], `c${i}`, 2)}</G>
+              <G key={i} transform={`translate(${c.x} ${c.y})`}>{line(c.d, c.len, cloud[i], `c${i}`, 1.2)}</G>
             ))}
           </Svg>
           {SPARKS.map((sp, i) => (
             <Animated.View key={i} style={{ position: 'absolute', left: sp.x * sc - 12 * sc, top: (sp.y - TOP) * sc - 12 * sc, opacity: spark[i], transform: [{ scale: spark[i] }, { rotate: spark[i].interpolate({ inputRange: [0, 1], outputRange: ['-45deg', '0deg'] }) }] }}>
-              <Svg width={24 * sc} height={24 * sc} viewBox="-12 -12 24 24"><Path d={SPARK} stroke="#fff" strokeWidth={1.8} strokeLinecap="round" fill="none" /></Svg>
+              <Svg width={24 * sc} height={24 * sc} viewBox="-12 -12 24 24"><Path d={SPARK} stroke="#fff" strokeWidth={1.2} strokeLinecap="round" fill="none" /></Svg>
             </Animated.View>
           ))}
         </Animated.View>
