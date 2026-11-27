@@ -63,7 +63,7 @@ function PlaceCardBase({ place, km, day, today, saved, onOpen, onToggleSave }: P
 export const PlaceCard = React.memo(PlaceCardBase);
 
 const st = StyleSheet.create({
-  card: { marginHorizontal: 16, marginTop: 16 },
+  card: { marginHorizontal: 16, marginTop: 12, marginBottom: 16 },
   heart: { position: 'absolute', top: 12, right: 12 },
   badge: { position: 'absolute', top: 12, left: 12, flexDirection: 'row', alignItems: 'center', maxWidth: '75%', minHeight: 28, paddingHorizontal: 12, paddingVertical: 4, borderRadius: 14, backgroundColor: colors.white, shadowColor: '#000', shadowOpacity: 0.12, shadowRadius: 4, shadowOffset: { width: 0, height: 1 }, elevation: 2 },
   text: { marginTop: 6, gap: 0 },
