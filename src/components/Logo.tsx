@@ -1,20 +1,14 @@
 import React from 'react';
-import Svg, { Circle, Path, Rect } from 'react-native-svg';
+import Svg, { Circle, Path } from 'react-native-svg';
 import { colors } from '../theme';
 
-/** Ghummakad mark: a map pin holding a domed monument with an arched gate. */
-export function Logo({ size = 80, pin = colors.white, detail = colors.primary, accent = colors.secondary }: { size?: number; pin?: string; detail?: string; accent?: string }) {
+/** Ghummakad mark: a bold G (an open ring with a bar) with a map pin dropped into its centre. */
+export function Logo({ size = 80, ring = colors.white, pin = colors.secondary }: { size?: number; ring?: string; pin?: string }) {
   return (
-    <Svg width={size} height={size} viewBox="0 0 120 120" accessibilityLabel="Ghummakad logo">
-      <Path d="M60 8 C37 8 20 26 20 48 C20 78 60 112 60 112 C60 112 100 78 100 48 C100 26 83 8 60 8 Z" fill={pin} />
-      {/* spire, dome, band, body with arched gate */}
-      <Rect x={59} y={20} width={2} height={9} rx={1} fill={detail} />
-      <Circle cx={60} cy={19} r={2.6} fill={detail} />
-      <Path d="M44 46 C44 36 51 30 60 28 C69 30 76 36 76 46 Z" fill={detail} />
-      <Rect x={40} y={46} width={40} height={5} rx={1.5} fill={accent} />
-      <Path d="M44 51 H76 V72 H44 Z M54 72 V62 C54 57 66 57 66 62 V72 Z" fill={detail} fillRule="evenodd" />
-      <Rect x={38} y={72} width={44} height={4} rx={1.5} fill={accent} />
-      <Circle cx={30} cy={36} r={0} fill={detail} />
+    <Svg width={size} height={size} viewBox="0 0 100 100" accessibilityLabel="Ghummakad logo">
+      <Path d="M74.5 29.4 A32 32 0 1 0 81.9 52.8 M82 52.8 H57" stroke={ring} strokeWidth={13} strokeLinecap="round" strokeLinejoin="round" fill="none" />
+      <Path transform="translate(50 49) scale(1.3)" d="M0 -13 C7.5 -13 12 -7.5 12 -2.5 C12 6 0 15 0 15 C0 15 -12 6 -12 -2.5 C-12 -7.5 -7.5 -13 0 -13 Z" fill={pin} stroke={ring} strokeWidth={1.6} strokeLinejoin="round" />
+      <Circle cx={50} cy={45.1} r={5.5} fill={ring} />
     </Svg>
   );
 }
