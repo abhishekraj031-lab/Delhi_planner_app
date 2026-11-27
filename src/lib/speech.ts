@@ -1,6 +1,7 @@
 import { Platform } from 'react-native';
 import * as Speech from 'expo-speech';
 import { bridgeTts, post } from './bridge';
+import { getLang } from '../i18n';
 
 /**
  * Speech to text uses expo-speech-recognition (the phone's own recogniser; the browser's on web).
@@ -58,7 +59,7 @@ export async function startListening(h: ListenHandlers): Promise<() => void> {
     subs.push(m.addListener('result', (e) => { const t = e?.results?.[0]?.transcript; if (t) h.onText(String(t), !!e.isFinal); }));
     subs.push(m.addListener('error', (e) => { if (e?.error !== 'aborted') h.onError(MESSAGES[e?.error] ?? 'Something went wrong with voice input. You can type instead.'); finish(); }));
     subs.push(m.addListener('end', finish));
-    m.start({ lang: 'en-IN', interimResults: true, continuous: false });
+    m.start({ lang: getLang() === 'hi' ? 'hi-IN' : 'en-IN', interimResults: true, continuous: false });
   } catch {
     h.onError(MESSAGES['not-allowed']); finish();
   }
@@ -67,6 +68,6 @@ export async function startListening(h: ListenHandlers): Promise<() => void> {
 
 export function speak(text: string) {
   if (bridgeTts()) { post({ dx: 'speak', text }); return; }
-  try { Speech.stop(); Speech.speak(text, { language: 'en-IN', rate: 0.98 }); } catch { /* speech is optional */ }
+  try { Speech.stop(); Speech.speak(text, { language: /[\u0900-\u097F]/.test(text) ? 'hi-IN' : 'en-IN', rate: 0.98 }); } catch { /* speech is optional */ }
 }
 export function stopSpeaking() { post({ dx: 'tts-stop' }); try { Speech.stop(); } catch { /* ignore */ } }

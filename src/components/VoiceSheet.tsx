@@ -7,6 +7,7 @@ import { colors, fontFor } from '../theme';
 import { tr } from '../i18n';
 import { formatAway, distanceKm } from '../lib/distance';
 import { formatFee } from '../lib/pricing';
+import { CatIcon } from './CatIcon';
 import { answerQuery, SUGGESTIONS, VoiceAnswer } from '../lib/voiceSearch';
 import { autoListen, micPermission, requestMic, startListening, speak, stopSpeaking, MicState } from '../lib/speech';
 import { onBridge, post, useBridgeCaps } from '../lib/bridge';
@@ -161,7 +162,7 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
                   return (
                     <FadeSlide key={p.id} k={p.id} dy={8} ms={260} style={{ alignSelf: 'stretch' }}>
                       <Pressable onPress={() => open(p.id)} accessibilityRole="button" accessibilityLabel={tr('{name}. Open details', { name: tr(p.name) })} style={({ pressed }) => [s.row, { opacity: pressed ? 0.7 : 1 }]}>
-                        <View style={[s.dot, { backgroundColor: p.color }]}><Txt style={{ fontSize: 20 }}>{p.emoji}</Txt></View>
+                        <View style={s.dot}><CatIcon cat={p.category} size={38} on /></View>
                         <View style={{ flex: 1 }}>
                           <Txt w="semi" style={{ fontSize: 15 }} numberOfLines={1}>{tr(p.name)}</Txt>
                           <Txt style={{ fontSize: 13, color: colors.sub }} numberOfLines={1}>
@@ -252,7 +253,7 @@ const s = StyleSheet.create({
   me: { backgroundColor: colors.primary, borderBottomRightRadius: 4 },
   bot: { backgroundColor: colors.fill, borderBottomLeftRadius: 4 },
   row: { flexDirection: 'row', alignItems: 'center', gap: 12, alignSelf: 'stretch', minHeight: 56, borderRadius: 12, borderWidth: 1, borderColor: colors.line, padding: 8, backgroundColor: colors.white },
-  dot: { width: 40, height: 40, borderRadius: 10, alignItems: 'center', justifyContent: 'center' },
+  dot: { width: 40, height: 40, borderRadius: 10, backgroundColor: colors.fill, alignItems: 'center', justifyContent: 'center' },
   chip: { minHeight: 36, justifyContent: 'center', paddingHorizontal: 12, borderRadius: 18, borderWidth: 1, borderColor: colors.primary },
   allow: { marginHorizontal: 16, marginBottom: 8, padding: 14, gap: 10, borderRadius: 14, backgroundColor: colors.fill },
   allowIcon: { width: 40, height: 40, borderRadius: 20, backgroundColor: colors.white, alignItems: 'center', justifyContent: 'center' },

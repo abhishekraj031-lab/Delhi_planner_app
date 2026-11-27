@@ -130,6 +130,8 @@ function Home() {
   const toast = (m: string) => { setNotice(m); setTimeout(() => setNotice(null), 2200); };
   const doShare = async (text: string) => { const r = await shareText(text); if (r === 'unsupported') setShareMsg(text); };
   const invite = () => doShare(tt('Join me on Ghummakad. We can share photos of the places we visit in Delhi.'));
+  /** After a successful login the user always lands on the home page. */
+  const signInHome = async (id: string, code: string) => { const ok = await signIn(id, code); if (ok) { setLoginOpen(false); setSub(null); setTab('home'); } return ok; };
   const needLogin = (fn: () => void) => (user ? fn() : setLoginOpen(true));
 
   useEffect(() => {
@@ -235,7 +237,7 @@ function Home() {
             onRename={setDisplayName} onOpenSaved={() => setSub('saved')} onOpenBookings={() => setSub('bookings')} onInvite={invite} onChangeStart={() => { changeTab('home'); setShowLocation(true); }}
             onAllowLocation={requestCurrent} onSignOut={signOut}
             onDelete={async () => { setSaved(new Set()); await saveJSON(KEYS.saved, []); await setDisplayName(''); await setPhoto(undefined); await signOut(); changeTab('home'); }} />
-        : <LoginScreen title={t.title} hint={t.hint} onSignIn={signIn} />;
+        : <LoginScreen title={t.title} hint={t.hint} onSignIn={signInHome} />;
     } else if (tab === 'wall') {
       const placeName = (id?: string) => places.find((x) => x.id === id)?.name;
       body = (
