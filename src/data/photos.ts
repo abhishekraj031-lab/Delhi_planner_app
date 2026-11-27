@@ -3,6 +3,7 @@ import type { ImageSourcePropType } from 'react-native';
 
 export type PhotoEntry = { src: ImageSourcePropType; w: number; h: number };
 export const photos: Record<string, PhotoEntry> = {
+  'adventure-island-rohini': { src: require('../../assets/photos/adventure-island-rohini.jpg'), w: 1100, h: 996 },
   'agrasen-ki-baoli': { src: require('../../assets/photos/agrasen-ki-baoli.jpg'), w: 720, h: 480 },
   'air-force-museum': { src: require('../../assets/photos/air-force-museum.jpg'), w: 1100, h: 733 },
   'akshardham-temple': { src: require('../../assets/photos/akshardham-temple.jpg'), w: 1100, h: 619 },
@@ -12,6 +13,7 @@ export const photos: Record<string, PhotoEntry> = {
   'connaught-place': { src: require('../../assets/photos/connaught-place.jpg'), w: 720, h: 292 },
   'cyber-hub': { src: require('../../assets/photos/cyber-hub.jpg'), w: 720, h: 480 },
   'dlf-mall-of-india': { src: require('../../assets/photos/dlf-mall-of-india.jpg'), w: 720, h: 540 },
+  'drizzling-land': { src: require('../../assets/photos/drizzling-land.jpg'), w: 1100, h: 825 },
   'feroz-shah-kotla': { src: require('../../assets/photos/feroz-shah-kotla.jpg'), w: 1100, h: 825 },
   'garden-of-five-senses': { src: require('../../assets/photos/garden-of-five-senses.jpg'), w: 720, h: 540 },
   'gurudwara-bangla-sahib': { src: require('../../assets/photos/gurudwara-bangla-sahib.jpg'), w: 720, h: 540 },
@@ -46,4 +48,5 @@ export const photos: Record<string, PhotoEntry> = {
   'sn': { src: require('../../assets/photos/sn.jpg'), w: 720, h: 540 },
   'sultanpur-national-park': { src: require('../../assets/photos/sultanpur-national-park.jpg'), w: 720, h: 335 },
   'tughlaqabad-fort': { src: require('../../assets/photos/tughlaqabad-fort.jpg'), w: 720, h: 480 },
+  'worlds-of-wonder': { src: require('../../assets/photos/worlds-of-wonder.jpg'), w: 1100, h: 772 },
 };
