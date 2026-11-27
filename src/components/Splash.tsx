@@ -4,7 +4,6 @@ import { Animated, Easing, View, useWindowDimensions } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import { colors } from '../theme';
 import { Txt } from './ui';
-import { Logo } from './Logo';
 import { post } from '../lib/bridge';
 
 /** Battlements along a wall from x0 to x1 at height y. */
@@ -25,15 +24,18 @@ const ICONS: { name: string; d: string }[] = [
 ];
 const TILTS = [-8, 6, -4, 8, -6, 5];
 
-/** Launch screen: monument icons burst out of the centre, then fold into the logo before the app name appears. */
+/** Launch screen: monument icons burst out around the logo, then fly into the Ghummakad wordmark, which fills in letter by letter as they land. */
 export function Splash({ onDone, ms = 4600 }: { onDone: () => void; ms?: number }) {
   const { width } = useWindowDimensions();
   const R = Math.min(width * 0.34, 150);
   const ICON = 64;
   const pop = useRef(ICONS.map(() => new Animated.Value(0))).current;
   const merge = useRef(new Animated.Value(0)).current;
-  const pin = useRef(new Animated.Value(0)).current;
   const title = useRef(new Animated.Value(0)).current;
+  const WORD = 'Ghummakad'.split('');
+  const TY = 0; // wordmark sits at the exact centre; icons fly into it
+  const letters = useRef(WORD.map(() => new Animated.Value(0))).current;
+  const land = useRef(new Animated.Value(0)).current;
   const out = useRef(new Animated.Value(1)).current;
   const ripple = useRef([0, 1, 2].map(() => new Animated.Value(0))).current;
   const float = useRef(new Animated.Value(0)).current;
@@ -47,8 +49,9 @@ export function Splash({ onDone, ms = 4600 }: { onDone: () => void; ms?: number 
     const run = Animated.parallel([
       Animated.stagger(130, pop.map((v) => Animated.spring(v, { toValue: 1, friction: 5, tension: 70, useNativeDriver: true }))),
       Animated.sequence([Animated.delay(Math.round(ms * 0.5)), Animated.timing(merge, { toValue: 1, duration: 650, easing: Easing.in(Easing.back(1.4)), useNativeDriver: true })]),
-      Animated.sequence([Animated.delay(Math.round(ms * 0.58)), Animated.spring(pin, { toValue: 1, friction: 4, tension: 80, useNativeDriver: true })]),
-      Animated.sequence([Animated.delay(Math.round(ms * 0.7)), Animated.timing(title, { toValue: 1, duration: 500, useNativeDriver: true })]),
+      Animated.sequence([Animated.delay(Math.round(ms * 0.5) + 380), Animated.stagger(60, letters.map((v) => Animated.spring(v, { toValue: 1, friction: 5, tension: 120, useNativeDriver: true })))]),
+      Animated.sequence([Animated.delay(Math.round(ms * 0.5) + 380), Animated.sequence([Animated.timing(land, { toValue: 1, duration: 140, useNativeDriver: true }), Animated.timing(land, { toValue: 0, duration: 260, useNativeDriver: true })])]),
+      Animated.sequence([Animated.delay(Math.round(ms * 0.5) + 900), Animated.timing(title, { toValue: 1, duration: 450, useNativeDriver: true })]),
       Animated.sequence([Animated.delay(ms - 450), Animated.timing(out, { toValue: 0, duration: 450, easing: Easing.inOut(Easing.cubic), useNativeDriver: true })]),
     ]);
     run.start(() => { loops.forEach((l) => l.stop()); bob.stop(); post({ dx: 'bar', bg: '#ffffff', fg: '#111216' }); onDone(); });
@@ -64,11 +67,11 @@ export function Splash({ onDone, ms = 4600 }: { onDone: () => void; ms?: number 
     return {
       position: 'absolute' as const, width: ICON, height: ICON, borderRadius: ICON / 2, alignItems: 'center' as const, justifyContent: 'center' as const,
       backgroundColor: 'rgba(255,255,255,0.14)', borderWidth: 1.5, borderColor: 'rgba(255,255,255,0.45)',
-      opacity: burst.interpolate({ inputRange: [0, 0.2, 1], outputRange: [0, 1, 1] }),
+      opacity: Animated.multiply(burst.interpolate({ inputRange: [0, 0.2, 1], outputRange: [0, 1, 1] }), merge.interpolate({ inputRange: [0, 0.85, 1], outputRange: [1, 1, 0] })),
       transform: [
         { translateX: Animated.multiply(Animated.multiply(burst, away), x) },
-        { translateY: Animated.add(Animated.multiply(Animated.multiply(burst, away), y), float.interpolate({ inputRange: [0, 1], outputRange: [i % 2 ? -4 : 4, i % 2 ? 4 : -4] })) },
-        { scale: Animated.multiply(burst, away) },
+        { translateY: Animated.add(Animated.add(Animated.multiply(Animated.multiply(burst, away), y), Animated.multiply(merge, TY)), Animated.multiply(away, float.interpolate({ inputRange: [0, 1], outputRange: [i % 2 ? -4 : 4, i % 2 ? 4 : -4] }))) },
+        { scale: Animated.multiply(burst, merge.interpolate({ inputRange: [0, 1], outputRange: [1, 0.15] })) },
         { rotate: burst.interpolate({ inputRange: [0, 1], outputRange: ['-40deg', `${TILTS[i]}deg`] }) },
       ],
     };
@@ -87,14 +90,19 @@ export function Splash({ onDone, ms = 4600 }: { onDone: () => void; ms?: number 
             <Svg width={38} height={38} viewBox="0 0 64 64"><Path d={m.d} stroke={colors.white} strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" fill="none" /></Svg>
           </Animated.View>
         ))}
-        <Animated.View style={{ position: 'absolute', opacity: pin, transform: [{ scale: pin.interpolate({ inputRange: [0, 1], outputRange: [0.2, 1] }) }] }}>
-          <Logo size={128} />
+        <Animated.View style={{ position: 'absolute', alignItems: 'center', transform: [{ translateY: TY }, { scale: land.interpolate({ inputRange: [0, 1], outputRange: [1, 1.08] }) }] }}>
+          <View style={{ flexDirection: 'row' }}>
+            {WORD.map((c, i) => (
+              <Animated.View key={i} style={{ opacity: letters[i], transform: [{ translateY: letters[i].interpolate({ inputRange: [0, 1], outputRange: [14, 0] }) }, { scale: letters[i].interpolate({ inputRange: [0, 1], outputRange: [0.4, 1] }) }] }}>
+                <Txt style={{ fontSize: 46, color: colors.white, fontFamily: 'Outfit_800ExtraBold', letterSpacing: -0.5, lineHeight: 54 }}>{c}</Txt>
+              </Animated.View>
+            ))}
+          </View>
+          <Animated.View style={{ opacity: title, transform: [{ translateY: title.interpolate({ inputRange: [0, 1], outputRange: [6, 0] }) }] }}>
+            <Txt style={{ fontSize: 15, color: 'rgba(255,255,255,0.85)' }}>घुमक्कड़</Txt>
+          </Animated.View>
         </Animated.View>
       </View>
-      <Animated.View style={{ position: 'absolute', bottom: '14%', alignItems: 'center', gap: 4, opacity: title, transform: [{ translateY: title.interpolate({ inputRange: [0, 1], outputRange: [12, 0] }) }] }}>
-        <Txt w="bold" style={{ fontSize: 32, color: colors.white }}>Ghummakad</Txt>
-        <Txt style={{ fontSize: 15, color: 'rgba(255,255,255,0.85)' }}>घुमक्कड़</Txt>
-      </Animated.View>
     </Animated.View>
   );
 }
