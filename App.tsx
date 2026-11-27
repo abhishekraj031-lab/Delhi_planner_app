@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Animated, Easing, FlatList, Image, Pressable, StyleSheet, TextInput, View } from 'react-native';
+import { Animated, Easing, FlatList, Image, Platform, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useFonts } from 'expo-font';
@@ -417,6 +417,14 @@ export default function App() {
 function Root() {
   const { ready } = useLang();
   const [splash, setSplash] = useState(true);
+  // The orange launch colour is only for the splash. Afterwards the browser's top bar and the notch area go white, like the app.
+  useEffect(() => {
+    if (splash || Platform.OS !== 'web' || typeof document === 'undefined') return;
+    try {
+      document.documentElement.style.background = '#fff'; document.body.style.background = '#fff';
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#ffffff');
+    } catch { /* cosmetic only */ }
+  }, [splash]);
   // The app loads underneath while the splash plays, then the splash slides off to the left.
   return (
     <View style={{ flex: 1, backgroundColor: '#fff' }}>
