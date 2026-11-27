@@ -25,7 +25,7 @@ const MONUMENTS: { name: string; d: string; len: number }[] = [
 ];
 
 /** Launch screen: Delhi monument outlines draw themselves along a skyline, then the app name appears. */
-export function Splash({ onDone, ms = 2500 }: { onDone: () => void; ms?: number }) {
+export function Splash({ onDone, ms = 4200 }: { onDone: () => void; ms?: number }) {
   const { width } = useWindowDimensions();
   const draw = useRef(MONUMENTS.map(() => new Animated.Value(0))).current;
   const ground = useRef(new Animated.Value(0)).current;
