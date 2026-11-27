@@ -26,13 +26,14 @@ import { NewPostSheet } from './src/components/NewPostSheet';
 import { useWall } from './src/hooks/useWall';
 import { shareText } from './src/lib/wall';
 import { distanceKm } from './src/lib/distance';
-import { Bell, ChevronDown, Church, CircleUser, Dome, FerrisWheel, Landmark, Lighthouse, Heart, MapPin, Search, Sparkles, ShoppingBag, SlidersHorizontal, Ticket, Trees, X } from 'lucide-react-native';
+import { Bell, ChevronDown, Church, CircleUser, Dome, FerrisWheel, Landmark, Lighthouse, Heart, MapPin, Search, ShoppingBag, SlidersHorizontal, Ticket, Trees, X } from 'lucide-react-native';
 import type { Category, Place } from './src/types';
 import { colors, font, fontFor } from './src/theme';
 import { loadPlaces } from './src/data/repository';
 import { categoriesWithPlaces, visiblePlaces } from './src/lib/places';
 import { KEYS, loadJSON, saveJSON } from './src/lib/storage';
 import { useLocation } from './src/hooks/useLocation';
+import { Orb } from './src/components/AssistantOrb';
 import { Chip, Txt } from './src/components/ui';
 import { PlaceCard } from './src/components/PlaceCard';
 import { PlaceDetail } from './src/components/PlaceDetail';
@@ -291,7 +292,7 @@ function Home() {
             {query ? null : <RotatingHint items={['India Gate', 'free places', 'Qutub Minar', 'nearest metro', 'Lotus Temple']} />}
           </View>
           <Pressable onPress={() => setShowVoice(true)} hitSlop={{ top: 6, bottom: 6, left: 6, right: 8 }} accessibilityRole="button" accessibilityLabel={tt('Ask the Delhi assistant')} style={({ pressed }) => [s.mic, { opacity: pressed ? 0.8 : 1 }]}>
-            <View style={s.ai}><Sparkles size={18} color={colors.white} /></View>
+            <Orb mode="speaking" size={38} />
           </Pressable>
         </View>
         <Pressable onPress={() => setShowFilters(true)} accessibilityRole="button" accessibilityLabel={tt('Filters')} style={s.filter}>
@@ -395,8 +396,7 @@ const s = StyleSheet.create({
   search: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8, minHeight: 52, paddingHorizontal: 16, borderRadius: 26, backgroundColor: colors.white, borderWidth: 1, borderColor: colors.line, shadowColor: '#000', shadowOpacity: 0.1, shadowRadius: 8, shadowOffset: { width: 0, height: 2 }, elevation: 3 },
   input: { flex: 1, fontFamily: font.regular, fontSize: 16, color: '#333232', paddingVertical: 8 },
   avatar: { width: 44, height: 44, borderRadius: 22, backgroundColor: colors.fill, alignItems: 'center', justifyContent: 'center' },
-  ai: { width: 34, height: 34, borderRadius: 17, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center' },
-  mic: { width: 38, height: 38, alignItems: 'center', justifyContent: 'center' },
+  mic: { width: 40, height: 40, alignItems: 'center', justifyContent: 'center' },
   filter: { width: 48, height: 48, borderRadius: 24, backgroundColor: colors.white, borderWidth: 1, borderColor: colors.line, alignItems: 'center', justifyContent: 'center' },
   chips: { paddingHorizontal: 4, paddingTop: 8, borderBottomWidth: 0 },
   hint: { color: colors.sub, fontSize: 12, marginHorizontal: 16, marginTop: 8 },
