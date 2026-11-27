@@ -3,6 +3,7 @@ import { Animated, Easing, Platform, Pressable, StyleSheet, View } from 'react-n
 import { CircleUser, Heart, House, Images } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '../theme';
+import { tr } from '../i18n';
 import { Txt } from './ui';
 
 export type TabKey = 'home' | 'wall' | 'favourites' | 'profile';
@@ -24,12 +25,12 @@ function TabItem({ on, label, Icon, onPress, alwaysLabel }: { on: boolean; label
     return () => clearTimeout(t);
   }, [on, v]);
   return (
-    <Pressable onPress={onPress} accessibilityRole="tab" accessibilityState={{ selected: on }} accessibilityLabel={label}
+    <Pressable onPress={onPress} accessibilityRole="tab" accessibilityState={{ selected: on }} accessibilityLabel={tr(label)}
       style={({ pressed }) => [s.tab, { opacity: pressed ? 0.7 : 1 }]}>
       <Animated.View pointerEvents="none" style={[s.pill, { opacity: v, transform: [{ scale: v.interpolate({ inputRange: [0, 1], outputRange: [0.85, 1] }) }] }]} />
       <View style={s.content}>
         <Icon size={20} color={shown ? colors.white : colors.ink} />
-        {on || shown || alwaysLabel ? <Txt w={shown ? 'semi' : 'regular'} style={{ fontSize: 12, color: shown ? colors.white : colors.ink }}>{label}</Txt> : null}
+        {on || shown || alwaysLabel ? <Txt w={shown ? 'semi' : 'regular'} style={{ fontSize: 12, color: shown ? colors.white : colors.ink }}>{tr(label)}</Txt> : null}
       </View>
     </Pressable>
   );

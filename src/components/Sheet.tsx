@@ -3,6 +3,7 @@ import { Modal, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { X } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '../theme';
+import { tr } from '../i18n';
 
 /** Bottom sheet over a dimmed screen (matches the Figma detail sheet). */
 export function Sheet({ visible, onClose, children, label }: { visible: boolean; onClose: () => void; children?: React.ReactNode; label: string }) {
@@ -10,8 +11,8 @@ export function Sheet({ visible, onClose, children, label }: { visible: boolean;
   return (
     <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose} statusBarTranslucent>
       <View style={s.wrap}>
-        <Pressable style={StyleSheet.absoluteFill} onPress={onClose} accessibilityLabel="Dismiss" accessibilityRole="button" />
-        <Pressable onPress={onClose} accessibilityLabel="Close" accessibilityRole="button" hitSlop={8} style={({ pressed }) => [s.fab, { opacity: pressed ? 0.7 : 1 }]}>
+        <Pressable style={StyleSheet.absoluteFill} onPress={onClose} accessibilityLabel={tr('Dismiss')} accessibilityRole="button" />
+        <Pressable onPress={onClose} accessibilityLabel={tr('Close')} accessibilityRole="button" hitSlop={8} style={({ pressed }) => [s.fab, { opacity: pressed ? 0.7 : 1 }]}>
           <X size={22} color={colors.white} />
         </Pressable>
         <View style={s.sheet} accessibilityViewIsModal accessibilityLabel={label}>

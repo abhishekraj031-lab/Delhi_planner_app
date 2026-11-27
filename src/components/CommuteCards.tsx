@@ -7,6 +7,7 @@ import { CAB_APPS, CabApp, estimateCab, estimateMetro, IXIGO_METRO_URL } from '.
 import { formatAway } from '../lib/distance';
 import { useExtLink } from '../lib/links';
 import { NotAvailable, Txt, Unverified } from './ui';
+import { tr } from '../i18n';
 
 const open = (url: string) => { Linking.openURL(url).catch(() => {}); };
 
@@ -23,13 +24,13 @@ function AppRow({ app: a, place: p, from }: { app: CabApp; place: Place; from: C
   const url = a.url(p, from);
   const ref = useExtLink(url);
   return (
-    <Pressable ref={ref} onPress={() => open(url)} accessibilityRole="link" accessibilityLabel={`Check price and book on ${a.name}`} accessibilityHint={a.note}
+    <Pressable ref={ref} onPress={() => open(url)} accessibilityRole="link" accessibilityLabel={tr('Check price and book on {app}', { app: a.name })} accessibilityHint={tr(a.note)}
       style={({ pressed }) => [s.app, { opacity: pressed ? 0.7 : 1 }]}>
       <View style={{ flex: 1, gap: 2 }}>
         <Txt w="semi" style={{ fontSize: 16 }}>{a.name}</Txt>
-        <Txt style={{ fontSize: 12, color: colors.sub }}>{a.note}</Txt>
+        <Txt style={{ fontSize: 12, color: colors.sub }}>{tr(a.note)}</Txt>
         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>
-          <Txt w="bold" style={{ fontSize: 14, color: colors.primary }}>Check price</Txt>
+          <Txt w="bold" style={{ fontSize: 14, color: colors.primary }}>{tr('Check price')}</Txt>
           <ChevronRight size={18} color={colors.primary} />
         </View>
       </View>
@@ -44,46 +45,46 @@ export function CommuteCards({ place: p, km, from, day, locState, onAllowLocatio
   return (
     <View style={{ gap: 12 }}>
       <View style={{ paddingHorizontal: 4, gap: 2 }}>
-        <Txt w="bold" style={{ fontSize: 18, color: colors.ink }}>Getting there</Txt>
-        {km != null ? <Txt style={{ fontSize: 13, color: colors.sub }}>{`${formatAway(km)} from you, in a straight line. Fares are estimates.`}</Txt> : null}
+        <Txt w="bold" style={{ fontSize: 18, color: colors.ink }}>{tr('Getting there')}</Txt>
+        {km != null ? <Txt style={{ fontSize: 13, color: colors.sub }}>{tr('{away} from you, in a straight line. Fares are estimates.', { away: formatAway(km) })}</Txt> : null}
       </View>
 
       <View style={s.card}>
         <View style={s.head}>
           <View style={[s.icon, { backgroundColor: '#e6efff' }]}><TrainFront size={22} color={colors.primary} /></View>
           <View style={{ flex: 1 }}>
-            <Txt w="bold" style={{ fontSize: 17 }}>Metro</Txt>
+            <Txt w="bold" style={{ fontSize: 17 }}>{tr('Metro')}</Txt>
             <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' }}>
-              {p.metro ? <Txt style={{ fontSize: 14, color: colors.sub }}>Nearest: {p.metro}</Txt> : <Txt style={{ fontSize: 14, color: colors.sub }}>Nearest metro: </Txt>}
+              {p.metro ? <Txt style={{ fontSize: 14, color: colors.sub }}>{tr('Nearest: {station}', { station: p.metro })}</Txt> : <Txt style={{ fontSize: 14, color: colors.sub }}>{tr('Nearest metro:')} </Txt>}
               {!p.metro ? <NotAvailable size={14} /> : p.metroUnverified ? <Unverified /> : null}
             </View>
           </View>
         </View>
         {metro ? (
           <View style={s.fareBox}>
-            <Txt w="bold" style={{ fontSize: 22, color: '#1d5fc4' }}>About ₹{metro.fare}</Txt>
+            <Txt w="bold" style={{ fontSize: 22, color: '#1d5fc4' }}>{tr('About ₹{fare}', { fare: metro.fare })}</Txt>
             <Txt style={{ fontSize: 13, color: colors.sub }}>
-              Estimated one-way fare for one adult, {metro.sunday ? 'Sunday rate' : 'Monday to Saturday'}. The exact fare depends on the station you board at. Airport Express costs more.
+              {tr('Estimated one-way fare for one adult, {kind}. The exact fare depends on the station you board at. Airport Express costs more.', { kind: metro.sunday ? tr('Sunday rate') : tr('Monday to Saturday') })}
             </Txt>
           </View>
         ) : null}
-        <Cta label="Book metro ticket on ixigo" hint="Opens ixigo in your browser or app" url={IXIGO_METRO_URL} onPress={() => open(IXIGO_METRO_URL)} />
-        <Txt style={{ fontSize: 12, color: colors.sub }}>You choose your stations on ixigo. Tickets are QR codes for Delhi Metro.</Txt>
+        <Cta label={tr('Book metro ticket on ixigo')} hint={tr('Opens ixigo in your browser or app')} url={IXIGO_METRO_URL} onPress={() => open(IXIGO_METRO_URL)} />
+        <Txt style={{ fontSize: 12, color: colors.sub }}>{tr('You choose your stations on ixigo. Tickets are QR codes for Delhi Metro.')}</Txt>
       </View>
 
       <View style={s.card}>
         <View style={s.head}>
           <View style={[s.icon, { backgroundColor: '#fff1d6' }]}><Car size={22} color="#9a5b00" /></View>
           <View style={{ flex: 1 }}>
-            <Txt w="bold" style={{ fontSize: 17 }}>Cab</Txt>
-            <Txt style={{ fontSize: 14, color: colors.sub }}>Pick the app you prefer</Txt>
+            <Txt w="bold" style={{ fontSize: 17 }}>{tr('Cab')}</Txt>
+            <Txt style={{ fontSize: 14, color: colors.sub }}>{tr('Pick the app you prefer')}</Txt>
           </View>
         </View>
         {cab ? (
           <View style={s.fareBox}>
-            <Txt w="bold" style={{ fontSize: 22, color: '#1d5fc4' }}>₹{cab.low} to ₹{cab.high}</Txt>
+            <Txt w="bold" style={{ fontSize: 22, color: '#1d5fc4' }}>{tr('₹{low} to ₹{high}', { low: cab.low, high: cab.high })}</Txt>
             <Txt style={{ fontSize: 13, color: colors.sub }}>
-              Estimated for a basic cab, about {cab.roadKm.toFixed(1)} km by road. Real prices change with traffic and demand and are shown in each app before you book.
+              {tr('Estimated for a basic cab, about {km} km by road. Real prices change with traffic and demand and are shown in each app before you book.', { km: cab.roadKm.toFixed(1) })}
             </Txt>
           </View>
         ) : null}

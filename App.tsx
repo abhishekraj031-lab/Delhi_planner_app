@@ -7,6 +7,13 @@ import { Figtree_400Regular } from '@expo-google-fonts/figtree/400Regular';
 import { Figtree_500Medium } from '@expo-google-fonts/figtree/500Medium';
 import { Figtree_600SemiBold } from '@expo-google-fonts/figtree/600SemiBold';
 import { Figtree_700Bold } from '@expo-google-fonts/figtree/700Bold';
+import { NotoSansDevanagari_400Regular } from '@expo-google-fonts/noto-sans-devanagari/400Regular';
+import { NotoSansDevanagari_500Medium } from '@expo-google-fonts/noto-sans-devanagari/500Medium';
+import { NotoSansDevanagari_600SemiBold } from '@expo-google-fonts/noto-sans-devanagari/600SemiBold';
+import { NotoSansDevanagari_700Bold } from '@expo-google-fonts/noto-sans-devanagari/700Bold';
+import { LangProvider, useLang } from './src/i18n';
+import { localizePlace } from './src/i18n/places';
+import { LanguageGate } from './src/components/LanguageGate';
 import { FadeSlide } from './src/components/motion';
 import { AuthPrompt } from './src/components/AuthPrompt';
 import { VoiceSheet } from './src/components/VoiceSheet';
@@ -21,7 +28,7 @@ import { shareText } from './src/lib/wall';
 import { distanceKm } from './src/lib/distance';
 import { Bell, ChevronDown, Church, CircleUser, Dome, FerrisWheel, Landmark, Lighthouse, Heart, MapPin, Mic, Search, ShoppingBag, SlidersHorizontal, Ticket, Trees, X } from 'lucide-react-native';
 import type { Category, Place } from './src/types';
-import { colors, font } from './src/theme';
+import { colors, font, fontFor } from './src/theme';
 import { loadPlaces } from './src/data/repository';
 import { categoriesWithPlaces, visiblePlaces } from './src/lib/places';
 import { KEYS, loadJSON, saveJSON } from './src/lib/storage';
@@ -61,7 +68,9 @@ function CategoryTab({ label, color, on, Icon, onPress }: { label: string; color
 
 function Home() {
   const insets = useSafeAreaInsets();
-  const [places, setPlaces] = useState<Place[]>([]);
+  const { lang, t: tt } = useLang();
+  const [placesEn, setPlaces] = useState<Place[]>([]);
+  const places = useMemo(() => (lang === 'hi' ? placesEn.map(localizePlace) : placesEn), [placesEn, lang]);
   const [savedAll, setSaved] = useState<Set<string>>(new Set());
   const [pendingSave, setPendingSave] = useState<{ ids: string[]; reopen: string | null } | null>(null);
   const [category, setCategory] = useState<Category | 'All'>('Monuments');
@@ -85,10 +94,10 @@ function Home() {
   const saved = useMemo(() => (user ? savedAll : new Set<string>()), [user, savedAll]);
   const { loc, state, requestCurrent, chooseArea } = useLocation();
   const wall = useWall();
-  const me = user ? (user.displayName || 'You') : null;
+  const me = user ? (user.displayName || tt('You')) : null;
   const toast = (m: string) => { setNotice(m); setTimeout(() => setNotice(null), 2200); };
   const doShare = async (text: string) => { const r = await shareText(text); if (r === 'unsupported') setShareMsg(text); };
-  const invite = () => doShare('Join me on Delhi Explorer. We can share photos of the places we visit in Delhi.');
+  const invite = () => doShare(tt('Join me on Delhi Explorer. We can share photos of the places we visit in Delhi.'));
   const needLogin = (fn: () => void) => (user ? fn() : setLoginOpen(true));
 
   useEffect(() => {
@@ -167,21 +176,21 @@ function Home() {
     return () => { live = false; };
   }, [gpsKey]);
   const geoHere = geo && geo.key === gpsKey ? geo.p : null;
-  const place = state === 'asking' ? { title: 'Finding your location…', sub: 'One moment' }
-    : loc?.kind === 'gps' ? (geoHere ? { title: geoHere.city, sub: geoHere.address || 'Current location' } : { title: 'Current location', sub: geo && geo.key === gpsKey ? 'Address not available' : 'Finding your address…' })
-    : loc ? { title: loc.label, sub: 'Area you chose. Tap to change' }
-    : { title: 'Choose location', sub: 'Location is off. Tap to choose an area' };
-  const locLabel = state === 'asking' ? 'Finding your location…' : loc ? (loc.kind === 'gps' ? 'Near your current location' : `Near ${loc.label}`) : 'Location off. Choose an area';
+  const place = state === 'asking' ? { title: tt('Finding your location…'), sub: tt('One moment') }
+    : loc?.kind === 'gps' ? (geoHere ? { title: geoHere.city, sub: geoHere.address || tt('Current location') } : { title: tt('Current location'), sub: geo && geo.key === gpsKey ? tt('Address not available') : tt('Finding your address…') })
+    : loc ? { title: tt(loc.label), sub: tt('Area you chose. Tap to change') }
+    : { title: tt('Choose location'), sub: tt('Location is off. Tap to choose an area') };
+  const locLabel = state === 'asking' ? tt('Finding your location…') : loc ? (loc.kind === 'gps' ? tt('Near your current location') : tt('Near {place}', { place: tt(loc.label) })) : tt('Location off. Choose an area');
 
   const tabs: Record<Exclude<TabKey, 'home'>, { title: string; hint: string; empty: string }> = {
-    wall: { title: 'My wall', hint: 'Log in to post on your wall.', empty: '' },
-    favourites: { title: 'Favourites', hint: 'Log in to see your saved places.', empty: 'Nothing here yet.' },
-    profile: { title: 'Profile', hint: 'Log in to manage your profile.', empty: `Signed in as ${user?.name ?? ''}.` },
+    wall: { title: tt('My wall'), hint: tt('Log in to post on your wall.'), empty: '' },
+    favourites: { title: tt('Favourites'), hint: tt('Log in to see your saved places.'), empty: tt('Nothing here yet.') },
+    profile: { title: tt('Profile'), hint: tt('Log in to manage your profile.'), empty: tt('Signed in as {name}.', { name: user?.name ?? '' }) },
   };
   const changeTab = (t: TabKey) => { setLoginOpen(false); setSub(null); setTab(t); };
   if (tab !== 'home') {
     const t = tabs[tab];
-    const empty = { icon: <Heart size={36} color={colors.primary} />, heading: 'Your wishlist is empty', message: 'Save places you want to visit and find them all here.', cta: user ? 'Explore places' : 'Log in to create wishlist' };
+    const empty = { icon: <Heart size={36} color={colors.primary} />, heading: tt('Your wishlist is empty'), message: tt('Save places you want to visit and find them all here.'), cta: user ? tt('Explore places') : tt('Log in to create wishlist') };
     let body: React.ReactNode;
     if (!authReady) body = <View style={{ flex: 1 }} />;
     else if (tab === 'profile' && user && sub === 'bookings') {
@@ -203,17 +212,17 @@ function Home() {
           onInvite={() => needLogin(invite)}
           onLike={(id) => needLogin(() => wall.toggleLike(id))}
           onComment={(id, text) => needLogin(() => wall.addComment(id, me as string, text))}
-          onShare={(post) => doShare(`${post.caption ? `${post.caption} - ` : ''}${placeName(post.placeId) ? `${placeName(post.placeId)}, Delhi. ` : ''}Shared from Delhi Explorer.`)}
+          onShare={(post) => doShare(`${post.caption ? `${post.caption} - ` : ''}${placeName(post.placeId) ? `${placeName(post.placeId)}, ${tt('Delhi')}. ` : ''}${tt('Shared from Delhi Explorer.')}`)}
           onDelete={wall.removePost} onOpenPlace={setOpenId} />
       );
     } else if (tab === 'favourites' && user && favRows.length > 0) {
       body = (
         <View style={{ flex: 1, paddingTop: insets.top + 12 }}>
           <View style={{ paddingHorizontal: 16, paddingBottom: 8 }}>
-            <Txt w="bold" style={{ fontSize: 20 }}>Favourites</Txt>
-            <Txt style={{ color: colors.sub, fontSize: 13 }}>{favRows.length} saved {favRows.length === 1 ? 'place' : 'places'}{loc ? ', nearest first' : ''}</Txt>
+            <Txt w="bold" style={{ fontSize: 20 }}>{tt('Favourites')}</Txt>
+            <Txt style={{ color: colors.sub, fontSize: 13 }}>{favRows.length === 1 ? tt('1 saved place') : tt('{n} saved places', { n: favRows.length })}{loc ? tt(', nearest first') : ''}</Txt>
           </View>
-          <FlatList data={favRows} keyExtractor={(r) => r.place.id} contentContainerStyle={{ paddingBottom: 12 }}
+          <FlatList data={favRows} extraData={lang} keyExtractor={(r) => r.place.id} contentContainerStyle={{ paddingBottom: 12 }}
             renderItem={({ item }) => (
               <PlaceCard place={item.place} km={item.km} day={day} today={today} saved onOpen={() => setOpenId(item.place.id)} onToggleSave={() => toggleSave(item.place.id)} />
             )} />
@@ -245,7 +254,7 @@ function Home() {
       <FadeSlide k="home" style={{ flex: 1 }}>
       <View style={s.header}>
         {user ? (
-          <Pressable onPress={() => setShowLocation(true)} hitSlop={{ top: 8, bottom: 8, right: 16 }} accessibilityRole="button" accessibilityLabel={`Location: ${place.title}, ${place.sub}. Change`} style={{ flex: 1 }}>
+          <Pressable onPress={() => setShowLocation(true)} hitSlop={{ top: 8, bottom: 8, right: 16 }} accessibilityRole="button" accessibilityLabel={tt('Location: {where}. Change', { where: `${place.title}, ${place.sub}` })} style={{ flex: 1 }}>
             <View style={s.loc}>
               <MapPin size={20} color={colors.primary} />
               <Txt w="bold" numberOfLines={1} style={{ fontSize: 20, flexShrink: 1 }}>{place.title}</Txt>
@@ -255,63 +264,63 @@ function Home() {
           </Pressable>
         ) : (
           <View style={{ flex: 1 }}>
-            <Txt w="bold" style={{ fontSize: 20 }}>Welcome</Txt>
-            <Pressable onPress={() => setShowLocation(true)} hitSlop={{ top: 8, bottom: 8, right: 16 }} accessibilityRole="button" accessibilityLabel={`Location: ${locLabel}. Change`} style={s.loc}>
+            <Txt w="bold" style={{ fontSize: 20 }}>{tt('Welcome')}</Txt>
+            <Pressable onPress={() => setShowLocation(true)} hitSlop={{ top: 8, bottom: 8, right: 16 }} accessibilityRole="button" accessibilityLabel={tt('Location: {where}. Change', { where: locLabel })} style={s.loc}>
               <MapPin size={14} color={colors.sub} />
               <Txt style={{ color: colors.sub, fontSize: 13 }}>{locLabel}</Txt>
             </Pressable>
           </View>
         )}
-        <Pressable onPress={() => setShowNotes(true)} accessibilityRole="button" accessibilityLabel="Notifications" style={s.avatar}>
+        <Pressable onPress={() => setShowNotes(true)} accessibilityRole="button" accessibilityLabel={tt('Notifications')} style={s.avatar}>
           <Bell size={22} color={colors.ink} />
         </Pressable>
       </View>
       <View style={s.searchRow}>
         <View style={s.search}>
           <Search size={20} color={colors.text} />
-          <TextInput value={query} onChangeText={setQuery} placeholder="Search place, attractions..." placeholderTextColor="#333232"
-            accessibilityLabel="Search places" returnKeyType="search" style={s.input} />
-          <Pressable onPress={() => setShowVoice(true)} hitSlop={{ top: 6, bottom: 6, left: 6, right: 12 }} accessibilityRole="button" accessibilityLabel="Voice search" style={s.mic}>
+          <TextInput value={query} onChangeText={setQuery} placeholder={tt('Search place, attractions...')} placeholderTextColor="#333232"
+            accessibilityLabel={tt('Search places')} returnKeyType="search" style={[s.input, { fontFamily: fontFor('regular') }]} />
+          <Pressable onPress={() => setShowVoice(true)} hitSlop={{ top: 6, bottom: 6, left: 6, right: 12 }} accessibilityRole="button" accessibilityLabel={tt('Voice search')} style={s.mic}>
             <Mic size={22} color={colors.ink} />
           </Pressable>
         </View>
-        <Pressable onPress={() => setShowFilters(true)} accessibilityRole="button" accessibilityLabel="Filters" style={s.filter}>
+        <Pressable onPress={() => setShowFilters(true)} accessibilityRole="button" accessibilityLabel={tt('Filters')} style={s.filter}>
           <SlidersHorizontal size={24} color={colors.ink} />
         </Pressable>
       </View>
       <View style={{ flexGrow: 0 }}>
-        <FlatList horizontal showsHorizontalScrollIndicator={false} data={categoriesWithPlaces(places)} keyExtractor={(c) => c} contentContainerStyle={s.chips}
+        <FlatList horizontal showsHorizontalScrollIndicator={false} data={categoriesWithPlaces(places)} extraData={lang} keyExtractor={(c) => c} contentContainerStyle={s.chips}
           renderItem={({ item }) => {
             const Icon = ICONS[item];
             const on = !query && category === item;
-            return <CategoryTab label={item} color={CAT_COLOR[item]} on={on} Icon={Icon} onPress={() => { setQuery(''); setCategory(item); }} />;
+            return <CategoryTab label={tt(item)} color={CAT_COLOR[item]} on={on} Icon={Icon} onPress={() => { setQuery(''); setCategory(item); }} />;
           }} />
       </View>
-      {loc ? <Txt style={s.hint}>Nearest first, by straight-line distance.</Txt> : null}
+      {loc ? <Txt style={s.hint}>{tt('Nearest first, by straight-line distance.')}</Txt> : null}
       {tags.length ? (
         <View style={s.tagRow}>
           <FlatList horizontal showsHorizontalScrollIndicator={false} data={tags} keyExtractor={(t) => t.key} style={{ flex: 1 }} contentContainerStyle={{ gap: 8, paddingHorizontal: 16 }}
             renderItem={({ item }) => (
-              <Pressable onPress={() => clearTag(item.key)} accessibilityRole="button" accessibilityLabel={`Remove filter ${item.label}`} style={s.tag}>
+              <Pressable onPress={() => clearTag(item.key)} accessibilityRole="button" accessibilityLabel={tt('Remove filter {name}', { name: item.label })} style={s.tag}>
                 <Txt w="medium" style={{ fontSize: 12, color: colors.primary }}>{item.label}</Txt>
                 <X size={14} color={colors.primary} />
               </Pressable>
             )} />
-          <Pressable onPress={clearAll} accessibilityRole="button" hitSlop={8} style={{ paddingRight: 16, paddingLeft: 4 }}><Txt w="semi" style={{ fontSize: 12, color: colors.sub }}>Clear</Txt></Pressable>
+          <Pressable onPress={clearAll} accessibilityRole="button" hitSlop={8} style={{ paddingRight: 16, paddingLeft: 4 }}><Txt w="semi" style={{ fontSize: 12, color: colors.sub }}>{tt('Clear')}</Txt></Pressable>
         </View>
       ) : null}
       {info.hint ? <Txt style={s.hint}>{info.hint}</Txt> : null}
-      {rows.length === 0 && tags.length ? <Txt style={s.hint}>{rows.length} places match. Places with unknown opening days, prices or hours are left out of those filters.</Txt> : null}
+      {rows.length === 0 && tags.length ? <Txt style={s.hint}>{tt('{n} places match. Places with unknown opening days, prices or hours are left out of those filters.', { n: rows.length })}</Txt> : null}
       <FadeSlide k={query ? 'search' : String(category)} style={{ flex: 1 }}>
-      <FlatList data={rows} keyExtractor={(r) => r.place.id} style={{ backgroundColor: colors.white }} contentContainerStyle={{ paddingBottom: 100 }}
+      <FlatList data={rows} extraData={lang} keyExtractor={(r) => r.place.id} style={{ backgroundColor: colors.white }} contentContainerStyle={{ paddingBottom: 100 }}
         initialNumToRender={6} windowSize={7} keyboardShouldPersistTaps="handled"
-        ListEmptyComponent={<Txt style={s.empty}>Nothing here yet. More places are coming soon — try another category or clear the filters.</Txt>}
+        ListEmptyComponent={<Txt style={s.empty}>{tt('Nothing here yet. More places are coming soon — try another category or clear the filters.')}</Txt>}
         renderItem={({ item }) => (
           <PlaceCard place={item.place} km={item.km} day={day} today={today} saved={saved.has(item.place.id)}
             onOpen={() => setOpenId(item.place.id)} onToggleSave={() => requestToggle(item.place.id)} />
         )} />
       </FadeSlide>
-      <Pressable onPress={() => setShowVoice(true)} accessibilityRole="button" accessibilityLabel="Ask the Delhi assistant"
+      <Pressable onPress={() => setShowVoice(true)} accessibilityRole="button" accessibilityLabel={tt('Ask the Delhi assistant')}
         style={({ pressed }) => ({ position: 'absolute', right: 20, bottom: 16, width: 68, height: 68, borderRadius: 34, alignItems: 'center', justifyContent: 'center', opacity: pressed ? 0.85 : 1,
           shadowColor: '#2c7aef', shadowOpacity: 0.45, shadowRadius: 14, shadowOffset: { width: 0, height: 6 }, elevation: 8 })}>
         <Orb mode="speaking" size={68} />
@@ -320,7 +329,7 @@ function Home() {
       <TabBar key="tabbar" tab={tab} onChange={setTab} />
       <PlaceDetail place={openPlace} km={openKm} loc={loc?.kind === 'gps' ? loc : null} locState={state} onAllowLocation={requestCurrent} day={day} today={today} saved={openId ? saved.has(openId) : false} nearby={nearby} onOpenPlace={setOpenId}
         onClose={() => setOpenId(null)} onToggleSave={() => openId && requestToggle(openId)} />
-      <VoiceSheet visible={showVoice} onClose={() => setShowVoice(false)} places={places} loc={loc} day={day} today={today} onOpenPlace={setOpenId} />
+      <VoiceSheet visible={showVoice} onClose={() => setShowVoice(false)} places={placesEn} loc={loc} day={day} today={today} onOpenPlace={setOpenId} />
       <AuthPrompt visible={pendingSave !== null} onClose={closeLoginPrompt} onSignIn={signInThenSave} />
       <FilterSheet visible={showFilters} onClose={() => setShowFilters(false)} extra={extra} category={category} categories={categoriesWithPlaces(places)}
         hasLocation={!!loc} onSetLocation={() => { setShowFilters(false); setShowLocation(true); }}
@@ -333,9 +342,16 @@ function Home() {
 }
 
 export default function App() {
-  const [loaded] = useFonts({ Figtree_400Regular, Figtree_500Medium, Figtree_600SemiBold, Figtree_700Bold });
+  const [loaded] = useFonts({ Figtree_400Regular, Figtree_500Medium, Figtree_600SemiBold, Figtree_700Bold, NotoSansDevanagari_400Regular, NotoSansDevanagari_500Medium, NotoSansDevanagari_600SemiBold, NotoSansDevanagari_700Bold });
   if (!loaded) return null;
-  return <SafeAreaProvider><Home /></SafeAreaProvider>;
+  return <SafeAreaProvider><LangProvider><Root /></LangProvider></SafeAreaProvider>;
+}
+
+/** The first time the app opens, ask which language to use. */
+function Root() {
+  const { ready, chosen } = useLang();
+  if (!ready) return null;
+  return chosen ? <Home /> : <LanguageGate />;
 }
 
 const s = StyleSheet.create({

@@ -7,22 +7,19 @@ import { getStatus } from '../lib/status';
 import { formatFee } from '../lib/pricing';
 import { formatAway } from '../lib/distance';
 import { Txt, Unverified } from './ui';
+import { clock, tr } from '../i18n';
 import { PlaceVisual } from './Visual';
 
 type Props = { place: Place; km: number | null; day: number; today: Date | null; saved: boolean; onOpen: () => void; onToggleSave: () => void };
 
-export const areaLabel = (p: Place) => (['Noida', 'Gurugram'].includes(p.area) ? p.area : `${p.area}, Delhi`);
+export const areaLabel = (p: Place) => (['Noida', 'Gurugram'].includes(p.areaEn ?? p.area) ? p.area : `${p.area}, ${tr('Delhi')}`);
 
-const fmtTime = (m: number) => {
-  const h = Math.floor(m / 60), min = m % 60, ap = h >= 12 ? 'pm' : 'am';
-  return `${h % 12 || 12}${min ? `:${String(min).padStart(2, '0')}` : ''}${ap}`;
-};
 
 /** Status text for the badge on the photo: "Open till 5pm", "Today closed", etc. */
 export function statusText(p: Place, day: number, today: Date | null) {
   const st = getStatus(p, day, today ?? undefined);
-  if (st.kind === 'open') return { text: p.hours ? `Open till ${fmtTime(p.hours[1])}` : 'Open', muted: false, unverified: !!p.hoursUnverified };
-  if (st.kind === 'unknown') return { text: 'Hours not available', muted: true, unverified: false };
+  if (st.kind === 'open') return { text: p.hours ? tr('Open till {time}', { time: clock(p.hours[1]) }) : tr('Open'), muted: false, unverified: !!p.hoursUnverified };
+  if (st.kind === 'unknown') return { text: tr('Hours not available'), muted: true, unverified: false };
   return { text: st.label, muted: false, unverified: false };
 }
 
@@ -40,7 +37,7 @@ function PlaceCardBase({ place, km, day, today, saved, onOpen, onToggleSave }: P
           {s.unverified ? <Unverified /> : null}
         </View>
         <Pressable onPress={onToggleSave} hitSlop={14} accessibilityRole="button"
-          accessibilityLabel={saved ? `Remove ${place.name} from saved` : `Save ${place.name}`} style={st.heart}>
+          accessibilityLabel={saved ? tr('Remove {name} from saved', { name: place.name }) : tr('Save {name}', { name: place.name })} style={st.heart}>
           <Heart size={28} color={saved ? '#ff385c' : colors.white} fill={saved ? '#ff385c' : 'rgba(0,0,0,0.35)'} strokeWidth={2} />
         </Pressable>
       </View>
@@ -48,16 +45,16 @@ function PlaceCardBase({ place, km, day, today, saved, onOpen, onToggleSave }: P
         <View style={st.titleRow}>
           <Txt w="semi" style={{ fontSize: 16, lineHeight: 22, flex: 1 }} numberOfLines={1}>{place.name}</Txt>
           {fee ? (
-            <View style={[st.fee, fee === 'Free' && st.feeFree]}>
-              {fee === 'Free'
-                ? <Txt w="bold" style={{ fontSize: 15, color: '#166534' }}>Free entry</Txt>
-                : <><Txt w="bold" style={{ fontSize: 17, color: '#1d5fc4' }}>{fee}</Txt><Txt style={{ fontSize: 12, color: '#1d5fc4' }}> entry fee</Txt></>}
+            <View style={[st.fee, fee === tr('Free') && st.feeFree]}>
+              {fee === tr('Free')
+                ? <Txt w="bold" style={{ fontSize: 15, color: '#166534' }}>{tr('Free entry')}</Txt>
+                : <><Txt w="bold" style={{ fontSize: 17, color: '#1d5fc4' }}>{fee}</Txt><Txt style={{ fontSize: 12, color: '#1d5fc4' }}> {tr('entry fee')}</Txt></>}
               {place.price.unverified ? <Unverified /> : null}
             </View>
-          ) : <View style={st.feeNone}><Txt style={{ fontSize: 12, color: colors.sub }}>Fee not available</Txt></View>}
+          ) : <View style={st.feeNone}><Txt style={{ fontSize: 12, color: colors.sub }}>{tr('Fee not available')}</Txt></View>}
         </View>
         <Txt style={st.grey} numberOfLines={1}>
-          {[place.area, km != null ? formatAway(km) : null, metro ? `${metro} metro` : null].filter(Boolean).join(' · ')}
+          {[place.area, km != null ? formatAway(km) : null, metro ? tr('{station} metro', { station: metro }) : null].filter(Boolean).join(' · ')}
         </Txt>
       </View>
     </Pressable>

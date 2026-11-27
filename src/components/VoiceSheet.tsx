@@ -3,7 +3,8 @@ import { KeyboardAvoidingView, Linking, Modal, Platform, Pressable, ScrollView, 
 import { ArrowUp, Mic, Square, Volume2, VolumeX, X } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { Coords, Place } from '../types';
-import { colors, font } from '../theme';
+import { colors, fontFor } from '../theme';
+import { tr } from '../i18n';
 import { formatAway, distanceKm } from '../lib/distance';
 import { formatFee } from '../lib/pricing';
 import { answerQuery, SUGGESTIONS, VoiceAnswer } from '../lib/voiceSearch';
@@ -15,7 +16,7 @@ import { FadeSlide } from './motion';
 import { Orb, OrbMode, Rings, StreamText, TypingDots } from './AssistantOrb';
 
 type Msg = { id: number; from: 'me' | 'bot'; text: string; places?: Place[]; stream?: boolean };
-const STATUS: Record<OrbMode, string> = { idle: 'Ready to help', listening: 'Listening…', thinking: 'Thinking…', speaking: 'Answering…' };
+const STATUS: Record<OrbMode, string> = { idle: 'Ready to help', listening: 'Listening…', thinking: 'Thinking…', speaking: 'Answering…' }; // shown through tr()
 const GREETING = 'Hi! Ask me about places to visit in Delhi. Tap the mic and speak, or type.';
 
 type Props = { visible: boolean; onClose: () => void; places: Place[]; loc: Coords | null; day: number; today: Date | null; onOpenPlace: (id: string) => void };
@@ -93,7 +94,7 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
       else if (m.dx === 'state') setListening(m.state !== 'idle');
       else if (m.dx === 'result') { setListening(false); ask(m.text, true); }
       else if (m.dx === 'error' && m.code !== 'stopped' && m.code !== 'dismissed') {
-        const msg = m.code === 'not_granted' ? "Microphone access is off for this preview. Turn it on in the page's Permissions menu, or type your question." : 'Voice input is not available right now. You can type your question instead.';
+        const msg = m.code === 'not_granted' ? "Microphone access is off for this preview. Turn it on in the page's Permissions menu, or type your question." : 'Voice input is not available right now. You can type your question instead.'; // translated when shown
         setMsgs((x) => [...x, { id: idRef.current++, from: 'bot', text: msg }]);
       }
     });
@@ -124,18 +125,18 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
   return (
     <Modal visible={visible} transparent animationType="slide" onRequestClose={close} statusBarTranslucent>
       <View style={s.wrap}>
-        <Pressable style={StyleSheet.absoluteFill} onPress={close} accessibilityLabel="Dismiss" accessibilityRole="button" />
-        <Pressable onPress={close} accessibilityLabel="Close" accessibilityRole="button" hitSlop={8} style={({ pressed }) => [s.fab, { opacity: pressed ? 0.7 : 1 }]}>
+        <Pressable style={StyleSheet.absoluteFill} onPress={close} accessibilityLabel={tr('Dismiss')} accessibilityRole="button" />
+        <Pressable onPress={close} accessibilityLabel={tr('Close')} accessibilityRole="button" hitSlop={8} style={({ pressed }) => [s.fab, { opacity: pressed ? 0.7 : 1 }]}>
           <X size={22} color={colors.white} />
         </Pressable>
-        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={s.sheet} accessibilityViewIsModal accessibilityLabel="Voice search">
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={s.sheet} accessibilityViewIsModal accessibilityLabel={tr('Voice search')}>
           <View style={s.head}>
             {hero ? null : <Orb mode={mode} size={40} />}
             <View style={{ flex: 1 }}>
-              <Txt w="bold" style={{ fontSize: 18 }}>Delhi assistant</Txt>
-              <Txt style={{ fontSize: 13, color: mode === 'idle' ? colors.sub : colors.primary }}>{STATUS[mode]}</Txt>
+              <Txt w="bold" style={{ fontSize: 18 }}>{tr('Delhi assistant')}</Txt>
+              <Txt style={{ fontSize: 13, color: mode === 'idle' ? colors.sub : colors.primary }}>{tr(STATUS[mode])}</Txt>
             </View>
-            <Pressable onPress={() => { setMuted((v) => !v); stopSpeaking(); setSpeaking(false); }} accessibilityRole="button" accessibilityLabel={muted ? 'Turn on spoken answers' : 'Turn off spoken answers'} hitSlop={8} style={s.iconBtn}>
+            <Pressable onPress={() => { setMuted((v) => !v); stopSpeaking(); setSpeaking(false); }} accessibilityRole="button" accessibilityLabel={muted ? tr('Turn on spoken answers') : tr('Turn off spoken answers')} hitSlop={8} style={s.iconBtn}>
               {muted ? <VolumeX size={22} color={colors.sub} /> : <Volume2 size={22} color={colors.ink} />}
             </Pressable>
           </View>
@@ -143,28 +144,28 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
             {hero ? (
               <FadeSlide k="hero" style={{ alignItems: 'center', gap: 6, paddingTop: 24, paddingBottom: 8 }} dy={14} ms={400}>
                 <Orb mode={mode} size={120} />
-                <Txt w="bold" style={{ fontSize: 22, marginTop: 14 }}>How can I help?</Txt>
-                <Txt style={{ fontSize: 15, color: colors.text, textAlign: 'center' }}>Ask about free places, ticket prices, timings or the nearest metro. Tap the mic and speak, or type.</Txt>
-                <Txt style={{ fontSize: 12, color: colors.sub, textAlign: 'center' }}>Answers come from the app's own place data.</Txt>
+                <Txt w="bold" style={{ fontSize: 22, marginTop: 14 }}>{tr('How can I help?')}</Txt>
+                <Txt style={{ fontSize: 15, color: colors.text, textAlign: 'center' }}>{tr('Ask about free places, ticket prices, timings or the nearest metro. Tap the mic and speak, or type.')}</Txt>
+                <Txt style={{ fontSize: 12, color: colors.sub, textAlign: 'center' }}>{tr("Answers come from the app's own place data.")}</Txt>
               </FadeSlide>
             ) : msgs.map((m) => (
               <FadeSlide key={m.id} k={String(m.id)} dy={12} ms={260} style={{ alignItems: m.from === 'me' ? 'flex-end' : 'flex-start', gap: 8 }}>
                 <View style={[s.bubble, m.from === 'me' ? s.me : s.bot]}>
                   {m.stream
-                    ? <StreamText text={m.text} onDone={() => endStream(m.id)} style={{ fontSize: 15, lineHeight: 21, color: colors.ink }} />
-                    : <Txt style={{ fontSize: 15, lineHeight: 21, color: m.from === 'me' ? colors.white : colors.ink }}>{m.text}</Txt>}
+                    ? <StreamText text={m.from === 'bot' ? tr(m.text) : m.text} onDone={() => endStream(m.id)} style={{ fontSize: 15, lineHeight: 21, color: colors.ink }} />
+                    : <Txt style={{ fontSize: 15, lineHeight: 21, color: m.from === 'me' ? colors.white : colors.ink }}>{m.from === 'bot' ? tr(m.text) : m.text}</Txt>}
                 </View>
                 {!m.stream ? m.places?.map((p) => {
                   const st = statusText(p, day, today);
                   const fee = formatFee(p, day);
                   return (
                     <FadeSlide key={p.id} k={p.id} dy={8} ms={260} style={{ alignSelf: 'stretch' }}>
-                      <Pressable onPress={() => open(p.id)} accessibilityRole="button" accessibilityLabel={`${p.name}. Open details`} style={({ pressed }) => [s.row, { opacity: pressed ? 0.7 : 1 }]}>
+                      <Pressable onPress={() => open(p.id)} accessibilityRole="button" accessibilityLabel={tr('{name}. Open details', { name: tr(p.name) })} style={({ pressed }) => [s.row, { opacity: pressed ? 0.7 : 1 }]}>
                         <View style={[s.dot, { backgroundColor: p.color }]}><Txt style={{ fontSize: 20 }}>{p.emoji}</Txt></View>
                         <View style={{ flex: 1 }}>
-                          <Txt w="semi" style={{ fontSize: 15 }} numberOfLines={1}>{p.name}</Txt>
+                          <Txt w="semi" style={{ fontSize: 15 }} numberOfLines={1}>{tr(p.name)}</Txt>
                           <Txt style={{ fontSize: 13, color: colors.sub }} numberOfLines={1}>
-                            {[p.area, fee ?? 'Price not available', st.text, loc ? formatAway(distanceKm(loc, p)) : null].filter(Boolean).join(' · ')}
+                            {[tr(p.area), fee ?? tr('Price not available'), st.text, loc ? formatAway(distanceKm(loc, p)) : null].filter(Boolean).join(' · ')}
                           </Txt>
                         </View>
                       </Pressable>
@@ -181,7 +182,7 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
             {hero ? (
               <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
                 {SUGGESTIONS.map((q) => (
-                  <Pressable key={q} onPress={() => ask(q, false)} accessibilityRole="button" style={s.chip}><Txt style={{ fontSize: 14, color: colors.primary }}>{q}</Txt></Pressable>
+                  <Pressable key={q} onPress={() => ask(q, false)} accessibilityRole="button" style={s.chip}><Txt style={{ fontSize: 14, color: colors.primary }}>{tr(q)}</Txt></Pressable>
                 ))}
               </View>
             ) : null}
@@ -192,9 +193,9 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
                 {SUGGESTIONS.map((q) => {
                   const on = q === lastQ;
                   return (
-                    <Pressable key={q} onPress={() => ask(q, false)} accessibilityRole="button" accessibilityLabel={q} accessibilityState={{ selected: on }}
+                    <Pressable key={q} onPress={() => ask(q, false)} accessibilityRole="button" accessibilityLabel={tr(q)} accessibilityState={{ selected: on }}
                       style={[s.chip, on && { backgroundColor: colors.primary }]}>
-                      <Txt style={{ fontSize: 14, color: on ? colors.white : colors.primary }}>{q}</Txt>
+                      <Txt style={{ fontSize: 14, color: on ? colors.white : colors.primary }}>{tr(q)}</Txt>
                     </Pressable>
                   );
                 })}
@@ -206,30 +207,30 @@ export function VoiceSheet({ visible, onClose, places, loc, day, today, onOpenPl
               <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
                 <View style={s.allowIcon}><Mic size={22} color={colors.primary} /></View>
                 <View style={{ flex: 1 }}>
-                  <Txt w="bold" style={{ fontSize: 16 }}>Allow microphone</Txt>
-                  <Txt style={{ fontSize: 13, color: colors.sub }}>Search for places by speaking. Your voice is turned into text on your phone.</Txt>
+                  <Txt w="bold" style={{ fontSize: 16 }}>{tr('Allow microphone')}</Txt>
+                  <Txt style={{ fontSize: 13, color: colors.sub }}>{tr('Search for places by speaking. Your voice is turned into text on your phone.')}</Txt>
                 </View>
               </View>
-              {perm === 'denied' ? <Txt style={{ fontSize: 13, color: colors.warn }}>Microphone is turned off for this app, so your phone may not ask again. Allow it in your phone settings, or type your question.</Txt> : null}
+              {perm === 'denied' ? <Txt style={{ fontSize: 13, color: colors.warn }}>{tr('Microphone is turned off for this app, so your phone may not ask again. Allow it in your phone settings, or type your question.')}</Txt> : null}
               <View ref={allowRef as never} style={{ flexDirection: 'row' }}>
-                <Button label="Allow microphone" onPress={allowMic} />
+                <Button label={tr('Allow microphone')} onPress={allowMic} />
               </View>
               {perm === 'denied' && Platform.OS !== 'web' ? (
                 <Pressable onPress={() => { Linking.openSettings().catch(() => {}); }} accessibilityRole="button" style={{ minHeight: 44, justifyContent: 'center' }}>
-                  <Txt w="semi" style={{ fontSize: 15, color: colors.primary }}>Open phone settings</Txt>
+                  <Txt w="semi" style={{ fontSize: 15, color: colors.primary }}>{tr('Open phone settings')}</Txt>
                 </Pressable>
               ) : null}
             </View>
           ) : null}
           <View style={[s.bar, { paddingBottom: 12 + insets.bottom }]}>
-            <TextInput value={text} onChangeText={setText} editable={!listening} placeholder={listening ? 'Listening…' : 'Type your question'} placeholderTextColor="#333232"
-              returnKeyType="send" onSubmitEditing={() => ready && ask(text, false)} accessibilityLabel="Type your question" style={s.input} />
+            <TextInput value={text} onChangeText={setText} editable={!listening} placeholder={listening ? tr('Listening…') : tr('Type your question')} placeholderTextColor="#333232"
+              returnKeyType="send" onSubmitEditing={() => ready && ask(text, false)} accessibilityLabel={tr('Type your question')} style={[s.input, { fontFamily: fontFor('regular') }]} />
             {ready ? (
-              <Pressable onPress={() => ask(text, false)} accessibilityRole="button" accessibilityLabel="Send" style={[s.round, { backgroundColor: colors.primary }]}><ArrowUp size={24} color={colors.white} /></Pressable>
+              <Pressable onPress={() => ask(text, false)} accessibilityRole="button" accessibilityLabel={tr('Send')} style={[s.round, { backgroundColor: colors.primary }]}><ArrowUp size={24} color={colors.white} /></Pressable>
             ) : (
               <View style={{ width: 48, height: 48, alignItems: 'center', justifyContent: 'center' }}>
                 <Rings active={listening} size={48} color={colors.warn} />
-                <Pressable ref={micRef as never} onPress={listening ? stopListen : listen} accessibilityRole="button" accessibilityLabel={listening ? 'Stop listening' : 'Speak'} style={[s.round, { backgroundColor: listening ? colors.warn : colors.dark }]}>
+                <Pressable ref={micRef as never} onPress={listening ? stopListen : listen} accessibilityRole="button" accessibilityLabel={listening ? tr('Stop listening') : tr('Speak')} style={[s.round, { backgroundColor: listening ? colors.warn : colors.dark }]}>
                   {listening ? <Square size={20} color={colors.white} fill={colors.white} /> : <Mic size={24} color={colors.white} />}
                 </Pressable>
               </View>
@@ -256,6 +257,6 @@ const s = StyleSheet.create({
   allow: { marginHorizontal: 16, marginBottom: 8, padding: 14, gap: 10, borderRadius: 14, backgroundColor: colors.fill },
   allowIcon: { width: 40, height: 40, borderRadius: 20, backgroundColor: colors.white, alignItems: 'center', justifyContent: 'center' },
   bar: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 16, paddingTop: 10, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: colors.line },
-  input: { flex: 1, minHeight: 48, borderRadius: 24, backgroundColor: colors.fill, paddingHorizontal: 16, fontFamily: font.regular, fontSize: 16, color: '#333232' },
+  input: { flex: 1, minHeight: 48, borderRadius: 24, backgroundColor: colors.fill, paddingHorizontal: 16, fontSize: 16, color: '#333232' },
   round: { width: 48, height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center' },
 });

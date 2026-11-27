@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { loadJSON, saveJSON } from './storage';
 import { APP_URL } from '../config';
 import { inFrame } from './bridge';
+import { tr } from '../i18n';
 
 export type Comment = { id: string; who: string; text: string; t: number };
 export type Post = {
@@ -53,12 +54,12 @@ export const newId = () => `${Date.now().toString(36)}${Math.random().toString(3
 
 export function ago(t: number, now = Date.now()): string {
   const m = Math.max(0, Math.round((now - t) / 60_000));
-  if (m < 1) return 'Just now';
-  if (m < 60) return `${m} min ago`;
+  if (m < 1) return tr('Just now');
+  if (m < 60) return tr('{n} min ago', { n: m });
   const h = Math.round(m / 60);
-  if (h < 24) return `${h} h ago`;
+  if (h < 24) return tr('{n} h ago', { n: h });
   const d = Math.round(h / 24);
-  return d === 1 ? 'Yesterday' : `${d} days ago`;
+  return d === 1 ? tr('Yesterday') : tr('{n} days ago', { n: d });
 }
 
 /** Shrinks a photo picked in the browser so it fits in storage. Native photos are already compressed by the picker. */

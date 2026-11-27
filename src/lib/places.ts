@@ -15,7 +15,7 @@ export function visiblePlaces(places: Place[], f: Filters, saved: Set<string>, l
   const q = f.query.trim().toLowerCase();
   const list = places.filter((p) => {
     if (!q && f.category !== 'All' && p.category !== f.category) return false;
-    if (q && ![p.name, p.area, p.category, p.metro ?? ''].join(' ').toLowerCase().includes(q)) return false;
+    if (q && ![p.name, p.nameEn ?? '', p.area, p.areaEn ?? '', p.category, p.metro ?? ''].join(' ').toLowerCase().includes(q)) return false;
     if (f.freeOnly && priceFor(p, f.day).i !== 0) return false;
     if (f.savedOnly && !saved.has(p.id)) return false;
     const x = f.extra;

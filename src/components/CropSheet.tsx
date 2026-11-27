@@ -3,6 +3,7 @@ import { Image, Modal, PanResponder, Pressable, StyleSheet, View } from 'react-n
 import { Minus, Plus } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '../theme';
+import { tr } from '../i18n';
 import { Button, Txt } from './ui';
 
 const FRAME = 280;
@@ -44,7 +45,7 @@ export function CropSheet({ uri, onCancel, onDone }: { uri: string | null; onCan
       setSize({ w, h });
       const base = FRAME / Math.min(w, h);
       setOff({ x: (FRAME - w * base) / 2, y: (FRAME - h * base) / 2 });
-    }, () => setErr('Could not open this photo.'));
+    }, () => setErr(tr('Could not open this photo.')));
   }, [uri]);
 
   // The photo always covers the frame, so there is never an empty gap inside the circle.
@@ -83,30 +84,30 @@ export function CropSheet({ uri, onCancel, onDone }: { uri: string | null; onCan
   const save = async () => {
     if (!uri || !size || busy) return;
     setBusy(true);
-    try { onDone(await cropToDataUri(uri, size, zoom, off)); } catch { setErr('Could not save this photo. Please try again.'); setBusy(false); }
+    try { onDone(await cropToDataUri(uri, size, zoom, off)); } catch { setErr(tr('Could not save this photo. Please try again.')); setBusy(false); }
   };
 
   return (
     <Modal visible={!!uri} transparent animationType="fade" onRequestClose={onCancel} statusBarTranslucent>
       <View style={[s.wrap, { paddingTop: insets.top + 16, paddingBottom: insets.bottom + 16 }]}>
-        <Txt w="bold" style={{ color: colors.white, fontSize: 18 }}>Adjust your photo</Txt>
-        <Txt style={{ color: '#cfcfd6', fontSize: 13, textAlign: 'center' }}>Drag to move. Zoom to choose the part that shows in your profile.</Txt>
-        <View style={s.frame} {...pan.panHandlers} accessibilityLabel="Photo crop area">
+        <Txt w="bold" style={{ color: colors.white, fontSize: 18 }}>{tr('Adjust your photo')}</Txt>
+        <Txt style={{ color: '#cfcfd6', fontSize: 13, textAlign: 'center' }}>{tr('Drag to move. Zoom to choose the part that shows in your profile.')}</Txt>
+        <View style={s.frame} {...pan.panHandlers} accessibilityLabel={tr('Photo crop area')}>
           {uri && size ? <Image source={{ uri }} resizeMode="stretch" style={{ position: 'absolute', left: off.x, top: off.y, width: size.w * base * zoom, height: size.h * base * zoom }} /> : null}
           <View pointerEvents="none" style={s.mask} />
         </View>
         <View style={s.zoomRow}>
-          <Pressable onPress={() => changeZoom(zoom - 0.5)} accessibilityRole="button" accessibilityLabel="Zoom out" hitSlop={8} style={s.zbtn}><Minus size={20} color={colors.white} /></Pressable>
-          <View {...sliderPan.panHandlers} accessibilityLabel="Zoom" style={{ width: TRACK, height: 36, justifyContent: 'center' }}>
+          <Pressable onPress={() => changeZoom(zoom - 0.5)} accessibilityRole="button" accessibilityLabel={tr('Zoom out')} hitSlop={8} style={s.zbtn}><Minus size={20} color={colors.white} /></Pressable>
+          <View {...sliderPan.panHandlers} accessibilityLabel={tr('Zoom')} style={{ width: TRACK, height: 36, justifyContent: 'center' }}>
             <View pointerEvents="none" style={s.track}><View style={[s.fill, { width: ((zoom - 1) / (MAX_ZOOM - 1)) * TRACK }]} /></View>
             <View pointerEvents="none" style={[s.knob, { left: ((zoom - 1) / (MAX_ZOOM - 1)) * TRACK - 11 }]} />
           </View>
-          <Pressable onPress={() => changeZoom(zoom + 0.5)} accessibilityRole="button" accessibilityLabel="Zoom in" hitSlop={8} style={s.zbtn}><Plus size={20} color={colors.white} /></Pressable>
+          <Pressable onPress={() => changeZoom(zoom + 0.5)} accessibilityRole="button" accessibilityLabel={tr('Zoom in')} hitSlop={8} style={s.zbtn}><Plus size={20} color={colors.white} /></Pressable>
         </View>
         {err ? <Txt style={{ color: '#ffb4a8', fontSize: 13 }}>{err}</Txt> : null}
         <View style={{ flexDirection: 'row', gap: 12, width: FRAME + 40 }}>
-          <Button label="Cancel" outline onPress={onCancel} />
-          <Button label={busy ? 'Saving...' : 'Use photo'} onPress={save} />
+          <Button label={tr('Cancel')} outline onPress={onCancel} />
+          <Button label={busy ? tr('Saving...') : tr('Use photo')} onPress={save} />
         </View>
       </View>
     </Modal>

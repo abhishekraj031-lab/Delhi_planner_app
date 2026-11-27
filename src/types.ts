@@ -8,7 +8,9 @@ export type Ticket = { label: string; value: string; unverified: boolean };
 export type Rule = { label: string; value: string };
 
 export type Place = {
-  id: string; name: string; area: string; category: Category; emoji: string; color: string;
+  id: string; name: string; area: string;
+  /** English name and area, kept when the place is shown in another language so search and labels still work. */
+  nameEn?: string; areaEn?: string; category: Category; emoji: string; color: string;
   /** Weekly closed days (0 = Sunday). null means opening days are not known. */
   closedDays: number[] | null;
   /** [open, close] in minutes after midnight. null = not known. */

@@ -7,7 +7,7 @@ import type { Category, UserLocation } from '../types';
 import { Button, Chip, Txt } from './ui';
 import { Sheet } from './Sheet';
 import { BUDGETS, DAYS_FOR, Extra, NO_EXTRA, OPEN_TILL, OPENS_BY, WHEN_OPTIONS, WHERES } from '../lib/filters';
-import { FULL_DAY_NAMES } from '../lib/status';
+import { clock, dayName, tr } from '../i18n';
 
 type FilterProps = {
   visible: boolean; onClose: () => void; extra: Extra; category: Category | 'All'; categories: Category[];
@@ -35,41 +35,41 @@ export function FilterSheet(p: FilterProps) {
   const count = p.countFor(x, cat);
   const dirty = JSON.stringify(x) !== JSON.stringify(NO_EXTRA);
   return (
-    <Sheet visible={p.visible} onClose={p.onClose} label="Filters">
+    <Sheet visible={p.visible} onClose={p.onClose} label={tr('Filters')}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Txt w="bold" style={{ fontSize: 20, flex: 1 }}>Filters</Txt>
-        {dirty ? <Pressable onPress={() => setX(NO_EXTRA)} hitSlop={8} accessibilityRole="button"><Txt w="semi" style={{ color: colors.primary }}>Clear all</Txt></Pressable> : null}
+        <Txt w="bold" style={{ fontSize: 20, flex: 1 }}>{tr('Filters')}</Txt>
+        {dirty ? <Pressable onPress={() => setX(NO_EXTRA)} hitSlop={8} accessibilityRole="button"><Txt w="semi" style={{ color: colors.primary }}>{tr('Clear all')}</Txt></Pressable> : null}
       </View>
-      <Group title="When are you going?" note="Weekdays is Monday to Friday. Places with unknown opening days are left out of day choices.">
-        <Row>{WHEN_OPTIONS.map((o) => <Chip key={o.key} label={o.label} on={x.when === o.key} onPress={() => set({ when: o.key, pick: null, ...(o.key !== 'today' && x.now ? { now: false } : {}) })} />)}</Row>
+      <Group title={tr('When are you going?')} note={tr('Weekdays is Monday to Friday. Places with unknown opening days are left out of day choices.')}>
+        <Row>{WHEN_OPTIONS.map((o) => <Chip key={o.key} label={tr(o.label)} on={x.when === o.key} onPress={() => set({ when: o.key, pick: null, ...(o.key !== 'today' && x.now ? { now: false } : {}) })} />)}</Row>
         {x.when !== 'today' ? (
-          <Row>{DAYS_FOR[x.when].map((d) => <Chip key={d} label={FULL_DAY_NAMES[d].slice(0, 3)} on={x.pick === d} onPress={() => set({ pick: x.pick === d ? null : d })} />)}</Row>
+          <Row>{DAYS_FOR[x.when].map((d) => <Chip key={d} label={dayName(d, true)} on={x.pick === d} onPress={() => set({ pick: x.pick === d ? null : d })} />)}</Row>
         ) : null}
       </Group>
-      <Group title="Budget" note="Entry fee for an Indian adult on the chosen day. Places with no fee on record are left out.">
-        <Row>{BUDGETS.map((o) => <Chip key={o.key} label={o.label} on={x.budget === o.key} onPress={() => set({ budget: x.budget === o.key ? null : o.key })} />)}</Row>
+      <Group title={tr('Budget')} note={tr('Entry fee for an Indian adult on the chosen day. Places with no fee on record are left out.')}>
+        <Row>{BUDGETS.map((o) => <Chip key={o.key} label={tr(o.label)} on={x.budget === o.key} onPress={() => set({ budget: x.budget === o.key ? null : o.key })} />)}</Row>
       </Group>
-      <Group title="Open hours" note="Based on opening and closing times on record. Places with no hours on record are left out. Pick both to plan a window, for example opens by 9 am and open till 6 pm.">
-        <Row><Chip label="Open now" on={x.now} onPress={() => set(x.now ? { now: false } : { now: true, when: 'today', pick: null })} /></Row>
-        <Txt w="semi" style={{ fontSize: 13, color: colors.sub }}>Opening time (opens by)</Txt>
-        <Row>{OPENS_BY.map((o) => <Chip key={o.min} label={o.label} on={x.opensBy === o.min} onPress={() => set({ opensBy: x.opensBy === o.min ? null : o.min })} />)}</Row>
-        <Txt w="semi" style={{ fontSize: 13, color: colors.sub }}>Closing time (open till at least)</Txt>
-        <Row>{OPEN_TILL.map((o) => <Chip key={o.min} label={o.label} on={x.openTill === o.min} onPress={() => set({ openTill: x.openTill === o.min ? null : o.min })} />)}</Row>
+      <Group title={tr('Open hours')} note={tr('Based on opening and closing times on record. Places with no hours on record are left out. Pick both to plan a window, for example opens by 9 am and open till 6 pm.')}>
+        <Row><Chip label={tr('Open now')} on={x.now} onPress={() => set(x.now ? { now: false } : { now: true, when: 'today', pick: null })} /></Row>
+        <Txt w="semi" style={{ fontSize: 13, color: colors.sub }}>{tr('Opening time (opens by)')}</Txt>
+        <Row>{OPENS_BY.map((o) => <Chip key={o.min} label={clock(o.min)} on={x.opensBy === o.min} onPress={() => set({ opensBy: x.opensBy === o.min ? null : o.min })} />)}</Row>
+        <Txt w="semi" style={{ fontSize: 13, color: colors.sub }}>{tr('Closing time (open till at least)')}</Txt>
+        <Row>{OPEN_TILL.map((o) => <Chip key={o.min} label={clock(o.min)} on={x.openTill === o.min} onPress={() => set({ openTill: x.openTill === o.min ? null : o.min })} />)}</Row>
       </Group>
-      <Group title="Where" note="Pick one. Distances are straight-line from your location. Metro uses the stations listed for each place.">
+      <Group title={tr('Where')} note={tr('Pick one. Distances are straight-line from your location. Metro uses the stations listed for each place.')}>
         <Row>{WHERES.map((o) => (
-          <Chip key={o.key} label={o.label} on={x.where === o.key}
+          <Chip key={o.key} label={tr(o.label)} on={x.where === o.key}
             onPress={() => (o.needsLocation && !p.hasLocation ? p.onSetLocation() : set({ where: x.where === o.key ? null : o.key }))} />
         ))}</Row>
-        {!p.hasLocation ? <Pressable onPress={p.onSetLocation} accessibilityRole="button"><Txt w="semi" style={{ color: colors.primary, fontSize: 13 }}>Set your location to use distance options</Txt></Pressable> : null}
+        {!p.hasLocation ? <Pressable onPress={p.onSetLocation} accessibilityRole="button"><Txt w="semi" style={{ color: colors.primary, fontSize: 13 }}>{tr('Set your location to use distance options')}</Txt></Pressable> : null}
       </Group>
-      <Group title="Type" note="All shows every type together, so you can compare places across the city.">
+      <Group title={tr('Type')} note={tr('All shows every type together, so you can compare places across the city.')}>
         <Row>
-          <Chip label="All" on={cat === 'All'} onPress={() => setCat('All')} />
-          {p.categories.map((c) => <Chip key={c} label={c} on={cat === c} onPress={() => setCat(c)} />)}
+          <Chip label={tr('All')} on={cat === 'All'} onPress={() => setCat('All')} />
+          {p.categories.map((c) => <Chip key={c} label={tr(c)} on={cat === c} onPress={() => setCat(c)} />)}
         </Row>
       </Group>
-      <View style={{ flexDirection: 'row' }}><Button label={count === 0 ? 'No places match' : `Show ${count} ${count === 1 ? 'place' : 'places'}`} onPress={() => p.onApply(x, cat)} /></View>
+      <View style={{ flexDirection: 'row' }}><Button label={count === 0 ? tr('No places match') : count === 1 ? tr('Show 1 place') : tr('Show {n} places', { n: count })} onPress={() => p.onApply(x, cat)} /></View>
     </Sheet>
   );
 }
@@ -77,19 +77,19 @@ export function FilterSheet(p: FilterProps) {
 type LocProps = { visible: boolean; onClose: () => void; loc: UserLocation | null; state: LocationState; onUseCurrent: () => void; onChooseArea: (label: string) => void };
 export function LocationSheet(p: LocProps) {
   return (
-    <Sheet visible={p.visible} onClose={p.onClose} label="Choose location">
+    <Sheet visible={p.visible} onClose={p.onClose} label={tr('Choose location')}>
       <View style={{ gap: 8 }}>
-        <Txt w="bold" style={{ fontSize: 16 }}>Your location</Txt>
-        <View style={{ flexDirection: 'row' }}><Button label="Use my current location" onPress={() => { p.onClose(); p.onUseCurrent(); }} /></View>
-        {p.state === 'denied' ? <Txt style={{ color: colors.warn }}>Location is turned off for this app. You can allow it in your phone settings, or pick an area below.</Txt> : null}
+        <Txt w="bold" style={{ fontSize: 16 }}>{tr('Your location')}</Txt>
+        <View style={{ flexDirection: 'row' }}><Button label={tr('Use my current location')} onPress={() => { p.onClose(); p.onUseCurrent(); }} /></View>
+        {p.state === 'denied' ? <Txt style={{ color: colors.warn }}>{tr('Location is turned off for this app. You can allow it in your phone settings, or pick an area below.')}</Txt> : null}
       </View>
       <View style={{ gap: 8 }}>
-        <Txt w="bold" style={{ fontSize: 16 }}>Or pick an area</Txt>
+        <Txt w="bold" style={{ fontSize: 16 }}>{tr('Or pick an area')}</Txt>
         <View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap' }}>
-          {AREAS.map((a) => <Chip key={a.label} label={a.label} on={p.loc?.label === a.label} onPress={() => { p.onChooseArea(a.label); p.onClose(); }} />)}
+          {AREAS.map((a) => <Chip key={a.label} label={tr(a.label)} on={p.loc?.label === a.label} onPress={() => { p.onChooseArea(a.label); p.onClose(); }} />)}
         </View>
       </View>
-      <Txt style={{ color: colors.sub, fontSize: 12 }}>Your location stays on your phone and is only used to sort places. Distances are straight-line, not travel time.</Txt>
+      <Txt style={{ color: colors.sub, fontSize: 12 }}>{tr('Your location stays on your phone and is only used to sort places. Distances are straight-line, not travel time.')}</Txt>
     </Sheet>
   );
 }

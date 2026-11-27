@@ -2,7 +2,8 @@ import React, { useMemo, useState } from 'react';
 import { Image, Platform, Pressable, TextInput, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Camera, Check, ImagePlus, Lock, MapPin, X } from 'lucide-react-native';
-import { colors } from '../theme';
+import { colors, fontFor } from '../theme';
+import { tr } from '../i18n';
 import { Place } from '../types';
 import { shrinkWeb } from '../lib/wall';
 import { Button, Txt } from './ui';
@@ -21,14 +22,14 @@ export function NewPostSheet({ visible, onClose, places, onPost }: { visible: bo
     setErr('');
     try {
       const perm = camera ? await ImagePicker.requestCameraPermissionsAsync() : await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (!perm.granted && Platform.OS !== 'web') { setErr(camera ? 'Camera is off for this app. Turn it on in your phone settings.' : 'Photos are off for this app. Turn them on in your phone settings.'); return; }
+      if (!perm.granted && Platform.OS !== 'web') { setErr(camera ? tr('Camera is off for this app. Turn it on in your phone settings.') : tr('Photos are off for this app. Turn them on in your phone settings.')); return; }
       const opts = { mediaTypes: ['images'] as ImagePicker.MediaType[], quality: 0.4, base64: true, allowsEditing: true, aspect: [1, 1] as [number, number] };
       const r = camera ? await ImagePicker.launchCameraAsync(opts) : await ImagePicker.launchImageLibraryAsync(opts);
       if (r.canceled || !r.assets?.[0]) return;
       const a = r.assets[0];
       const uri = a.base64 ? `data:${a.mimeType ?? 'image/jpeg'};base64,${a.base64}` : a.uri;
       setPhoto(Platform.OS === 'web' ? await shrinkWeb(uri) : uri);
-    } catch { setErr('Could not open your photos. Please try again.'); }
+    } catch { setErr(tr('Could not open your photos. Please try again.')); }
   };
 
   const matches = useMemo(() => {
@@ -38,27 +39,27 @@ export function NewPostSheet({ visible, onClose, places, onPost }: { visible: bo
   const chosen = places.find((p) => p.id === placeId);
 
   return (
-    <Sheet visible={visible} onClose={close} label="New post">
-      <Txt w="bold" style={{ fontSize: 20 }}>New post</Txt>
+    <Sheet visible={visible} onClose={close} label={tr('New post')}>
+      <Txt w="bold" style={{ fontSize: 20 }}>{tr('New post')}</Txt>
 
       {photo ? (
         <View>
-          <Image source={{ uri: photo }} accessibilityLabel="Your photo" style={{ width: '100%', aspectRatio: 1, borderRadius: 16, backgroundColor: colors.fill }} />
-          <Pressable onPress={() => setPhoto(null)} accessibilityRole="button" accessibilityLabel="Remove photo" style={{ position: 'absolute', top: 10, right: 10, width: 36, height: 36, borderRadius: 18, backgroundColor: 'rgba(0,0,0,0.6)', alignItems: 'center', justifyContent: 'center' }}>
+          <Image source={{ uri: photo }} accessibilityLabel={tr('Your photo')} style={{ width: '100%', aspectRatio: 1, borderRadius: 16, backgroundColor: colors.fill }} />
+          <Pressable onPress={() => setPhoto(null)} accessibilityRole="button" accessibilityLabel={tr('Remove photo')} style={{ position: 'absolute', top: 10, right: 10, width: 36, height: 36, borderRadius: 18, backgroundColor: 'rgba(0,0,0,0.6)', alignItems: 'center', justifyContent: 'center' }}>
             <X size={20} color={colors.white} />
           </Pressable>
         </View>
       ) : (
         <View style={{ gap: 10 }}>
-          <Pressable onPress={() => pick(false)} accessibilityRole="button" accessibilityLabel="Choose a photo"
+          <Pressable onPress={() => pick(false)} accessibilityRole="button" accessibilityLabel={tr('Choose a photo')}
             style={({ pressed }) => ({ height: 180, borderRadius: 16, borderWidth: 1.5, borderStyle: 'dashed', borderColor: colors.primary, backgroundColor: '#f2f7ff', alignItems: 'center', justifyContent: 'center', gap: 8, opacity: pressed ? 0.7 : 1 })}>
             <ImagePlus size={32} color={colors.primary} />
-            <Txt w="semi" style={{ color: colors.primary, fontSize: 16 }}>Choose a photo</Txt>
-            <Txt style={{ color: colors.sub, fontSize: 13 }}>From the places you visited</Txt>
+            <Txt w="semi" style={{ color: colors.primary, fontSize: 16 }}>{tr('Choose a photo')}</Txt>
+            <Txt style={{ color: colors.sub, fontSize: 13 }}>{tr('From the places you visited')}</Txt>
           </Pressable>
           {Platform.OS !== 'web' ? (
-            <Pressable onPress={() => pick(true)} accessibilityRole="button" accessibilityLabel="Take a photo" style={({ pressed }) => ({ flexDirection: 'row', gap: 8, alignItems: 'center', alignSelf: 'center', padding: 8, opacity: pressed ? 0.6 : 1 })}>
-              <Camera size={18} color={colors.primary} /><Txt w="semi" style={{ color: colors.primary, fontSize: 15 }}>Take a photo</Txt>
+            <Pressable onPress={() => pick(true)} accessibilityRole="button" accessibilityLabel={tr('Take a photo')} style={({ pressed }) => ({ flexDirection: 'row', gap: 8, alignItems: 'center', alignSelf: 'center', padding: 8, opacity: pressed ? 0.6 : 1 })}>
+              <Camera size={18} color={colors.primary} /><Txt w="semi" style={{ color: colors.primary, fontSize: 15 }}>{tr('Take a photo')}</Txt>
             </Pressable>
           ) : null}
         </View>
@@ -66,15 +67,15 @@ export function NewPostSheet({ visible, onClose, places, onPost }: { visible: bo
       {err ? <Txt style={{ color: colors.warn, fontSize: 13 }}>{err}</Txt> : null}
 
       <View style={{ gap: 8 }}>
-        <Txt w="bold" style={{ fontSize: 15 }}>Where was this?</Txt>
+        <Txt w="bold" style={{ fontSize: 15 }}>{tr('Where was this?')}</Txt>
         {chosen ? (
-          <Pressable onPress={() => setPlaceId(undefined)} accessibilityRole="button" accessibilityLabel={`Remove ${chosen.name}`} style={{ flexDirection: 'row', alignItems: 'center', gap: 8, alignSelf: 'flex-start', backgroundColor: colors.primary, borderRadius: 18, paddingHorizontal: 12, paddingVertical: 8 }}>
+          <Pressable onPress={() => setPlaceId(undefined)} accessibilityRole="button" accessibilityLabel={tr('Remove {name}', { name: chosen.name })} style={{ flexDirection: 'row', alignItems: 'center', gap: 8, alignSelf: 'flex-start', backgroundColor: colors.primary, borderRadius: 18, paddingHorizontal: 12, paddingVertical: 8 }}>
             <MapPin size={16} color={colors.white} /><Txt w="semi" style={{ color: colors.white, fontSize: 14 }}>{chosen.name}</Txt><X size={16} color={colors.white} />
           </Pressable>
         ) : (
           <>
-            <TextInput value={q} onChangeText={setQ} placeholder="Search a place" placeholderTextColor="#777" accessibilityLabel="Search a place"
-              style={{ height: 48, borderRadius: 12, backgroundColor: colors.fill, paddingHorizontal: 14, fontSize: 16, color: colors.ink }} />
+            <TextInput value={q} onChangeText={setQ} placeholder={tr('Search a place')} placeholderTextColor="#777" accessibilityLabel={tr('Search a place')}
+              style={{ height: 48, borderRadius: 12, backgroundColor: colors.fill, paddingHorizontal: 14, fontSize: 16, color: colors.ink, fontFamily: fontFor('regular') }} />
             <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
               {matches.map((p) => (
                 <Pressable key={p.id} onPress={() => { setPlaceId(p.id); setQ(''); }} accessibilityRole="button" accessibilityLabel={p.name}
@@ -88,22 +89,22 @@ export function NewPostSheet({ visible, onClose, places, onPost }: { visible: bo
       </View>
 
       <View style={{ gap: 8 }}>
-        <Txt w="bold" style={{ fontSize: 15 }}>Caption</Txt>
-        <TextInput value={caption} onChangeText={setCaption} placeholder="Say something about this place" placeholderTextColor="#777" multiline maxLength={280} accessibilityLabel="Caption"
-          style={{ minHeight: 84, borderRadius: 12, backgroundColor: colors.fill, padding: 14, fontSize: 16, color: colors.ink, textAlignVertical: 'top' }} />
+        <Txt w="bold" style={{ fontSize: 15 }}>{tr('Caption')}</Txt>
+        <TextInput value={caption} onChangeText={setCaption} placeholder={tr('Say something about this place')} placeholderTextColor="#777" multiline maxLength={280} accessibilityLabel={tr('Caption')}
+          style={{ minHeight: 84, borderRadius: 12, backgroundColor: colors.fill, padding: 14, fontSize: 16, color: colors.ink, textAlignVertical: 'top', fontFamily: fontFor('regular') }} />
       </View>
 
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: colors.fill, borderRadius: 12, padding: 12 }}>
         <Lock size={18} color={colors.ink} />
         <View style={{ flex: 1 }}>
-          <Txt w="semi" style={{ fontSize: 15 }}>Friends and family</Txt>
-          <Txt style={{ fontSize: 13, color: colors.sub }}>Only people you invite can see this.</Txt>
+          <Txt w="semi" style={{ fontSize: 15 }}>{tr('Friends and family')}</Txt>
+          <Txt style={{ fontSize: 13, color: colors.sub }}>{tr('Only people you invite can see this.')}</Txt>
         </View>
         <Check size={18} color={colors.primary} />
       </View>
 
       <View style={{ flexDirection: 'row' }}>
-        <Button label="Post" onPress={() => { if (!photo) { setErr('Add a photo to post.'); return; } onPost({ photo, placeId, caption: caption.trim() }); close(); }} />
+        <Button label={tr('Post')} onPress={() => { if (!photo) { setErr(tr('Add a photo to post.')); return; } onPost({ photo, placeId, caption: caption.trim() }); close(); }} />
       </View>
     </Sheet>
   );

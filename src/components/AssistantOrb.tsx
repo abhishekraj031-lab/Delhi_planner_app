@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AccessibilityInfo, Animated, Easing, Platform, StyleProp, TextStyle, View } from 'react-native';
 import { Sparkles } from 'lucide-react-native';
 import { colors } from '../theme';
+import { tr } from '../i18n';
 import { Txt } from './ui';
 
 const NATIVE = Platform.OS !== 'web';
@@ -100,7 +101,7 @@ export function TypingDots() {
     return () => ls.forEach((l) => l.stop());
   }, [reduce, dots]);
   return (
-    <View style={{ flexDirection: 'row', gap: 5, height: 22, alignItems: 'center' }} accessible accessibilityLabel="Assistant is thinking">
+    <View style={{ flexDirection: 'row', gap: 5, height: 22, alignItems: 'center' }} accessible accessibilityLabel={tr('Assistant is thinking')}>
       {dots.map((d, i) => (
         <Animated.View key={i} style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: colors.sub,
           opacity: d.interpolate({ inputRange: [0, 1], outputRange: [0.35, 1] }), transform: [{ translateY: d.interpolate({ inputRange: [0, 1], outputRange: [0, -4] }) }] }} />

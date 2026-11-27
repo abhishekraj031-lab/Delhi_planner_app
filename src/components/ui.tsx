@@ -1,11 +1,12 @@
 import { useExtLink } from '../lib/links';
 import React from 'react';
 import { Pressable, StyleSheet, Text, TextProps, View } from 'react-native';
-import { colors, font } from '../theme';
+import { colors, fontFor } from '../theme';
+import { tr } from '../i18n';
 
 type Weight = 'regular' | 'medium' | 'semi' | 'bold';
 export function Txt({ w = 'regular', style, ...rest }: TextProps & { w?: Weight }) {
-  return <Text {...rest} style={[{ fontFamily: font[w], color: colors.ink, fontSize: 14 }, style]} />;
+  return <Text {...rest} style={[{ fontFamily: fontFor(w), color: colors.ink, fontSize: 14 }, style]} />;
 }
 export function Chip({ label, on, icon, onPress }: { label: string; on: boolean; icon?: React.ReactNode; onPress: () => void }) {
   return (
@@ -16,10 +17,10 @@ export function Chip({ label, on, icon, onPress }: { label: string; on: boolean;
   );
 }
 export const Unverified = () => (
-  <View style={s.unv}><Txt w="bold" style={{ fontSize: 11, color: colors.unv }}>Unverified</Txt></View>
+  <View style={s.unv}><Txt w="bold" style={{ fontSize: 11, color: colors.unv }}>{tr('Unverified')}</Txt></View>
 );
 export const NotAvailable = ({ size = 14 }: { size?: number }) => (
-  <Txt style={{ color: colors.sub, fontStyle: 'italic', fontSize: size }}>Not available</Txt>
+  <Txt style={{ color: colors.sub, fontStyle: 'italic', fontSize: size }}>{tr('Not available')}</Txt>
 );
 /** `url` is for buttons that open a website or app: it lets the web preview put a real link over the button. */
 export function Button({ label, onPress, outline, url }: { label: string; onPress: () => void; outline?: boolean; url?: string }) {

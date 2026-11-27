@@ -1,4 +1,5 @@
 import type { Coords } from '../types';
+import { tr } from '../i18n';
 
 export function distanceKm(a: Coords, b: Coords): number {
   const r = (x: number) => (x * Math.PI) / 180;
@@ -6,6 +7,6 @@ export function distanceKm(a: Coords, b: Coords): number {
   return 12742 * Math.asin(Math.sqrt(h));
 }
 export function formatAway(km: number): string {
-  if (km < 1) return 'under 1 km away';
-  return km < 10 ? `${km.toFixed(1)} km away` : `${Math.round(km)} km away`;
+  if (km < 1) return tr('under 1 km away');
+  return tr('{n} km away', { n: km < 10 ? km.toFixed(1) : Math.round(km) });
 }

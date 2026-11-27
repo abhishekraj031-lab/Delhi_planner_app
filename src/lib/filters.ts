@@ -1,6 +1,7 @@
 import type { Place } from '../types';
 import { priceFor } from './pricing';
 import { FULL_DAY_NAMES, getStatus } from './status';
+import { clock, tr } from '../i18n';
 
 /** When the visit happens. 'today' shows everything with today's status; the others keep only places known to be open. */
 export type When = 'today' | 'weekdays' | 'weekend';
@@ -31,10 +32,10 @@ export const NO_EXTRA: Extra = { when: 'today', pick: null, budget: null, now: f
 
 /** The weekday used to show prices and status for a choice. */
 export function whenInfo(when: When, pick: number | null, todayDow: number): { day: number; label: string; hint: string | null } {
-  if (when === 'today') return { day: todayDow, label: 'Today', hint: null };
-  if (pick != null) return { day: pick, label: FULL_DAY_NAMES[pick], hint: `Showing places open on ${FULL_DAY_NAMES[pick]}.` };
-  if (when === 'weekdays') return { day: 3, label: 'Weekdays', hint: 'Showing places open every weekday, Monday to Friday.' };
-  return { day: 6, label: 'Weekend', hint: 'Showing places open on both Saturday and Sunday.' };
+  if (when === 'today') return { day: todayDow, label: tr('Today'), hint: null };
+  if (pick != null) return { day: pick, label: FULL_DAY_NAMES[pick], hint: tr('Showing places open on {day}.', { day: FULL_DAY_NAMES[pick] }) };
+  if (when === 'weekdays') return { day: 3, label: tr('Weekdays'), hint: tr('Showing places open every weekday, Monday to Friday.') };
+  return { day: 6, label: tr('Weekend'), hint: tr('Showing places open on both Saturday and Sunday.') };
 }
 
 /** Places with unknown opening days are left out of day filters, never guessed. */
@@ -67,10 +68,10 @@ export function matchesHours(p: Place, x: Pick<Extra, 'now' | 'opensBy' | 'openT
 export function activeTags(x: Extra): { key: string; label: string }[] {
   const t: { key: string; label: string }[] = [];
   if (x.when !== 'today') t.push({ key: 'when', label: whenInfo(x.when, x.pick, 0).label });
-  if (x.budget) t.push({ key: 'budget', label: BUDGETS.find((b) => b.key === x.budget)!.label });
-  if (x.now) t.push({ key: 'now', label: 'Open now' });
-  if (x.opensBy != null) t.push({ key: 'opensBy', label: `Opens by ${OPENS_BY.find((o) => o.min === x.opensBy)!.label}` });
-  if (x.openTill != null) t.push({ key: 'openTill', label: `Open till ${OPEN_TILL.find((o) => o.min === x.openTill)!.label}` });
-  if (x.where) t.push({ key: 'where', label: WHERES.find((w) => w.key === x.where)!.label });
+  if (x.budget) t.push({ key: 'budget', label: tr(BUDGETS.find((b) => b.key === x.budget)!.label) });
+  if (x.now) t.push({ key: 'now', label: tr('Open now') });
+  if (x.opensBy != null) t.push({ key: 'opensBy', label: tr('Opens by {time}', { time: clock(x.opensBy) }) });
+  if (x.openTill != null) t.push({ key: 'openTill', label: tr('Open till {time}', { time: clock(x.openTill) }) });
+  if (x.where) t.push({ key: 'where', label: tr(WHERES.find((w) => w.key === x.where)!.label) });
   return t;
 }
