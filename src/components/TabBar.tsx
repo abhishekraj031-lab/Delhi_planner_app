@@ -46,7 +46,7 @@ function TabItem({ on, label, Icon, onPress }: { on: boolean; label: string; alw
 export function TabBar({ tab, onChange }: { tab: TabKey; onChange: (t: TabKey) => void }) {
   const insets = useSafeAreaInsets();
   return (
-    <View style={[s.bar, { paddingBottom: Math.max(insets.bottom, 12) }]}>
+    <View style={[s.bar, { paddingBottom: Math.max(insets.bottom, 12) + 12 }]}>
       {TABS.map(({ key, label, Icon }) => (
         <TabItem key={key} on={tab === key} label={label} Icon={Icon} onPress={() => onChange(key)} />
       ))}
