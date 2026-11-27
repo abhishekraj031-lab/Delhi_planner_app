@@ -1,84 +1,96 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, Easing, View, useWindowDimensions } from 'react-native';
-import Svg, { Circle, Line, Path } from 'react-native-svg';
+import Svg, { Path } from 'react-native-svg';
 import { colors } from '../theme';
 import { Txt } from './ui';
 import { Logo } from './Logo';
 
-const AnimatedPath = Animated.createAnimatedComponent(Path);
-const AnimatedLine = Animated.createAnimatedComponent(Line);
-
 /** Battlements along a wall from x0 to x1 at height y. */
-const crenels = (x0: number, x1: number, y: number, h = 5, w = 7) => {
+const crenels = (x0: number, x1: number, y: number, h = 5, w = 5) => {
   let d = `M${x0} ${y}`;
   for (let x = x0; x + w <= x1; x += w * 2) d += ` V${y - h} H${x + w} V${y} H${Math.min(x + w * 2, x1)}`;
   return d;
 };
 
-/** One monument per entry, drawn left to right along the ground line. Each is a single outline path. */
-const MONUMENTS: { name: string; d: string; len: number }[] = [
-  { name: "Humayun's Tomb", d: 'M8 120 V104 H78 V120 M16 104 V88 H70 V104 M36 104 V95 Q43 87 50 95 V104 M26 88 Q43 54 60 88 M43 63 V54', len: 282 },
-  { name: 'Red Fort', d: `M92 120 V74 H170 V120 ${crenels(92, 170, 74)} M118 120 V98 Q131 84 144 98 V120 M96 74 V64 Q103 56 110 64 V74 M152 74 V64 Q159 56 166 64 V74`, len: 456 },
-  { name: 'India Gate', d: 'M190 120 V52 H246 V120 M186 52 H250 V45 H186 Z M206 120 V84 Q218 58 230 84 V120 M214 45 V38 H222 V45', len: 466 },
-  { name: 'Qutub Minar', d: 'M276 120 L280 32 H288 L292 120 M277 100 H291 M278 78 H290 M279 56 H289 M280 32 Q284 22 288 32 M284 22 V12', len: 244 },
-  { name: 'Lotus Temple', d: 'M314 120 Q314 92 334 68 Q354 92 354 120 M324 120 Q324 96 334 78 Q344 96 344 120 M334 68 V60 M314 120 H354', len: 250 },
+/** Monument outlines on a 64 x 64 grid. */
+const ICONS: { name: string; d: string }[] = [
+  { name: 'Qutub Minar', d: 'M26 58 L29 14 H35 L38 58 M27 46 H37 M28 34 H36 M29 24 H35 M29 14 Q32 8 35 14 M32 8 V3' },
+  { name: 'Red Fort', d: `M6 58 V30 H58 V58 ${crenels(6, 58, 30)} M10 30 V22 Q15 15 20 22 V30 M44 30 V22 Q49 15 54 22 V30 M24 58 V43 Q32 33 40 43 V58` },
+  { name: 'India Gate', d: 'M12 58 V22 H52 V58 M8 22 H56 V15 H8 Z M24 58 V36 Q32 20 40 36 V58' },
+  { name: 'Lotus Temple', d: 'M10 58 Q10 36 32 14 Q54 36 54 58 M20 58 Q20 40 32 26 Q44 40 44 58 M32 14 V8 M6 58 H58' },
+  { name: "Humayun's Tomb", d: 'M6 58 V47 H58 V58 M12 47 V37 H52 V47 M26 47 V41 Q32 35 38 41 V47 M18 37 Q32 8 46 37 M32 15 V6' },
+  { name: 'Jama Masjid', d: 'M12 58 V16 M9 16 H15 M12 16 V10 M52 58 V16 M49 16 H55 M52 16 V10 M18 58 V42 H46 V58 M21 42 Q32 22 43 42 M32 23 V16' },
 ];
+const TILTS = [-8, 6, -4, 8, -6, 5];
 
-/** Launch screen: Delhi monument outlines draw themselves along a skyline, then the app name appears. */
-export function Splash({ onDone, ms = 4200 }: { onDone: () => void; ms?: number }) {
+/** Launch screen: monument icons burst out of the centre, then fold into the logo before the app name appears. */
+export function Splash({ onDone, ms = 4600 }: { onDone: () => void; ms?: number }) {
   const { width } = useWindowDimensions();
-  const draw = useRef(MONUMENTS.map(() => new Animated.Value(0))).current;
-  const ground = useRef(new Animated.Value(0)).current;
-  const sun = useRef(new Animated.Value(0)).current;
+  const R = Math.min(width * 0.34, 150);
+  const ICON = 64;
+  const pop = useRef(ICONS.map(() => new Animated.Value(0))).current;
+  const merge = useRef(new Animated.Value(0)).current;
+  const pin = useRef(new Animated.Value(0)).current;
   const title = useRef(new Animated.Value(0)).current;
   const out = useRef(new Animated.Value(1)).current;
-  const pin = useRef(new Animated.Value(0)).current;
+  const ripple = useRef([0, 1, 2].map(() => new Animated.Value(0))).current;
+  const float = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    const seg = Math.round(ms * 0.5);
-    Animated.parallel([
-      Animated.timing(sun, { toValue: 1, duration: ms, easing: Easing.out(Easing.quad), useNativeDriver: false }),
-      Animated.timing(ground, { toValue: 1, duration: 500, useNativeDriver: false }),
-      Animated.stagger(Math.round(ms * 0.1), draw.map((v) => Animated.timing(v, { toValue: 1, duration: seg, easing: Easing.inOut(Easing.cubic), useNativeDriver: false }))),
-      Animated.sequence([Animated.delay(Math.round(ms * 0.4)), Animated.spring(pin, { toValue: 1, friction: 5, tension: 90, useNativeDriver: true })]),
-      Animated.sequence([Animated.delay(Math.round(ms * 0.55)), Animated.timing(title, { toValue: 1, duration: Math.round(ms * 0.2), useNativeDriver: true })]),
+    const loops = ripple.map((v, i) => Animated.loop(Animated.sequence([Animated.delay(i * 700), Animated.timing(v, { toValue: 1, duration: 2100, easing: Easing.out(Easing.quad), useNativeDriver: true }), Animated.timing(v, { toValue: 0, duration: 0, useNativeDriver: true })])));
+    loops.forEach((l) => l.start());
+    const bob = Animated.loop(Animated.sequence([Animated.timing(float, { toValue: 1, duration: 900, easing: Easing.inOut(Easing.sin), useNativeDriver: true }), Animated.timing(float, { toValue: 0, duration: 900, easing: Easing.inOut(Easing.sin), useNativeDriver: true })]));
+    bob.start();
+    const run = Animated.parallel([
+      Animated.stagger(130, pop.map((v) => Animated.spring(v, { toValue: 1, friction: 5, tension: 70, useNativeDriver: true }))),
+      Animated.sequence([Animated.delay(Math.round(ms * 0.5)), Animated.timing(merge, { toValue: 1, duration: 650, easing: Easing.in(Easing.back(1.4)), useNativeDriver: true })]),
+      Animated.sequence([Animated.delay(Math.round(ms * 0.58)), Animated.spring(pin, { toValue: 1, friction: 4, tension: 80, useNativeDriver: true })]),
+      Animated.sequence([Animated.delay(Math.round(ms * 0.7)), Animated.timing(title, { toValue: 1, duration: 500, useNativeDriver: true })]),
       Animated.sequence([Animated.delay(ms - 450), Animated.timing(out, { toValue: 0, duration: 450, easing: Easing.inOut(Easing.cubic), useNativeDriver: true })]),
-    ]).start(() => onDone());
+    ]);
+    run.start(() => { loops.forEach((l) => l.stop()); bob.stop(); onDone(); });
+    return () => { loops.forEach((l) => l.stop()); bob.stop(); run.stop(); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const w = Math.min(width - 32, 460);
+  const iconStyle = (i: number) => {
+    const a = (-90 + i * 60) * (Math.PI / 180);
+    const x = Math.cos(a) * R, y = Math.sin(a) * R;
+    const burst = pop[i];
+    const away = merge.interpolate({ inputRange: [0, 1], outputRange: [1, 0] });
+    return {
+      position: 'absolute' as const, width: ICON, height: ICON, borderRadius: ICON / 2, alignItems: 'center' as const, justifyContent: 'center' as const,
+      backgroundColor: 'rgba(255,255,255,0.14)', borderWidth: 1.5, borderColor: 'rgba(255,255,255,0.45)',
+      opacity: burst.interpolate({ inputRange: [0, 0.2, 1], outputRange: [0, 1, 1] }),
+      transform: [
+        { translateX: Animated.multiply(Animated.multiply(burst, away), x) },
+        { translateY: Animated.add(Animated.multiply(Animated.multiply(burst, away), y), float.interpolate({ inputRange: [0, 1], outputRange: [i % 2 ? -4 : 4, i % 2 ? 4 : -4] })) },
+        { scale: Animated.multiply(burst, away) },
+        { rotate: burst.interpolate({ inputRange: [0, 1], outputRange: ['-40deg', `${TILTS[i]}deg`] }) },
+      ],
+    };
+  };
+
   return (
-    <Animated.View accessibilityLabel="Delhi Explorer" style={{ flex: 1, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 50, transform: [{ translateX: out.interpolate({ inputRange: [0, 1], outputRange: [-width, 0] }) }] }}>
-      <Animated.View style={{ marginBottom: 12, opacity: pin.interpolate({ inputRange: [0, 0.3, 1], outputRange: [0, 1, 1] }), transform: [{ translateY: pin.interpolate({ inputRange: [0, 1], outputRange: [-60, 0] }) }, { scale: pin.interpolate({ inputRange: [0, 1], outputRange: [0.6, 1] }) }] }}>
-        <Logo size={96} />
-      </Animated.View>
-      <View style={{ width: w, height: (w * 150) / 360 }}>
-        <Svg width="100%" height="100%" viewBox="0 0 360 150">
-          <AnimatedSun v={sun} />
-          {MONUMENTS.map((m, i) => (
-            <AnimatedPath key={m.name} d={m.d} strokeDasharray={`${m.len} ${m.len}`}
-              strokeDashoffset={draw[i].interpolate({ inputRange: [0, 1], outputRange: [m.len, 0] }) as unknown as number}
-              stroke={colors.white} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" fill="none" />
-          ))}
-          <AnimatedLine x1={0} x2={360} y1={120} y2={120} stroke={colors.white} strokeWidth={2.4} strokeLinecap="round"
-            strokeOpacity={ground as unknown as number} />
-        </Svg>
+    <Animated.View accessibilityLabel="Delhi Explorer" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 50, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', transform: [{ translateX: out.interpolate({ inputRange: [0, 1], outputRange: [-width, 0] }) }] }}>
+      <View style={{ width: R * 2 + ICON, height: R * 2 + ICON, alignItems: 'center', justifyContent: 'center' }}>
+        {ripple.map((v, i) => (
+          <Animated.View key={i} style={{ position: 'absolute', width: R * 1.2, height: R * 1.2, borderRadius: R * 0.6, borderWidth: 1.5, borderColor: 'rgba(255,255,255,0.5)',
+            opacity: v.interpolate({ inputRange: [0, 1], outputRange: [0.5, 0] }), transform: [{ scale: v.interpolate({ inputRange: [0, 1], outputRange: [0.5, 2.3] }) }] }} />
+        ))}
+        {ICONS.map((m, i) => (
+          <Animated.View key={m.name} style={iconStyle(i)}>
+            <Svg width={38} height={38} viewBox="0 0 64 64"><Path d={m.d} stroke={colors.white} strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" fill="none" /></Svg>
+          </Animated.View>
+        ))}
+        <Animated.View style={{ position: 'absolute', opacity: pin, transform: [{ scale: pin.interpolate({ inputRange: [0, 1], outputRange: [0.2, 1] }) }] }}>
+          <Logo size={128} />
+        </Animated.View>
       </View>
-      <Animated.View style={{ marginTop: 28, alignItems: 'center', gap: 4, opacity: title, transform: [{ translateY: title.interpolate({ inputRange: [0, 1], outputRange: [10, 0] }) }] }}>
-        <Txt w="bold" style={{ fontSize: 30, color: colors.white }}>Delhi Explorer</Txt>
-        <Txt style={{ fontSize: 14, color: 'rgba(255,255,255,0.85)' }}>दिल्ली एक्सप्लोरर</Txt>
+      <Animated.View style={{ position: 'absolute', bottom: '14%', alignItems: 'center', gap: 4, opacity: title, transform: [{ translateY: title.interpolate({ inputRange: [0, 1], outputRange: [12, 0] }) }] }}>
+        <Txt w="bold" style={{ fontSize: 32, color: colors.white }}>Delhi Explorer</Txt>
+        <Txt style={{ fontSize: 15, color: 'rgba(255,255,255,0.85)' }}>दिल्ली एक्सप्लोरर</Txt>
       </Animated.View>
     </Animated.View>
-  );
-}
-
-const AnimatedCircle = Animated.createAnimatedComponent(Circle);
-/** A faint sun that slowly rises behind the monuments. */
-function AnimatedSun({ v }: { v: Animated.Value }) {
-  return (
-    <AnimatedCircle cx={262} r={30} fill={colors.white}
-      cy={v.interpolate({ inputRange: [0, 1], outputRange: [150, 52] }) as unknown as number}
-      fillOpacity={v.interpolate({ inputRange: [0, 1], outputRange: [0, 0.16] }) as unknown as number} />
   );
 }
