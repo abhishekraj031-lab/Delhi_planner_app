@@ -31,6 +31,7 @@ describe('data integrity', () => {
       'national-zoological-park': 'https://nzpnewdelhi.gov.in/tickets/new?ln=en',
       rm: 'https://www.nrmindia.org',
       rf: 'https://asimustsee.nic.in/red-fort.php',
+      'atlantic-water-world': 'https://booking.atlanticwaterworld.com',
       'qutub-minar': 'https://asimustsee.nic.in/qutub-minar.php',
     };
     for (const p of all) {
