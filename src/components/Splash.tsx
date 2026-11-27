@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from 'react';
+import { StatusBar } from 'expo-status-bar';
 import { Animated, Easing, View, useWindowDimensions } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import { colors } from '../theme';
 import { Txt } from './ui';
 import { Logo } from './Logo';
+import { post } from '../lib/bridge';
 
 /** Battlements along a wall from x0 to x1 at height y. */
 const crenels = (x0: number, x1: number, y: number, h = 5, w = 5) => {
@@ -37,6 +39,7 @@ export function Splash({ onDone, ms = 4600 }: { onDone: () => void; ms?: number 
   const float = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
+    post({ dx: 'bar', bg: colors.primary, fg: '#ffffff' }); // preview only: colour the phone's status bar to match
     const loops = ripple.map((v, i) => Animated.loop(Animated.sequence([Animated.delay(i * 700), Animated.timing(v, { toValue: 1, duration: 2100, easing: Easing.out(Easing.quad), useNativeDriver: true }), Animated.timing(v, { toValue: 0, duration: 0, useNativeDriver: true })])));
     loops.forEach((l) => l.start());
     const bob = Animated.loop(Animated.sequence([Animated.timing(float, { toValue: 1, duration: 900, easing: Easing.inOut(Easing.sin), useNativeDriver: true }), Animated.timing(float, { toValue: 0, duration: 900, easing: Easing.inOut(Easing.sin), useNativeDriver: true })]));
@@ -48,7 +51,7 @@ export function Splash({ onDone, ms = 4600 }: { onDone: () => void; ms?: number 
       Animated.sequence([Animated.delay(Math.round(ms * 0.7)), Animated.timing(title, { toValue: 1, duration: 500, useNativeDriver: true })]),
       Animated.sequence([Animated.delay(ms - 450), Animated.timing(out, { toValue: 0, duration: 450, easing: Easing.inOut(Easing.cubic), useNativeDriver: true })]),
     ]);
-    run.start(() => { loops.forEach((l) => l.stop()); bob.stop(); onDone(); });
+    run.start(() => { loops.forEach((l) => l.stop()); bob.stop(); post({ dx: 'bar', bg: '#ffffff', fg: '#111216' }); onDone(); });
     return () => { loops.forEach((l) => l.stop()); bob.stop(); run.stop(); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -73,6 +76,7 @@ export function Splash({ onDone, ms = 4600 }: { onDone: () => void; ms?: number 
 
   return (
     <Animated.View accessibilityLabel="Ghummakad" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 50, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center', transform: [{ translateX: out.interpolate({ inputRange: [0, 1], outputRange: [-width, 0] }) }] }}>
+      <StatusBar style="light" />
       <View style={{ width: R * 2 + ICON, height: R * 2 + ICON, alignItems: 'center', justifyContent: 'center' }}>
         {ripple.map((v, i) => (
           <Animated.View key={i} style={{ position: 'absolute', width: R * 1.2, height: R * 1.2, borderRadius: R * 0.6, borderWidth: 1.5, borderColor: 'rgba(255,255,255,0.5)',

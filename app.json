@@ -63,7 +63,7 @@
           "image": "./assets/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#2c7aef"
         }
       ],
       "expo-speech-recognition"

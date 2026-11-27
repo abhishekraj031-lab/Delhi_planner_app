@@ -32,7 +32,7 @@ body{background:var(--bg);margin:0;overflow:hidden}
 .wrap{height:100%;box-sizing:border-box;padding-block:12px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;align-items:center;justify-content:center}
 .slot{position:relative}
 .phone{position:absolute;top:0;left:0;width:390px;height:844px;box-sizing:content-box;border:10px solid var(--frame);border-radius:48px;overflow:hidden;transform-origin:top left;background:#fff;margin:-10px;display:flex;flex-direction:column}
-.status{height:47px;flex:none;display:flex;align-items:flex-end;justify-content:space-between;padding:0 28px 6px;background:var(--bar);color:var(--barfg);font:600 15px/1 -apple-system,system-ui,sans-serif;position:relative}
+.status{height:47px;flex:none;display:flex;align-items:flex-end;justify-content:space-between;padding:0 28px 6px;background:var(--bar);box-shadow:0 1px 0 var(--bar);z-index:2;color:var(--barfg);font:600 15px/1 -apple-system,system-ui,sans-serif;position:relative}
 .status i{display:flex;gap:5px;align-items:center}
 .status b{display:block;background:var(--barfg);border-radius:2px}
 .island{position:absolute;top:10px;left:50%;width:110px;height:30px;margin-left:-55px;background:#000;border-radius:16px}
@@ -112,6 +112,7 @@ addEventListener('message', (e) => {
   if (e.source !== frame.contentWindow || !e.data || typeof e.data.dx !== 'string') return;
   const m = e.data;
   if (m.dx === 'hello') caps();
+  else if (m.dx === 'bar') { document.documentElement.style.setProperty('--bar', String(m.bg || '#fff')); document.documentElement.style.setProperty('--barfg', String(m.fg || '#111216')); }
   else if (m.dx === 'mic') {
     if (!m.rect || !bridge.d) { ov.style.display = 'none'; return; }
     Object.assign(ov.style, { display: 'block', left: m.rect.x + 'px', top: (47 + m.rect.y) + 'px', width: m.rect.w + 'px', height: m.rect.h + 'px' });
