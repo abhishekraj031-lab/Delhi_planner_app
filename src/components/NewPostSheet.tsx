@@ -52,14 +52,14 @@ export function NewPostSheet({ visible, onClose, places, onPost }: { visible: bo
       ) : (
         <View style={{ gap: 10 }}>
           <Pressable onPress={() => pick(false)} accessibilityRole="button" accessibilityLabel={tr('Choose a photo')}
-            style={({ pressed }) => ({ height: 180, borderRadius: 16, borderWidth: 1.5, borderStyle: 'dashed', borderColor: colors.primary, backgroundColor: colors.primarySoft, alignItems: 'center', justifyContent: 'center', gap: 8, opacity: pressed ? 0.7 : 1 })}>
+            style={({ pressed }) => ({ height: 180, borderRadius: 16, borderWidth: 1.5, borderStyle: 'dashed', borderColor: colors.secondary, backgroundColor: colors.secondarySoft, alignItems: 'center', justifyContent: 'center', gap: 8, opacity: pressed ? 0.7 : 1 })}>
             <ImagePlus size={32} color={colors.primary} />
-            <Txt w="semi" style={{ color: colors.primaryText, fontSize: 16 }}>{tr('Choose a photo')}</Txt>
+            <Txt w="semi" style={{ color: colors.secondary, fontSize: 16 }}>{tr('Choose a photo')}</Txt>
             <Txt style={{ color: colors.sub, fontSize: 13 }}>{tr('From the places you visited')}</Txt>
           </Pressable>
           {Platform.OS !== 'web' ? (
             <Pressable onPress={() => pick(true)} accessibilityRole="button" accessibilityLabel={tr('Take a photo')} style={({ pressed }) => ({ flexDirection: 'row', gap: 8, alignItems: 'center', alignSelf: 'center', padding: 8, opacity: pressed ? 0.6 : 1 })}>
-              <Camera size={18} color={colors.primary} /><Txt w="semi" style={{ color: colors.primaryText, fontSize: 15 }}>{tr('Take a photo')}</Txt>
+              <Camera size={18} color={colors.secondary} /><Txt w="semi" style={{ color: colors.secondary, fontSize: 15 }}>{tr('Take a photo')}</Txt>
             </Pressable>
           ) : null}
         </View>

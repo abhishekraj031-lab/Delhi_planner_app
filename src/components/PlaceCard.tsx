@@ -48,7 +48,7 @@ function PlaceCardBase({ place, km, day, today, saved, onOpen, onToggleSave }: P
             <View style={[st.fee, fee === tr('Free') && st.feeFree]}>
               {fee === tr('Free')
                 ? <Txt w="bold" style={{ fontSize: 15, color: '#166534' }}>{tr('Free entry')}</Txt>
-                : <><Txt w="bold" style={{ fontSize: 17, color: colors.primaryText }}>{fee}</Txt><Txt style={{ fontSize: 12, color: colors.primaryText }}> {tr('entry fee')}</Txt></>}
+                : <><Txt w="bold" style={{ fontSize: 17, color: colors.ink }}>{fee}</Txt><Txt style={{ fontSize: 12, color: colors.secondary }}> {tr('entry fee')}</Txt></>}
               {place.price.unverified ? <Unverified /> : null}
             </View>
           ) : <View style={st.feeNone}><Txt style={{ fontSize: 12, color: colors.sub }}>{tr('Fee not available')}</Txt></View>}
@@ -68,7 +68,7 @@ const st = StyleSheet.create({
   badge: { position: 'absolute', top: 12, left: 12, flexDirection: 'row', alignItems: 'center', maxWidth: '75%', minHeight: 28, paddingHorizontal: 12, paddingVertical: 4, borderRadius: 14, backgroundColor: colors.white, shadowColor: '#000', shadowOpacity: 0.12, shadowRadius: 4, shadowOffset: { width: 0, height: 1 }, elevation: 2 },
   text: { marginTop: 6, gap: 0 },
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  fee: { flexDirection: 'row', minHeight: 28, paddingHorizontal: 10, borderRadius: 14, backgroundColor: colors.primaryTint, alignItems: 'center' },
+  fee: { flexDirection: 'row', minHeight: 28, paddingHorizontal: 10, borderRadius: 14, backgroundColor: colors.secondaryTint, alignItems: 'center' },
   feeFree: { backgroundColor: '#dcfce7' },
   feeNone: { minHeight: 28, paddingHorizontal: 10, borderRadius: 14, backgroundColor: colors.fill, justifyContent: 'center' },
   grey: { color: colors.sub, fontSize: 14, lineHeight: 18, marginTop: -2 },

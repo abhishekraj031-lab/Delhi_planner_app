@@ -68,7 +68,7 @@ export function LoginScreen({ title, hint, onSignIn }: { title: string; hint: st
                 autoCapitalize="none" autoCorrect={false} textContentType="emailAddress" autoComplete="email" accessibilityLabel={tr('Gmail address')} onSubmitEditing={sendCode} style={[s.input, { fontFamily: fontFor('regular') }]} />
               {error ? <Txt style={{ color: colors.warn }}>{error}</Txt> : null}
               <Button label={tr('Send verification code')} onPress={sendCode} />
-              <Pressable onPress={() => switchTo('phone')} accessibilityRole="button" style={s.link}><Txt w="semi" style={{ fontSize: 15, color: colors.primaryText }}>{tr('Use mobile number instead')}</Txt></Pressable>
+              <Pressable onPress={() => switchTo('phone')} accessibilityRole="button" style={s.link}><Txt w="semi" style={{ fontSize: 15, color: colors.secondary }}>{tr('Use mobile number instead')}</Txt></Pressable>
             </>
           )}
           <Txt style={{ color: colors.sub, fontSize: 12 }}>{tr('Demo only: no code is really sent yet. Enter {code} on the next screen.', { code: DEMO_OTP })}</Txt>
@@ -83,7 +83,7 @@ export function LoginScreen({ title, hint, onSignIn }: { title: string; hint: st
           {error ? <Txt style={{ color: colors.warn }}>{error}</Txt> : null}
           <Button label={tr('Verify and log in')} onPress={() => verify(code)} />
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Pressable onPress={back} accessibilityRole="button" style={s.link}><Txt w="semi" style={{ fontSize: 15, color: colors.primaryText }}>{method === 'phone' ? tr('Change number') : tr('Change email')}</Txt></Pressable>
+            <Pressable onPress={back} accessibilityRole="button" style={s.link}><Txt w="semi" style={{ fontSize: 15, color: colors.secondary }}>{method === 'phone' ? tr('Change number') : tr('Change email')}</Txt></Pressable>
             <Pressable onPress={() => { if (wait === 0) { setWait(RESEND_SECONDS); setCode(''); setError(''); } }} disabled={wait > 0} accessibilityRole="button" style={s.link}>
               <Txt w="semi" style={{ fontSize: 15, color: wait > 0 ? colors.sub : colors.primary }}>{wait > 0 ? tr('Resend in {n}s', { n: wait }) : tr('Resend code')}</Txt>
             </Pressable>

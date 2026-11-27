@@ -309,7 +309,7 @@ function Home() {
           <FlatList horizontal showsHorizontalScrollIndicator={false} data={tags} keyExtractor={(t) => t.key} style={{ flex: 1 }} contentContainerStyle={{ gap: 8, paddingHorizontal: 16 }}
             renderItem={({ item }) => (
               <Pressable onPress={() => clearTag(item.key)} accessibilityRole="button" accessibilityLabel={tt('Remove filter {name}', { name: item.label })} style={s.tag}>
-                <Txt w="medium" style={{ fontSize: 12, color: colors.primaryText }}>{item.label}</Txt>
+                <Txt w="medium" style={{ fontSize: 12, color: colors.secondary }}>{item.label}</Txt>
                 <X size={14} color={colors.primary} />
               </Pressable>
             )} />
@@ -381,6 +381,6 @@ const s = StyleSheet.create({
   chips: { paddingHorizontal: 4, paddingTop: 8, borderBottomWidth: 0 },
   hint: { color: colors.sub, fontSize: 12, marginHorizontal: 16, marginTop: 8 },
   tagRow: { flexDirection: 'row', alignItems: 'center', marginTop: 8, flexGrow: 0 },
-  tag: { flexDirection: 'row', alignItems: 'center', gap: 4, height: 28, paddingHorizontal: 10, borderRadius: 14, backgroundColor: colors.primaryTint },
+  tag: { flexDirection: 'row', alignItems: 'center', gap: 4, height: 28, paddingHorizontal: 10, borderRadius: 14, backgroundColor: colors.secondaryTint },
   empty: { color: colors.sub, textAlign: 'center', padding: 48 },
 });

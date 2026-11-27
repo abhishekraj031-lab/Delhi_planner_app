@@ -3,7 +3,7 @@
   <path d="M60 8 C37 8 20 26 20 48 C20 78 60 112 60 112 C60 112 100 78 100 48 C100 26 83 8 60 8 Z" fill="#fff" transform="translate(0 0)"/>
   <rect x="59" y="20" width="2" height="9" rx="1" fill="#E8590C"/><circle cx="60" cy="19" r="2.6" fill="#E8590C"/>
   <path d="M44 46 C44 36 51 30 60 28 C69 30 76 36 76 46 Z" fill="#E8590C"/>
-  <rect x="40" y="46" width="40" height="5" rx="1.5" fill="#E8590C"/>
+  <rect x="40" y="46" width="40" height="5" rx="1.5" fill="#0F766E"/>
   <path d="M44 51 H76 V72 H44 Z M54 72 V62 C54 57 66 57 66 62 V72 Z" fill="#E8590C" fill-rule="evenodd"/>
-  <rect x="38" y="72" width="44" height="4" rx="1.5" fill="#E8590C"/>
+  <rect x="38" y="72" width="44" height="4" rx="1.5" fill="#0F766E"/>
 </svg>
