@@ -38,6 +38,7 @@ import { Chip, Txt } from './src/components/ui';
 import { inFrame, onBridge, post } from './src/lib/bridge';
 import { PlaceCard } from './src/components/PlaceCard';
 import { PlaceDetail } from './src/components/PlaceDetail';
+import { CatIcon } from './src/components/CatIcon';
 import { TabBar, TabKey } from './src/components/TabBar';
 import { ProfileScreen, initialOf } from './src/components/ProfileScreen';
 import { EmptyState } from './src/components/EmptyState';
@@ -58,12 +59,12 @@ const CAT_COLOR: Record<Category, string> = {
   'Gardens & Parks': '#2e9e4f', 'Markets & Food': '#d99100', 'Entertainment': '#2c7aef',
 };
 
-function CategoryTab({ label, color: _own, on, Icon, onPress }: { label: string; color: string; on: boolean; Icon: React.ComponentType<{ size?: number; color?: string; fill?: string; strokeWidth?: number }>; onPress: () => void }) {
+function CategoryTab({ label, cat, on, onPress }: { label: string; cat: Category; on: boolean; onPress: () => void }) {
   const color = colors.primary; // the active category always uses the app's orange
   return (
     <Pressable onPress={onPress} hitSlop={4} accessibilityRole="button" accessibilityState={{ selected: on }}
-      style={({ pressed }) => ({ alignItems: 'center', gap: 6, minHeight: 60, paddingHorizontal: 14, paddingTop: 8, borderBottomWidth: 2, borderBottomColor: on ? color : 'transparent', opacity: pressed ? 0.6 : 1, transform: [{ scale: pressed ? 0.96 : 1 }] })}>
-      <Icon size={26} color={on ? color : colors.sub} fill={on ? `${color}38` : 'none'} strokeWidth={on ? 2.2 : 1.8} />
+      style={({ pressed }) => ({ alignItems: 'center', gap: 6, minHeight: 74, paddingHorizontal: 14, paddingTop: 6, borderBottomWidth: 2, borderBottomColor: on ? color : 'transparent', opacity: pressed ? 0.6 : 1, transform: [{ scale: pressed ? 0.96 : 1 }] })}>
+      <CatIcon cat={cat} size={40} on={on} />
       <Txt w={on ? 'semi' : 'regular'} style={{ fontSize: 12, color: on ? colors.ink : colors.sub, paddingBottom: 6 }}>{label}</Txt>
     </Pressable>
   );
@@ -333,9 +334,8 @@ function Home() {
       <View style={{ flexGrow: 0 }}>
         <FlatList horizontal showsHorizontalScrollIndicator={false} data={categoriesWithPlaces(places)} extraData={lang} keyExtractor={(c) => c} contentContainerStyle={s.chips}
           renderItem={({ item }) => {
-            const Icon = ICONS[item];
             const on = !query && category === item;
-            return <CategoryTab label={tt(item)} color={CAT_COLOR[item]} on={on} Icon={Icon} onPress={() => { setQuery(''); setCategory(item); }} />;
+            return <CategoryTab label={tt(item)} cat={item} on={on} onPress={() => { setQuery(''); setCategory(item); }} />;
           }} />
       </View>
       {tags.length ? (
