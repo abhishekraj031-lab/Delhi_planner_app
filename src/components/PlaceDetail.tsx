@@ -232,9 +232,10 @@ export function PlaceDetail({ place, km, loc, locState, onAllowLocation, day, to
         </ScrollView>
 
         <CircleBtn onPress={onClose} label={tr('Back')} side="left" top={top}><ChevronLeft size={26} color={colors.ink} /></CircleBtn>
-        <CircleBtn onPress={onToggleSave} label={saved ? tr('Remove from saved') : tr('Save place')} side="right" top={top}>
-          <Heart size={24} color={saved ? '#ff385c' : colors.ink} fill={saved ? '#ff385c' : 'none'} />
-        </CircleBtn>
+        {/* Same heart as on the home cards: bare, white with a soft dark fill, top right of the photo. */}
+        <Pressable onPress={onToggleSave} hitSlop={14} accessibilityRole="button" accessibilityLabel={saved ? tr('Remove from saved') : tr('Save place')} style={{ position: 'absolute', top: top + 8, right: 16 }}>
+          <Heart size={28} color={saved ? '#ff385c' : colors.white} fill={saved ? '#ff385c' : 'rgba(0,0,0,0.35)'} strokeWidth={2} />
+        </Pressable>
 
         {/* Bottom bar */}
         <View style={[s.bar, { paddingBottom: Math.max(insets.bottom, 12) }]}>
