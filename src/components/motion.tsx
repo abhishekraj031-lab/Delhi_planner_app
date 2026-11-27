@@ -5,7 +5,7 @@ const NATIVE = Platform.OS !== 'web';
 
 /** Small shared motion: content fades in and rises a few pixels. Skipped when the user turns on Reduce Motion. */
 function Inner({ children, style, dy, ms }: { children: React.ReactNode; style?: StyleProp<ViewStyle>; dy: number; ms: number }) {
-  const v = useRef(new Animated.Value(0)).current;
+  const v = useRef(new Animated.Value(0.35)).current; // starts part-visible so a tab switch never flashes blank
   useEffect(() => {
     let live = true;
     AccessibilityInfo.isReduceMotionEnabled().then((reduce) => {
@@ -16,7 +16,7 @@ function Inner({ children, style, dy, ms }: { children: React.ReactNode; style?:
     return () => { live = false; };
   }, [v, ms]);
   return (
-    <Animated.View style={[style, { opacity: v, transform: [{ translateY: v.interpolate({ inputRange: [0, 1], outputRange: [dy, 0] }) }] }]}>
+    <Animated.View style={[style, { opacity: v, transform: [{ translateY: v.interpolate({ inputRange: [0, 1], outputRange: [dy * 1.5, 0] }) }] }]}>
       {children}
     </Animated.View>
   );

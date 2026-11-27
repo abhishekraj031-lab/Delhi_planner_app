@@ -235,7 +235,7 @@ function Home() {
     return (
       <View style={s.screen}>
         <StatusBar style="dark" />
-        <FadeSlide k={`${tab}-${!user && loginOpen}-${sub}`} style={{ flex: 1 }}>{body}</FadeSlide>
+        <FadeSlide k={`${tab}-${!user && loginOpen}-${sub}`} dy={6} ms={240} style={{ flex: 1 }}>{body}</FadeSlide>
         {notice ? (
           <View pointerEvents="none" style={{ position: 'absolute', left: 16, right: 16, bottom: Math.max(insets.bottom, 12) + 84, backgroundColor: colors.dark, borderRadius: 12, paddingVertical: 12, paddingHorizontal: 16 }}>
             <Txt w="semi" style={{ color: colors.white, fontSize: 14, textAlign: 'center' }}>{notice}</Txt>
@@ -252,7 +252,7 @@ function Home() {
   return (
     <View style={[s.screen, { paddingTop: insets.top }]}>
       <StatusBar style="dark" />
-      <FadeSlide k="home" style={{ flex: 1 }}>
+      <FadeSlide k="home" dy={6} ms={240} style={{ flex: 1 }}>
       <View style={s.header}>
         {user ? (
           <Pressable onPress={() => setShowLocation(true)} hitSlop={{ top: 8, bottom: 8, right: 16 }} accessibilityRole="button" accessibilityLabel={tt('Location: {where}. Change', { where: `${place.title}, ${place.sub}` })} style={{ flex: 1 }}>

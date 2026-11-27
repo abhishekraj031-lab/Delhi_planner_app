@@ -16,21 +16,28 @@ const TABS: { key: TabKey; label: string; Icon: React.ComponentType<{ size?: num
 const NATIVE = Platform.OS !== 'web';
 
 /** The orange pill fades and grows in behind the active tab; the colours switch halfway so text never disappears. */
-function TabItem({ on, label, Icon, onPress, alwaysLabel }: { on: boolean; label: string; alwaysLabel?: boolean; Icon: (typeof TABS)[number]['Icon']; onPress: () => void }) {
-  const v = useRef(new Animated.Value(on ? 1 : 0)).current;
+function TabItem({ on, label, Icon, onPress }: { on: boolean; label: string; alwaysLabel?: boolean; Icon: (typeof TABS)[number]['Icon']; onPress: () => void }) {
+  const v = useRef(new Animated.Value(on ? 1 : 0)).current;   // 0 = idle, 1 = active (drives the pill)
+  const w = useRef(new Animated.Value(on ? 1 : 0)).current;   // label width, animated on the JS driver because it changes layout
   const [shown, setShown] = useState(on);
   useEffect(() => {
-    Animated.timing(v, { toValue: on ? 1 : 0, duration: 200, easing: Easing.out(Easing.cubic), useNativeDriver: NATIVE }).start();
-    const t = setTimeout(() => setShown(on), 80);
+    const cfg = { duration: 260, easing: Easing.bezier(0.3, 0, 0.2, 1) };
+    Animated.timing(v, { toValue: on ? 1 : 0, ...cfg, useNativeDriver: NATIVE }).start();
+    Animated.timing(w, { toValue: on ? 1 : 0, ...cfg, useNativeDriver: false }).start();
+    const t = setTimeout(() => setShown(on), on ? 110 : 90);
     return () => clearTimeout(t);
-  }, [on, v]);
+  }, [on, v, w]);
   return (
     <Pressable onPress={onPress} accessibilityRole="tab" accessibilityState={{ selected: on }} accessibilityLabel={tr(label)}
       style={({ pressed }) => [s.tab, { opacity: pressed ? 0.7 : 1 }]}>
-      <Animated.View pointerEvents="none" style={[s.pill, { opacity: v, transform: [{ scale: v.interpolate({ inputRange: [0, 1], outputRange: [0.85, 1] }) }] }]} />
+      <Animated.View pointerEvents="none" style={[s.pill, { opacity: v, transform: [{ scale: v.interpolate({ inputRange: [0, 1], outputRange: [0.8, 1] }) }] }]} />
       <View style={s.content}>
         <Icon size={20} color={shown ? colors.white : colors.ink} />
-        {on || shown || alwaysLabel ? <Txt w={shown ? 'semi' : 'regular'} style={{ fontSize: 12, color: shown ? colors.white : colors.ink }}>{tr(label)}</Txt> : null}
+        <Animated.View style={{ maxWidth: w.interpolate({ inputRange: [0, 1], outputRange: [0, 110] }), marginLeft: w.interpolate({ inputRange: [0, 1], outputRange: [0, 6] }), overflow: 'hidden' }}>
+          <Animated.View style={{ opacity: v }}>
+            <Txt w="semi" numberOfLines={1} style={{ fontSize: 12, color: colors.white }}>{tr(label)}</Txt>
+          </Animated.View>
+        </Animated.View>
       </View>
     </Pressable>
   );
@@ -49,6 +56,6 @@ export function TabBar({ tab, onChange }: { tab: TabKey; onChange: (t: TabKey) =
 const s = StyleSheet.create({
   bar: { flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', paddingTop: 12, paddingHorizontal: 8, backgroundColor: colors.white, borderTopWidth: 1, borderTopColor: colors.fill },
   tab: { minHeight: 44, paddingHorizontal: 16, borderRadius: 12, justifyContent: 'center' },
-  content: { flexDirection: 'row', alignItems: 'center', gap: 6, zIndex: 1 },
+  content: { flexDirection: 'row', alignItems: 'center', zIndex: 1 },
   pill: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, borderRadius: 12, backgroundColor: colors.primary, zIndex: 0 },
 });
